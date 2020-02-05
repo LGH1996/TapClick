@@ -1,0 +1,102 @@
+package com.lgh.advertising.going;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.accessibility.AccessibilityViewCommand;
+
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.lgh.advertising.myclass.AppDescribe;
+import com.lgh.advertising.myclass.DataDao;
+import com.lgh.advertising.myclass.DataDaoFactory;
+
+import java.util.List;
+
+public class AppSelectActivity extends AppCompatActivity {
+    LayoutInflater inflater;
+    PackageManager packageManager;
+    DataDao dataDao;
+    public static AppDescribe appDescribe;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        inflater = LayoutInflater.from(this);
+        packageManager = getPackageManager();
+        dataDao = DataDaoFactory.getInstance(getApplicationContext());
+        setContentView(R.layout.view_select);
+        ListView listView = findViewById(R.id.listView);
+        final List<AppDescribe> listApp = dataDao.getAppDescribes();
+        for (AppDescribe e:listApp){
+            try {
+                e.appDrawable = packageManager.getApplicationIcon(e.appPackage);
+            } catch (PackageManager.NameNotFoundException nameNotFoundException) {
+                nameNotFoundException.printStackTrace();
+            }
+        }
+        BaseAdapter baseAdapter = new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return listApp.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return position;
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                AppSelectActivity.ViewHolder holder;
+                if (convertView == null) {
+                    convertView = inflater.inflate(R.layout.view_pac, null);
+                    holder = new AppSelectActivity.ViewHolder(convertView);
+                    convertView.setTag(holder);
+                } else {
+                    holder = (AppSelectActivity.ViewHolder) convertView.getTag();
+                }
+                AppDescribe tem = listApp.get(position);
+                holder.textView.setText(tem.appName);
+                holder.imageView.setImageDrawable(tem.appDrawable);
+                return convertView;
+            }
+        };
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                appDescribe = listApp.get(position);
+                appDescribe.autoFinder = dataDao.getAutoFinder(appDescribe.appPackage);
+                appDescribe.coordinateList = dataDao.getCoordinates(appDescribe.appPackage);
+                appDescribe.widgetList = dataDao.getWidgets(appDescribe.appPackage);
+                startActivity(new Intent(AppSelectActivity.this,AppConfigActivity.class));
+            }
+        });
+        listView.setAdapter(baseAdapter);
+
+    }
+
+    class ViewHolder {
+        TextView textView;
+        ImageView imageView;
+
+        public ViewHolder(View v) {
+            textView = v.findViewById(R.id.name);
+            imageView = v.findViewById(R.id.img);
+        }
+    }
+}
