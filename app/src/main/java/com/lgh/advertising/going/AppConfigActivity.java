@@ -71,6 +71,7 @@ public class AppConfigActivity extends AppCompatActivity {
 
         LinearLayout layoutCoordinate = findViewById(R.id.coordinate_layout);
         Collection<Coordinate> coordinateList = appDescribe.coordinateMap.values();
+        if (coordinateList.isEmpty()) layoutCoordinate.setVisibility(View.GONE);
         for (Coordinate e:coordinateList){
             View viewCoordinate = inflater.inflate(R.layout.view_coordinate, null);
             EditText coordinateActivity = viewCoordinate.findViewById(R.id.coordinate_activity);
@@ -94,6 +95,7 @@ public class AppConfigActivity extends AppCompatActivity {
 
         LinearLayout layoutWidget = findViewById(R.id.widget_layout);
         Collection<Set<Widget>> widgetSetList = appDescribe.widgetSetMap.values();
+        if (widgetSetList.isEmpty()) layoutWidget.setVisibility(View.GONE);
         for (Set<Widget> widgetSet:widgetSetList) {
             for (Widget e:widgetSet) {
                 View viewWidget = inflater.inflate(R.layout.view_widget, null);

@@ -64,18 +64,17 @@ public class MainFunction {
 
     public static final String TAG = "MainFunction";
     public static Handler handler;
+    private Map<String, AppDescribe> appDescribeMap;
+    private AppDescribe appDescribe;
     private AccessibilityService service;
     private String currentPackage;
     private String currentActivity;
     private boolean is_state_change_a, is_state_change_b, is_state_change_c;
-    public static Map<String, AppDescribe> appDescribeMap;
 
     private int autoRetrieveNumber;
     private AccessibilityServiceInfo serviceInfo;
     private ScheduledFuture future_a, future_b, future_c;
     private ScheduledExecutorService executorService;
-    private AppDescribe appDescribe;
-
 
     private View adv_view, layout_win;
     private ImageView target_xy;
