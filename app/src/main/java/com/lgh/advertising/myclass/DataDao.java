@@ -18,11 +18,11 @@ public interface DataDao {
     List<Coordinate> getCoordinates(String appPackage);
     @Query("SELECT * FROM Widget WHERE appPackage = :appPackage")
     List<Widget> getWidgets(String appPackage);
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAppDescribe(AppDescribe... appDescribes);
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAppDescribe(List<AppDescribe> appDescribes);
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAutoFinder(AutoFinder... autoFinders);
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAutoFinder(List<AutoFinder> autoFinders);
@@ -30,6 +30,5 @@ public interface DataDao {
     void insertCoordinate(Coordinate... coordinates);
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertWidget(Widget... widgets);
-
 
 }

@@ -9,6 +9,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Entity(indices = @Index(value = "appPackage",unique = true))
@@ -32,9 +33,9 @@ public class AppDescribe {
     @Ignore
     public AutoFinder autoFinder;
     @Ignore
-    public List<Coordinate> coordinateList;
+    public Map<String,Coordinate> coordinateMap;
     @Ignore
-    public List<Widget> widgetList;
+    public Map<String,Set<Widget>> widgetSetMap;
 
     public AppDescribe() {
         this.appName = "";
@@ -51,7 +52,7 @@ public class AppDescribe {
         this.widgetOnOff = true;
         this.appDrawable = null;
         this.autoFinder = null;
-        this.coordinateList = null;
-        this.widgetList = null;
+        this.coordinateMap = null;
+        this.widgetSetMap = null;
     }
 }

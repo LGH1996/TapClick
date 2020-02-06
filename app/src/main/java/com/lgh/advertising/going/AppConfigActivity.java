@@ -17,7 +17,10 @@ import com.lgh.advertising.myclass.AutoFinder;
 import com.lgh.advertising.myclass.Coordinate;
 import com.lgh.advertising.myclass.Widget;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class AppConfigActivity extends AppCompatActivity {
 
@@ -67,7 +70,7 @@ public class AppConfigActivity extends AppCompatActivity {
         layoutAutoFinder.addView(viewAutoFinder);
 
         LinearLayout layoutCoordinate = findViewById(R.id.coordinate_layout);
-        List<Coordinate> coordinateList = appDescribe.coordinateList;
+        Collection<Coordinate> coordinateList = appDescribe.coordinateMap.values();
         for (Coordinate e:coordinateList){
             View viewCoordinate = inflater.inflate(R.layout.view_coordinate, null);
             EditText coordinateActivity = viewCoordinate.findViewById(R.id.coordinate_activity);
@@ -90,8 +93,9 @@ public class AppConfigActivity extends AppCompatActivity {
 
 
         LinearLayout layoutWidget = findViewById(R.id.widget_layout);
-        List<Widget> widgetList = appDescribe.widgetList;
-        for (Widget e:widgetList) {
+        Collection<Set<Widget>> widgetSetList = appDescribe.widgetSetMap.values();
+        for (Set<Widget> widgetSet:widgetSetList) {
+            for (Widget e:widgetSet) {
                 View viewWidget = inflater.inflate(R.layout.view_widget, null);
                 EditText widgetActivity = viewWidget.findViewById(R.id.widget_activity);
                 EditText widgetClickable = viewWidget.findViewById(R.id.widget_clickable);
@@ -111,6 +115,7 @@ public class AppConfigActivity extends AppCompatActivity {
                 widgetText.setText(e.widgetText);
                 widgetClickOnly.setChecked(e.clickOnly);
                 layoutWidget.addView(viewWidget);
+            }
         }
     }
 }

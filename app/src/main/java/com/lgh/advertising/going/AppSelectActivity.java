@@ -17,11 +17,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Maps;
 import com.lgh.advertising.myclass.AppDescribe;
+import com.lgh.advertising.myclass.Coordinate;
 import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
+import com.lgh.advertising.myclass.Widget;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AppSelectActivity extends AppCompatActivity {
     LayoutInflater inflater;
@@ -81,8 +88,24 @@ public class AppSelectActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 appDescribe = listApp.get(position);
                 appDescribe.autoFinder = dataDao.getAutoFinder(appDescribe.appPackage);
-                appDescribe.coordinateList = dataDao.getCoordinates(appDescribe.appPackage);
-                appDescribe.widgetList = dataDao.getWidgets(appDescribe.appPackage);
+                appDescribe.coordinateMap = Maps.uniqueIndex(dataDao.getCoordinates(appDescribe.appPackage), new Function<Coordinate, String>() {
+                    @Override
+                    public String apply(Coordinate input) {
+                        return input.appActivity;
+                    }
+                });
+                List<Widget> widgetList = dataDao.getWidgets(appDescribe.appPackage);
+                appDescribe.widgetSetMap = new HashMap<>();
+                for (Widget w:widgetList){
+                    Set<Widget> widgetSet = appDescribe.widgetSetMap.get(w.appActivity);
+                    if (widgetSet == null){
+                        widgetSet = new HashSet<>();
+                        widgetSet.add(w);
+                        appDescribe.widgetSetMap.put(w.appActivity,widgetSet);
+                    } else {
+                        widgetSet.add(w);
+                    }
+                }
                 startActivity(new Intent(AppSelectActivity.this,AppConfigActivity.class));
             }
         });

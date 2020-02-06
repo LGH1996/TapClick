@@ -55,11 +55,6 @@
                         android:layout_centerVertical="true" />
                 </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/divideLine" />
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -84,9 +79,9 @@
                         android:layout_toEndOf="@+id/auto_finder_txt_a"
                         android:background="@null"
                         android:ems="4"
-                        android:maxLength="6"
                         android:gravity="center_vertical"
                         android:inputType="number"
+                        android:maxLength="6"
                         android:singleLine="true"
                         android:textColor="@color/textColor"
                         android:textSize="12sp" />
@@ -108,6 +103,12 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/auto_finder_txt_d" />
                 </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divideLine"
+                    android:layout_marginBottom="10dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -150,11 +151,6 @@
                         android:layout_centerVertical="true" />
                 </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/divideLine" />
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -179,9 +175,9 @@
                         android:layout_toEndOf="@+id/auto_finder_txt_b"
                         android:background="@null"
                         android:ems="4"
-                        android:maxLength="6"
                         android:gravity="center_vertical"
                         android:inputType="number"
+                        android:maxLength="6"
                         android:singleLine="true"
                         android:textColor="@color/textColor"
                         android:textSize="12sp" />
@@ -203,6 +199,12 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/widget_txt_e" />
                 </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divideLine"
+                    android:layout_marginBottom="10dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -245,11 +247,6 @@
                         android:layout_centerVertical="true" />
                 </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/divideLine" />
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -274,9 +271,9 @@
                         android:layout_toEndOf="@+id/auto_finder_txt_c"
                         android:background="@null"
                         android:ems="4"
-                        android:maxLength="6"
                         android:gravity="center_vertical"
                         android:inputType="number"
+                        android:maxLength="6"
                         android:singleLine="true"
                         android:textColor="@color/textColor"
                         android:textSize="12sp" />
@@ -298,6 +295,12 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/widget_txt_f" />
                 </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divideLine"
+                    android:layout_marginBottom="10dp"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
