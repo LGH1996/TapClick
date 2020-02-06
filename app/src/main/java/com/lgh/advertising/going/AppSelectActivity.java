@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.Coordinate;
@@ -25,15 +26,19 @@ import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
 import com.lgh.advertising.myclass.Widget;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class AppSelectActivity extends AppCompatActivity {
     LayoutInflater inflater;
     PackageManager packageManager;
     DataDao dataDao;
+    Map<String,AppDescribe> appDescribeMap;
+    List<AppDescribe> appDescribeList;
     public static AppDescribe appDescribe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +46,15 @@ public class AppSelectActivity extends AppCompatActivity {
         inflater = LayoutInflater.from(this);
         packageManager = getPackageManager();
         dataDao = DataDaoFactory.getInstance(getApplicationContext());
+        if (MainFunction.appDescribeMap != null){
+            appDescribeMap = MainFunction.appDescribeMap;
+            appDescribeList = Lists.newArrayList(appDescribeMap.values());
+        } else {
+            appDescribeList = dataDao.getAppDescribes();
+        }
         setContentView(R.layout.view_select);
         ListView listView = findViewById(R.id.listView);
-        final List<AppDescribe> listApp = dataDao.getAppDescribes();
-        for (AppDescribe e:listApp){
+        for (AppDescribe e:appDescribeList){
             try {
                 e.appDrawable = packageManager.getApplicationIcon(e.appPackage);
             } catch (PackageManager.NameNotFoundException nameNotFoundException) {
@@ -54,7 +64,7 @@ public class AppSelectActivity extends AppCompatActivity {
         BaseAdapter baseAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
-                return listApp.size();
+                return appDescribeList.size();
             }
 
             @Override
@@ -77,8 +87,8 @@ public class AppSelectActivity extends AppCompatActivity {
                 } else {
                     holder = (AppSelectActivity.ViewHolder) convertView.getTag();
                 }
-                AppDescribe tem = listApp.get(position);
-                holder.textView.setText(tem.appName);
+                AppDescribe tem = appDescribeList.get(position);
+                holder.textView.setText(tem.appName+"("+(tem.on_off?"开":"关")+")");
                 holder.imageView.setImageDrawable(tem.appDrawable);
                 return convertView;
             }
@@ -86,24 +96,29 @@ public class AppSelectActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                appDescribe = listApp.get(position);
-                appDescribe.autoFinder = dataDao.getAutoFinder(appDescribe.appPackage);
-                appDescribe.coordinateMap = Maps.uniqueIndex(dataDao.getCoordinates(appDescribe.appPackage), new Function<Coordinate, String>() {
-                    @Override
-                    public String apply(Coordinate input) {
-                        return input.appActivity;
-                    }
-                });
-                List<Widget> widgetList = dataDao.getWidgets(appDescribe.appPackage);
-                appDescribe.widgetSetMap = new HashMap<>();
-                for (Widget w:widgetList){
-                    Set<Widget> widgetSet = appDescribe.widgetSetMap.get(w.appActivity);
-                    if (widgetSet == null){
-                        widgetSet = new HashSet<>();
-                        widgetSet.add(w);
-                        appDescribe.widgetSetMap.put(w.appActivity,widgetSet);
-                    } else {
-                        widgetSet.add(w);
+                String packageName = appDescribeList.get(position).appPackage;
+                if (appDescribeMap != null){
+                    appDescribe = appDescribeMap.get(packageName);
+                } else {
+                    appDescribe = appDescribeList.get(position);
+                    appDescribe.autoFinder = dataDao.getAutoFinder(appDescribe.appPackage);
+                    appDescribe.coordinateMap = Maps.uniqueIndex(dataDao.getCoordinates(appDescribe.appPackage), new Function<Coordinate, String>() {
+                        @Override
+                        public String apply(Coordinate input) {
+                            return input.appActivity;
+                        }
+                    });
+                    List<Widget> widgetList = dataDao.getWidgets(appDescribe.appPackage);
+                    appDescribe.widgetSetMap = new HashMap<>();
+                    for (Widget w:widgetList){
+                        Set<Widget> widgetSet = appDescribe.widgetSetMap.get(w.appActivity);
+                        if (widgetSet == null){
+                            widgetSet = new HashSet<>();
+                            widgetSet.add(w);
+                            appDescribe.widgetSetMap.put(w.appActivity,widgetSet);
+                        } else {
+                            widgetSet.add(w);
+                        }
                     }
                 }
                 startActivity(new Intent(AppSelectActivity.this,AppConfigActivity.class));

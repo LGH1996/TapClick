@@ -16,13 +16,23 @@ public class Coordinate {
     public int clickInterval;
     public int clickNumber;
 
-    public Coordinate(String appPackage, String appActivity, int xPosition, int yPosition, int clickDelay, int clickInterval, int clickNumber) {
-        this.appPackage = appPackage;
-        this.appActivity = appActivity;
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-        this.clickDelay = clickDelay;
-        this.clickInterval = clickInterval;
-        this.clickNumber = clickNumber;
+    public Coordinate() {
+        this.appPackage = "";
+        this.appActivity = "";
+        this.xPosition = 0;
+        this.yPosition = 0;
+        this.clickDelay = 2000;
+        this.clickInterval = 500;
+        this.clickNumber = 1;
+    }
+
+    public Coordinate(Coordinate coordinate){
+        this.appPackage = coordinate.appPackage;
+        this.appActivity = coordinate.appActivity;
+        this.xPosition = coordinate.xPosition;
+        this.yPosition = coordinate.yPosition;
+        this.clickDelay = coordinate.clickDelay;
+        this.clickInterval = coordinate.clickInterval;
+        this.clickNumber = coordinate.clickNumber;
     }
 }

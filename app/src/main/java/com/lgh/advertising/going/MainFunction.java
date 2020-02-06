@@ -64,7 +64,7 @@ public class MainFunction {
 
     public static final String TAG = "MainFunction";
     public static Handler handler;
-    private Map<String, AppDescribe> appDescribeMap;
+    public static Map<String, AppDescribe> appDescribeMap;
     private AppDescribe appDescribe;
     private AccessibilityService service;
     private String currentPackage;
@@ -78,8 +78,6 @@ public class MainFunction {
 
     private View adv_view, layout_win;
     private ImageView target_xy;
-    private Widget widgetDescribe;
-    private Coordinate positionDescribe;
     private LayoutInflater inflater;
     private WindowManager.LayoutParams aParams, bParams, cParams;
     private DisplayMetrics metrics;
@@ -481,8 +479,8 @@ public class MainFunction {
             return;
         }
         windowManager = (WindowManager) service.getSystemService(Context.WINDOW_SERVICE);
-        widgetDescribe = new Widget("", "", false, 0, false, null, "", "", "", "");
-        positionDescribe = new Coordinate("", "", 0, 0, 1500, 500, 1);
+        final Widget widgetSelect = new Widget();
+        final Coordinate coordinateSelect  = new Coordinate();
         inflater = LayoutInflater.from(service);
         adv_view = inflater.inflate(R.layout.advertise_desc, null);
         final TextView pacName = adv_view.findViewById(R.id.pacName);
@@ -574,13 +572,13 @@ public class MainFunction {
                         x = Math.round(event.getRawX());
                         y = Math.round(event.getRawY());
                         windowManager.updateViewLayout(target_xy, cParams);
-                        positionDescribe.appPackage = currentPackage;
-                        positionDescribe.appActivity = currentActivity;
-                        positionDescribe.xPosition = cParams.x + width;
-                        positionDescribe.yPosition = cParams.y + height;
-                        pacName.setText(positionDescribe.appPackage);
-                        actName.setText(positionDescribe.appActivity);
-                        xyP.setText("X轴：" + positionDescribe.xPosition + "    " + "Y轴：" + positionDescribe.yPosition + "    " + "(其他参数默认)");
+                        coordinateSelect.appPackage = currentPackage;
+                        coordinateSelect.appActivity = currentActivity;
+                        coordinateSelect.xPosition = cParams.x + width;
+                        coordinateSelect.yPosition = cParams.y + height;
+                        pacName.setText(coordinateSelect.appPackage);
+                        actName.setText(coordinateSelect.appActivity);
+                        xyP.setText("X轴：" + coordinateSelect.xPosition + "    " + "Y轴：" + coordinateSelect.yPosition + "    " + "(其他参数默认)");
                         break;
                     case MotionEvent.ACTION_UP:
                         cParams.alpha = 0.5f;
@@ -597,8 +595,8 @@ public class MainFunction {
                 if (bParams.alpha == 0) {
                     AccessibilityNodeInfo root = service.getRootInActiveWindow();
                     if (root == null) return;
-                    widgetDescribe.appPackage = currentPackage;
-                    widgetDescribe.appActivity = currentActivity;
+                    widgetSelect.appPackage = currentPackage;
+                    widgetSelect.appActivity = currentActivity;
                     layout_add.removeAllViews();
                     ArrayList<AccessibilityNodeInfo> roots = new ArrayList<>();
                     roots.add(root);
@@ -633,18 +631,18 @@ public class MainFunction {
                             @Override
                             public void onFocusChange(View v, boolean hasFocus) {
                                 if (hasFocus) {
-                                    widgetDescribe.widgetRect = temRect;
-                                    widgetDescribe.widgetClickable = e.isClickable();
-                                    widgetDescribe.widgetClass = e.getClassName().toString();
+                                    widgetSelect.widgetRect = temRect;
+                                    widgetSelect.widgetClickable = e.isClickable();
+                                    widgetSelect.widgetClass = e.getClassName().toString();
                                     CharSequence cId = e.getViewIdResourceName();
-                                    widgetDescribe.widgetId = cId == null ? "" : cId.toString();
+                                    widgetSelect.widgetId = cId == null ? "" : cId.toString();
                                     CharSequence cDesc = e.getContentDescription();
-                                    widgetDescribe.widgetDescribe = cDesc == null ? "" : cDesc.toString();
+                                    widgetSelect.widgetDescribe = cDesc == null ? "" : cDesc.toString();
                                     CharSequence cText = e.getText();
-                                    widgetDescribe.widgetText = cText == null ? "" : cText.toString();
+                                    widgetSelect.widgetText = cText == null ? "" : cText.toString();
                                     saveWidgetButton.setEnabled(true);
-                                    pacName.setText(widgetDescribe.appPackage);
-                                    actName.setText(widgetDescribe.appActivity);
+                                    pacName.setText(widgetSelect.appPackage);
+                                    actName.setText(widgetSelect.appActivity);
                                     widget.setText("click:" + (e.isClickable() ? "true" : "false") + " " + "bonus:" + temRect.toShortString() + " " + "id:" + (cId == null ? "null" : cId.toString().substring(cId.toString().indexOf("id/") + 3)) + " " + "desc:" + (cDesc == null ? "null" : cDesc.toString()) + " " + "text:" + (cText == null ? "null" : cText.toString()));
                                     v.setBackgroundResource(R.drawable.node_focus);
                                 } else {
@@ -657,8 +655,8 @@ public class MainFunction {
                     bParams.alpha = 0.5f;
                     bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
                     windowManager.updateViewLayout(layout_win, bParams);
-                    pacName.setText(widgetDescribe.appPackage);
-                    actName.setText(widgetDescribe.appActivity);
+                    pacName.setText(widgetSelect.appPackage);
+                    actName.setText(widgetSelect.appActivity);
                     button.setText("隐藏布局");
                 } else {
                     bParams.alpha = 0f;
@@ -674,13 +672,13 @@ public class MainFunction {
             public void onClick(View v) {
                 Button button = (Button) v;
                 if (cParams.alpha == 0) {
-                    positionDescribe.appPackage = currentPackage;
-                    positionDescribe.appActivity = currentActivity;
+                    coordinateSelect.appPackage = currentPackage;
+                    coordinateSelect.appActivity = currentActivity;
                     cParams.alpha = 0.5f;
                     cParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
                     windowManager.updateViewLayout(target_xy, cParams);
-                    pacName.setText(positionDescribe.appPackage);
-                    actName.setText(positionDescribe.appActivity);
+                    pacName.setText(coordinateSelect.appPackage);
+                    actName.setText(coordinateSelect.appActivity);
                     button.setText("隐藏准心");
                 } else {
                     cParams.alpha = 0f;
@@ -694,18 +692,34 @@ public class MainFunction {
         saveWidgetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Widget temWidget = new Widget(widgetDescribe);
+                Widget temWidget = new Widget(widgetSelect);
+                AppDescribe temAppDescribe = appDescribeMap.get(temWidget.appPackage);
+                if (temAppDescribe != null){
+                    Set<Widget> temWidgetSet = temAppDescribe.widgetSetMap.get(temWidget.appActivity);
+                    if (temWidgetSet == null){
+                        temWidgetSet = new HashSet<>();
+                        temWidgetSet.add(temWidget);
+                        temAppDescribe.widgetSetMap.put(temWidget.appActivity,temWidgetSet);
+                    } else {
+                        temWidgetSet.add(temWidget);
+                    }
+                }
                 DataDaoFactory.getInstance(service).insertWidget(temWidget);
                 saveWidgetButton.setEnabled(false);
-                pacName.setText(widgetDescribe.appPackage + " (以下控件数据已保存)");
+                pacName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
             }
         });
         savePositionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataDaoFactory.getInstance(service).insertCoordinate(positionDescribe);
+                Coordinate temCoordinate = new Coordinate(coordinateSelect);
+                AppDescribe temAppDescribe = appDescribeMap.get(temCoordinate.appPackage);
+                if (temAppDescribe != null){
+                    temAppDescribe.coordinateMap.put(temCoordinate.appActivity,temCoordinate);
+                }
+                DataDaoFactory.getInstance(service).insertCoordinate(temCoordinate);
                 savePositionButton.setEnabled(false);
-                pacName.setText(positionDescribe.appPackage + " (以下坐标数据已保存)");
+                pacName.setText(temCoordinate.appPackage + " (以下坐标数据已保存)");
             }
         });
         quitButton.setOnClickListener(new View.OnClickListener() {

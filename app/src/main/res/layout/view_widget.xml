@@ -28,7 +28,7 @@
                 android:enabled="false"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -164,11 +164,13 @@
                 android:textSize="12sp" />
 
             <EditText
-                android:id="@+id/widget_delay"
+                android:id="@+id/widget_clickDelay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="该属性不存在"
+                android:ems="4"
+                android:inputType="number"
+                android:maxLength="4"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
