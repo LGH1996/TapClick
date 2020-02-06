@@ -26,10 +26,15 @@ import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
 import com.lgh.advertising.myclass.Widget;
 
+import java.text.Collator;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -52,6 +57,12 @@ public class AppSelectActivity extends AppCompatActivity {
         } else {
             appDescribeList = dataDao.getAppDescribes();
         }
+        Collections.sort(appDescribeList, new Comparator<AppDescribe>() {
+            @Override
+            public int compare(AppDescribe o1, AppDescribe o2) {
+                return Collator.getInstance(Locale.CHINESE).compare(o1.appName,o2.appName);
+            }
+        });
         setContentView(R.layout.view_select);
         ListView listView = findViewById(R.id.listView);
         for (AppDescribe e:appDescribeList){
@@ -88,7 +99,7 @@ public class AppSelectActivity extends AppCompatActivity {
                     holder = (AppSelectActivity.ViewHolder) convertView.getTag();
                 }
                 AppDescribe tem = appDescribeList.get(position);
-                holder.textView.setText(tem.appName+"("+(tem.on_off?"开":"关")+")");
+                holder.textView.setText(tem.appName+" ("+(tem.on_off?"开启":"关闭")+")");
                 holder.imageView.setImageDrawable(tem.appDrawable);
                 return convertView;
             }
@@ -101,25 +112,7 @@ public class AppSelectActivity extends AppCompatActivity {
                     appDescribe = appDescribeMap.get(packageName);
                 } else {
                     appDescribe = appDescribeList.get(position);
-                    appDescribe.autoFinder = dataDao.getAutoFinder(appDescribe.appPackage);
-                    appDescribe.coordinateMap = Maps.uniqueIndex(dataDao.getCoordinates(appDescribe.appPackage), new Function<Coordinate, String>() {
-                        @Override
-                        public String apply(Coordinate input) {
-                            return input.appActivity;
-                        }
-                    });
-                    List<Widget> widgetList = dataDao.getWidgets(appDescribe.appPackage);
-                    appDescribe.widgetSetMap = new HashMap<>();
-                    for (Widget w:widgetList){
-                        Set<Widget> widgetSet = appDescribe.widgetSetMap.get(w.appActivity);
-                        if (widgetSet == null){
-                            widgetSet = new HashSet<>();
-                            widgetSet.add(w);
-                            appDescribe.widgetSetMap.put(w.appActivity,widgetSet);
-                        } else {
-                            widgetSet.add(w);
-                        }
-                    }
+                    appDescribe.getOtherField(dataDao);
                 }
                 startActivity(new Intent(AppSelectActivity.this,AppConfigActivity.class));
             }

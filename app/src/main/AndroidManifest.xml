@@ -14,7 +14,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".AddAdvertisingActivity"></activity>
         <activity android:name=".AppSelectActivity" />
-        <activity android:name=".AppConfigActivity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+        <activity android:name=".AppConfigActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

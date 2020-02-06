@@ -59,16 +59,51 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
-
+                    android:layout_marginBottom="5dp">
                     <TextView
-                        android:id="@+id/auto_finder_txt_a"
+                        android:id="@+id/on_off_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5dp"
-                        android:text="文字检索持续时间:"
+                        android:text="该应用总开关:"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp" />
+                    <Switch
+                        android:id="@+id/on_off_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/on_off_txt"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp">
+                    <TextView
+                        android:id="@+id/auto_finder_on_off_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5dp"
+                        android:text="文字检索开关:"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp" />
+                    <Switch
+                        android:id="@+id/auto_finder_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/auto_finder_on_off_txt"
+                        android:layout_centerVertical="true"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@id/auto_finder_sustainTime"
+                        android:layout_marginEnd="5dp"
+                        android:text="持续时间:"
                         android:textColor="@color/textColor"
                         android:textSize="12sp" />
 
@@ -77,7 +112,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/auto_finder_txt_a"
+                        android:layout_toStartOf="@id/auto_finder_txt"
                         android:background="@null"
                         android:ems="4"
                         android:gravity="center_vertical"
@@ -88,13 +123,13 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/auto_finder_txt_d"
+                        android:id="@+id/auto_finder_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5dp"
-                        android:layout_toEndOf="@+id/auto_finder_sustainTime"
-                        android:text="持续检索:"
+                        android:layout_toStartOf="@id/auto_finder_retrieveAllTime"
+                        android:text="保持开启:"
                         android:textColor="@color/textColor"
                         android:textSize="12sp" />
 
@@ -102,26 +137,35 @@
                         android:id="@+id/auto_finder_retrieveAllTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/auto_finder_txt_d" />
-                    <Switch
-                        android:id="@+id/auto_finder_switch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"/>
+                        android:layout_alignParentEnd="true" />
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
-
+                    android:layout_marginBottom="5dp">
                     <TextView
-                        android:id="@+id/coordinate_txt_b"
+                        android:id="@+id/coordinate_on_off_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5dp"
-                        android:text="坐标检索持续时间:"
+                        android:text="坐标检索开关:"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp" />
+                    <Switch
+                        android:id="@+id/coordinate_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/coordinate_on_off_txt"
+                        android:layout_centerVertical="true"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@id/coordinate_sustainTime"
+                        android:layout_marginEnd="5dp"
+                        android:text="持续时间:"
                         android:textColor="@color/textColor"
                         android:textSize="12sp" />
 
@@ -130,7 +174,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/coordinate_txt_b"
+                        android:layout_toStartOf="@id/coordinate_txt"
                         android:background="@null"
                         android:ems="4"
                         android:gravity="center_vertical"
@@ -141,13 +185,13 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/widget_txt_e"
+                        android:id="@+id/coordinate_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5dp"
-                        android:layout_toEndOf="@id/coordinate_sustainTime"
-                        android:text="持续检索:"
+                        android:layout_toStartOf="@id/coordinate_retrieveAllTime"
+                        android:text="保持开启:"
                         android:textColor="@color/textColor"
                         android:textSize="12sp" />
 
@@ -155,67 +199,70 @@
                         android:id="@+id/coordinate_retrieveAllTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/widget_txt_e" />
-
-                    <Switch
-                        android:id="@+id/coordinate_switch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"/>
+                        android:layout_alignParentEnd="true" />
                 </RelativeLayout>
                 <RelativeLayout
-                    android:layout_width="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
+                <TextView
+                    android:id="@+id/widget_on_off_txt"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="5dp"
+                    android:text="控件检索开关:"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
+                <Switch
+                    android:id="@+id/widget_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/widget_on_off_txt"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/widget_sustainTime"
+                    android:layout_marginEnd="5dp"
+                    android:text="持续时间:"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
 
-                    <TextView
-                        android:id="@+id/widget_txt_c"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="5dp"
-                        android:text="控件检索持续时间:"
-                        android:textColor="@color/textColor"
-                        android:textSize="12sp" />
+                <EditText
+                    android:id="@+id/widget_sustainTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/widget_txt"
+                    android:background="@null"
+                    android:ems="4"
+                    android:gravity="center_vertical"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:singleLine="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
 
-                    <EditText
-                        android:id="@+id/widget_sustainTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/widget_txt_c"
-                        android:background="@null"
-                        android:ems="4"
-                        android:gravity="center_vertical"
-                        android:inputType="number"
-                        android:maxLength="6"
-                        android:singleLine="true"
-                        android:textColor="@color/textColor"
-                        android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/widget_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_toStartOf="@id/widget_retrieveAllTime"
+                    android:text="保持开启:"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
 
-                    <TextView
-                        android:id="@+id/widget_txt_f"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="5dp"
-                        android:layout_toEndOf="@+id/widget_sustainTime"
-                        android:text="持续检索:"
-                        android:textColor="@color/textColor"
-                        android:textSize="12sp" />
-
-                    <CheckBox
-                        android:id="@+id/widget_retrieveAllTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/widget_txt_f" />
-                    <Switch
-                        android:id="@+id/widget_switch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"/>
-                </RelativeLayout>
+                <CheckBox
+                    android:id="@+id/widget_retrieveAllTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
 
             </LinearLayout>
 
@@ -223,7 +270,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/base_setting_modify"

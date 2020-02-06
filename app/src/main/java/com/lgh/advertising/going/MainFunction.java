@@ -3,6 +3,7 @@ package com.lgh.advertising.going;
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.accessibilityservice.GestureDescription;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -70,16 +71,15 @@ public class MainFunction {
     private String currentPackage;
     private String currentActivity;
     private boolean is_state_change_a, is_state_change_b, is_state_change_c;
-
     private int autoRetrieveNumber;
     private AccessibilityServiceInfo serviceInfo;
     private ScheduledFuture future_a, future_b, future_c;
     private ScheduledExecutorService executorService;
 
+    private WindowManager.LayoutParams aParams, bParams, cParams;
     private View adv_view, layout_win;
     private ImageView target_xy;
     private LayoutInflater inflater;
-    private WindowManager.LayoutParams aParams, bParams, cParams;
     private DisplayMetrics metrics;
     private WindowManager windowManager;
 
@@ -181,7 +181,6 @@ public class MainFunction {
                                     }
                                 } else {
                                     if (is_state_change_a || is_state_change_b || is_state_change_c) {
-
                                         serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                                         service.setServiceInfo(serviceInfo);
                                         is_state_change_a = false;
@@ -421,10 +420,10 @@ public class MainFunction {
         for (InputMethodInfo e : inputMethodInfoList) {
             packageRemove.add(e.getPackageName());
         }
-        packageRemove.add(service.getPackageName());
         packageRemove.add("com.android.systemui");
         packageSystem.removeAll(packageRemove);
         packageSystem.addAll(packageHome);
+        packageSystem.add(service.getPackageName());
         packageSystem.add("com.android.packageinstaller");
         packageCommon.removeAll(packageSystem);
         packageCommon.removeAll(packageRemove);
@@ -451,34 +450,18 @@ public class MainFunction {
         dataDao.insertAutoFinder(autoFinderList);
         appDescribeList = dataDao.getAppDescribes();
         for (AppDescribe e : appDescribeList) {
-            e.autoFinder = dataDao.getAutoFinder(e.appPackage);
-            e.coordinateMap = Maps.uniqueIndex(dataDao.getCoordinates(e.appPackage), new Function<Coordinate, String>() {
-                @Override
-                public String apply(Coordinate input) {
-                    return input.appActivity;
-                }
-            });
-            List<Widget> widgetList = dataDao.getWidgets(e.appPackage);
-            e.widgetSetMap = new HashMap<>();
-            for (Widget w : widgetList) {
-                Set<Widget> widgetSet = e.widgetSetMap.get(w.appActivity);
-                if (widgetSet == null) {
-                    widgetSet = new HashSet<>();
-                    widgetSet.add(w);
-                    e.widgetSetMap.put(w.appActivity, widgetSet);
-                } else {
-                    widgetSet.add(w);
-                }
-            }
+            e.getOtherField(dataDao);
             appDescribeMap.put(e.appPackage, e);
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     void showAddAdvertisingFloat() {
         if (target_xy != null || adv_view != null || layout_win != null) {
             return;
         }
         windowManager = (WindowManager) service.getSystemService(Context.WINDOW_SERVICE);
+        final DataDao dataDao = DataDaoFactory.getInstance(service);
         final Widget widgetSelect = new Widget();
         final Coordinate coordinateSelect  = new Coordinate();
         inflater = LayoutInflater.from(service);
@@ -704,7 +687,7 @@ public class MainFunction {
                         temWidgetSet.add(temWidget);
                     }
                 }
-                DataDaoFactory.getInstance(service).insertWidget(temWidget);
+                dataDao.insertWidget(temWidget);
                 saveWidgetButton.setEnabled(false);
                 pacName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
             }
@@ -717,7 +700,7 @@ public class MainFunction {
                 if (temAppDescribe != null){
                     temAppDescribe.coordinateMap.put(temCoordinate.appActivity,temCoordinate);
                 }
-                DataDaoFactory.getInstance(service).insertCoordinate(temCoordinate);
+                dataDao.insertCoordinate(temCoordinate);
                 savePositionButton.setEnabled(false);
                 pacName.setText(temCoordinate.appPackage + " (以下坐标数据已保存)");
             }

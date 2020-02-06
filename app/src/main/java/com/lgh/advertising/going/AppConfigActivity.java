@@ -24,6 +24,7 @@ import com.lgh.advertising.myclass.DataDaoFactory;
 import com.lgh.advertising.myclass.Widget;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -43,7 +44,7 @@ public class AppConfigActivity extends AppCompatActivity {
         dataDao = DataDaoFactory.getInstance(this);
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
-        AppDescribe appDescribe = AppSelectActivity.appDescribe;
+        final AppDescribe appDescribe = AppSelectActivity.appDescribe;
         setContentView(R.layout.view_appconfig);
         setTitle(AppSelectActivity.appDescribe.appName);
         setContentView(R.layout.view_appconfig);
@@ -84,7 +85,7 @@ public class AppConfigActivity extends AppCompatActivity {
         layoutAutoFinder.addView(viewAutoFinder);
 
         final LinearLayout layoutCoordinate = findViewById(R.id.coordinate_layout);
-        final List<Coordinate> coordinateList = Lists.newArrayList(appDescribe.coordinateMap.values());
+        final List<Coordinate> coordinateList = new ArrayList<>(appDescribe.coordinateMap.values());
         if (coordinateList.isEmpty()) layoutCoordinate.setVisibility(View.GONE);
         for (final Coordinate e:coordinateList){
             final View viewCoordinate = inflater.inflate(R.layout.view_coordinate, null);
@@ -107,7 +108,7 @@ public class AppConfigActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     dataDao.deleteCoordinate(e);
-                    coordinateList.remove(e);
+                    appDescribe.coordinateMap.remove(e.appActivity);
                     layoutCoordinate.removeView(viewCoordinate);
                 }
             });
@@ -155,7 +156,7 @@ public class AppConfigActivity extends AppCompatActivity {
 
 
         final LinearLayout layoutWidget = findViewById(R.id.widget_layout);
-        Collection<Set<Widget>> widgetSetList = appDescribe.widgetSetMap.values();
+        List<Set<Widget>> widgetSetList = new ArrayList<>(appDescribe.widgetSetMap.values());
         if (widgetSetList.isEmpty()) layoutWidget.setVisibility(View.GONE);
         for (final Set<Widget> widgetSet:widgetSetList) {
             for (final Widget e:widgetSet) {
@@ -185,6 +186,10 @@ public class AppConfigActivity extends AppCompatActivity {
                         dataDao.deleteWidget(e);
                         widgetSet.remove(e);
                         layoutWidget.removeView(viewWidget);
+                        if (widgetSet.isEmpty()){
+                            appDescribe.widgetSetMap.remove(e.appActivity);
+                        }
+
                     }
                 });
                 widgetSure.setOnClickListener(new View.OnClickListener() {

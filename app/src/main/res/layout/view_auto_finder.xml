@@ -88,14 +88,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
-                android:text="是否仅模拟点击"
+                android:text="仅模拟点击:"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
 
             <CheckBox
                 android:id="@+id/clickOnly"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical" />
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"

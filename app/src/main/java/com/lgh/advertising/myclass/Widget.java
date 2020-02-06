@@ -7,6 +7,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity(indices = @Index(value = {"appActivity","widgetRect"},unique = true))
 public class Widget {
@@ -46,5 +47,20 @@ public class Widget {
         this.widgetId = widget.widgetId;
         this.widgetDescribe = widget.widgetDescribe;
         this.widgetText = widget.widgetText;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (this == obj) return true;
+        if (!(obj instanceof Widget)) return false;
+        Widget widget = (Widget) obj;
+        return this.widgetRect.equals(widget.widgetRect);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.widgetRect);
     }
 }
