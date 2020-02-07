@@ -2,6 +2,7 @@ package com.lgh.advertising.going;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.BoringLayout;
@@ -9,6 +10,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -16,6 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.common.collect.Lists;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.MalformedJsonException;
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.AutoFinder;
 import com.lgh.advertising.myclass.Coordinate;
@@ -37,6 +43,7 @@ public class AppConfigActivity extends AppCompatActivity {
     LayoutInflater inflater;
     DataDao dataDao;
     DisplayMetrics metrics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,56 +52,139 @@ public class AppConfigActivity extends AppCompatActivity {
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
         final AppDescribe appDescribe = AppSelectActivity.appDescribe;
+        final SimpleDateFormat simpleDateFormat= new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
         setContentView(R.layout.view_appconfig);
         setTitle(AppSelectActivity.appDescribe.appName);
-        setContentView(R.layout.view_appconfig);
 
-        Switch autoFinderSwitch = findViewById(R.id.auto_finder_switch);
-        EditText autoFinderSustainTime = findViewById(R.id.auto_finder_sustainTime);
-        CheckBox autoFinderRetrieveAllTime = findViewById(R.id.auto_finder_retrieveAllTime);
+        final Switch onOffSwitch = findViewById(R.id.on_off_switch);
+        onOffSwitch.setChecked(appDescribe.on_off);
+
+        final Switch autoFinderSwitch = findViewById(R.id.auto_finder_switch);
+        final EditText autoFinderSustainTime = findViewById(R.id.auto_finder_sustainTime);
+        final CheckBox autoFinderRetrieveAllTime = findViewById(R.id.auto_finder_retrieveAllTime);
         autoFinderSwitch.setChecked(appDescribe.autoFinderOnOFF);
-        autoFinderSustainTime.setText(String.valueOf(appDescribe.autoFinderRetrieveTime)) ;
+        autoFinderSustainTime.setText(String.valueOf(appDescribe.autoFinderRetrieveTime));
         autoFinderRetrieveAllTime.setChecked(appDescribe.autoFinderRetrieveAllTime);
 
 
-        Switch coordinateSwitch = findViewById(R.id.coordinate_switch);
-        EditText coordinateSustainTime = findViewById(R.id.coordinate_sustainTime);
-        CheckBox coordinateRetrieveAllTime = findViewById(R.id.coordinate_retrieveAllTime);
+        final Switch coordinateSwitch = findViewById(R.id.coordinate_switch);
+        final EditText coordinateSustainTime = findViewById(R.id.coordinate_sustainTime);
+        final CheckBox coordinateRetrieveAllTime = findViewById(R.id.coordinate_retrieveAllTime);
         coordinateSwitch.setChecked(appDescribe.coordinateOnOff);
         coordinateSustainTime.setText(String.valueOf(appDescribe.coordinateRetrieveTime));
         coordinateRetrieveAllTime.setChecked(appDescribe.coordinateRetrieveAllTime);
 
-        Switch widgetSwitch = findViewById(R.id.widget_switch);
-        EditText widgetSustainTime = findViewById(R.id.widget_sustainTime);
-        CheckBox widgetRetrieveAllTime = findViewById(R.id.widget_retrieveAllTime);
+        final Switch widgetSwitch = findViewById(R.id.widget_switch);
+        final EditText widgetSustainTime = findViewById(R.id.widget_sustainTime);
+        final CheckBox widgetRetrieveAllTime = findViewById(R.id.widget_retrieveAllTime);
         widgetSwitch.setChecked(appDescribe.widgetOnOff);
         widgetSustainTime.setText(String.valueOf(appDescribe.widgetRetrieveTime));
         widgetRetrieveAllTime.setChecked(appDescribe.widgetRetrieveAllTime);
 
+        final TextView baseSettingModify = findViewById(R.id.base_setting_modify);
+        TextView baseSettingDelete = findViewById(R.id.base_setting_delete);
+        TextView baseSettingSure = findViewById(R.id.base_setting_sure);
+        baseSettingDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AppConfigActivity.this,"该选项不允许删除",Toast.LENGTH_SHORT).show();
+            }
+        });
+        baseSettingSure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String autoFinderTime= autoFinderSustainTime.getText().toString();
+                String coordinateTime = coordinateSustainTime.getText().toString();
+                String widgetTime = widgetSustainTime.getText().toString();
+                baseSettingModify.setTextColor(0xffff0000);
+                if (autoFinderTime.isEmpty()||coordinateTime.isEmpty()||widgetTime.isEmpty()){}{
+                    baseSettingModify.setText("内容不能为空");
+                }
+                appDescribe.on_off = onOffSwitch.isChecked();
+                appDescribe.autoFinderOnOFF = autoFinderSwitch.isChecked();
+                appDescribe.autoFinderRetrieveTime = Integer.valueOf(autoFinderTime);
+                appDescribe.autoFinderRetrieveAllTime = autoFinderRetrieveAllTime.isChecked();
+                appDescribe.coordinateOnOff = coordinateSwitch.isChecked();
+                appDescribe.coordinateRetrieveTime = Integer.valueOf(coordinateTime);
+                appDescribe.coordinateRetrieveAllTime = coordinateRetrieveAllTime.isChecked();
+                appDescribe.widgetOnOff = widgetSwitch.isChecked();
+                appDescribe.widgetRetrieveTime = Integer.valueOf(widgetTime);
+                appDescribe.widgetRetrieveAllTime = widgetRetrieveAllTime.isChecked();
+                dataDao.updateAppDescribe(appDescribe);
+                baseSettingModify.setTextColor(0xff000000);
+                baseSettingModify.setText(simpleDateFormat.format(new Date()) + "(修改成功)");
+            }
+        });
+
         LinearLayout layoutAutoFinder = findViewById(R.id.auto_finder_layout);
-        View viewAutoFinder = inflater.inflate(R.layout.view_auto_finder,null);
-        AutoFinder autoFinder = appDescribe.autoFinder;
-        EditText autoFinderKeyword = viewAutoFinder.findViewById(R.id.retrieveKeyword);
-        EditText autoFinderRetrieveNumber = viewAutoFinder.findViewById(R.id.retrieveNumber);
-        EditText autoFinderClickDelay = viewAutoFinder.findViewById(R.id.clickDelay);
-        CheckBox autoFinderClickOnly = viewAutoFinder.findViewById(R.id.clickOnly);
-        autoFinderKeyword.setText(autoFinder.keywordList.toString());
+        View viewAutoFinder = inflater.inflate(R.layout.view_auto_finder, null);
+        final AutoFinder autoFinder = appDescribe.autoFinder;
+        final EditText autoFinderKeyword = viewAutoFinder.findViewById(R.id.retrieveKeyword);
+        final EditText autoFinderRetrieveNumber = viewAutoFinder.findViewById(R.id.retrieveNumber);
+        final EditText autoFinderClickDelay = viewAutoFinder.findViewById(R.id.clickDelay);
+        final CheckBox autoFinderClickOnly = viewAutoFinder.findViewById(R.id.clickOnly);
+        final TextView autoFinderModify = viewAutoFinder.findViewById(R.id.auto_finder_modify);
+        TextView autoFinderDelete = viewAutoFinder.findViewById(R.id.auto_finder_delete);
+        TextView autoFinderSure = viewAutoFinder.findViewById(R.id.auto_finder_sure);
+        autoFinderKeyword.setText(new Gson().toJson(autoFinder.keywordList));
         autoFinderRetrieveNumber.setText(String.valueOf(autoFinder.retrieveNumber));
         autoFinderClickDelay.setText(String.valueOf(autoFinder.clickDelay));
         autoFinderClickOnly.setChecked(autoFinder.clickOnly);
+        autoFinderDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AppConfigActivity.this,"该选项不允许删除",Toast.LENGTH_SHORT).show();
+            }
+        });
+        autoFinderSure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String keywordList = autoFinderKeyword.getText().toString().trim();
+                String retrieveNumber = autoFinderRetrieveNumber.getText().toString();
+                String clickDelay = autoFinderClickDelay.getText().toString();
+                List<String> temKeyword;
+                autoFinderModify.setTextColor(0xffff0000);
+                try {
+                    temKeyword = new Gson().fromJson(keywordList, new TypeToken<List<String>>() {
+                    }.getType());
+                    autoFinderKeyword.setText(keywordList);
+                } catch (JsonSyntaxException jse) {
+                    autoFinderModify.setText("关键词格式填写错误");
+                    return;
+                }
+                if (retrieveNumber.isEmpty() || clickDelay.isEmpty()) {
+                    autoFinderModify.setText("内容不能为空");
+                    return;
+                }else if (Integer.valueOf(retrieveNumber) < 1 || Integer.valueOf(retrieveNumber) > 100) {
+                    autoFinderModify.setText("检索次数应为１~100次之间");
+                    return;
+                } else if (Integer.valueOf(clickDelay) > 4000) {
+                    autoFinderModify.setText("点击延迟应为0~4000(ms)之间");
+                    return;
+                } else {
+                    autoFinder.keywordList = temKeyword;
+                    autoFinder.retrieveNumber = Integer.valueOf(retrieveNumber);
+                    autoFinder.clickDelay = Integer.valueOf(clickDelay);
+                    autoFinder.clickOnly = autoFinderClickOnly.isChecked();
+                }
+                dataDao.updateAutoFinder(autoFinder);
+                autoFinderModify.setTextColor(0xff000000);
+                autoFinderModify.setText(simpleDateFormat.format(new Date()) + "(修改成功)");
+            }
+        });
         layoutAutoFinder.addView(viewAutoFinder);
 
         final LinearLayout layoutCoordinate = findViewById(R.id.coordinate_layout);
         final List<Coordinate> coordinateList = new ArrayList<>(appDescribe.coordinateMap.values());
         if (coordinateList.isEmpty()) layoutCoordinate.setVisibility(View.GONE);
-        for (final Coordinate e:coordinateList){
+        for (final Coordinate e : coordinateList) {
             final View viewCoordinate = inflater.inflate(R.layout.view_coordinate, null);
             EditText coordinateActivity = viewCoordinate.findViewById(R.id.coordinate_activity);
             final EditText coordinateXPosition = viewCoordinate.findViewById(R.id.coordinate_xPosition);
             final EditText coordinateYPosition = viewCoordinate.findViewById(R.id.coordinate_yPosition);
             final EditText coordinateDelay = viewCoordinate.findViewById(R.id.coordinate_clickDelay);
             final EditText coordinateInterval = viewCoordinate.findViewById(R.id.coordinate_ClickInterval);
-            final EditText coordinateNumber  = viewCoordinate.findViewById(R.id.coordinate_clickNumber);
+            final EditText coordinateNumber = viewCoordinate.findViewById(R.id.coordinate_clickNumber);
             final TextView coordinateModify = viewCoordinate.findViewById(R.id.coordinate_modify);
             TextView coordinateDelete = viewCoordinate.findViewById(R.id.coordinate_delete);
             TextView coordinateSure = viewCoordinate.findViewById(R.id.coordinate_sure);
@@ -146,9 +236,9 @@ public class AppConfigActivity extends AppCompatActivity {
                         e.clickInterval = Integer.valueOf(sInterval);
                         e.clickNumber = Integer.valueOf(sNumber);
                     }
-                    dataDao.updateCoordiante(e);
+                    dataDao.updateCoordinate(e);
                     coordinateModify.setTextColor(0xff000000);
-                    coordinateModify.setText((new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH).format(new Date()) + "(修改成功)"));
+                    coordinateModify.setText(simpleDateFormat.format(new Date()) + "(修改成功)");
                 }
             });
             layoutCoordinate.addView(viewCoordinate);
@@ -158,8 +248,8 @@ public class AppConfigActivity extends AppCompatActivity {
         final LinearLayout layoutWidget = findViewById(R.id.widget_layout);
         List<Set<Widget>> widgetSetList = new ArrayList<>(appDescribe.widgetSetMap.values());
         if (widgetSetList.isEmpty()) layoutWidget.setVisibility(View.GONE);
-        for (final Set<Widget> widgetSet:widgetSetList) {
-            for (final Widget e:widgetSet) {
+        for (final Set<Widget> widgetSet : widgetSetList) {
+            for (final Widget e : widgetSet) {
                 final View viewWidget = inflater.inflate(R.layout.view_widget, null);
                 EditText widgetActivity = viewWidget.findViewById(R.id.widget_activity);
                 EditText widgetClickable = viewWidget.findViewById(R.id.widget_clickable);
@@ -186,7 +276,7 @@ public class AppConfigActivity extends AppCompatActivity {
                         dataDao.deleteWidget(e);
                         widgetSet.remove(e);
                         layoutWidget.removeView(viewWidget);
-                        if (widgetSet.isEmpty()){
+                        if (widgetSet.isEmpty()) {
                             appDescribe.widgetSetMap.remove(e.appActivity);
                         }
 
@@ -197,10 +287,10 @@ public class AppConfigActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         String clickDelay = widgetClickDelay.getText().toString();
                         widgetModify.setTextColor(0xffff0000);
-                        if (clickDelay.isEmpty()){
+                        if (clickDelay.isEmpty()) {
                             widgetModify.setText("延迟点击不能为空");
                             return;
-                        }else if (Integer.valueOf(clickDelay)>4000){
+                        } else if (Integer.valueOf(clickDelay) > 4000) {
                             widgetModify.setText("点击延迟应为0~4000(ms)之间");
                             return;
                         }
@@ -214,7 +304,7 @@ public class AppConfigActivity extends AppCompatActivity {
                         widgetText.setText(e.widgetText);
                         dataDao.updateWidget(e);
                         widgetModify.setTextColor(0xff000000);
-                        widgetModify.setText(new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH).format(new Date()) + "(修改成功)");
+                        widgetModify.setText(simpleDateFormat.format(new Date()) + "(修改成功)");
                     }
                 });
                 layoutWidget.addView(viewWidget);

@@ -43,7 +43,7 @@
                         android:gravity="center_vertical|start"
                         android:paddingStart="10dp"
                         android:singleLine="true"
-                        android:text="基础设置"
+                        android:text="基础功能设置"
                         android:textColor="@color/textColor"
                         android:textSize="15sp" />
 
@@ -114,13 +114,14 @@
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@id/auto_finder_txt"
                         android:background="@null"
-                        android:ems="4"
+                        android:ems="3"
                         android:gravity="center_vertical"
                         android:inputType="number"
                         android:maxLength="6"
                         android:singleLine="true"
                         android:textColor="@color/textColor"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:layout_marginEnd="15dp"/>
 
                     <TextView
                         android:id="@+id/auto_finder_txt"
@@ -129,7 +130,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5dp"
                         android:layout_toStartOf="@id/auto_finder_retrieveAllTime"
-                        android:text="保持开启:"
+                        android:text="保持:"
                         android:textColor="@color/textColor"
                         android:textSize="12sp" />
 
@@ -176,13 +177,14 @@
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@id/coordinate_txt"
                         android:background="@null"
-                        android:ems="4"
+                        android:ems="3"
                         android:gravity="center_vertical"
                         android:inputType="number"
                         android:maxLength="6"
                         android:singleLine="true"
                         android:textColor="@color/textColor"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:layout_marginEnd="15dp"/>
 
                     <TextView
                         android:id="@+id/coordinate_txt"
@@ -191,7 +193,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5dp"
                         android:layout_toStartOf="@id/coordinate_retrieveAllTime"
-                        android:text="保持开启:"
+                        android:text="保持:"
                         android:textColor="@color/textColor"
                         android:textSize="12sp" />
 
@@ -231,20 +233,21 @@
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
 
-                <EditText
-                    android:id="@+id/widget_sustainTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/widget_txt"
-                    android:background="@null"
-                    android:ems="4"
-                    android:gravity="center_vertical"
-                    android:inputType="number"
-                    android:maxLength="6"
-                    android:singleLine="true"
-                    android:textColor="@color/textColor"
-                    android:textSize="12sp" />
+                    <EditText
+                        android:id="@+id/widget_sustainTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@id/widget_txt"
+                        android:background="@null"
+                        android:ems="3"
+                        android:gravity="center_vertical"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp"
+                        android:layout_marginEnd="15dp"/>
 
                 <TextView
                     android:id="@+id/widget_txt"
@@ -253,7 +256,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="5dp"
                     android:layout_toStartOf="@id/widget_retrieveAllTime"
-                    android:text="保持开启:"
+                    android:text="保持:"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
 
@@ -341,7 +344,7 @@
                         android:gravity="center_vertical|start"
                         android:paddingStart="10dp"
                         android:singleLine="true"
-                        android:text="文字管理"
+                        android:text="文字检索管理"
                         android:textColor="@color/textColor"
                         android:textSize="15sp" />
 
@@ -390,7 +393,7 @@
                         android:gravity="center_vertical|start"
                         android:paddingStart="10dp"
                         android:singleLine="true"
-                        android:text="坐标管理"
+                        android:text="坐标检索管理"
                         android:textColor="@color/textColor"
                         android:textSize="15sp" />
 
@@ -439,7 +442,7 @@
                         android:gravity="center_vertical|start"
                         android:paddingStart="10dp"
                         android:singleLine="true"
-                        android:text="控件管理"
+                        android:text="控件检索管理"
                         android:textColor="@color/textColor"
                         android:textSize="15sp" />
 

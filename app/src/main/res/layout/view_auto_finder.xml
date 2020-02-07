@@ -26,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:enabled="false"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
@@ -49,8 +48,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:enabled="false"
                 android:singleLine="true"
+                android:ems="4"
+                android:gravity="center_vertical"
+                android:inputType="number"
+                android:maxLength="4"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -73,7 +75,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:enabled="false"
+                android:ems="4"
+                android:gravity="center_vertical"
+                android:inputType="number"
+                android:maxLength="4"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
@@ -106,7 +111,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/coordinate_modify"
+                android:id="@+id/auto_finder_modify"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -116,18 +121,18 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/coordinate_delete"
+                android:id="@+id/auto_finder_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:layout_toStartOf="@+id/coordinate_sure"
+                android:layout_toStartOf="@id/auto_finder_sure"
                 android:padding="1dp"
                 android:text="删除"
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/coordinate_sure"
+                android:id="@+id/auto_finder_sure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

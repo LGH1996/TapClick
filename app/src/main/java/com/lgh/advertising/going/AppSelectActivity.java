@@ -39,12 +39,14 @@ import java.util.Map;
 import java.util.Set;
 
 public class AppSelectActivity extends AppCompatActivity {
+
+    public static AppDescribe appDescribe;
     LayoutInflater inflater;
     PackageManager packageManager;
     DataDao dataDao;
     Map<String,AppDescribe> appDescribeMap;
     List<AppDescribe> appDescribeList;
-    public static AppDescribe appDescribe;
+    BaseAdapter baseAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +74,7 @@ public class AppSelectActivity extends AppCompatActivity {
                 nameNotFoundException.printStackTrace();
             }
         }
-        BaseAdapter baseAdapter = new BaseAdapter() {
+        baseAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
                 return appDescribeList.size();
@@ -119,6 +121,23 @@ public class AppSelectActivity extends AppCompatActivity {
         });
         listView.setAdapter(baseAdapter);
 
+    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        baseAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (MainFunction.appDescribeMap != null){
+            for (AppDescribe e:MainFunction.appDescribeMap.values()){
+                e.getOtherField(dataDao);
+            }
+        }
     }
 
     class ViewHolder {

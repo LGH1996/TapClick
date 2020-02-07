@@ -6,6 +6,7 @@ import android.accessibilityservice.GestureDescription;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -75,6 +76,8 @@ public class MainFunction {
     private AccessibilityServiceInfo serviceInfo;
     private ScheduledFuture future_a, future_b, future_c;
     private ScheduledExecutorService executorService;
+    private MyScreenOffReceiver screenOnReceiver;
+    private MyInstallReceiver installReceiver;
 
     private WindowManager.LayoutParams aParams, bParams, cParams;
     private View adv_view, layout_win;
@@ -94,6 +97,14 @@ public class MainFunction {
             executorService = Executors.newSingleThreadScheduledExecutor();
             serviceInfo = service.getServiceInfo();
             appDescribeMap = new HashMap<>();
+            screenOnReceiver = new MyScreenOffReceiver();
+            installReceiver = new MyInstallReceiver();
+            service.registerReceiver(screenOnReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
+            IntentFilter filterInstall = new IntentFilter();
+            filterInstall.addAction(Intent.ACTION_PACKAGE_ADDED);
+            filterInstall.addAction(Intent.ACTION_PACKAGE_REMOVED);
+            filterInstall.addDataScheme("package");
+            service.registerReceiver(installReceiver, filterInstall);
             updatePackage();
             future_a = future_b = future_c = executorService.schedule(new Runnable() {
                 @Override
@@ -106,6 +117,10 @@ public class MainFunction {
                     switch (msg.what) {
                         case 0x00:
                             showAddAdvertisingFloat();
+                            break;
+                        case 0x01:
+                            currentPackage = "ScreenOff Package";
+                            currentActivity = "ScreenOff Activity";
                             break;
                     }
                     return true;
@@ -255,6 +270,8 @@ public class MainFunction {
     }
 
     public boolean onUnbind(Intent intent) {
+        service.unregisterReceiver(screenOnReceiver);
+        service.unregisterReceiver(installReceiver);
         return false;
     }
 
@@ -409,6 +426,7 @@ public class MainFunction {
         Set<String> packageSystem = new HashSet<>();
         Set<String> packageHome = new HashSet<>();
         Set<String> packageRemove = new HashSet<>();
+        Set<String> packageInstall = new HashSet<>();
         List<ResolveInfo> ResolveInfoList;
         Intent intent;
         intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME);
@@ -432,20 +450,23 @@ public class MainFunction {
         intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER);
         ResolveInfoList = packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL);
         for (ResolveInfo e : ResolveInfoList) {
-            if (!packageRemove.contains(e.activityInfo.packageName)) {
+            String packageName = e.activityInfo.packageName;
+            packageInstall.add(packageName);
+            if (!packageRemove.contains(packageName)) {
                 AppDescribe appDescribe = new AppDescribe();
                 appDescribe.appName = packageManager.getApplicationLabel(e.activityInfo.applicationInfo).toString();
-                appDescribe.appPackage = e.activityInfo.packageName;
-                if ((e.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM || packageHome.contains(e.activityInfo.packageName)) {
+                appDescribe.appPackage = packageName;
+                if ((e.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM || packageHome.contains(packageName)) {
                     appDescribe.on_off = false;
                 }
                 appDescribeList.add(appDescribe);
                 AutoFinder autoFinder = new AutoFinder();
-                autoFinder.appPackage = e.activityInfo.packageName;
+                autoFinder.appPackage = packageName;
                 autoFinder.keywordList = Arrays.asList("跳过");
                 autoFinderList.add(autoFinder);
             }
         }
+        dataDao.deleteNotInstallAppDescribe(packageInstall);
         dataDao.insertAppDescribe(appDescribeList);
         dataDao.insertAutoFinder(autoFinderList);
         appDescribeList = dataDao.getAppDescribes();

@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
+import java.util.Set;
 
 @Dao
 public interface DataDao {
@@ -37,8 +38,14 @@ public interface DataDao {
     @Delete
     void deleteWidget(Widget... widgets);
     @Update
-    void updateCoordiante(Coordinate... coordinates);
+    void updateCoordinate(Coordinate... coordinates);
     @Update
     void updateWidget(Widget... widgets);
+    @Update
+    void updateAutoFinder(AutoFinder... autoFinders);
+    @Update
+    void updateAppDescribe(AppDescribe... appDescribe);
+    @Query("DELETE FROM AppDescribe WHERE appPackage NOT IN (:appDescribes)")
+    void deleteNotInstallAppDescribe(Set<String> appDescribes);
 
 }
