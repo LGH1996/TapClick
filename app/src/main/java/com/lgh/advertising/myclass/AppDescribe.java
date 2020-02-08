@@ -33,8 +33,7 @@ public class AppDescribe {
     public boolean autoFinderOnOFF;
     public boolean coordinateOnOff;
     public boolean widgetOnOff;
-    @Ignore
-    public Drawable appDrawable;
+
     @Ignore
     public AutoFinder autoFinder;
     @Ignore
@@ -55,7 +54,6 @@ public class AppDescribe {
         this.autoFinderOnOFF = true;
         this.coordinateOnOff = true;
         this.widgetOnOff = true;
-        this.appDrawable = null;
         this.autoFinder = null;
         this.coordinateMap = null;
         this.widgetSetMap = null;

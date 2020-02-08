@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -75,9 +76,6 @@ public class MainFunction {
     private WindowManager.LayoutParams aParams, bParams, cParams;
     private View viewAdvertisingMessage, viewLayoutAnalyze;
     private ImageView viewClickPosition;
-    private LayoutInflater inflater;
-    private DisplayMetrics metrics;
-    private WindowManager windowManager;
 
     public MainFunction(AccessibilityService service) {
         this.service = service;
@@ -248,7 +246,28 @@ public class MainFunction {
     }
 
     public void onConfigurationChanged(Configuration newConfig) {
-
+        if (viewAdvertisingMessage != null && viewClickPosition != null && viewLayoutAnalyze != null) {
+            DisplayMetrics metrics = new DisplayMetrics();
+            WindowManager windowManager = (WindowManager) service.getSystemService(Context.WINDOW_SERVICE);
+            windowManager.getDefaultDisplay().getRealMetrics(metrics);
+            aParams.x = (metrics.widthPixels - aParams.width) / 2;
+            aParams.y = metrics.heightPixels - aParams.height;
+            bParams.width = metrics.widthPixels;
+            bParams.height = metrics.heightPixels;
+            cParams.x = (metrics.widthPixels - cParams.width) / 2;
+            cParams.y = (metrics.heightPixels - cParams.height) / 2;
+            windowManager.updateViewLayout(viewAdvertisingMessage, aParams);
+            windowManager.updateViewLayout(viewClickPosition, cParams);
+            FrameLayout layout = viewLayoutAnalyze.findViewById(R.id.frame);
+            layout.removeAllViews();
+            TextView text = new TextView(service);
+            text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            text.setGravity(Gravity.CENTER);
+            text.setTextColor(0xffff0000);
+            text.setText("请重新刷新布局");
+            windowManager.updateViewLayout(layout,bParams);
+            layout.addView(text, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT, Gravity.CENTER));
+        }
     }
 
     public boolean onUnbind(Intent intent) {
@@ -456,31 +475,32 @@ public class MainFunction {
         if (viewClickPosition != null || viewAdvertisingMessage != null || viewLayoutAnalyze != null) {
             return;
         }
-        windowManager = (WindowManager) service.getSystemService(Context.WINDOW_SERVICE);
+        final WindowManager windowManager = (WindowManager) service.getSystemService(Context.WINDOW_SERVICE);
         final DataDao dataDao = DataDaoFactory.getInstance(service);
         final Widget widgetSelect = new Widget();
         final Coordinate coordinateSelect = new Coordinate();
-        inflater = LayoutInflater.from(service);
-        viewAdvertisingMessage = inflater.inflate(R.layout.advertise_desc, null);
+        LayoutInflater inflater = LayoutInflater.from(service);
+        viewAdvertisingMessage = inflater.inflate(R.layout.view_advertising, null);
         final TextView pacName = viewAdvertisingMessage.findViewById(R.id.pacName);
         final TextView actName = viewAdvertisingMessage.findViewById(R.id.actName);
         final TextView widget = viewAdvertisingMessage.findViewById(R.id.widget);
-        final TextView xyP = viewAdvertisingMessage.findViewById(R.id.xy);
+        final TextView xyPosition = viewAdvertisingMessage.findViewById(R.id.xy);
         Button switchWid = viewAdvertisingMessage.findViewById(R.id.switch_wid);
         final Button saveWidgetButton = viewAdvertisingMessage.findViewById(R.id.save_wid);
         Button switchAim = viewAdvertisingMessage.findViewById(R.id.switch_aim);
         final Button savePositionButton = viewAdvertisingMessage.findViewById(R.id.save_aim);
         Button quitButton = viewAdvertisingMessage.findViewById(R.id.quit);
 
-        viewLayoutAnalyze = inflater.inflate(R.layout.accessibilitynode_desc, null);
+        viewLayoutAnalyze = inflater.inflate(R.layout.view_widget_select, null);
         final FrameLayout layoutParent = viewLayoutAnalyze.findViewById(R.id.frame);
 
         viewClickPosition = new ImageView(service);
         viewClickPosition.setImageResource(R.drawable.p);
-        metrics = new DisplayMetrics();
+        DisplayMetrics metrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getRealMetrics(metrics);
-        int width = metrics.widthPixels;
-        int height = metrics.heightPixels;
+        final boolean b = metrics.heightPixels > metrics.widthPixels;
+        int width = b ? metrics.widthPixels : metrics.heightPixels;
+        int height = b ? metrics.heightPixels : metrics.widthPixels;
         aParams = new WindowManager.LayoutParams();
         aParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
         aParams.format = PixelFormat.TRANSPARENT;
@@ -557,7 +577,7 @@ public class MainFunction {
                         coordinateSelect.yPosition = cParams.y + height;
                         pacName.setText(coordinateSelect.appPackage);
                         actName.setText(coordinateSelect.appActivity);
-                        xyP.setText("X轴：" + coordinateSelect.xPosition + "    " + "Y轴：" + coordinateSelect.yPosition + "    " + "(其他参数默认)");
+                        xyPosition.setText("X轴：" + coordinateSelect.xPosition + "    " + "Y轴：" + coordinateSelect.yPosition + "    " + "(其他参数默认)");
                         break;
                     case MotionEvent.ACTION_UP:
                         cParams.alpha = 0.5f;

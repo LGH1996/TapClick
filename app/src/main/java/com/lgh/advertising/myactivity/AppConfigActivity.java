@@ -1,27 +1,22 @@
-package com.lgh.advertising.going;
+package com.lgh.advertising.myactivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.text.BoringLayout;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.MalformedJsonException;
+import com.lgh.advertising.going.R;
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.AutoFinder;
 import com.lgh.advertising.myclass.Coordinate;
@@ -31,8 +26,6 @@ import com.lgh.advertising.myclass.Widget;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;

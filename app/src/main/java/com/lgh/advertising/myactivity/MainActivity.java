@@ -1,43 +1,25 @@
-package com.lgh.advertising.going;
+package com.lgh.advertising.myactivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.PixelFormat;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.lgh.advertising.myclass.AppDescribe;
-import com.lgh.advertising.myclass.Coordinate;
-import com.lgh.advertising.myclass.Widget;
+import com.lgh.advertising.going.MainFunction;
+import com.lgh.advertising.going.MyAccessibilityService;
+import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
+import com.lgh.advertising.going.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -71,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                convertView = inflater.inflate(R.layout.main_item, null);
+                convertView = inflater.inflate(R.layout.view_main_item, null);
                 ImageView imageView = convertView.findViewById(R.id.main_img);
                 TextView textView = convertView.findViewById(R.id.main_name);
                 Resource resource = source.get(position);
@@ -89,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case 1:
-                        MainActivity.this.startActivity(new Intent(MainActivity.this,AddAdvertisingActivity.class));
+                        MainActivity.this.startActivity(new Intent(MainActivity.this, AddAdvertisingActivity.class));
                         MainFunction.handler.sendEmptyMessage(0x00);
                         break;
                     case 2:

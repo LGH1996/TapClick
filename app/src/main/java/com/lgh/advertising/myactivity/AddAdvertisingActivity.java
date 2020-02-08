@@ -1,8 +1,10 @@
-package com.lgh.advertising.going;
+package com.lgh.advertising.myactivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.lgh.advertising.going.R;
 
 public class AddAdvertisingActivity extends AppCompatActivity {
 

@@ -12,12 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddAdvertisingActivity"></activity>
-        <activity android:name=".AppSelectActivity" />
-        <activity android:name=".AppConfigActivity"
+        <activity android:name="com.lgh.advertising.myactivity.AppAuthorizationActivity"></activity>
+        <activity android:name="com.lgh.advertising.myactivity.AddAdvertisingActivity" />
+        <activity android:name="com.lgh.advertising.myactivity.AppSelectActivity" />
+        <activity
+            android:name="com.lgh.advertising.myactivity.AppConfigActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".MainActivity">
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name="com.lgh.advertising.myactivity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,6 +55,7 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/configurenogesture" />
         </service>
+
         <receiver
             android:name=".MyScreenOffReceiver"
             android:enabled="true"
