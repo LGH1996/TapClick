@@ -18,7 +18,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -32,19 +31,14 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Maps;
-import com.google.gson.Gson;
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.AutoFinder;
 import com.lgh.advertising.myclass.Coordinate;
 import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
-import com.lgh.advertising.myclass.MyDatabase;
 import com.lgh.advertising.myclass.Widget;
 
 import java.util.ArrayList;
@@ -56,7 +50,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -77,11 +70,11 @@ public class MainFunction {
     private ScheduledFuture future_a, future_b, future_c;
     private ScheduledExecutorService executorService;
     private MyScreenOffReceiver screenOnReceiver;
-    private MyInstallReceiver installReceiver;
+    private Set<Widget> widgetSet;
 
     private WindowManager.LayoutParams aParams, bParams, cParams;
-    private View adv_view, layout_win;
-    private ImageView target_xy;
+    private View viewAdvertisingMessage, viewLayoutAnalyze;
+    private ImageView viewClickPosition;
     private LayoutInflater inflater;
     private DisplayMetrics metrics;
     private WindowManager windowManager;
@@ -98,13 +91,7 @@ public class MainFunction {
             serviceInfo = service.getServiceInfo();
             appDescribeMap = new HashMap<>();
             screenOnReceiver = new MyScreenOffReceiver();
-            installReceiver = new MyInstallReceiver();
             service.registerReceiver(screenOnReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
-            IntentFilter filterInstall = new IntentFilter();
-            filterInstall.addAction(Intent.ACTION_PACKAGE_ADDED);
-            filterInstall.addAction(Intent.ACTION_PACKAGE_REMOVED);
-            filterInstall.addDataScheme("package");
-            service.registerReceiver(installReceiver, filterInstall);
             updatePackage();
             future_a = future_b = future_c = executorService.schedule(new Runnable() {
                 @Override
@@ -132,20 +119,20 @@ public class MainFunction {
     }
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName());
+//        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName());
         try {
             switch (event.getEventType()) {
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                    CharSequence temPac = event.getPackageName();
+                    CharSequence temPackage = event.getPackageName();
                     CharSequence temClass = event.getClassName();
-                    if (temPac != null && temClass != null) {
-                        String pacName = temPac.toString();
-                        String actName = temClass.toString();
-                        boolean isActivity = !actName.startsWith("android.widget.") && !actName.startsWith("android.view.") && !actName.startsWith("android.app.");
-                        if (!pacName.equals(currentPackage) && isActivity) {
-                            appDescribe = appDescribeMap.get(pacName);
+                    if (temPackage != null && temClass != null) {
+                        String packageName = temPackage.toString();
+                        String activityName = temClass.toString();
+                        boolean isActivity = !activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.") && !activityName.startsWith("android.app.");
+                        if (!packageName.equals(currentPackage) && isActivity) {
+                            appDescribe = appDescribeMap.get(packageName);
                             if (appDescribe != null) {
-                                currentPackage = pacName;
+                                currentPackage = packageName;
                                 if (appDescribe.on_off) {
                                     future_a.cancel(false);
                                     future_b.cancel(false);
@@ -209,38 +196,37 @@ public class MainFunction {
                             }
                         }
                         if (isActivity) {
-                            currentActivity = actName;
-                            if (is_state_change_a && appDescribe != null) {
-                                final Coordinate coordinate = appDescribe.coordinateMap.get(currentActivity);
-                                if (coordinate != null) {
-                                    executorService.scheduleAtFixedRate(new Runnable() {
-                                        int num = 0;
+                            currentActivity = activityName;
+                            if (appDescribe != null) {
+                                widgetSet = appDescribe.widgetSetMap.get(activityName);
+                                if (is_state_change_a) {
+                                    final Coordinate coordinate = appDescribe.coordinateMap.get(activityName);
+                                    if (coordinate != null) {
+                                        executorService.scheduleAtFixedRate(new Runnable() {
+                                            int num = 0;
 
-                                        @Override
-                                        public void run() {
-                                            if (num < coordinate.clickNumber && currentActivity.equals(coordinate.appActivity)) {
-                                                click(coordinate.xPosition, coordinate.yPosition, 0, 20);
-                                                num++;
-                                            } else {
-                                                throw new RuntimeException();
+                                            @Override
+                                            public void run() {
+                                                if (num < coordinate.clickNumber && currentActivity.equals(coordinate.appActivity)) {
+                                                    click(coordinate.xPosition, coordinate.yPosition, 0, 20);
+                                                    num++;
+                                                } else {
+                                                    throw new RuntimeException();
+                                                }
                                             }
-                                        }
-                                    }, coordinate.clickDelay, coordinate.clickInterval, TimeUnit.MILLISECONDS);
+                                        }, coordinate.clickDelay, coordinate.clickInterval, TimeUnit.MILLISECONDS);
+                                    }
                                 }
                             }
                         }
-                        if (!pacName.equals(currentPackage)) {
+                        if (!packageName.equals(currentPackage)) {
                             break;
                         }
-                        if (is_state_change_b && appDescribe != null) {
-                            Set<Widget> widgetSet = appDescribe.widgetSetMap.get(actName);
-                            if (widgetSet != null) {
-                                findSkipButtonByWidget(service.getRootInActiveWindow(), widgetSet);
-                            }
+                        if (is_state_change_b && appDescribe != null  && widgetSet != null) {
+                            findSkipButtonByWidget(service.getRootInActiveWindow(), widgetSet);
                         }
                         if (is_state_change_c && appDescribe != null) {
-                            AutoFinder autoFinder = appDescribe.autoFinder;
-                            findSkipButtonByText(service.getRootInActiveWindow(), autoFinder);
+                            findSkipButtonByText(service.getRootInActiveWindow(), appDescribe.autoFinder);
                         }
                     }
                     break;
@@ -248,15 +234,11 @@ public class MainFunction {
                     if (event.getPackageName().equals("com.android.systemui")) {
                         break;
                     }
-                    if (is_state_change_b && appDescribe != null) {
-                        Set<Widget> widgetSet = appDescribe.widgetSetMap.get(currentActivity);
-                        if (widgetSet != null) {
-                            findSkipButtonByWidget(service.getRootInActiveWindow(), widgetSet);
-                        }
+                    if (is_state_change_b && appDescribe != null && widgetSet != null) {
+                        findSkipButtonByWidget(service.getRootInActiveWindow(), widgetSet);
                     }
                     if (is_state_change_c && appDescribe != null) {
-                        AutoFinder autoFinder = appDescribe.autoFinder;
-                        findSkipButtonByText(service.getRootInActiveWindow(), autoFinder);
+                        findSkipButtonByText(service.getRootInActiveWindow(), appDescribe.autoFinder);
                     }
                     break;
             }
@@ -271,7 +253,6 @@ public class MainFunction {
 
     public boolean onUnbind(Intent intent) {
         service.unregisterReceiver(screenOnReceiver);
-        service.unregisterReceiver(installReceiver);
         return false;
     }
 
@@ -422,29 +403,23 @@ public class MainFunction {
 
         DataDao dataDao = DataDaoFactory.getInstance(service);
         PackageManager packageManager = service.getPackageManager();
-        Set<String> packageCommon = new HashSet<>();
-        Set<String> packageSystem = new HashSet<>();
-        Set<String> packageHome = new HashSet<>();
-        Set<String> packageRemove = new HashSet<>();
         Set<String> packageInstall = new HashSet<>();
+        Set<String> packageOff = new HashSet<>();
+        Set<String> packageRemove = new HashSet<>();
         List<ResolveInfo> ResolveInfoList;
         Intent intent;
         intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME);
         ResolveInfoList = packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL);
         for (ResolveInfo e : ResolveInfoList) {
-            packageHome.add(e.activityInfo.packageName);
+            packageOff.add(e.activityInfo.packageName);
         }
         List<InputMethodInfo> inputMethodInfoList = ((InputMethodManager) service.getSystemService(AccessibilityService.INPUT_METHOD_SERVICE)).getInputMethodList();
         for (InputMethodInfo e : inputMethodInfoList) {
             packageRemove.add(e.getPackageName());
         }
         packageRemove.add("com.android.systemui");
-        packageSystem.removeAll(packageRemove);
-        packageSystem.addAll(packageHome);
-        packageSystem.add(service.getPackageName());
-        packageSystem.add("com.android.packageinstaller");
-        packageCommon.removeAll(packageSystem);
-        packageCommon.removeAll(packageRemove);
+        packageOff.add(service.getPackageName());
+        packageOff.add("com.android.packageinstaller");
         List<AppDescribe> appDescribeList = new ArrayList<>();
         List<AutoFinder> autoFinderList = new ArrayList<>();
         intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER);
@@ -456,7 +431,7 @@ public class MainFunction {
                 AppDescribe appDescribe = new AppDescribe();
                 appDescribe.appName = packageManager.getApplicationLabel(e.activityInfo.applicationInfo).toString();
                 appDescribe.appPackage = packageName;
-                if ((e.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM || packageHome.contains(packageName)) {
+                if ((e.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM || packageOff.contains(packageName)) {
                     appDescribe.on_off = false;
                 }
                 appDescribeList.add(appDescribe);
@@ -466,7 +441,7 @@ public class MainFunction {
                 autoFinderList.add(autoFinder);
             }
         }
-        dataDao.deleteNotInstallAppDescribe(packageInstall);
+        dataDao.deleteAppDescribeByNotIn(packageInstall);
         dataDao.insertAppDescribe(appDescribeList);
         dataDao.insertAutoFinder(autoFinderList);
         appDescribeList = dataDao.getAppDescribes();
@@ -478,30 +453,30 @@ public class MainFunction {
 
     @SuppressLint("ClickableViewAccessibility")
     void showAddAdvertisingFloat() {
-        if (target_xy != null || adv_view != null || layout_win != null) {
+        if (viewClickPosition != null || viewAdvertisingMessage != null || viewLayoutAnalyze != null) {
             return;
         }
         windowManager = (WindowManager) service.getSystemService(Context.WINDOW_SERVICE);
         final DataDao dataDao = DataDaoFactory.getInstance(service);
         final Widget widgetSelect = new Widget();
-        final Coordinate coordinateSelect  = new Coordinate();
+        final Coordinate coordinateSelect = new Coordinate();
         inflater = LayoutInflater.from(service);
-        adv_view = inflater.inflate(R.layout.advertise_desc, null);
-        final TextView pacName = adv_view.findViewById(R.id.pacName);
-        final TextView actName = adv_view.findViewById(R.id.actName);
-        final TextView widget = adv_view.findViewById(R.id.widget);
-        final TextView xyP = adv_view.findViewById(R.id.xy);
-        Button switchWid = adv_view.findViewById(R.id.switch_wid);
-        final Button saveWidgetButton = adv_view.findViewById(R.id.save_wid);
-        Button switchAim = adv_view.findViewById(R.id.switch_aim);
-        final Button savePositionButton = adv_view.findViewById(R.id.save_aim);
-        Button quitButton = adv_view.findViewById(R.id.quit);
+        viewAdvertisingMessage = inflater.inflate(R.layout.advertise_desc, null);
+        final TextView pacName = viewAdvertisingMessage.findViewById(R.id.pacName);
+        final TextView actName = viewAdvertisingMessage.findViewById(R.id.actName);
+        final TextView widget = viewAdvertisingMessage.findViewById(R.id.widget);
+        final TextView xyP = viewAdvertisingMessage.findViewById(R.id.xy);
+        Button switchWid = viewAdvertisingMessage.findViewById(R.id.switch_wid);
+        final Button saveWidgetButton = viewAdvertisingMessage.findViewById(R.id.save_wid);
+        Button switchAim = viewAdvertisingMessage.findViewById(R.id.switch_aim);
+        final Button savePositionButton = viewAdvertisingMessage.findViewById(R.id.save_aim);
+        Button quitButton = viewAdvertisingMessage.findViewById(R.id.quit);
 
-        layout_win = inflater.inflate(R.layout.accessibilitynode_desc, null);
-        final FrameLayout layout_add = layout_win.findViewById(R.id.frame);
+        viewLayoutAnalyze = inflater.inflate(R.layout.accessibilitynode_desc, null);
+        final FrameLayout layoutParent = viewLayoutAnalyze.findViewById(R.id.frame);
 
-        target_xy = new ImageView(service);
-        target_xy.setImageResource(R.drawable.p);
+        viewClickPosition = new ImageView(service);
+        viewClickPosition.setImageResource(R.drawable.p);
         metrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getRealMetrics(metrics);
         int width = metrics.widthPixels;
@@ -536,7 +511,7 @@ public class MainFunction {
         cParams.y = (metrics.heightPixels - cParams.height) / 2;
         cParams.alpha = 0f;
 
-        adv_view.setOnTouchListener(new View.OnTouchListener() {
+        viewAdvertisingMessage.setOnTouchListener(new View.OnTouchListener() {
             int x = 0, y = 0;
 
             @Override
@@ -551,13 +526,13 @@ public class MainFunction {
                         aParams.y = Math.round(aParams.y + (event.getRawY() - y));
                         x = Math.round(event.getRawX());
                         y = Math.round(event.getRawY());
-                        windowManager.updateViewLayout(adv_view, aParams);
+                        windowManager.updateViewLayout(viewAdvertisingMessage, aParams);
                         break;
                 }
                 return true;
             }
         });
-        target_xy.setOnTouchListener(new View.OnTouchListener() {
+        viewClickPosition.setOnTouchListener(new View.OnTouchListener() {
             int x = 0, y = 0, width = cParams.width / 2, height = cParams.height / 2;
 
             @Override
@@ -566,7 +541,7 @@ public class MainFunction {
                     case MotionEvent.ACTION_DOWN:
                         savePositionButton.setEnabled(true);
                         cParams.alpha = 0.9f;
-                        windowManager.updateViewLayout(target_xy, cParams);
+                        windowManager.updateViewLayout(viewClickPosition, cParams);
                         x = Math.round(event.getRawX());
                         y = Math.round(event.getRawY());
                         break;
@@ -575,7 +550,7 @@ public class MainFunction {
                         cParams.y = Math.round(cParams.y + (event.getRawY() - y));
                         x = Math.round(event.getRawX());
                         y = Math.round(event.getRawY());
-                        windowManager.updateViewLayout(target_xy, cParams);
+                        windowManager.updateViewLayout(viewClickPosition, cParams);
                         coordinateSelect.appPackage = currentPackage;
                         coordinateSelect.appActivity = currentActivity;
                         coordinateSelect.xPosition = cParams.x + width;
@@ -586,7 +561,7 @@ public class MainFunction {
                         break;
                     case MotionEvent.ACTION_UP:
                         cParams.alpha = 0.5f;
-                        windowManager.updateViewLayout(target_xy, cParams);
+                        windowManager.updateViewLayout(viewClickPosition, cParams);
                         break;
                 }
                 return true;
@@ -601,7 +576,7 @@ public class MainFunction {
                     if (root == null) return;
                     widgetSelect.appPackage = currentPackage;
                     widgetSelect.appActivity = currentActivity;
-                    layout_add.removeAllViews();
+                    layoutParent.removeAllViews();
                     ArrayList<AccessibilityNodeInfo> roots = new ArrayList<>();
                     roots.add(root);
                     ArrayList<AccessibilityNodeInfo> nodeList = new ArrayList<>();
@@ -654,18 +629,18 @@ public class MainFunction {
                                 }
                             }
                         });
-                        layout_add.addView(img, params);
+                        layoutParent.addView(img, params);
                     }
                     bParams.alpha = 0.5f;
                     bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-                    windowManager.updateViewLayout(layout_win, bParams);
+                    windowManager.updateViewLayout(viewLayoutAnalyze, bParams);
                     pacName.setText(widgetSelect.appPackage);
                     actName.setText(widgetSelect.appActivity);
                     button.setText("隐藏布局");
                 } else {
                     bParams.alpha = 0f;
                     bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
-                    windowManager.updateViewLayout(layout_win, bParams);
+                    windowManager.updateViewLayout(viewLayoutAnalyze, bParams);
                     saveWidgetButton.setEnabled(false);
                     button.setText("显示布局");
                 }
@@ -680,14 +655,14 @@ public class MainFunction {
                     coordinateSelect.appActivity = currentActivity;
                     cParams.alpha = 0.5f;
                     cParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-                    windowManager.updateViewLayout(target_xy, cParams);
+                    windowManager.updateViewLayout(viewClickPosition, cParams);
                     pacName.setText(coordinateSelect.appPackage);
                     actName.setText(coordinateSelect.appActivity);
                     button.setText("隐藏准心");
                 } else {
                     cParams.alpha = 0f;
                     cParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
-                    windowManager.updateViewLayout(target_xy, cParams);
+                    windowManager.updateViewLayout(viewClickPosition, cParams);
                     savePositionButton.setEnabled(false);
                     button.setText("显示准心");
                 }
@@ -698,12 +673,12 @@ public class MainFunction {
             public void onClick(View v) {
                 Widget temWidget = new Widget(widgetSelect);
                 AppDescribe temAppDescribe = appDescribeMap.get(temWidget.appPackage);
-                if (temAppDescribe != null){
+                if (temAppDescribe != null) {
                     Set<Widget> temWidgetSet = temAppDescribe.widgetSetMap.get(temWidget.appActivity);
-                    if (temWidgetSet == null){
+                    if (temWidgetSet == null) {
                         temWidgetSet = new HashSet<>();
                         temWidgetSet.add(temWidget);
-                        temAppDescribe.widgetSetMap.put(temWidget.appActivity,temWidgetSet);
+                        temAppDescribe.widgetSetMap.put(temWidget.appActivity, temWidgetSet);
                     } else {
                         temWidgetSet.add(temWidget);
                     }
@@ -718,8 +693,8 @@ public class MainFunction {
             public void onClick(View v) {
                 Coordinate temCoordinate = new Coordinate(coordinateSelect);
                 AppDescribe temAppDescribe = appDescribeMap.get(temCoordinate.appPackage);
-                if (temAppDescribe != null){
-                    temAppDescribe.coordinateMap.put(temCoordinate.appActivity,temCoordinate);
+                if (temAppDescribe != null) {
+                    temAppDescribe.coordinateMap.put(temCoordinate.appActivity, temCoordinate);
                 }
                 dataDao.insertCoordinate(temCoordinate);
                 savePositionButton.setEnabled(false);
@@ -729,19 +704,19 @@ public class MainFunction {
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                windowManager.removeViewImmediate(layout_win);
-                windowManager.removeViewImmediate(adv_view);
-                windowManager.removeViewImmediate(target_xy);
-                layout_win = null;
-                adv_view = null;
-                target_xy = null;
+                windowManager.removeViewImmediate(viewLayoutAnalyze);
+                windowManager.removeViewImmediate(viewAdvertisingMessage);
+                windowManager.removeViewImmediate(viewClickPosition);
+                viewLayoutAnalyze = null;
+                viewAdvertisingMessage = null;
+                viewClickPosition = null;
                 aParams = null;
                 bParams = null;
                 cParams = null;
             }
         });
-        windowManager.addView(layout_win, bParams);
-        windowManager.addView(adv_view, aParams);
-        windowManager.addView(target_xy, cParams);
+        windowManager.addView(viewLayoutAnalyze, bParams);
+        windowManager.addView(viewAdvertisingMessage, aParams);
+        windowManager.addView(viewClickPosition, cParams);
     }
 }

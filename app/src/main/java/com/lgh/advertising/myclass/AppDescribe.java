@@ -48,7 +48,7 @@ public class AppDescribe {
         this.on_off = true;
         this.autoFinderRetrieveTime = 8000;
         this.autoFinderRetrieveAllTime = false;
-        this.coordinateRetrieveTime = 8000;
+        this.coordinateRetrieveTime = 15000;
         this.coordinateRetrieveAllTime = false;
         this.widgetRetrieveTime = 15000;
         this.widgetRetrieveAllTime = false;

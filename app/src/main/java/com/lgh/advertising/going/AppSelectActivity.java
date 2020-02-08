@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,16 +45,17 @@ public class AppSelectActivity extends AppCompatActivity {
     LayoutInflater inflater;
     PackageManager packageManager;
     DataDao dataDao;
-    Map<String,AppDescribe> appDescribeMap;
+    Map<String, AppDescribe> appDescribeMap;
     List<AppDescribe> appDescribeList;
     BaseAdapter baseAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         inflater = LayoutInflater.from(this);
         packageManager = getPackageManager();
         dataDao = DataDaoFactory.getInstance(getApplicationContext());
-        if (MainFunction.appDescribeMap != null){
+        if (MainFunction.appDescribeMap != null) {
             appDescribeMap = MainFunction.appDescribeMap;
             appDescribeList = Lists.newArrayList(appDescribeMap.values());
         } else {
@@ -62,15 +64,16 @@ public class AppSelectActivity extends AppCompatActivity {
         Collections.sort(appDescribeList, new Comparator<AppDescribe>() {
             @Override
             public int compare(AppDescribe o1, AppDescribe o2) {
-                return Collator.getInstance(Locale.CHINESE).compare(o1.appName,o2.appName);
+                return Collator.getInstance(Locale.CHINESE).compare(o1.appName, o2.appName);
             }
         });
         setContentView(R.layout.view_select);
         ListView listView = findViewById(R.id.listView);
-        for (AppDescribe e:appDescribeList){
+        for (AppDescribe e : appDescribeList) {
             try {
                 e.appDrawable = packageManager.getApplicationIcon(e.appPackage);
             } catch (PackageManager.NameNotFoundException nameNotFoundException) {
+                appDescribeList.remove(e);
                 nameNotFoundException.printStackTrace();
             }
         }
@@ -101,7 +104,7 @@ public class AppSelectActivity extends AppCompatActivity {
                     holder = (AppSelectActivity.ViewHolder) convertView.getTag();
                 }
                 AppDescribe tem = appDescribeList.get(position);
-                holder.textView.setText(tem.appName+" ("+(tem.on_off?"开启":"关闭")+")");
+                holder.textView.setText(tem.appName + " (" + (tem.on_off ? "开启" : "关闭") + ")");
                 holder.imageView.setImageDrawable(tem.appDrawable);
                 return convertView;
             }
@@ -109,14 +112,17 @@ public class AppSelectActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 String packageName = appDescribeList.get(position).appPackage;
-                if (appDescribeMap != null){
+                appDescribe = null;
+                if (appDescribeMap != null) {
                     appDescribe = appDescribeMap.get(packageName);
-                } else {
+                }
+                if (appDescribe == null) {
                     appDescribe = appDescribeList.get(position);
                     appDescribe.getOtherField(dataDao);
                 }
-                startActivity(new Intent(AppSelectActivity.this,AppConfigActivity.class));
+                startActivity(new Intent(AppSelectActivity.this, AppConfigActivity.class));
             }
         });
         listView.setAdapter(baseAdapter);
@@ -133,8 +139,8 @@ public class AppSelectActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (MainFunction.appDescribeMap != null){
-            for (AppDescribe e:MainFunction.appDescribeMap.values()){
+        if (MainFunction.appDescribeMap != null) {
+            for (AppDescribe e : MainFunction.appDescribeMap.values()) {
                 e.getOtherField(dataDao);
             }
         }
