@@ -107,6 +107,11 @@ public class MainFunction {
                             currentPackage = "ScreenOff Package";
                             currentActivity = "ScreenOff Activity";
                             break;
+                        case 0x02:
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                service.disableSelf();
+                            }
+                            break;
                     }
                     return true;
                 }

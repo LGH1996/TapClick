@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lgh.advertising.going.MainFunction;
 import com.lgh.advertising.going.MyAccessibilityService;
@@ -71,8 +72,12 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case 1:
-                        MainActivity.this.startActivity(new Intent(MainActivity.this, AddAdvertisingActivity.class));
-                        MainFunction.handler.sendEmptyMessage(0x00);
+                        if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null){
+                            Toast.makeText(MainActivity.this,"请先开启无障碍服务",Toast.LENGTH_SHORT).show();
+                        } else {
+                            MainActivity.this.startActivity(new Intent(MainActivity.this, AddAdvertisingActivity.class));
+                            MainFunction.handler.sendEmptyMessage(0x00);
+                        }
                         break;
                     case 2:
                         MainActivity.this.startActivity(new Intent(MainActivity.this,AppSelectActivity.class));
