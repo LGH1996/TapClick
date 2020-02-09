@@ -11,18 +11,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name="com.lgh.advertising.myactivity.AppAuthorizationActivity"></activity>
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        <activity android:name="com.lgh.advertising.myactivity.AppSettingActivity" />
+        <activity android:name="com.lgh.advertising.myactivity.AppAuthorizationActivity" />
         <activity android:name="com.lgh.advertising.myactivity.AddAdvertisingActivity" />
         <activity android:name="com.lgh.advertising.myactivity.AppSelectActivity" />
         <activity
             android:name="com.lgh.advertising.myactivity.AppConfigActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name="com.lgh.advertising.myactivity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

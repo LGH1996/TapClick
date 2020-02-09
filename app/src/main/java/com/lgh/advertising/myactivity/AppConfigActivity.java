@@ -1,7 +1,6 @@
 package com.lgh.advertising.myactivity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -31,7 +30,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-public class AppConfigActivity extends AppCompatActivity {
+public class AppConfigActivity extends Activity {
 
     LayoutInflater inflater;
     DataDao dataDao;
@@ -50,6 +49,8 @@ public class AppConfigActivity extends AppCompatActivity {
         setTitle(AppSelectActivity.appDescribe.appName);
 
         final Switch onOffSwitch = findViewById(R.id.on_off_switch);
+        EditText onOffName = findViewById(R.id.on_off_name);
+        onOffName.setText(appDescribe.appName);
         onOffSwitch.setChecked(appDescribe.on_off);
 
         final Switch autoFinderSwitch = findViewById(R.id.auto_finder_switch);

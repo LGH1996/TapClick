@@ -32,7 +32,7 @@ public class MyAccessibilityServiceNoGesture extends AccessibilityService {
         mainFunction = new MainFunction(this);
         mainFunction.onServiceConnected();
         if (MyAccessibilityService.mainFunction != null) {
-            MyAccessibilityService.mainFunction.handler.sendEmptyMessage(0x02);
+            MyAccessibilityService.mainFunction.closeService();
         }
     }
 

@@ -1,8 +1,8 @@
 package com.lgh.advertising.myactivity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -18,9 +18,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.common.collect.Lists;
 import com.lgh.advertising.going.MainFunction;
+import com.lgh.advertising.going.MyAccessibilityService;
+import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.DataDao;
@@ -34,7 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class AppSelectActivity extends AppCompatActivity {
+public class AppSelectActivity extends Activity {
 
     public static AppDescribe appDescribe;
     PackageManager packageManager;
@@ -55,13 +58,24 @@ public class AppSelectActivity extends AppCompatActivity {
         final ListView listView = findViewById(R.id.listView);
         final ProgressBar progressBar = findViewById(R.id.progress);
         final LayoutInflater inflater = LayoutInflater.from(this);
-        listView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (MainFunction.appDescribeMap != null) {
-                    appDescribeMap = MainFunction.appDescribeMap;
+                if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
+                    handler.sendEmptyMessage(0x01);
+                } else if (MyAccessibilityService.mainFunction != null && MyAccessibilityServiceNoGesture.mainFunction != null) {
+                    handler.sendEmptyMessage(0x02);
+                } else {
+                    if (MyAccessibilityService.mainFunction != null) {
+                        appDescribeMap = MyAccessibilityService.mainFunction.getAppDescribeMap();
+                    }
+                    if (MyAccessibilityServiceNoGesture.mainFunction != null) {
+                        appDescribeMap = MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap();
+                    }
+                }
+                if (appDescribeMap != null) {
                     appDescribeList = Lists.newArrayList(appDescribeMap.values());
                 } else {
                     appDescribeList = dataDao.getAppDescribes();
@@ -87,59 +101,66 @@ public class AppSelectActivity extends AppCompatActivity {
         handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message msg) {
-                if (msg.what == 0x00) {
-
-                    baseAdapter = new BaseAdapter() {
-                        @Override
-                        public int getCount() {
-                            return appDescribeAndIconList.size();
-                        }
-
-                        @Override
-                        public Object getItem(int position) {
-                            return position;
-                        }
-
-                        @Override
-                        public long getItemId(int position) {
-                            return position;
-                        }
-
-                        @Override
-                        public View getView(int position, View convertView, ViewGroup parent) {
-                            AppSelectActivity.ViewHolder holder;
-                            if (convertView == null) {
-                                convertView = inflater.inflate(R.layout.view_pac, null);
-                                holder = new AppSelectActivity.ViewHolder(convertView);
-                                convertView.setTag(holder);
-                            } else {
-                                holder = (AppSelectActivity.ViewHolder) convertView.getTag();
+                switch (msg.what) {
+                    case 0x00:
+                        baseAdapter = new BaseAdapter() {
+                            @Override
+                            public int getCount() {
+                                return appDescribeAndIconList.size();
                             }
-                            AppDescribeAndIcon tem = appDescribeAndIconList.get(position);
-                            holder.textView.setText(tem.appDescribe.appName + " (" + (tem.appDescribe.on_off ? "开启" : "关闭") + ")");
-                            holder.imageView.setImageDrawable(tem.icon);
-                            return convertView;
-                        }
-                    };
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                            String packageName = appDescribeList.get(position).appPackage;
-                            appDescribe = null;
-                            if (appDescribeMap != null) {
-                                appDescribe = appDescribeMap.get(packageName);
+                            @Override
+                            public Object getItem(int position) {
+                                return position;
                             }
-                            if (appDescribe == null) {
-                                appDescribe = appDescribeList.get(position);
-                                appDescribe.getOtherField(dataDao);
+
+                            @Override
+                            public long getItemId(int position) {
+                                return position;
                             }
-                            startActivity(new Intent(AppSelectActivity.this, AppConfigActivity.class));
-                        }
-                    });
-                    listView.setAdapter(baseAdapter);
-                    listView.setVisibility(View.VISIBLE);
-                    progressBar.setVisibility(View.GONE);
+
+                            @Override
+                            public View getView(int position, View convertView, ViewGroup parent) {
+                                AppSelectActivity.ViewHolder holder;
+                                if (convertView == null) {
+                                    convertView = inflater.inflate(R.layout.view_pac, null);
+                                    holder = new AppSelectActivity.ViewHolder(convertView);
+                                    convertView.setTag(holder);
+                                } else {
+                                    holder = (AppSelectActivity.ViewHolder) convertView.getTag();
+                                }
+                                AppDescribeAndIcon tem = appDescribeAndIconList.get(position);
+                                holder.textView.setText(tem.appDescribe.appName + " (" + (tem.appDescribe.on_off ? "开启" : "关闭") + ")");
+                                holder.imageView.setImageDrawable(tem.icon);
+                                return convertView;
+                            }
+                        };
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                appDescribe = null;
+                                String packageName = appDescribeList.get(position).appPackage;
+                                if (appDescribeMap != null) {
+                                    appDescribe = appDescribeMap.get(packageName);
+                                }
+                                if (appDescribe == null) {
+                                    appDescribe = appDescribeList.get(position);
+                                    appDescribe.getOtherField(dataDao);
+                                }
+                                startActivity(new Intent(AppSelectActivity.this, AppConfigActivity.class));
+                            }
+                        });
+                        listView.setAdapter(baseAdapter);
+                        listView.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        break;
+                    case 0x01:
+                        Toast.makeText(AppSelectActivity.this, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 0x02:
+                        Toast.makeText(AppSelectActivity.this, "无障碍服务冲突", Toast.LENGTH_SHORT).show();
+                        break;
                 }
                 return true;
             }
@@ -157,8 +178,13 @@ public class AppSelectActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (MainFunction.appDescribeMap != null) {
-            for (AppDescribe e : MainFunction.appDescribeMap.values()) {
+        if (MyAccessibilityService.mainFunction != null) {
+            for (AppDescribe e : MyAccessibilityService.mainFunction.getAppDescribeMap().values()) {
+                e.getOtherField(dataDao);
+            }
+        }
+        if (MyAccessibilityServiceNoGesture.mainFunction != null) {
+            for (AppDescribe e : MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap().values()) {
                 e.getOtherField(dataDao);
             }
         }

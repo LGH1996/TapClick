@@ -15,8 +15,11 @@ public class MyScreenOffReceiver extends BroadcastReceiver {
         try {
             String action = intent.getAction();
             if (action != null && action.equals(Intent.ACTION_SCREEN_OFF)) {
-                if (MyAccessibilityService.mainFunction != null || MyAccessibilityServiceNoGesture.mainFunction != null){
-                    MainFunction.handler.sendEmptyMessage(0x01);
+                if (MyAccessibilityService.mainFunction != null){
+                    MyAccessibilityService.mainFunction.onScreenOff();
+                }
+                if (MyAccessibilityServiceNoGesture.mainFunction != null){
+                    MyAccessibilityServiceNoGesture.mainFunction.onScreenOff();
                 }
             }
         } catch (Throwable e) {

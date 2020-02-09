@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/accessibility_on_off"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
 
         <ImageView
-            android:id="@+id/accessibility_img"
+            android:id="@+id/accessibility_on_off_img"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true" />
 
         <TextView
-            android:id="@+id/accessibility_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/accessibility_img"
+            android:layout_toEndOf="@id/accessibility_on_off_img"
             android:gravity="center_vertical|start"
             android:paddingLeft="15dp"
             android:singleLine="true"
             android:textColor="@color/textColor"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:text="无障碍服务权限"/>
 
         <ImageView
             android:layout_width="20dp"
@@ -39,28 +43,68 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/batteryIgnore_on_off"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
 
         <ImageView
-            android:id="@+id/main_img"
+            android:id="@+id/batteryIgnore_on_off_img"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true" />
 
         <TextView
-            android:id="@+id/main_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/main_img"
+            android:layout_toEndOf="@id/batteryIgnore_on_off_img"
             android:gravity="center_vertical|start"
             android:paddingLeft="15dp"
             android:singleLine="true"
             android:textColor="@color/textColor"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:text="忽略电池优化权限"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:clickable="false"
+            android:focusable="false"
+            android:alpha="0.7"
+            android:src="@drawable/forward" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/alert_window_off"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
+
+        <ImageView
+            android:id="@+id/alert_window_on_off_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/alert_window_on_off_img"
+            android:gravity="center_vertical|start"
+            android:paddingLeft="15dp"
+            android:singleLine="true"
+            android:textColor="@color/textColor"
+            android:textSize="20sp"
+            android:text="悬浮窗权限"/>
 
         <ImageView
             android:layout_width="20dp"

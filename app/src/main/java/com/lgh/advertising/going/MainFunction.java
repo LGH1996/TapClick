@@ -59,8 +59,7 @@ import java.util.concurrent.TimeUnit;
 public class MainFunction {
 
     public static final String TAG = "MainFunction";
-    public static Handler handler;
-    public static Map<String, AppDescribe> appDescribeMap;
+    private Map<String, AppDescribe> appDescribeMap;
     private AppDescribe appDescribe;
     private AccessibilityService service;
     private String currentPackage;
@@ -77,7 +76,7 @@ public class MainFunction {
     private View viewAdvertisingMessage, viewLayoutAnalyze;
     private ImageView viewClickPosition;
 
-    public MainFunction(AccessibilityService service) {
+    public MainFunction(AccessibilityService service){
         this.service = service;
     }
 
@@ -96,26 +95,6 @@ public class MainFunction {
                 public void run() {
                 }
             }, 0, TimeUnit.MILLISECONDS);
-            handler = new Handler(new Handler.Callback() {
-                @Override
-                public boolean handleMessage(@NonNull Message msg) {
-                    switch (msg.what) {
-                        case 0x00:
-                            showAddAdvertisingFloat();
-                            break;
-                        case 0x01:
-                            currentPackage = "ScreenOff Package";
-                            currentActivity = "ScreenOff Activity";
-                            break;
-                        case 0x02:
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                service.disableSelf();
-                            }
-                            break;
-                    }
-                    return true;
-                }
-            });
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -418,6 +397,20 @@ public class MainFunction {
         }
     }
 
+    public void  onScreenOff(){
+        currentPackage = "ScreenOff Package";
+        currentActivity = "ScreenOff Activity";
+    }
+
+    public  void closeService(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            service.disableSelf();
+        }
+    }
+
+    public Map<String,AppDescribe> getAppDescribeMap(){
+        return  appDescribeMap;
+    }
 
     /**
      * 在安装卸载软件时触发调用，
@@ -475,8 +468,9 @@ public class MainFunction {
         }
     }
 
+
     @SuppressLint("ClickableViewAccessibility")
-    void showAddAdvertisingFloat() {
+    public void showAddAdvertisingFloat() {
         if (viewClickPosition != null || viewAdvertisingMessage != null || viewLayoutAnalyze != null) {
             return;
         }

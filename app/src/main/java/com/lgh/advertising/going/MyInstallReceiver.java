@@ -40,9 +40,12 @@ public class MyInstallReceiver extends BroadcastReceiver {
                         autoFinder.keywordList = Arrays.asList("跳过");
                         dataDao.insertAppDescribe(appDescribe);
                         dataDao.insertAutoFinder(autoFinder);
-                        if (MainFunction.appDescribeMap != null) {
-                            appDescribe.getOtherField(dataDao);
-                            MainFunction.appDescribeMap.put(appDescribe.appPackage, appDescribe);
+                        appDescribe.getOtherField(dataDao);
+                        if (MyAccessibilityService.mainFunction != null) {
+                            MyAccessibilityService.mainFunction.getAppDescribeMap().put(appDescribe.appPackage, appDescribe);
+                        }
+                        if (MyAccessibilityServiceNoGesture.mainFunction != null) {
+                            MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap().put(appDescribe.appPackage, appDescribe);
                         }
                     } catch (PackageManager.NameNotFoundException e) {
                         e.printStackTrace();
@@ -51,8 +54,11 @@ public class MyInstallReceiver extends BroadcastReceiver {
                 if (action.equals(Intent.ACTION_PACKAGE_REMOVED) && dataString != null) {
                     String packageName = dataString.substring(8);
                     dataDao.deleteAppDescribeByPackageNames(packageName);
-                    if (MainFunction.appDescribeMap != null) {
-                        MainFunction.appDescribeMap.remove(packageName);
+                    if (MyAccessibilityService.mainFunction != null) {
+                        MyAccessibilityService.mainFunction.getAppDescribeMap().remove(packageName);
+                    }
+                    if (MyAccessibilityServiceNoGesture.mainFunction != null) {
+                        MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap().remove(packageName);
                     }
                 }
             }
