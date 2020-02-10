@@ -100,9 +100,12 @@
 
             <CheckBox
                 android:id="@+id/clickOnly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical" />
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@drawable/check_select"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:button="@null"/>
         </LinearLayout>
 
         <RelativeLayout

@@ -82,14 +82,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@id/on_off_txt_a"/>
+                        android:layout_toEndOf="@id/on_off_txt_a"
+                        android:thumb="@drawable/switch_custom_thumb_selector"
+                        android:track="@drawable/switch_custom_track_selector" />
                     <TextView
                         android:id="@+id/on_off_txt_b"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@id/on_off_switch"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="20dp"
                         android:layout_marginEnd="5dp"
                         android:text="应用名称:"
                         android:textColor="@color/textColor"
@@ -128,14 +130,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/auto_finder_on_off_txt_a"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true"
+                        android:thumb="@drawable/switch_custom_thumb_selector"
+                        android:track="@drawable/switch_custom_track_selector" />
                     <TextView
                         android:id="@+id/auto_finder_on_off_txt_b"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@id/auto_finder_switch"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="20dp"
                         android:layout_marginEnd="5dp"
                         android:text="持续时间:"
                         android:textColor="@color/textColor"
@@ -155,7 +159,7 @@
                         android:singleLine="true"
                         android:textColor="@color/textColor"
                         android:textSize="12sp"
-                        android:layout_marginEnd="15dp"/>
+                        android:layout_marginEnd="20dp"/>
 
                     <TextView
                         android:id="@+id/auto_finder_txt"
@@ -170,10 +174,14 @@
 
                     <CheckBox
                         android:id="@+id/auto_finder_retrieveAllTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_toEndOf="@id/auto_finder_txt"
-                        android:layout_alignParentEnd="true"/>
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/check_select"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:button="@null"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -194,14 +202,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/coordinate_on_off_txt_a"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true"
+                        android:thumb="@drawable/switch_custom_thumb_selector"
+                        android:track="@drawable/switch_custom_track_selector" />
                     <TextView
                         android:id="@+id/coordinate_on_off_txt_b"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@id/coordinate_switch"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="20dp"
                         android:layout_marginEnd="5dp"
                         android:text="持续时间:"
                         android:textColor="@color/textColor"
@@ -221,7 +231,7 @@
                         android:singleLine="true"
                         android:textColor="@color/textColor"
                         android:textSize="12sp"
-                        android:layout_marginEnd="15dp"/>
+                        android:layout_marginEnd="20dp"/>
 
                     <TextView
                         android:id="@+id/coordinate_txt"
@@ -236,10 +246,14 @@
 
                     <CheckBox
                         android:id="@+id/coordinate_retrieveAllTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_toEndOf="@id/coordinate_txt"
-                        android:layout_alignParentEnd="true"/>
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/check_select"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:button="@null"/>
                 </RelativeLayout>
                 <RelativeLayout
                 android:layout_width="match_parent"
@@ -260,14 +274,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/widget_on_off_txt_a"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    android:thumb="@drawable/switch_custom_thumb_selector"
+                    android:track="@drawable/switch_custom_track_selector" />
                 <TextView
                     android:id="@+id/widget_on_off_txt_b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/widget_switch"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginEnd="5dp"
                     android:text="持续时间:"
                     android:textColor="@color/textColor"
@@ -287,7 +303,7 @@
                         android:singleLine="true"
                         android:textColor="@color/textColor"
                         android:textSize="12sp"
-                        android:layout_marginEnd="15dp"/>
+                        android:layout_marginEnd="20dp"/>
 
                 <TextView
                     android:id="@+id/widget_txt"
@@ -302,10 +318,14 @@
 
                 <CheckBox
                     android:id="@+id/widget_retrieveAllTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_toEndOf="@id/widget_txt"
-                    android:layout_alignParentEnd="true"/>
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/check_select"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:button="@null"/>
             </RelativeLayout>
 
             </LinearLayout>

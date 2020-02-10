@@ -21,10 +21,6 @@ public interface DataDao {
     List<Coordinate> getCoordinates(String appPackage);
     @Query("SELECT * FROM Widget WHERE appPackage = :appPackage")
     List<Widget> getWidgets(String appPackage);
-    @Query("DELETE FROM AppDescribe WHERE appPackage NOT IN (:packageNames)")
-    void deleteAppDescribeByNotIn(Set<String> packageNames);
-    @Query("DELETE FROM AppDescribe WHERE appPackage IN (:packageNames)")
-    void deleteAppDescribeByPackageNames(String... packageNames);
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAppDescribe(AppDescribe... appDescribes);
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -37,6 +33,10 @@ public interface DataDao {
     void insertCoordinate(Coordinate... coordinates);
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertWidget(Widget... widgets);
+    @Query("DELETE FROM AppDescribe WHERE appPackage NOT IN (:packageNames)")
+    void deleteAppDescribeByNotIn(Set<String> packageNames);
+    @Query("DELETE FROM AppDescribe WHERE appPackage IN (:packageNames)")
+    void deleteAppDescribeByPackageNames(String... packageNames);
     @Delete
     void deleteCoordinate(Coordinate... coordinates);
     @Delete
