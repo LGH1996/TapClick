@@ -1,6 +1,14 @@
 package com.lgh.advertising.myclass;
 
+import android.content.Intent;
+
+import androidx.room.Entity;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
+@Entity(indices = @Index("id"))
 public class MyAppConfig {
-    public boolean on_off;
+    @PrimaryKey(autoGenerate = true)
+    public Integer id;
     public boolean autoHideOnTaskList;
 }

@@ -19,7 +19,6 @@ public class Widget {
     public boolean clickOnly;
     public boolean widgetClickable;
     public Rect widgetRect;
-    public String widgetClass;
     public String widgetId;
     public String widgetDescribe;
     public String widgetText;
@@ -31,7 +30,6 @@ public class Widget {
         this.clickOnly = false;
         this.widgetClickable = false;
         this.widgetRect = null;
-        this.widgetClass = "";
         this.widgetId = "";
         this.widgetDescribe = "";
         this.widgetText = "";
@@ -43,7 +41,6 @@ public class Widget {
         this.clickOnly = widget.clickOnly;
         this.widgetClickable = widget.widgetClickable;
         this.widgetRect = widget.widgetRect;
-        this.widgetClass = widget.widgetClass;
         this.widgetId = widget.widgetId;
         this.widgetDescribe = widget.widgetDescribe;
         this.widgetText = widget.widgetText;
