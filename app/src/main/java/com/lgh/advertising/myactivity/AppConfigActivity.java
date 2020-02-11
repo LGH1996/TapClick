@@ -45,7 +45,7 @@ public class AppConfigActivity extends Activity {
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
         final AppDescribe appDescribe = AppSelectActivity.appDescribe;
         final SimpleDateFormat simpleDateFormat= new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
-        setContentView(R.layout.view_appconfig);
+        setContentView(R.layout.activity_appconfig);
         setTitle(AppSelectActivity.appDescribe.appName);
 
         final Switch onOffSwitch = findViewById(R.id.on_off_switch);

@@ -66,8 +66,9 @@ public class MainFunction {
     private AccessibilityServiceInfo serviceInfo;
     private ScheduledFuture future_coordinate, future_widget, future_autoFinder;
     private ScheduledExecutorService executorService;
-    private MyScreenOffReceiver screenOnReceiver;
+    private MyScreenOffReceiver screenOffReceiver;
     private Set<Widget> widgetSet;
+    private MyInstallReceiver installReceiver;
 
     private WindowManager.LayoutParams aParams, bParams, cParams;
     private View viewAdvertisingMessage, viewLayoutAnalyze;
@@ -84,8 +85,14 @@ public class MainFunction {
             executorService = Executors.newSingleThreadScheduledExecutor();
             serviceInfo = service.getServiceInfo();
             appDescribeMap = new HashMap<>();
-            screenOnReceiver = new MyScreenOffReceiver();
-            service.registerReceiver(screenOnReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
+            screenOffReceiver = new MyScreenOffReceiver();
+            service.registerReceiver(screenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
+            installReceiver = new MyInstallReceiver();
+            IntentFilter filterInstall = new IntentFilter();
+            filterInstall.addAction(Intent.ACTION_PACKAGE_ADDED);
+            filterInstall.addAction(Intent.ACTION_PACKAGE_REMOVED);
+            filterInstall.addDataScheme("package");
+            service.registerReceiver(installReceiver, filterInstall);
             updatePackage();
             future_coordinate = future_widget = future_autoFinder = executorService.schedule(new Runnable() {
                 @Override
@@ -254,7 +261,8 @@ public class MainFunction {
     }
 
     public boolean onUnbind(Intent intent) {
-        service.unregisterReceiver(screenOnReceiver);
+        service.unregisterReceiver(screenOffReceiver);
+        service.unregisterReceiver(installReceiver);
         return false;
     }
 

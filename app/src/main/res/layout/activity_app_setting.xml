@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:text="是否在任务列表中自动隐藏该应用："
+            android:text="是否在任务列表中自动隐藏主页："
             android:textColor="@color/textColor"
             android:textSize="15sp" />
 
@@ -81,7 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:text="请穷逼作者喝杯奶茶："
+            android:text="请穷逼作者喝杯茶："
             android:textColor="@color/textColor"
             android:textSize="15sp" />
         <ImageView

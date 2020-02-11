@@ -20,7 +20,7 @@
         android:paddingEnd="10dp"
         android:lineSpacingMultiplier="1.5"
         android:textColor="@color/textColor"
-        android:text="如果你添加了某个广告页面的控件或者坐标，则在该页面出现时程序就会自动检索该页面的内容，这也许会在一定的程度上造成卡顿，所以为了不影响体验，请合理添加控件或坐标"/>
+        android:text="如果你添加了某个广告页面的控件或者坐标，则在该页面出现时程序就会自动检索该页面的内容，这也许会在一定的程度上造成卡顿，所以为了不影响体验，请合理添加控件或坐标."/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
