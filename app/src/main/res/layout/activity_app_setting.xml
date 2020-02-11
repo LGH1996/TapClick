@@ -2,11 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:layout_marginTop="10dp"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="应用信息页面："
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/textColor"
+            android:textSize="15sp" />
+        <Button
+            android:id="@+id/setting_open"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:padding="1dp"
+            android:layout_gravity="center_vertical"
+            android:text="打开"
+            android:gravity="center" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -17,7 +42,7 @@
             android:textSize="15sp" />
 
         <CheckBox
-            android:id="@+id/widget_clickOnly"
+            android:id="@+id/setting_autoHideOnTaskList"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:background="@drawable/check_select"
@@ -28,22 +53,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp">
+        android:layout_marginTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:text="最新版下载地址："
+            android:text="作者联系方式："
             android:textColor="@color/textColor"
             android:textSize="15sp" />
-
-        <CheckBox
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@drawable/check_select"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:button="@null"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:enabled="false"
+            android:text="2281442260@qq.com"
+            android:textColor="@color/textColor"
+            android:background="@null"
+            android:textSize="15sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="请穷逼作者喝杯奶茶："
+            android:textColor="@color/textColor"
+            android:textSize="15sp" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitStart"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/support_me" />
     </LinearLayout>
 </LinearLayout>

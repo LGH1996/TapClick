@@ -116,4 +116,12 @@
             android:alpha="0.7"
             android:src="@drawable/forward" />
     </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:lineSpacingMultiplier="2"
+        android:text="提示：\n为了保证应用能够稳定运行，请设置允许后台运行，并在任务列表中把该应用锁定。\n主页可设置为在任务列表中自动隐藏，建议尽量避免手动清理，否则无障碍服务可能会被自动关闭，需要重新开启。"/>
 </LinearLayout>

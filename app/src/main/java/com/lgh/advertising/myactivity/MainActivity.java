@@ -3,6 +3,8 @@ package com.lgh.advertising.myactivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +19,29 @@ import com.lgh.advertising.going.MainFunction;
 import com.lgh.advertising.going.MyAccessibilityService;
 import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
+import com.lgh.advertising.myclass.DataDao;
+import com.lgh.advertising.myclass.DataDaoFactory;
+import com.lgh.advertising.myclass.MyAppConfig;
 
+import java.awt.font.TextAttribute;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends Activity {
+
+    private MyAppConfig myAppConfig;
+    private DataDao dataDao;
+    private boolean startActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ListView listView = findViewById(R.id.main_listView);
+        dataDao = DataDaoFactory.getInstance(this);
+        myAppConfig = dataDao.getMyAppConfig();
+        if (myAppConfig == null) myAppConfig = new MyAppConfig();
         final LayoutInflater inflater = LayoutInflater.from(this);
         final List<Resource> source = new ArrayList<>();
         source.add(new Resource("授权管理", R.drawable.authorization));
@@ -89,9 +103,12 @@ public class MainActivity extends Activity {
                         MainActivity.this.startActivity(new Intent(MainActivity.this, AppSelectActivity.class));
                         break;
                     case 3:
-                        startActivity(new Intent(MainActivity.this,AppSettingActivity.class));
+                        Intent intent = new Intent(MainActivity.this,AppSettingActivity.class);
+                        intent.putExtra("myAppConfig.autoHideOnTaskList",myAppConfig.autoHideOnTaskList);
+                        startActivityForResult(intent,0);
                         break;
                 }
+                startActivity = true;
             }
         });
     }
@@ -110,6 +127,39 @@ public class MainActivity extends Activity {
         } else {
             statusImg.setImageResource(R.drawable.ok);
             statusTip.setText("无障碍服务已开启\n请确保允许该应用后台运行\n并在任务列表中下拉锁定该页面");
+        }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            if (myAppConfig.autoHideOnTaskList) {
+                finishAndRemoveTask();
+            }
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!startActivity && myAppConfig.autoHideOnTaskList){
+            finishAndRemoveTask();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startActivity = false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode ==0){
+            myAppConfig.autoHideOnTaskList = data.getBooleanExtra("myAppConfig.autoHideOnTaskList",myAppConfig.autoHideOnTaskList);
+            dataDao.insertMyAppConfig(myAppConfig);
         }
     }
 

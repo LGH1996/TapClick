@@ -8,7 +8,12 @@ import androidx.room.PrimaryKey;
 
 @Entity(indices = @Index("id"))
 public class MyAppConfig {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     public Integer id;
     public boolean autoHideOnTaskList;
+
+    public MyAppConfig() {
+        this.id = 0;
+        this.autoHideOnTaskList = false;
+    }
 }

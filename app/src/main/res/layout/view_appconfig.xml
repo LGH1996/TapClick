@@ -51,10 +51,11 @@
 
                     <ImageButton
                         android:id="@+id/base_setting_question"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        android:alpha="0.1"
                         android:background= "@drawable/question"/>
                 </RelativeLayout>
                 <ImageView
@@ -411,10 +412,11 @@
 
                     <ImageButton
                         android:id="@+id/auto_finder_question"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        android:alpha="0.1"
                         android:background= "@drawable/question"/>
                 </RelativeLayout>
 
@@ -460,10 +462,11 @@
 
                     <ImageButton
                         android:id="@+id/coordinate_question"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        android:alpha="0.1"
                         android:background="@drawable/question"/>
                 </RelativeLayout>
 
@@ -509,10 +512,11 @@
 
                     <ImageButton
                         android:id="@+id/widget_question"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        android:alpha="0.1"
                         android:background="@drawable/question"/>
                 </RelativeLayout>
 
