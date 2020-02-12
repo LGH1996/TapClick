@@ -14,6 +14,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
+            android:text="检查应用更新："
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/textColor"
+            android:textSize="15sp" />
+        <Button
+            android:id="@+id/setting_update"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:padding="1dp"
+            android:layout_gravity="center_vertical"
+            android:text="开始"
+            android:gravity="center" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
             android:text="应用信息页面："
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
@@ -31,7 +53,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp">
+        android:layout_marginTop="5dp">
 
         <TextView
             android:layout_width="wrap_content"
