@@ -63,7 +63,7 @@ public class AppConfigActivity extends Activity {
             public void onClick(View v) {
                 View view = inflater.inflate(R.layout.view_question,null);
                 EditText textView = view.findViewById(R.id.question_answer);
-                textView.setText(strId);
+                textView.setText(Html.fromHtml(getString(strId)));
                 AlertDialog alertDialog = new AlertDialog.Builder(AppConfigActivity.this).setView(view).setPositiveButton("确定",null).create();
                 alertDialog.show();
             }

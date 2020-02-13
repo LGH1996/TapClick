@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -181,7 +183,10 @@ public class MainActivity extends Activity {
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
                     if (haveNewVersion){
-                        AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).setIcon(R.drawable.update_app).setTitle("发现新版本("+latestVersionMessage.tag_name.substring(1)+")").setMessage(latestVersionMessage.body).setNegativeButton("取消",null).setPositiveButton("更新", new DialogInterface.OnClickListener() {
+                        View view = inflater.inflate(R.layout.view_update_message,null);
+                        EditText editText = view.findViewById(R.id.update_massage);
+                        editText.setText(Html.fromHtml(latestVersionMessage.body));
+                        AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).setIcon(R.drawable.update_app).setTitle("发现新版本("+latestVersionMessage.tag_name.substring(1)+")").setView(view).setNegativeButton("取消",null).setPositiveButton("更新", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(latestVersionMessage.assets.get(0).browser_download_url));

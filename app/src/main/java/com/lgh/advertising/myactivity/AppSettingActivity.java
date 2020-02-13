@@ -13,13 +13,16 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.Html;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -70,7 +73,7 @@ public class AppSettingActivity extends Activity {
         });
         checkUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 @SuppressLint("StaticFieldLeak") AsyncTask<String,Integer,String> asyncTask = new AsyncTask<String, Integer, String>() {
                     private LatestVersionMessage latestVersionMessage;
                     private AlertDialog waitDialog;
@@ -128,7 +131,10 @@ public class AppSettingActivity extends Activity {
                         super.onPostExecute(s);
                         waitDialog.dismiss();
                         if (haveNewVersion){
-                            AlertDialog dialog = new AlertDialog.Builder(AppSettingActivity.this).setIcon(R.drawable.update_app).setTitle("发现新版本("+latestVersionMessage.tag_name.substring(1)+")").setMessage(latestVersionMessage.body).setNegativeButton("取消",null).setPositiveButton("更新", new DialogInterface.OnClickListener() {
+                            View view = LayoutInflater.from(AppSettingActivity.this).inflate(R.layout.view_update_message,null);
+                            EditText editText = view.findViewById(R.id.update_massage);
+                            editText.setText(Html.fromHtml(latestVersionMessage.body));
+                            AlertDialog dialog = new AlertDialog.Builder(AppSettingActivity.this).setIcon(R.drawable.update_app).setTitle("发现新版本("+latestVersionMessage.tag_name.substring(1)+")").setView(view).setNegativeButton("取消",null).setPositiveButton("更新", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(latestVersionMessage.assets.get(0).browser_download_url));
