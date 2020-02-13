@@ -3,8 +3,10 @@ package com.lgh.advertising.myactivity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,10 +14,12 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +40,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -125,6 +132,69 @@ public class MainActivity extends Activity {
                 startActivity = true;
             }
         });
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd a");
+        String forUpdate = dateFormat.format(new Date());
+        if (!forUpdate.equals(myAppConfig.forUpdate)){
+            myAppConfig.forUpdate = forUpdate;
+            dataDao.insertMyAppConfig(myAppConfig);
+            @SuppressLint("StaticFieldLeak") AsyncTask<String,Integer,String> asyncTask = new AsyncTask<String, Integer, String>() {
+                private LatestVersionMessage latestVersionMessage;
+                private boolean haveNewVersion;
+
+                @Override
+                protected String doInBackground(String... strings) {
+                    try {
+                        URL url = new URL(strings[0]);
+                        HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                        httpsURLConnection.setRequestMethod("GET");
+                        httpsURLConnection.setUseCaches(false);
+                        httpsURLConnection.setConnectTimeout(10000);
+                        httpsURLConnection.connect();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream()));
+                        StringBuilder stringBuilder = new StringBuilder();
+                        String str;
+                        while ((str = reader.readLine())!=null){
+                            stringBuilder.append(str);
+                        }
+                        latestVersionMessage = new Gson().fromJson(stringBuilder.toString(),LatestVersionMessage.class);
+                        int versionCode = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionCode;
+                        String appName = latestVersionMessage.assets.get(0).name;
+                        int newVersion = Integer.valueOf(appName.substring(appName.lastIndexOf('-')+1,appName.lastIndexOf('.')));
+                        if (newVersion > versionCode){
+                            haveNewVersion = true;
+                        } else {
+                            haveNewVersion = false;
+                        }
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }  catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (Throwable e){
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    if (haveNewVersion){
+                        AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).setIcon(R.drawable.update_app).setTitle("发现新版本("+latestVersionMessage.tag_name.substring(1)+")").setMessage(latestVersionMessage.body).setNegativeButton("取消",null).setPositiveButton("更新", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(latestVersionMessage.assets.get(0).browser_download_url));
+                                startActivity(intent);
+                            }
+                        }).create();
+                        dialog.show();
+                    }
+                }
+            };
+            asyncTask.execute("https://api.github.com/repos/LGH1996/UPDATEADGO/releases/latest");
+        }
+
     }
 
     @Override

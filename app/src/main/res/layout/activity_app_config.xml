@@ -1,6 +1,532 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/base_setting_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/base_setting_img"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/retrieve_setting" />
+
+                    <TextView
+                        android:id="@+id/base_setting_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@+id/base_setting_img"
+                        android:gravity="center_vertical|start"
+                        android:paddingStart="10dp"
+                        android:singleLine="true"
+                        android:text="基础功能设置"
+                        android:textColor="@color/textColor"
+                        android:textSize="15sp" />
+
+                    <ImageButton
+                        android:id="@+id/base_setting_question"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:alpha="0.1"
+                        android:background= "@drawable/question"/>
+                </RelativeLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divideLine"
+                    android:layout_marginBottom="10dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp">
+                    <TextView
+                        android:id="@+id/on_off_txt_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5dp"
+                        android:text="该应用总开关:"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp" />
+                    <Switch
+                        android:id="@+id/on_off_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/on_off_txt_a"
+                        android:thumb="@drawable/switch_custom_thumb_selector"
+                        android:track="@drawable/switch_custom_track_selector" />
+                    <TextView
+                        android:id="@+id/on_off_txt_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/on_off_switch"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="应用名称:"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/on_off_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/on_off_txt_b"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp"
+                        android:layout_marginEnd="15dp"
+                        android:enabled="false"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp">
+                    <TextView
+                        android:id="@+id/auto_finder_on_off_txt_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5dp"
+                        android:text="字词检索开关:"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp" />
+                    <Switch
+                        android:id="@+id/auto_finder_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/auto_finder_on_off_txt_a"
+                        android:layout_centerVertical="true"
+                        android:thumb="@drawable/switch_custom_thumb_selector"
+                        android:track="@drawable/switch_custom_track_selector" />
+                    <TextView
+                        android:id="@+id/auto_finder_on_off_txt_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/auto_finder_switch"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="持续时间(ms):"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/auto_finder_sustainTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/auto_finder_on_off_txt_b"
+                        android:background="@null"
+                        android:ems="3"
+                        android:gravity="center_vertical"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp"
+                        android:layout_marginEnd="20dp"/>
+
+                    <TextView
+                        android:id="@+id/auto_finder_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5dp"
+                        android:layout_toEndOf="@id/auto_finder_sustainTime"
+                        android:text="保持:"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/auto_finder_retrieveAllTime"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_toEndOf="@id/auto_finder_txt"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/check_select"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:button="@null"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp">
+                    <TextView
+                        android:id="@+id/coordinate_on_off_txt_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5dp"
+                        android:text="坐标检索开关:"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp" />
+                    <Switch
+                        android:id="@+id/coordinate_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/coordinate_on_off_txt_a"
+                        android:layout_centerVertical="true"
+                        android:thumb="@drawable/switch_custom_thumb_selector"
+                        android:track="@drawable/switch_custom_track_selector" />
+                    <TextView
+                        android:id="@+id/coordinate_on_off_txt_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/coordinate_switch"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="持续时间(ms):"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/coordinate_sustainTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/coordinate_on_off_txt_b"
+                        android:background="@null"
+                        android:ems="3"
+                        android:gravity="center_vertical"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp"
+                        android:layout_marginEnd="20dp"/>
+
+                    <TextView
+                        android:id="@+id/coordinate_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5dp"
+                        android:layout_toEndOf="@id/coordinate_sustainTime"
+                        android:text="保持:"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/coordinate_retrieveAllTime"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_toEndOf="@id/coordinate_txt"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/check_select"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:button="@null"/>
+                </RelativeLayout>
+                <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
+                <TextView
+                    android:id="@+id/widget_on_off_txt_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="5dp"
+                    android:text="控件检索开关:"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
+                <Switch
+                    android:id="@+id/widget_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/widget_on_off_txt_a"
+                    android:layout_centerVertical="true"
+                    android:thumb="@drawable/switch_custom_thumb_selector"
+                    android:track="@drawable/switch_custom_track_selector" />
+                <TextView
+                    android:id="@+id/widget_on_off_txt_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/widget_switch"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="持续时间(ms):"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/widget_sustainTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/widget_on_off_txt_b"
+                        android:background="@null"
+                        android:ems="3"
+                        android:gravity="center_vertical"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="12sp"
+                        android:layout_marginEnd="20dp"/>
+
+                <TextView
+                    android:id="@+id/widget_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_toEndOf="@id/widget_sustainTime"
+                    android:text="保持:"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
+
+                <CheckBox
+                    android:id="@+id/widget_retrieveAllTime"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_toEndOf="@id/widget_txt"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/check_select"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:button="@null"/>
+            </RelativeLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/base_setting_modify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:padding="1dp"
+                    android:singleLine="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/base_setting_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_toStartOf="@+id/base_setting_sure"
+                    android:padding="1dp"
+                    android:text="删除"
+                    android:textColor="@drawable/text_click_color"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/base_setting_sure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:padding="1dp"
+                    android:text="确认"
+                    android:textColor="@drawable/text_click_color"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:src="@color/divideLine"
+                android:layout_marginTop="10dp" />
+
+
+            <LinearLayout
+                android:id="@+id/auto_finder_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/auto_finder_img"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/auto_finder" />
+
+                    <TextView
+                        android:id="@+id/auto_finder_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@+id/auto_finder_img"
+                        android:gravity="center_vertical|start"
+                        android:paddingStart="10dp"
+                        android:singleLine="true"
+                        android:text="字词检索管理"
+                        android:textColor="@color/textColor"
+                        android:textSize="15sp" />
+
+                    <ImageButton
+                        android:id="@+id/auto_finder_question"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:alpha="0.1"
+                        android:background= "@drawable/question"/>
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divideLine"
+                    android:layout_marginBottom="10dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/coordinate_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/coordinate_img"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/coordinate" />
+
+                    <TextView
+                        android:id="@+id/coordinate_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@+id/coordinate_img"
+                        android:gravity="center_vertical|start"
+                        android:paddingStart="10dp"
+                        android:singleLine="true"
+                        android:text="坐标检索管理"
+                        android:textColor="@color/textColor"
+                        android:textSize="15sp" />
+
+                    <ImageButton
+                        android:id="@+id/coordinate_question"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:alpha="0.1"
+                        android:background="@drawable/question"/>
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divideLine"
+                    android:layout_marginBottom="10dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/widget_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/widget_img"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/widget" />
+
+                    <TextView
+                        android:id="@+id/widget_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@+id/widget_img"
+                        android:gravity="center_vertical|start"
+                        android:paddingStart="10dp"
+                        android:singleLine="true"
+                        android:text="控件检索管理"
+                        android:textColor="@color/textColor"
+                        android:textSize="15sp" />
+
+                    <ImageButton
+                        android:id="@+id/widget_question"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:alpha="0.1"
+                        android:background="@drawable/question"/>
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divideLine"
+                    android:layout_marginBottom="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
