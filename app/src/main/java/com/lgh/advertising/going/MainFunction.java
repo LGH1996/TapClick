@@ -105,7 +105,7 @@ public class MainFunction {
     }
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName() + "-" + event.getContentChangeTypes() + "_" + event.getAction() + "_" + event.getRecordCount() + "-" + event.getAddedCount() + "_" + event.getWindowId() + "-" + event.isEnabled() + "-" + event.getSource().isVisibleToUser());
+        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName() + "-" + event.getContentChangeTypes() + "_" + event.getAction() + "_" + event.getRecordCount() + "-" + event.getAddedCount() + "_" + event.getWindowId() + "-" + event.isEnabled() + "-");
         try {
             switch (event.getEventType()) {
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
@@ -115,7 +115,7 @@ public class MainFunction {
                         String packageName = temPackage.toString();
                         String activityName = temClass.toString();
                         boolean isActivity = !activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.");
-                        if (!packageName.equals(currentPackage) && isActivity && event.getSource().isVisibleToUser()) {
+                        if (!packageName.equals(currentPackage) && isActivity) {
                             appDescribe = appDescribeMap.get(packageName);
                             if (appDescribe != null) {
                                 currentPackage = packageName;
