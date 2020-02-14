@@ -25,9 +25,8 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        String str = "app-release-444412.apk";
+        String str = "1app-release-444412.apk11d33";
         Matcher pattern = Pattern.compile("\\d+").matcher(str);
-        pattern.find();
-        System.out.println(pattern.toMatchResult().group());
+        System.out.println(pattern.toString());
     }
 }

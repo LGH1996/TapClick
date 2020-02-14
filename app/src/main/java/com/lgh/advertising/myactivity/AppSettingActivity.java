@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -102,13 +103,14 @@ public class AppSettingActivity extends Activity {
                             HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
                             httpsURLConnection.setRequestMethod("GET");
                             httpsURLConnection.setUseCaches(false);
-                            httpsURLConnection.setConnectTimeout(10000);
                             httpsURLConnection.connect();
                             Scanner scanner = new Scanner(httpsURLConnection.getInputStream());
                             StringBuilder stringBuilder = new StringBuilder();
                             while (scanner.hasNextLine()){
                                 stringBuilder.append(scanner.nextLine());
                             }
+                            scanner.close();
+                            httpsURLConnection.disconnect();
                             latestVersionMessage = new Gson().fromJson(stringBuilder.toString(), LatestMessage.class);
                             int versionCode = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionCode;
                             String appName = latestVersionMessage.assets.get(0).name;

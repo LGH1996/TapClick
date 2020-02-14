@@ -145,13 +145,14 @@ public class MainActivity extends Activity {
                         HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
                         httpsURLConnection.setRequestMethod("GET");
                         httpsURLConnection.setUseCaches(false);
-                        httpsURLConnection.setConnectTimeout(10000);
                         httpsURLConnection.connect();
                         Scanner scanner = new Scanner(httpsURLConnection.getInputStream());
                         StringBuilder stringBuilder = new StringBuilder();
                         while (scanner.hasNextLine()){
                             stringBuilder.append(scanner.nextLine());
                         }
+                        scanner.close();
+                        httpsURLConnection.disconnect();
                         latestVersionMessage = new Gson().fromJson(stringBuilder.toString(), LatestMessage.class);
                         int versionCode = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionCode;
                         String appName = latestVersionMessage.assets.get(0).name;
