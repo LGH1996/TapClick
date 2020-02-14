@@ -1,14 +1,19 @@
 package com.lgh.advertising.going;
 
+import android.content.Intent;
+
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.lgh.advertising.myclass.LatestMessage;
 
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 
@@ -20,15 +25,9 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        Gson gson = new Gson();
-        List<String> stringList = new ArrayList<>();
-        stringList.add("a");
-        stringList.add("跳过");
-        System.out.println(gson.toJson(stringList));
-        System.out.println(stringList.toString());
-        System.out.println(gson.fromJson(stringList.toString(),new TypeToken<List<String>>(){}.getType()).toString());
-        System.out.println(gson.fromJson("   [a,  b     ,解决       ]    ",new TypeToken<List<String>>(){}.getType()).toString());
-        System.out.println("[ g，好]".matches("^\\[(\\S+,)*(\\S.+)\\]$"));
-
+        String str = "app-release-444412.apk";
+        Matcher pattern = Pattern.compile("\\d+").matcher(str);
+        pattern.find();
+        System.out.println(pattern.toMatchResult().group());
     }
 }

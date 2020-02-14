@@ -105,7 +105,7 @@ public class MainFunction {
     }
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName()+"-"+event.getContentChangeTypes()+"_"+event.getAction()+"_"+event.getRecordCount()+"-"+event.getAddedCount()+"_"+event.getWindowId()+"-"+event.isEnabled()+"-"+event.getSource().isVisibleToUser());
+        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName() + "-" + event.getContentChangeTypes() + "_" + event.getAction() + "_" + event.getRecordCount() + "-" + event.getAddedCount() + "_" + event.getWindowId() + "-" + event.isEnabled() + "-" + event.getSource().isVisibleToUser());
         try {
             switch (event.getEventType()) {
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
@@ -200,7 +200,7 @@ public class MainFunction {
                                     if (widgetSet != null) {
                                         serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                                         service.setServiceInfo(serviceInfo);
-                                    } else if (!on_off_autoFinder){
+                                    } else if (!on_off_autoFinder) {
                                         serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                                         service.setServiceInfo(serviceInfo);
                                     }
@@ -280,21 +280,23 @@ public class MainFunction {
                     public void run() {
                         if (autoFinder.clickOnly) {
                             for (AccessibilityNodeInfo e : list) {
-                                Rect rect = new Rect();
-                                e.getBoundsInScreen(rect);
-                                click(rect.centerX(), rect.centerY(), 0, 20);
-                                e.recycle();
+                                if (e.refresh()) {
+                                    Rect rect = new Rect();
+                                    e.getBoundsInScreen(rect);
+                                    click(rect.centerX(), rect.centerY(), 0, 20);
+                                }
                             }
                         } else {
                             for (AccessibilityNodeInfo e : list) {
-                                if (!e.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                    if (!e.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                        Rect rect = new Rect();
-                                        e.getBoundsInScreen(rect);
-                                        click(rect.centerX(), rect.centerY(), 0, 20);
+                                if (e.refresh()) {
+                                    if (!e.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                                        if (!e.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                                            Rect rect = new Rect();
+                                            e.getBoundsInScreen(rect);
+                                            click(rect.centerX(), rect.centerY(), 0, 20);
+                                        }
                                     }
                                 }
-                                e.recycle();
                             }
                         }
                     }
@@ -343,24 +345,25 @@ public class MainFunction {
                         executorService.schedule(new Runnable() {
                             @Override
                             public void run() {
-                                if (e.clickOnly) {
-                                    click(temRect.centerX(), temRect.centerY(), 0, 20);
-                                } else {
-                                    if (!node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                        if (!node.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                            click(temRect.centerX(), temRect.centerY(), 0, 20);
+                                if (node.refresh()) {
+                                    if (e.clickOnly) {
+                                        click(temRect.centerX(), temRect.centerY(), 0, 20);
+                                    } else {
+                                        if (!node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                                            if (!node.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                                                click(temRect.centerX(), temRect.centerY(), 0, 20);
+                                            }
                                         }
                                     }
                                 }
                             }
                         }, e.clickDelay, TimeUnit.MILLISECONDS);
-                        return;
+                        break;
                     }
                 }
                 for (int n = 0; n < node.getChildCount(); n++) {
                     listB.add(node.getChild(n));
                 }
-                node.recycle();
             }
             if (a == b) {
                 a = 0;

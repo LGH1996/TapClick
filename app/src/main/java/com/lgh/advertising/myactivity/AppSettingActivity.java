@@ -24,20 +24,25 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
-import com.lgh.advertising.myclass.LatestVersionMessage;
+import com.lgh.advertising.myclass.LatestMessage;
 import com.lgh.advertising.myclass.MyAppConfig;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -75,7 +80,7 @@ public class AppSettingActivity extends Activity {
             @Override
             public void onClick(final View v) {
                 @SuppressLint("StaticFieldLeak") AsyncTask<String,Integer,String> asyncTask = new AsyncTask<String, Integer, String>() {
-                    private LatestVersionMessage latestVersionMessage;
+                    private LatestMessage latestVersionMessage;
                     private AlertDialog waitDialog;
                     private boolean haveNewVersion;
 
@@ -99,20 +104,18 @@ public class AppSettingActivity extends Activity {
                             httpsURLConnection.setUseCaches(false);
                             httpsURLConnection.setConnectTimeout(10000);
                             httpsURLConnection.connect();
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream()));
+                            Scanner scanner = new Scanner(httpsURLConnection.getInputStream());
                             StringBuilder stringBuilder = new StringBuilder();
-                            String str;
-                            while ((str = reader.readLine())!=null){
-                                stringBuilder.append(str);
+                            while (scanner.hasNextLine()){
+                                stringBuilder.append(scanner.nextLine());
                             }
-                            latestVersionMessage = new Gson().fromJson(stringBuilder.toString(),LatestVersionMessage.class);
+                            latestVersionMessage = new Gson().fromJson(stringBuilder.toString(), LatestMessage.class);
                             int versionCode = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionCode;
                             String appName = latestVersionMessage.assets.get(0).name;
-                            int newVersion = Integer.valueOf(appName.substring(appName.lastIndexOf('-')+1,appName.lastIndexOf('.')));
-                            if (newVersion > versionCode){
-                                haveNewVersion = true;
-                            } else {
-                                haveNewVersion = false;
+                            Matcher matcher = Pattern.compile("\\d+").matcher(appName);
+                            if (matcher.find()){
+                                int newVersion = Integer.valueOf(matcher.group());
+                                haveNewVersion = newVersion > versionCode;
                             }
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
@@ -132,9 +135,9 @@ public class AppSettingActivity extends Activity {
                         waitDialog.dismiss();
                         if (haveNewVersion){
                             View view = LayoutInflater.from(AppSettingActivity.this).inflate(R.layout.view_update_message,null);
-                            EditText editText = view.findViewById(R.id.update_massage);
-                            editText.setText(Html.fromHtml(latestVersionMessage.body));
-                            AlertDialog dialog = new AlertDialog.Builder(AppSettingActivity.this).setIcon(R.drawable.update_app).setTitle("发现新版本("+latestVersionMessage.tag_name.substring(1)+")").setView(view).setNegativeButton("取消",null).setPositiveButton("更新", new DialogInterface.OnClickListener() {
+                            TextView textView = view.findViewById(R.id.update_massage);
+                            textView.setText(Html.fromHtml(latestVersionMessage.body));
+                            AlertDialog dialog = new AlertDialog.Builder(AppSettingActivity.this).setView(view).setNegativeButton("取消",null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(latestVersionMessage.assets.get(0).browser_download_url));

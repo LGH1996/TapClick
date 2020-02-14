@@ -55,14 +55,14 @@ public class AppConfigActivity extends Activity {
         ImageButton questionCoordinate = findViewById(R.id.coordinate_question);
         ImageButton questionWidget = findViewById(R.id.widget_question);
         class QuestionClickListener implements View.OnClickListener {
-            int strId;
-            public QuestionClickListener(int strId){
+            private int strId;
+            private QuestionClickListener(int strId){
                 this.strId = strId;
             }
             @Override
             public void onClick(View v) {
                 View view = inflater.inflate(R.layout.view_question,null);
-                EditText textView = view.findViewById(R.id.question_answer);
+                TextView textView = view.findViewById(R.id.question_answer);
                 textView.setText(Html.fromHtml(getString(strId)));
                 AlertDialog alertDialog = new AlertDialog.Builder(AppConfigActivity.this).setView(view).setPositiveButton("确定",null).create();
                 alertDialog.show();
