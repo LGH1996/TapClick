@@ -1,6 +1,7 @@
 package com.lgh.advertising.myactivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -19,10 +20,13 @@ import com.lgh.advertising.going.R;
 
 public class AppAuthorizationActivity extends Activity {
 
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_authorization);
+        context = getApplicationContext();
         RelativeLayout accessibilityOnOff = findViewById(R.id.accessibility_on_off);
         RelativeLayout batteryOnOff = findViewById(R.id.batteryIgnore_on_off);
         RelativeLayout alertWindowOnOff = findViewById(R.id.alert_window_off);
@@ -36,14 +40,14 @@ public class AppAuthorizationActivity extends Activity {
                         break;
                     case R.id.batteryIgnore_on_off:
                         if (((PowerManager) getSystemService(POWER_SERVICE)).isIgnoringBatteryOptimizations(getPackageName())) {
-                            Toast.makeText(AppAuthorizationActivity.this, "忽略电池优化权限已打开", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "忽略电池优化权限已打开", Toast.LENGTH_SHORT).show();
                         }else {
                             Intent intentB = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + getPackageName()));
                             ResolveInfo resolveInfo = getPackageManager().resolveActivity(intentB, PackageManager.MATCH_ALL);
                             if (resolveInfo != null) {
                                 startActivity(intentB);
                             } else {
-                                Toast.makeText(AppAuthorizationActivity.this, "授权窗口打开失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "授权窗口打开失败", Toast.LENGTH_SHORT).show();
                             }
                         }
                         break;
@@ -81,7 +85,7 @@ public class AppAuthorizationActivity extends Activity {
         } else {
             batteryOnOffImg.setImageResource(R.drawable.error);
         }
-        if (Settings.canDrawOverlays(this)) {
+        if (Settings.canDrawOverlays(context)) {
             alertWindowOnOffImg.setImageResource(R.drawable.ok);
         } else {
             alertWindowOnOffImg.setImageResource(R.drawable.error);

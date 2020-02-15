@@ -3,6 +3,7 @@ package com.lgh.advertising.myactivity;
 import androidx.annotation.NonNull;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -40,6 +41,7 @@ import java.util.Map;
 public class AppSelectActivity extends Activity {
 
     public static AppDescribe appDescribe;
+    Context context;
     PackageManager packageManager;
     DataDao dataDao;
     Map<String, AppDescribe> appDescribeMap;
@@ -52,12 +54,13 @@ public class AppSelectActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_select);
+        context = getApplicationContext();
         packageManager = getPackageManager();
         dataDao = DataDaoFactory.getInstance(getApplicationContext());
         appDescribeAndIconList = new ArrayList<>();
         final ListView listView = findViewById(R.id.listView);
         final ProgressBar progressBar = findViewById(R.id.progress);
-        final LayoutInflater inflater = LayoutInflater.from(this);
+        final LayoutInflater inflater = LayoutInflater.from(context);
         progressBar.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
         new Thread(new Runnable() {
@@ -148,7 +151,7 @@ public class AppSelectActivity extends Activity {
                                     appDescribe = appDescribeList.get(position);
                                     appDescribe.getOtherField(dataDao);
                                 }
-                                startActivity(new Intent(AppSelectActivity.this, AppConfigActivity.class));
+                                startActivity(new Intent(context, AppConfigActivity.class));
                             }
                         });
                         listView.setAdapter(baseAdapter);
@@ -156,10 +159,10 @@ public class AppSelectActivity extends Activity {
                         progressBar.setVisibility(View.GONE);
                         break;
                     case 0x01:
-                        Toast.makeText(AppSelectActivity.this, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
                         break;
                     case 0x02:
-                        Toast.makeText(AppSelectActivity.this, "无障碍服务冲突", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "无障碍服务冲突", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return true;

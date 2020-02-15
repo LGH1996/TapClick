@@ -8,27 +8,11 @@ import android.view.accessibility.AccessibilityEvent;
 
 public class MyAccessibilityService extends AccessibilityService {
 
-    private int create_num, connect_num;
     public static MainFunction mainFunction;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        try {
-            create_num = 0;
-            connect_num = 0;
-            create_num++;
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
-        if (++connect_num != create_num) {
-            throw new RuntimeException("无障碍服务出现异常");
-        }
         mainFunction = new MainFunction(this);
         mainFunction.onServiceConnected();
         if (MyAccessibilityServiceNoGesture.mainFunction != null) {

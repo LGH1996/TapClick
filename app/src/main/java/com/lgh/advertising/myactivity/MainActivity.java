@@ -3,6 +3,7 @@ package com.lgh.advertising.myactivity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -48,6 +49,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends Activity {
 
+    private Context context;
     private MyAppConfig myAppConfig;
     private DataDao dataDao;
     private boolean startActivity;
@@ -56,17 +58,18 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ListView listView = findViewById(R.id.main_listView);
-        dataDao = DataDaoFactory.getInstance(this);
+        context = getApplicationContext();
+        dataDao = DataDaoFactory.getInstance(context);
         myAppConfig = dataDao.getMyAppConfig();
         if (myAppConfig == null) myAppConfig = new MyAppConfig();
-        final LayoutInflater inflater = LayoutInflater.from(this);
+
+        ListView listView = findViewById(R.id.main_listView);
+        final LayoutInflater inflater = LayoutInflater.from(context);
         final List<Resource> source = new ArrayList<>();
         source.add(new Resource("授权管理", R.drawable.authorization));
         source.add(new Resource("添加广告", R.drawable.advertising));
         source.add(new Resource("数据管理", R.drawable.edit));
         source.add(new Resource("应用设置", R.drawable.setting));
-
         BaseAdapter baseAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
@@ -100,15 +103,15 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(MainActivity.this,AppAuthorizationActivity.class));
+                        startActivity(new Intent(context,AppAuthorizationActivity.class));
                         break;
                     case 1:
                         if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
-                            Toast.makeText(MainActivity.this, "请先开启无障碍服务", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "请先开启无障碍服务", Toast.LENGTH_SHORT).show();
                         } else if (MyAccessibilityService.mainFunction != null && MyAccessibilityServiceNoGesture.mainFunction != null) {
-                            Toast.makeText(MainActivity.this, "无障碍服务冲突", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "无障碍服务冲突", Toast.LENGTH_SHORT).show();
                         } else {
-                            startActivity(new Intent(MainActivity.this, AddAdvertisingActivity.class));
+                            startActivity(new Intent(context, AddAdvertisingActivity.class));
                             if (MyAccessibilityService.mainFunction != null) {
                                 MyAccessibilityService.mainFunction.showAddAdvertisingFloat();
                             }
@@ -118,10 +121,10 @@ public class MainActivity extends Activity {
                         }
                         break;
                     case 2:
-                        MainActivity.this.startActivity(new Intent(MainActivity.this, AppSelectActivity.class));
+                        MainActivity.this.startActivity(new Intent(context, AppSelectActivity.class));
                         break;
                     case 3:
-                        Intent intent = new Intent(MainActivity.this,AppSettingActivity.class);
+                        Intent intent = new Intent(context,AppSettingActivity.class);
                         intent.putExtra("myAppConfig.autoHideOnTaskList",myAppConfig.autoHideOnTaskList);
                         startActivityForResult(intent,0);
                         break;
@@ -180,7 +183,7 @@ public class MainActivity extends Activity {
                         View view = inflater.inflate(R.layout.view_update_message,null);
                         TextView textView = view.findViewById(R.id.update_massage);
                         textView.setText(Html.fromHtml(latestVersionMessage.body));
-                        AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).setView(view).setNegativeButton("取消",null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        AlertDialog dialog = new AlertDialog.Builder(context).setView(view).setNegativeButton("取消",null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(latestVersionMessage.assets.get(0).browser_download_url));

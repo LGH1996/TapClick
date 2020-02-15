@@ -2,6 +2,7 @@ package com.lgh.advertising.myactivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
@@ -35,6 +36,7 @@ import java.util.Set;
 
 public class AppConfigActivity extends Activity {
 
+    Context context;
     LayoutInflater inflater;
     DataDao dataDao;
     DisplayMetrics metrics;
@@ -43,8 +45,9 @@ public class AppConfigActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_config);
-        inflater = LayoutInflater.from(this);
-        dataDao = DataDaoFactory.getInstance(this);
+        context = getApplicationContext();
+        inflater = LayoutInflater.from(context);
+        dataDao = DataDaoFactory.getInstance(context);
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
         final AppDescribe appDescribe = AppSelectActivity.appDescribe;
@@ -106,7 +109,7 @@ public class AppConfigActivity extends Activity {
         baseSettingDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AppConfigActivity.this,"该选项不允许删除",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"该选项不允许删除",Toast.LENGTH_SHORT).show();
             }
         });
         baseSettingSure.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +155,7 @@ public class AppConfigActivity extends Activity {
         autoFinderDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AppConfigActivity.this,"该选项不允许删除",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"该选项不允许删除",Toast.LENGTH_SHORT).show();
             }
         });
         autoFinderSure.setOnClickListener(new View.OnClickListener() {

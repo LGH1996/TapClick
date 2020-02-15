@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -49,12 +50,14 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class AppSettingActivity extends Activity {
 
+    private Context context;
     private boolean autoHideOnTaskList;
     private  Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_setting);
+        context = getApplicationContext();
         autoHideOnTaskList = getIntent().getBooleanExtra("myAppConfig.autoHideOnTaskList",false);
         intent = new Intent();
         intent.putExtra("myAppConfig.autoHideOnTaskList",autoHideOnTaskList);
@@ -88,7 +91,7 @@ public class AppSettingActivity extends Activity {
                     @Override
                     protected void onPreExecute() {
                         super.onPreExecute();
-                        waitDialog = new AlertDialog.Builder(AppSettingActivity.this).setView(new ProgressBar(AppSettingActivity.this)).setCancelable(false).create();
+                        waitDialog = new AlertDialog.Builder(AppSettingActivity.this).setView(new ProgressBar(context)).setCancelable(false).create();
                         Window window = waitDialog.getWindow();
                         if (window != null)
                         window.setBackgroundDrawableResource(R.color.transparent);
@@ -136,7 +139,7 @@ public class AppSettingActivity extends Activity {
                         super.onPostExecute(s);
                         waitDialog.dismiss();
                         if (haveNewVersion){
-                            View view = LayoutInflater.from(AppSettingActivity.this).inflate(R.layout.view_update_message,null);
+                            View view = LayoutInflater.from(context).inflate(R.layout.view_update_message,null);
                             TextView textView = view.findViewById(R.id.update_massage);
                             textView.setText(Html.fromHtml(latestVersionMessage.body));
                             AlertDialog dialog = new AlertDialog.Builder(AppSettingActivity.this).setView(view).setNegativeButton("取消",null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -148,7 +151,7 @@ public class AppSettingActivity extends Activity {
                             }).create();
                             dialog.show();
                         } else {
-                            Toast.makeText(AppSettingActivity.this,"当前已是最新版本",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,"当前已是最新版本",Toast.LENGTH_SHORT).show();
                         }
                     }
                 };
