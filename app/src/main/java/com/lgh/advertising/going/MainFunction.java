@@ -207,26 +207,26 @@ public class MainFunction {
                                 }
                             }
                         }
-                        if (!packageName.equals(currentPackage)) {
-                            break;
-                        }
-                        if (on_off_widget && appDescribe != null && widgetSet != null) {
-                            findSkipButtonByWidget(service.getRootInActiveWindow(), widgetSet);
-                        }
-                        if (on_off_autoFinder && appDescribe != null) {
-                            findSkipButtonByText(service.getRootInActiveWindow(), appDescribe.autoFinder);
+
+                        if (packageName.equals(currentPackage)) {
+                            if (on_off_widget && appDescribe != null && widgetSet != null) {
+                                findSkipButtonByWidget(service.getRootInActiveWindow(), widgetSet);
+                            }
+                            if (on_off_autoFinder && appDescribe != null) {
+                                findSkipButtonByText(service.getRootInActiveWindow(), appDescribe.autoFinder);
+                            }
                         }
                     }
                     break;
+
                 case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
-                    if (event.getPackageName().equals("com.android.systemui")) {
-                        break;
-                    }
-                    if (on_off_widget && appDescribe != null && widgetSet != null) {
-                        findSkipButtonByWidget(event.getSource(), widgetSet);
-                    }
-                    if (on_off_autoFinder && appDescribe != null) {
-                        findSkipButtonByText(event.getSource(), appDescribe.autoFinder);
+                    if (event.getPackageName().equals(currentPackage)) {
+                        if (on_off_widget && appDescribe != null && widgetSet != null) {
+                            findSkipButtonByWidget(event.getSource(), widgetSet);
+                        }
+                        if (on_off_autoFinder && appDescribe != null) {
+                            findSkipButtonByText(event.getSource(), appDescribe.autoFinder);
+                        }
                     }
                     break;
             }
