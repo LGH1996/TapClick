@@ -1,8 +1,5 @@
 package com.lgh.advertising.myclass;
 
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
-
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Index;

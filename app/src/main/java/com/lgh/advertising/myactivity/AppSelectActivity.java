@@ -22,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.common.collect.Lists;
-import com.lgh.advertising.going.MainFunction;
 import com.lgh.advertising.going.MyAccessibilityService;
 import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;

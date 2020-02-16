@@ -3,7 +3,6 @@ package com.lgh.advertising.going;
 import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 
 public class MyAccessibilityServiceNoGesture extends AccessibilityService {

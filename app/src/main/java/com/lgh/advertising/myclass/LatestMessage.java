@@ -1,7 +1,5 @@
 package com.lgh.advertising.myclass;
 
-import android.graphics.Rect;
-
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -12,10 +10,6 @@ public class LatestMessage {
     public boolean draft, prerelease;
     public Author author;
     public List<Asset> assets;
-
-    public BodyMassage getBodyMessage(){
-        return new Gson().fromJson(body,BodyMassage.class);
-    }
 
     public class Asset {
         public String url, id, node_id, name, label, content_type, state, size, download_count, created_at, updated_at, browser_download_url;
@@ -28,22 +22,5 @@ public class LatestMessage {
 
     public class Uploader {
         public String login, id, node_id, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin;
-    }
-    public static class BodyMassage {
-        public int versionCode;
-        public String versionName;
-        public String versionMessage;
-        public String versionAction;
-        public String versionCategory;
-        public String versionMimeType;
-        public String versionUri;
-        public boolean versionForceUpdate;
-        public String notificationMessage;
-        public String notifacationActiom;
-        public String notifacationCategory;
-        public String notifacationMimeType;
-        public String notifacationUri;
-        public boolean notificationShow;
-        public boolean notificationCancleAble;
     }
 }

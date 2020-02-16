@@ -6,7 +6,6 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import java.util.List;
 import java.util.Objects;
 
 @Entity(indices = @Index(value = {"appActivity","widgetRect"},unique = true))

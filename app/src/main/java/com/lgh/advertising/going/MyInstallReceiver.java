@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.util.Log;
 
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.AutoFinder;

@@ -18,7 +18,6 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/base_setting_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -38,7 +37,6 @@
                         android:src="@drawable/retrieve_setting" />
 
                     <TextView
-                        android:id="@+id/base_setting_title"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_toEndOf="@+id/base_setting_img"
@@ -399,7 +397,6 @@
                         android:src="@drawable/auto_finder" />
 
                     <TextView
-                        android:id="@+id/auto_finder_title"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_toEndOf="@+id/auto_finder_img"
@@ -449,7 +446,6 @@
                         android:src="@drawable/coordinate" />
 
                     <TextView
-                        android:id="@+id/coordinate_title"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_toEndOf="@+id/coordinate_img"
@@ -499,7 +495,6 @@
                         android:src="@drawable/widget" />
 
                     <TextView
-                        android:id="@+id/widget_title"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_toEndOf="@+id/widget_img"

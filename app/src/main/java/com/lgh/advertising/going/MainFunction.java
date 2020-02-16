@@ -4,6 +4,8 @@ import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.accessibilityservice.GestureDescription;
 import android.annotation.SuppressLint;
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -16,7 +18,6 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -69,6 +70,7 @@ public class MainFunction {
     private MyScreenOffReceiver screenOffReceiver;
     private Set<Widget> widgetSet;
     private MyInstallReceiver installReceiver;
+    private UsageStatsManager usageStatsManager;
 
     private WindowManager.LayoutParams aParams, bParams, cParams;
     private View viewAdvertisingMessage, viewLayoutAnalyze;
@@ -85,6 +87,7 @@ public class MainFunction {
             executorService = Executors.newSingleThreadScheduledExecutor();
             serviceInfo = service.getServiceInfo();
             appDescribeMap = new HashMap<>();
+            usageStatsManager = (UsageStatsManager) service.getSystemService(Context.USAGE_STATS_SERVICE);
             screenOffReceiver = new MyScreenOffReceiver();
             service.registerReceiver(screenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
             installReceiver = new MyInstallReceiver();
@@ -105,7 +108,7 @@ public class MainFunction {
     }
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName() + "-" + event.getContentChangeTypes() + "_" + event.getAction() + "_" + event.getRecordCount() + "-" + event.getAddedCount() + "_" + event.getWindowId() + "-" + event.isEnabled() + "-");
+//        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName() + "-" + event.getContentChangeTypes() + "_" + event.getAction() + "_" + event.getRecordCount() + "-" + event.getAddedCount() + "_" + event.getWindowId() + "-" + event.isEnabled() + "-");
         try {
             switch (event.getEventType()) {
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
@@ -114,6 +117,20 @@ public class MainFunction {
                     if (temPackage != null && temClass != null) {
                         String packageName = temPackage.toString();
                         String activityName = temClass.toString();
+                        long temTime = System.currentTimeMillis();
+                        List<UsageStats> usageStats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, temTime - 500, temTime);
+                        if (usageStats != null && !usageStats.isEmpty()) {
+                            UsageStats latest = usageStats.get(0);
+                            for (UsageStats e : usageStats) {
+                                if (e.getLastTimeUsed() > latest.getLastTimeUsed()) {
+                                    latest = e;
+                                }
+                            }
+//                            if (!packageName.equals(latest.getPackageName())){
+//                                Toast.makeText(service,"包名识别冲突：\n"+packageName+"\n"+latest.getPackageName(),Toast.LENGTH_SHORT).show();
+//                            }
+                            packageName = latest.getPackageName();
+                        }
                         boolean isActivity = !activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.");
                         if (!packageName.equals(currentPackage) && isActivity) {
                             appDescribe = appDescribeMap.get(packageName);

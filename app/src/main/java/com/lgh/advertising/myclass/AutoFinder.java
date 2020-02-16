@@ -5,7 +5,6 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity(indices = @Index(value = "appPackage",unique = true))
 public class AutoFinder {
