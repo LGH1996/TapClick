@@ -18,6 +18,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.AutoFinder;
@@ -117,19 +119,19 @@ public class MainFunction {
                     if (temPackage != null && temClass != null) {
                         String packageName = temPackage.toString();
                         String activityName = temClass.toString();
-                        long temTime = System.currentTimeMillis();
-                        List<UsageStats> usageStats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, temTime - 500, temTime);
-                        if (usageStats != null && !usageStats.isEmpty()) {
+                        long time = System.currentTimeMillis();
+                        List<UsageStats> usageStats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, time-5000,time);
+                        if (!usageStats.isEmpty()) {
                             UsageStats latest = usageStats.get(0);
                             for (UsageStats e : usageStats) {
                                 if (e.getLastTimeUsed() > latest.getLastTimeUsed()) {
                                     latest = e;
                                 }
                             }
-//                            if (!packageName.equals(latest.getPackageName())){
-//                                Toast.makeText(service,"包名识别冲突：\n"+packageName+"\n"+latest.getPackageName(),Toast.LENGTH_SHORT).show();
-//                            }
+                            Toast.makeText(service,latest.getPackageName(),Toast.LENGTH_SHORT).show();
                             packageName = latest.getPackageName();
+                        } else {
+                            Toast.makeText(service,"usageStats is empty",Toast.LENGTH_SHORT).show();
                         }
                         boolean isActivity = !activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.");
                         if (!packageName.equals(currentPackage) && isActivity) {
