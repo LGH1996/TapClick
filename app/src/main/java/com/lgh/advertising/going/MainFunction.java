@@ -119,18 +119,18 @@ public class MainFunction {
                     if (temPackage != null && temClass != null) {
                         String packageName = temPackage.toString();
                         String activityName = temClass.toString();
+                        boolean isActivity = !activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.");
                         long time = System.currentTimeMillis();
-                        List<UsageStats> usageStats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, time - 5000, time);
-                        UsageStats latest = usageStats.get(0);
-                        if (latest != null) {
-                            for (UsageStats e : usageStats) {
+                        List<UsageStats> usageStatsList = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, time - 5000, time);
+                        if (!usageStatsList.isEmpty()) {
+                            UsageStats latest = usageStatsList.get(0);
+                            for (UsageStats e : usageStatsList) {
                                 if (e.getLastTimeUsed() > latest.getLastTimeUsed()) {
                                     latest = e;
                                 }
                             }
                             packageName = latest.getPackageName();
                         }
-                        boolean isActivity = !activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.");
                         if (!packageName.equals(currentPackage) && isActivity) {
                             appDescribe = appDescribeMap.get(packageName);
                             if (appDescribe != null) {
