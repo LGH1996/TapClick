@@ -110,7 +110,7 @@ public class MainFunction {
     }
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName() + "-" + event.getContentChangeTypes() + "_" + event.getAction() + "_" + event.getRecordCount() + "-" + event.getAddedCount() + "_" + event.getWindowId() + "-" + event.isEnabled() + "-");
+//        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName() + "-" + event.getContentChangeTypes() + "_" + event.getAction() + "_" + event.getRecordCount() + "-" + event.getAddedCount() + "_" + event.getWindowId() + "-" + event.isEnabled() + "-");
         try {
             switch (event.getEventType()) {
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
@@ -121,8 +121,8 @@ public class MainFunction {
                         String activityName = temClass.toString();
                         long time = System.currentTimeMillis();
                         List<UsageStats> usageStats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, time - 5000, time);
-                        if (!usageStats.isEmpty()) {
-                            UsageStats latest = usageStats.get(0);
+                        UsageStats latest = usageStats.get(0);
+                        if (latest != null) {
                             for (UsageStats e : usageStats) {
                                 if (e.getLastTimeUsed() > latest.getLastTimeUsed()) {
                                     latest = e;
