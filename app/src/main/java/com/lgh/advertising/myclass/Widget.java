@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
-@Entity(indices = @Index(value = {"appActivity","widgetRect"},unique = true))
+@Entity(indices = @Index(value = {"appPackage","appActivity","widgetRect"},unique = true))
 public class Widget {
     @PrimaryKey(autoGenerate = true)
     public Integer id;
@@ -52,11 +52,11 @@ public class Widget {
         if (this == obj) return true;
         if (!(obj instanceof Widget)) return false;
         Widget widget = (Widget) obj;
-        return this.widgetRect.equals(widget.widgetRect);
+        return this.appPackage.equals(widget.appPackage) && this.appActivity.equals(widget.appActivity) && this.widgetRect.equals(widget.widgetRect);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.widgetRect);
+        return Objects.hash(this.appPackage,this.appActivity,this.widgetRect);
     }
 }
