@@ -4,6 +4,8 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(indices = @Index(value = {"appPackage","appActivity"},unique = true))
 public class Coordinate {
     @PrimaryKey(autoGenerate = true)
@@ -34,5 +36,19 @@ public class Coordinate {
         this.clickDelay = coordinate.clickDelay;
         this.clickInterval = coordinate.clickInterval;
         this.clickNumber = coordinate.clickNumber;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (this == obj) return true;
+        if (!(obj instanceof Coordinate)) return false;
+        Coordinate coordinate = (Coordinate) obj;
+        return this.appPackage.equals(coordinate.appPackage) && this.appActivity.equals(coordinate.appActivity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.appPackage,this.appActivity);
     }
 }
