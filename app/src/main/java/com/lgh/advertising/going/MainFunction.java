@@ -110,7 +110,7 @@ public class MainFunction {
     }
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
-//        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName() + "-" + event.getContentChangeTypes() + "_" + event.getAction() + "_" + event.getRecordCount() + "-" + event.getAddedCount() + "_" + event.getWindowId() + "-" + event.isEnabled() + "-");
+        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName() + "-" + event.getContentChangeTypes() + "_" + event.getAction() + "_" + event.getRecordCount() + "-" + event.getAddedCount() + "_" + event.getWindowId() + "-" + event.isEnabled() + "-");
         try {
             switch (event.getEventType()) {
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
@@ -120,7 +120,7 @@ public class MainFunction {
                         String packageName = temPackage.toString();
                         String activityName = temClass.toString();
                         long time = System.currentTimeMillis();
-                        List<UsageStats> usageStats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, time-5000,time);
+                        List<UsageStats> usageStats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, time - 5000, time);
                         if (!usageStats.isEmpty()) {
                             UsageStats latest = usageStats.get(0);
                             for (UsageStats e : usageStats) {
@@ -128,10 +128,7 @@ public class MainFunction {
                                     latest = e;
                                 }
                             }
-                            Toast.makeText(service,latest.getPackageName(),Toast.LENGTH_SHORT).show();
                             packageName = latest.getPackageName();
-                        } else {
-                            Toast.makeText(service,"usageStats is empty",Toast.LENGTH_SHORT).show();
                         }
                         boolean isActivity = !activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.");
                         if (!packageName.equals(currentPackage) && isActivity) {
@@ -226,7 +223,6 @@ public class MainFunction {
                                 }
                             }
                         }
-
                         if (packageName.equals(currentPackage)) {
                             if (on_off_widget && appDescribe != null && widgetSet != null) {
                                 findSkipButtonByWidget(service.getRootInActiveWindow(), widgetSet);
@@ -473,10 +469,10 @@ public class MainFunction {
             Set<String> packageInstall = new HashSet<>();
             Set<String> packageOff = new HashSet<>();
             Set<String> packageRemove = new HashSet<>();
-            List<ResolveInfo> ResolveInfoList;
+            List<ResolveInfo> ResolveInfoList = new ArrayList<>();
             Intent intent;
             intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME);
-            ResolveInfoList = packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL);
+            ResolveInfoList.addAll(packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL));
             for (ResolveInfo e : ResolveInfoList) {
                 packageOff.add(e.activityInfo.packageName);
             }
@@ -490,7 +486,7 @@ public class MainFunction {
             List<AppDescribe> appDescribeList = new ArrayList<>();
             List<AutoFinder> autoFinderList = new ArrayList<>();
             intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER);
-            ResolveInfoList = packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL);
+            ResolveInfoList.addAll(packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL));
             for (ResolveInfo e : ResolveInfoList) {
                 String packageName = e.activityInfo.packageName;
                 packageInstall.add(packageName);
@@ -752,6 +748,7 @@ public class MainFunction {
                             temWidgetSet.add(temWidget);
                             temAppDescribe.widgetSetMap.put(temWidget.appActivity, temWidgetSet);
                         } else {
+                            temWidgetSet.remove(temWidget);
                             temWidgetSet.add(temWidget);
                         }
                     }
