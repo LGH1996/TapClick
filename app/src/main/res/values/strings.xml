@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">ADGO</string>
-    <string name="accessibilityName">ADGO(支持坐标点击)</string>
-    <string name="accessibilityNameNoGesture">ADGO(不支持坐标点击)</string>
+    <string name="app_name">AD Going</string>
+    <string name="accessibilityName">AD Going(支持坐标点击)</string>
+    <string name="accessibilityNameNoGesture">AD Going(不支持坐标点击)</string>
     <string name="description">
         该服务支持坐标点击，但某些机型可能因此出现卡顿掉帧的情况，如果出现上述情况，请关闭此服务，开启另一个不支持坐标点击的服务。\n\n
         注意:不能同时开启两个服务，否则会因为冲突而产生异常。在开启该服务后，请确保另一个不支持坐标点击的服务已关闭。\n\n
@@ -36,11 +36,15 @@
         点击次数：对该坐标点击相应的次数后自动停止模拟点击；<br><br>
         注意：坐标模拟点击仅在开启支持坐标点击的无障碍服务时才能生效，但部分机型会因为在无障碍服务中申请了执行手势的功能而产生卡顿掉帧的现象，所以请根据情况开启合适的无障碍服务。]]>
     </string>
-    <string name="widgetQuestion" formatted="true">
+    <string name="widgetQuestion">
         <![CDATA[一个活动页面可以添加多个控件，在检测到该活动页面出现时就会对该页面的控件进行检索，如果存在与该控件“Id”属性或“Describe”属性或“Text”属性或“Bonus”属性相同的控件，就会对其执行点击动作。<br><br>
         延迟点击：某些控件需要延迟一定的时间后执行点击动作才能生效；<br>
         仅进行模拟点击：某些控件对无障碍服务的点击动作不生效，需要进行坐标的模拟点击，该选项仅在支持坐标点击的无障碍服务中生效；<br><br>
         注意：如果该活动页面还存在其他“Id”属性或“Describe”属性或“Text”属性相同的控件，则可能被干扰导致误判而失效，如果出现这种情况，可以尝试把该控件的“Id”属性或“Describe”属性或“Text”属性删除，只留下“Bonus”属性作为该控件的唯一标识；<br>
         注意：控件检索是个比较耗性能的操作，所以可以为某些弹窗或某些不经常出现的活动页面添加控件，但不要为一个普通的活动页面添加控件，否则会影响性能。]]>
+    </string>
+    <string name="authorizationQuestion">
+        说明：\n无障碍服务权限、忽略电池优化权限、应用悬浮窗权限:必须开启的权限，如果提示授权窗口打开失败，请自行找到其开关并将其打开。\n查看应用使用情况权限：如果在添加广告页面时出现包名识别错误的情况，可尝试把该权限打开，否则，建议将其关闭。\n\n
+        提示：\n为了保证应用能够稳定运行，请设置允许后台运行，并在任务列表中把该应用锁定。\n主页可设置为在任务列表中自动隐藏，建议尽量避免手动清理，否则无障碍服务可能会被自动关闭，需要重新开启。
     </string>
 </resources>

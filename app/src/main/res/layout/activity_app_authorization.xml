@@ -43,44 +43,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/usageStats_on_off"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp">
-
-        <ImageView
-            android:id="@+id/usageStats_on_off_img"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@id/usageStats_on_off_img"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="15dp"
-            android:singleLine="true"
-            android:textColor="@color/textColor"
-            android:textSize="20sp"
-            android:text="查看使用情况权限"/>
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:clickable="false"
-            android:focusable="false"
-            android:alpha="0.7"
-            android:src="@drawable/forward" />
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/batteryIgnore_on_off"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -118,7 +80,7 @@
             android:src="@drawable/forward" />
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/alert_window_off"
+        android:id="@+id/alertWindow_on_off"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:gravity="center_vertical"
@@ -142,7 +104,44 @@
             android:singleLine="true"
             android:textColor="@color/textColor"
             android:textSize="20sp"
-            android:text="悬浮窗权限"/>
+            android:text="应用悬浮窗权限"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:clickable="false"
+            android:focusable="false"
+            android:alpha="0.7"
+            android:src="@drawable/forward" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/usageStats_on_off"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
+
+        <ImageView
+            android:id="@+id/usageStats_on_off_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/usageStats_on_off_img"
+            android:gravity="center_vertical|start"
+            android:paddingLeft="15dp"
+            android:singleLine="true"
+            android:textColor="@color/textColor"
+            android:textSize="20sp"
+            android:text="查看应用使用情况权限"/>
 
         <ImageView
             android:layout_width="20dp"
@@ -160,6 +159,7 @@
         android:layout_marginTop="50dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:lineSpacingMultiplier="2"
-        android:text="提示：\n为了保证应用能够稳定运行，请设置允许后台运行，并在任务列表中把该应用锁定。\n主页可设置为在任务列表中自动隐藏，建议尽量避免手动清理，否则无障碍服务可能会被自动关闭，需要重新开启。"/>
+        android:lineSpacingMultiplier="1.5"
+        android:textSize="12sp"
+        android:text="@string/authorizationQuestion"/>
 </LinearLayout>
