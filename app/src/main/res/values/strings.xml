@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AdGo</string>
+    <string name="app_name">AdGo(测试)</string>
     <string name="accessibilityName">AdGo(支持坐标点击)</string>
     <string name="accessibilityNameNoGesture">AdGo(不支持坐标点击)</string>
     <string name="description">

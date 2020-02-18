@@ -135,7 +135,6 @@ public class MainFunction {
                                     packageName = latest.getPackageName();
                                     isConflict = true;
                                 }
-
                             }
                             if (!packageName.equals(currentPackage)) {
                                 appDescribe = appDescribeMap.get(packageName);
