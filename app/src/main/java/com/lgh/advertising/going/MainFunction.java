@@ -110,7 +110,6 @@ public class MainFunction {
     }
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
-//        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName() + "-" + event.getContentChangeTypes() + "_" + event.getAction() + "_" + event.getRecordCount() + "-" + event.getAddedCount() + "_" + event.getWindowId() + "-" + event.isEnabled() + "-");
         try {
             switch (event.getEventType()) {
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
@@ -122,20 +121,21 @@ public class MainFunction {
                         boolean isActivity = !activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.");
                         boolean isConflict = false;
                         if (isActivity) {
-                            long time = System.currentTimeMillis();
-                            List<UsageStats> usageStatsList = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, time - 10000, time);
-                            if (!usageStatsList.isEmpty()) {
-                                UsageStats latest = usageStatsList.get(0);
-                                for (UsageStats e : usageStatsList) {
-                                    if (e.getLastTimeUsed() > latest.getLastTimeUsed()) {
-                                        latest = e;
-                                    }
-                                }
-                                if (!packageName.equals(latest.getPackageName())){
-                                    packageName = latest.getPackageName();
-                                    isConflict = true;
-                                }
-                            }
+//                            long time = System.currentTimeMillis();
+//                            List<UsageStats> usageStatsList = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, time - 10000, time);
+//                            if (!usageStatsList.isEmpty()) {
+//                                UsageStats latest = usageStatsList.get(0);
+//                                for (UsageStats e : usageStatsList) {
+//                                    if (e.getLastTimeUsed() > latest.getLastTimeUsed()) {
+//                                        latest = e;
+//                                    }
+//                                }
+//                                if (!packageName.equals(latest.getPackageName())){
+//                                    packageName = latest.getPackageName();
+//                                    isConflict = true;
+//                                }
+//                            }
+                            Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName() + ":::::" +event.toString()+"*****"+event.getSource().toString());
                             if (!packageName.equals(currentPackage)) {
                                 appDescribe = appDescribeMap.get(packageName);
                                 if (appDescribe != null) {
