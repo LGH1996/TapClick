@@ -1,12 +1,16 @@
 package com.lgh.advertising.myactivity;
 
+import android.accessibilityservice.AccessibilityServiceInfo;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -18,11 +22,19 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
@@ -34,9 +46,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import okhttp3.Headers;
@@ -152,61 +167,96 @@ public class AppSettingActivity extends Activity {
         submitDebug.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                @SuppressLint("StaticFieldLeak") AsyncTask<String,Integer,String> asyncTask = new AsyncTask<String, Integer, String>() {
-                    private boolean successful;
-                    private AlertDialog waitDialog;
-
-                    @Override
-                    protected void onPreExecute() {
-                        super.onPreExecute();
-                        successful = true;
-                        waitDialog = new AlertDialog.Builder(AppSettingActivity.this).setView(new ProgressBar(context)).setCancelable(false).create();
-                        Window window = waitDialog.getWindow();
-                        if (window != null)
-                            window.setBackgroundDrawableResource(R.color.transparent);
-                        waitDialog.show();
-
-                    }
-
-                    @Override
-                    protected String doInBackground(String... strings) {
-                        try {
-                            File file = new File(context.getExternalCacheDir().getAbsolutePath()+File.separator+Build.PRODUCT+".txt");
-                            FileInputStream inputStream = new FileInputStream(file);
-                            byte[] bytes = new byte[(int) file.length()];
-                            inputStream.read(bytes);
-                            HashMap<String,String> postMessage = new HashMap<>();
-                            postMessage.put("message",new SimpleDateFormat("yyyy:MM:dd HH:mm:ss a", Locale.ENGLISH).format(new Date()));
-                            postMessage.put("content",Base64.encodeToString(bytes,Base64.DEFAULT));
-                            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),new Gson().toJson(postMessage));
-                            Headers headers = new Headers.Builder().add("Authorization","token ccb492b65726eafa5a66eb53fac607ccaa021c62").build();
-                            Request request = new Request.Builder().put(requestBody).headers(headers).url(strings[0]).build();
-                            OkHttpClient httpClient = new OkHttpClient();
-                            Response response = httpClient.newCall(request).execute();
-                            Log.i("aaaaaaaaaaaa",response.body().string());
-                            response.close();
-                            FileWriter fileWriter = new FileWriter(file,false);
-                            fileWriter.write("");
-                            fileWriter.close();
-                        } catch (Throwable e){
-                            successful = false;
-                            e.printStackTrace();
+                try {
+                    final LayoutInflater inflater = LayoutInflater.from(context);
+                    final View view = inflater.inflate(R.layout.view_commit, null);
+                    final AlertDialog dialogCommit = new AlertDialog.Builder(AppSettingActivity.this).setView(view).create();
+                    final EditText textView = view.findViewById(R.id.editText);
+                    TextView but_empty = view.findViewById(R.id.empty);
+                    TextView but_cancel = view.findViewById(R.id.cancel);
+                    TextView but_sure = view.findViewById(R.id.sure);
+                    but_empty.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            textView.setText("");
                         }
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(String s) {
-                        super.onPostExecute(s);
-                        waitDialog.dismiss();
-                        if (successful){
-                            Toast.makeText(context,"提交成功",Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(context,"提交失败",Toast.LENGTH_SHORT).show();
+                    });
+                    but_cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialogCommit.dismiss();
                         }
-                    }
-                };
-                asyncTask.execute("https://api.github.com/repos/lgh1996/UPDATEADGO/contents/"+ Build.PRODUCT+"_"+Build.VERSION.SDK_INT+"("+Build.VERSION.RELEASE+")"+"_"+ SystemClock.uptimeMillis() +".doc");
+                    });
+                    but_sure.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                final String commitMessage = textView.getText().toString().trim();
+                                if (commitMessage.isEmpty()){
+                                    Toast.makeText(context,"内容不能为空",Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                @SuppressLint("StaticFieldLeak") AsyncTask<String,Integer,String> asyncTask = new AsyncTask<String, Integer, String>() {
+                                    private boolean successful;
+                                    private AlertDialog waitDialog;
+
+                                    @Override
+                                    protected void onPreExecute() {
+                                        super.onPreExecute();
+                                        successful = true;
+                                        waitDialog = new AlertDialog.Builder(AppSettingActivity.this).setView(new ProgressBar(context)).setCancelable(false).create();
+                                        Window window = waitDialog.getWindow();
+                                        if (window != null)
+                                            window.setBackgroundDrawableResource(R.color.transparent);
+                                        waitDialog.show();
+
+                                    }
+
+                                    @Override
+                                    protected String doInBackground(String... strings) {
+                                        try {
+                                            HashMap<String,String> postMessage = new HashMap<>();
+                                            postMessage.put("message",new SimpleDateFormat("yyyy:MM:dd HH:mm:ss a", Locale.ENGLISH).format(new Date()));
+                                            postMessage.put("content",Base64.encodeToString(commitMessage.getBytes(),Base64.DEFAULT));
+                                            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),new Gson().toJson(postMessage));
+                                            Headers headers = new Headers.Builder().add("Authorization","token ccb492b65726eafa5a66eb53fac607ccaa021c62").build();
+                                            Request request = new Request.Builder().put(requestBody).headers(headers).url(strings[0]).build();
+                                            OkHttpClient httpClient = new OkHttpClient();
+                                            Response response = httpClient.newCall(request).execute();
+                                            response.close();
+                                        } catch (Throwable e){
+                                            successful = false;
+                                            e.printStackTrace();
+                                        }
+                                        return null;
+                                    }
+
+                                    @Override
+                                    protected void onPostExecute(String s) {
+                                        super.onPostExecute(s);
+                                        waitDialog.dismiss();
+                                        if (successful){
+                                            Toast.makeText(context,"提交成功",Toast.LENGTH_SHORT).show();
+                                            dialogCommit.dismiss();
+                                        } else {
+                                            Toast.makeText(context,"提交失败",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                };
+                                asyncTask.execute("https://api.github.com/repos/lgh1996/UPDATEADGO/contents/"+ Build.PRODUCT+"_"+Build.VERSION.SDK_INT+"("+Build.VERSION.RELEASE+")"+"_"+ SystemClock.uptimeMillis() +".doc");
+                            } catch (Throwable e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    Window win = dialogCommit.getWindow();
+                    win.setBackgroundDrawableResource(R.color.dialogBackground);
+                    win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                    win.setDimAmount(0);
+                    dialogCommit.show();
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

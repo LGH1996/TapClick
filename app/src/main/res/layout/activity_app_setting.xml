@@ -67,7 +67,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="5dp"
             android:gravity="center_vertical"
-            android:text="提交调试信息："
+            android:text="提交反馈信息："
             android:textColor="@color/textColor"
             android:textSize="15sp" />
 
@@ -78,7 +78,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:padding="1dp"
-            android:text="提交" />
+            android:text="编辑" />
     </LinearLayout>
 
     <LinearLayout

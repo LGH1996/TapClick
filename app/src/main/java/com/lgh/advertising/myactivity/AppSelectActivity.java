@@ -125,7 +125,7 @@ public class AppSelectActivity extends Activity {
                             public View getView(int position, View convertView, ViewGroup parent) {
                                 AppSelectActivity.ViewHolder holder;
                                 if (convertView == null) {
-                                    convertView = inflater.inflate(R.layout.view_pac, null);
+                                    convertView = inflater.inflate(R.layout.view_select_item, null);
                                     holder = new AppSelectActivity.ViewHolder(convertView);
                                     convertView.setTag(holder);
                                 } else {

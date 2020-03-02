@@ -40,10 +40,6 @@ import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
 import com.lgh.advertising.myclass.Widget;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -74,9 +70,6 @@ public class MainFunction {
     private MyScreenOffReceiver screenOffReceiver;
     private Set<Widget> widgetSet;
     private MyInstallReceiver installReceiver;
-    private OutputStreamWriter writer;
-    private File file;
-    private PackageManager packageManager;
 
     private WindowManager.LayoutParams aParams, bParams, cParams;
     private View viewAdvertisingMessage, viewLayoutAnalyze;
@@ -93,7 +86,6 @@ public class MainFunction {
             executorService = Executors.newSingleThreadScheduledExecutor();
             serviceInfo = service.getServiceInfo();
             appDescribeMap = new HashMap<>();
-            packageManager = service.getPackageManager();
             screenOffReceiver = new MyScreenOffReceiver();
             service.registerReceiver(screenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
             installReceiver = new MyInstallReceiver();
@@ -102,7 +94,6 @@ public class MainFunction {
             filterInstall.addAction(Intent.ACTION_PACKAGE_REMOVED);
             filterInstall.addDataScheme("package");
             service.registerReceiver(installReceiver, filterInstall);
-            file = new File(service.getExternalCacheDir().getAbsolutePath()+File.separator+Build.PRODUCT+".txt");
             updatePackage();
             future_coordinate = future_widget = future_autoFinder = executorService.schedule(new Runnable() {
                 @Override
@@ -126,62 +117,16 @@ public class MainFunction {
                         String activityName = temClass.toString();
                         boolean isActivity = !activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.");
                         if (root != null){
-                            String temStr = root.getPackageName().toString();
-                            if (!packageName.equals(temStr)){
-                                packageName = temStr;
+                            String rootPackage = root.getPackageName().toString();
+                            if (!packageName.equals(rootPackage)){
+                                packageName = rootPackage;
                                 if (!isActivity) {
                                     activityName = "Unknown Activity";
                                 }
                             }
                         }
                         if (isActivity) {
-//                            if (writer == null){
-//                                writer = new OutputStreamWriter(new FileOutputStream(file,true));
-//                            }
-//
-//                            StringBuilder strEvent = new StringBuilder();
-//                            Class<AccessibilityEvent> eventClass = AccessibilityEvent.class;
-//                            Method[] eventClassMethods = eventClass.getMethods();
-//                            Arrays.sort(eventClassMethods, new Comparator<Method>() {
-//                                @Override
-//                                public int compare(Method o1, Method o2) {
-//                                    return o1.getReturnType().getName().compareToIgnoreCase(o2.getReturnType().getName());
-//                                }
-//                            });
-//                            strEvent.append("AccessibilityEvent&");
-//                            for (Method e:eventClassMethods){
-//                                if (e.getReturnType().equals(int.class)||e.getReturnType().equals(long.class)||e.getReturnType().equals(boolean.class)||e.getReturnType().equals(CharSequence.class)){
-//                                    if (e.getParameterTypes().length == 0) {
-//                                        e.setAccessible(true);
-//                                        strEvent.append(e.getName()+":"+e.invoke(event)+"&");
-//                                    }
-//                                }
-//                            }
-//
-//                            StringBuilder strNode = new StringBuilder();
-//                            Class<AccessibilityNodeInfo> nodeClass = AccessibilityNodeInfo.class;
-//                            Method[] nodeClassMethods = nodeClass.getMethods();
-//                            Arrays.sort(nodeClassMethods, new Comparator<Method>() {
-//                                @Override
-//                                public int compare(Method o1, Method o2) {
-//                                    return o1.getReturnType().getName().compareToIgnoreCase(o2.getReturnType().getName());
-//                                }
-//                            });
-//                            strNode.append("AccessibilityNodeInfo&");
-//                            for (Method e:nodeClassMethods){
-//                                if (e.getReturnType().equals(int.class)||e.getReturnType().equals(long.class)||e.getReturnType().equals(boolean.class)||e.getReturnType().equals(CharSequence.class)){
-//                                    if (e.getParameterTypes().length == 0) {
-//                                        e.setAccessible(true);
-//                                        strNode.append(e.getName()+":"+e.invoke(event.getSource())+"&");
-//                                    }
-//                                }
-//                            }
-//
-//                            String appName = packageManager.getApplicationLabel(packageManager.getApplicationInfo(event.getPackageName().toString(),PackageManager.GET_META_DATA)).toString();
-//                            writer.write(appName +"&" + event.getClassName() + "&" + strEvent+"\n"+appName +"&" + event.getClassName() + "&"+strNode+"\n");
-//                            writer.flush();
                             currentActivity = activityName;
-
                             if (!packageName.equals(currentPackage)) {
                                 appDescribe = appDescribeMap.get(packageName);
                                 if (appDescribe != null) {
