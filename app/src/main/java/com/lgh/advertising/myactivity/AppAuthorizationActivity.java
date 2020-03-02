@@ -36,7 +36,6 @@ public class AppAuthorizationActivity extends Activity {
         RelativeLayout accessibilityOnOff = findViewById(R.id.accessibility_on_off);
         RelativeLayout batteryIgnoreOnOff = findViewById(R.id.batteryIgnore_on_off);
         RelativeLayout alertWindowOnOff = findViewById(R.id.alertWindow_on_off);
-        RelativeLayout usageStatsOnOff = findViewById(R.id.usageStats_on_off);
         ImageView.OnClickListener onOffClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,21 +65,12 @@ public class AppAuthorizationActivity extends Activity {
                             startActivity(intent);
                         }
                         break;
-                    case R.id.usageStats_on_off:
-                        Intent intentUsageStats = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-                        if (intentUsageStats.resolveActivity(packageManager) != null) {
-                            startActivity(intentUsageStats);
-                        } else {
-                            Toast.makeText(context, "授权窗口打开失败,请手动打开", Toast.LENGTH_SHORT).show();
-                        }
-                        break;
                 }
             }
         };
         accessibilityOnOff.setOnClickListener(onOffClickListener);
         batteryIgnoreOnOff.setOnClickListener(onOffClickListener);
         alertWindowOnOff.setOnClickListener(onOffClickListener);
-        usageStatsOnOff.setOnClickListener(onOffClickListener);
     }
 
     @Override
@@ -89,7 +79,6 @@ public class AppAuthorizationActivity extends Activity {
         ImageView accessibilityOnOffImg = findViewById(R.id.accessibility_on_off_img);
         ImageView batteryOnOffImg = findViewById(R.id.batteryIgnore_on_off_img);
         ImageView alertWindowOnOffImg = findViewById(R.id.alert_window_on_off_img);
-        ImageView usageStatsImg = findViewById(R.id.usageStats_on_off_img);
         if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
             accessibilityOnOffImg.setImageResource(R.drawable.error);
         } else {
@@ -104,11 +93,6 @@ public class AppAuthorizationActivity extends Activity {
             alertWindowOnOffImg.setImageResource(R.drawable.ok);
         } else {
             alertWindowOnOffImg.setImageResource(R.drawable.error);
-        }
-        if (appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), getPackageName()) == AppOpsManager.MODE_ALLOWED){
-            usageStatsImg.setImageResource(R.drawable.ok);
-        } else {
-            usageStatsImg.setImageResource(R.drawable.error);
         }
     }
 }

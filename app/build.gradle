@@ -21,11 +21,12 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'android.arch.persistence.room:compiler:1.1.1'
     implementation 'android.arch.persistence.room:runtime:1.1.1'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.10.0'
 }

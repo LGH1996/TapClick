@@ -19,3 +19,9 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class com.lgh.advertising.myclass.LatestMessage {*;}
+-keep class com.lgh.advertising.myclass.LatestMessage$Asset {*;}
+-keep class com.lgh.advertising.myclass.LatestMessage$Author {*;}
+-keep class com.lgh.advertising.myclass.LatestMessage$Uploader {*;}
+

@@ -56,6 +56,30 @@
             android:padding="1dp"
             android:text="打开" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="5dp"
+            android:gravity="center_vertical"
+            android:text="提交调试信息："
+            android:textColor="@color/textColor"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/setting_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:padding="1dp"
+            android:text="提交" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -116,43 +116,6 @@
             android:alpha="0.7"
             android:src="@drawable/forward" />
     </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/usageStats_on_off"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp">
-
-        <ImageView
-            android:id="@+id/usageStats_on_off_img"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@id/usageStats_on_off_img"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="15dp"
-            android:singleLine="true"
-            android:textColor="@color/textColor"
-            android:textSize="20sp"
-            android:text="查看应用使用情况权限"/>
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:clickable="false"
-            android:focusable="false"
-            android:alpha="0.7"
-            android:src="@drawable/forward" />
-    </RelativeLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

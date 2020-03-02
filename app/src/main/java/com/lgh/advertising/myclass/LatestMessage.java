@@ -1,7 +1,5 @@
 package com.lgh.advertising.myclass;
 
-import com.google.gson.Gson;
-
 import java.util.List;
 
 public class LatestMessage {
@@ -11,16 +9,16 @@ public class LatestMessage {
     public Author author;
     public List<Asset> assets;
 
-    public class Asset {
+    public static class Asset {
         public String url, id, node_id, name, label, content_type, state, size, download_count, created_at, updated_at, browser_download_url;
         public Uploader uploader;
     }
 
-    public class Author {
+    public static class Author {
         public String login, id, node_id, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin;
     }
 
-    public class Uploader {
+    public static class Uploader {
         public String login, id, node_id, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin;
     }
 }

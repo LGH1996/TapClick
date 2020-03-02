@@ -4,8 +4,6 @@ import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.accessibilityservice.GestureDescription;
 import android.annotation.SuppressLint;
-import android.app.usage.UsageStats;
-import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -42,6 +40,10 @@ import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
 import com.lgh.advertising.myclass.Widget;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -72,7 +74,9 @@ public class MainFunction {
     private MyScreenOffReceiver screenOffReceiver;
     private Set<Widget> widgetSet;
     private MyInstallReceiver installReceiver;
-    private UsageStatsManager usageStatsManager;
+    private OutputStreamWriter writer;
+    private File file;
+    private PackageManager packageManager;
 
     private WindowManager.LayoutParams aParams, bParams, cParams;
     private View viewAdvertisingMessage, viewLayoutAnalyze;
@@ -89,7 +93,7 @@ public class MainFunction {
             executorService = Executors.newSingleThreadScheduledExecutor();
             serviceInfo = service.getServiceInfo();
             appDescribeMap = new HashMap<>();
-            usageStatsManager = (UsageStatsManager) service.getSystemService(Context.USAGE_STATS_SERVICE);
+            packageManager = service.getPackageManager();
             screenOffReceiver = new MyScreenOffReceiver();
             service.registerReceiver(screenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
             installReceiver = new MyInstallReceiver();
@@ -98,6 +102,7 @@ public class MainFunction {
             filterInstall.addAction(Intent.ACTION_PACKAGE_REMOVED);
             filterInstall.addDataScheme("package");
             service.registerReceiver(installReceiver, filterInstall);
+            file = new File(service.getExternalCacheDir().getAbsolutePath()+File.separator+Build.PRODUCT+".txt");
             updatePackage();
             future_coordinate = future_widget = future_autoFinder = executorService.schedule(new Runnable() {
                 @Override
@@ -113,29 +118,70 @@ public class MainFunction {
         try {
             switch (event.getEventType()) {
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
+                    AccessibilityNodeInfo root = service.getRootInActiveWindow();
                     CharSequence temPackage = event.getPackageName();
                     CharSequence temClass = event.getClassName();
                     if (temPackage != null && temClass != null) {
                         String packageName = temPackage.toString();
                         String activityName = temClass.toString();
                         boolean isActivity = !activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.");
-                        boolean isConflict = false;
+                        if (root != null){
+                            String temStr = root.getPackageName().toString();
+                            if (!packageName.equals(temStr)){
+                                packageName = temStr;
+                                if (!isActivity) {
+                                    activityName = "Unknown Activity";
+                                }
+                            }
+                        }
                         if (isActivity) {
-//                            long time = System.currentTimeMillis();
-//                            List<UsageStats> usageStatsList = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, time - 10000, time);
-//                            if (!usageStatsList.isEmpty()) {
-//                                UsageStats latest = usageStatsList.get(0);
-//                                for (UsageStats e : usageStatsList) {
-//                                    if (e.getLastTimeUsed() > latest.getLastTimeUsed()) {
-//                                        latest = e;
+//                            if (writer == null){
+//                                writer = new OutputStreamWriter(new FileOutputStream(file,true));
+//                            }
+//
+//                            StringBuilder strEvent = new StringBuilder();
+//                            Class<AccessibilityEvent> eventClass = AccessibilityEvent.class;
+//                            Method[] eventClassMethods = eventClass.getMethods();
+//                            Arrays.sort(eventClassMethods, new Comparator<Method>() {
+//                                @Override
+//                                public int compare(Method o1, Method o2) {
+//                                    return o1.getReturnType().getName().compareToIgnoreCase(o2.getReturnType().getName());
+//                                }
+//                            });
+//                            strEvent.append("AccessibilityEvent&");
+//                            for (Method e:eventClassMethods){
+//                                if (e.getReturnType().equals(int.class)||e.getReturnType().equals(long.class)||e.getReturnType().equals(boolean.class)||e.getReturnType().equals(CharSequence.class)){
+//                                    if (e.getParameterTypes().length == 0) {
+//                                        e.setAccessible(true);
+//                                        strEvent.append(e.getName()+":"+e.invoke(event)+"&");
 //                                    }
 //                                }
-//                                if (!packageName.equals(latest.getPackageName())){
-//                                    packageName = latest.getPackageName();
-//                                    isConflict = true;
+//                            }
+//
+//                            StringBuilder strNode = new StringBuilder();
+//                            Class<AccessibilityNodeInfo> nodeClass = AccessibilityNodeInfo.class;
+//                            Method[] nodeClassMethods = nodeClass.getMethods();
+//                            Arrays.sort(nodeClassMethods, new Comparator<Method>() {
+//                                @Override
+//                                public int compare(Method o1, Method o2) {
+//                                    return o1.getReturnType().getName().compareToIgnoreCase(o2.getReturnType().getName());
+//                                }
+//                            });
+//                            strNode.append("AccessibilityNodeInfo&");
+//                            for (Method e:nodeClassMethods){
+//                                if (e.getReturnType().equals(int.class)||e.getReturnType().equals(long.class)||e.getReturnType().equals(boolean.class)||e.getReturnType().equals(CharSequence.class)){
+//                                    if (e.getParameterTypes().length == 0) {
+//                                        e.setAccessible(true);
+//                                        strNode.append(e.getName()+":"+e.invoke(event.getSource())+"&");
+//                                    }
 //                                }
 //                            }
-                            Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName() + ":::::" +event.toString()+"*****"+event.getSource().toString());
+//
+//                            String appName = packageManager.getApplicationLabel(packageManager.getApplicationInfo(event.getPackageName().toString(),PackageManager.GET_META_DATA)).toString();
+//                            writer.write(appName +"&" + event.getClassName() + "&" + strEvent+"\n"+appName +"&" + event.getClassName() + "&"+strNode+"\n");
+//                            writer.flush();
+                            currentActivity = activityName;
+
                             if (!packageName.equals(currentPackage)) {
                                 appDescribe = appDescribeMap.get(packageName);
                                 if (appDescribe != null) {
@@ -195,9 +241,6 @@ public class MainFunction {
                                     }
                                 }
                             }
-                        }
-                        if (isActivity && !isConflict) {
-                            currentActivity = activityName;
                             if (appDescribe != null) {
                                 if (on_off_coordinate) {
                                     final Coordinate coordinate = appDescribe.coordinateMap.get(activityName);
@@ -231,10 +274,10 @@ public class MainFunction {
                         }
                         if (packageName.equals(currentPackage)) {
                             if (on_off_widget && appDescribe != null && widgetSet != null) {
-                                findSkipButtonByWidget(service.getRootInActiveWindow(), widgetSet);
+                                findSkipButtonByWidget(root, widgetSet);
                             }
                             if (on_off_autoFinder && appDescribe != null) {
-                                findSkipButtonByText(service.getRootInActiveWindow(), appDescribe.autoFinder);
+                                findSkipButtonByText(root, appDescribe.autoFinder);
                             }
                         }
                     }

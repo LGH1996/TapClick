@@ -45,6 +45,10 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 
 public class MainActivity extends Activity {
 
@@ -143,19 +147,11 @@ public class MainActivity extends Activity {
                 @Override
                 protected String doInBackground(String... strings) {
                     try {
-                        URL url = new URL(strings[0]);
-                        HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                        httpsURLConnection.setRequestMethod("GET");
-                        httpsURLConnection.setUseCaches(false);
-                        httpsURLConnection.connect();
-                        Scanner scanner = new Scanner(httpsURLConnection.getInputStream());
-                        StringBuilder stringBuilder = new StringBuilder();
-                        while (scanner.hasNextLine()){
-                            stringBuilder.append(scanner.nextLine());
-                        }
-                        scanner.close();
-                        httpsURLConnection.disconnect();
-                        latestVersionMessage = new Gson().fromJson(stringBuilder.toString(), LatestMessage.class);
+                        OkHttpClient httpClient = new OkHttpClient();
+                        Request request = new Request.Builder().get().url(strings[0]).build();
+                        Response response = httpClient.newCall(request).execute();
+                        latestVersionMessage = new Gson().fromJson(response.body().string(), LatestMessage.class);
+                        response.close();
                         int versionCode = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionCode;
                         String appName = latestVersionMessage.assets.get(0).name;
                         Matcher matcher = Pattern.compile("\\d+").matcher(appName);
@@ -182,7 +178,7 @@ public class MainActivity extends Activity {
                         View view = inflater.inflate(R.layout.view_update_message,null);
                         TextView textView = view.findViewById(R.id.update_massage);
                         textView.setText(Html.fromHtml(latestVersionMessage.body));
-                        AlertDialog dialog = new AlertDialog.Builder(context).setView(view).setNegativeButton("取消",null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).setView(view).setNegativeButton("取消",null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(latestVersionMessage.assets.get(0).browser_download_url));
