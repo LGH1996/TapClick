@@ -20,12 +20,35 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text=" 活动名:"
+                    android:text="活动名:"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
 
                 <EditText
                     android:id="@+id/coordinate_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:enabled="false"
+                    android:gravity="center_vertical"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:singleLine="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="创建时间:"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/coordinate_createTime"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -45,7 +68,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text=" X轴坐标:"
+                        android:text="X轴坐标:"
                         android:textColor="@color/textColor"
                         android:textSize="12sp" />
 

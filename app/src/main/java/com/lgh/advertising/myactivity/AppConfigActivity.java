@@ -29,6 +29,8 @@ import com.lgh.advertising.myclass.Widget;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -51,7 +53,8 @@ public class AppConfigActivity extends Activity {
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
         final AppDescribe appDescribe = AppSelectActivity.appDescribe;
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
+        final SimpleDateFormat dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
+        final SimpleDateFormat dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.ENGLISH);
 
         ImageButton questionBaseSetting = findViewById(R.id.base_setting_question);
         ImageButton questionAutoFinder = findViewById(R.id.auto_finder_question);
@@ -138,7 +141,7 @@ public class AppConfigActivity extends Activity {
                 appDescribe.widgetRetrieveAllTime = widgetRetrieveAllTime.isChecked();
                 dataDao.updateAppDescribe(appDescribe);
                 baseSettingModify.setTextColor(0xff000000);
-                baseSettingModify.setText(simpleDateFormat.format(new Date()) + "(修改成功)");
+                baseSettingModify.setText(dateFormatModify.format(new Date()) + "(修改成功)");
             }
         });
 
@@ -195,7 +198,7 @@ public class AppConfigActivity extends Activity {
                 }
                 dataDao.updateAutoFinder(autoFinder);
                 autoFinderModify.setTextColor(0xff000000);
-                autoFinderModify.setText(simpleDateFormat.format(new Date()) + "(修改成功)");
+                autoFinderModify.setText(dateFormatModify.format(new Date()) + "(修改成功)");
             }
         });
         layoutAutoFinder.addView(viewAutoFinder);
@@ -203,9 +206,16 @@ public class AppConfigActivity extends Activity {
         final LinearLayout layoutCoordinate = findViewById(R.id.coordinate_layout);
         final List<Coordinate> coordinateList = new ArrayList<>(appDescribe.coordinateMap.values());
         if (coordinateList.isEmpty()) layoutCoordinate.setVisibility(View.GONE);
+        Collections.sort(coordinateList, new Comparator<Coordinate>() {
+            @Override
+            public int compare(Coordinate o1, Coordinate o2) {
+                return (int) (o2.createTime - o1.createTime);
+            }
+        });
         for (final Coordinate e : coordinateList) {
             final View viewCoordinate = inflater.inflate(R.layout.view_coordinate, null);
             EditText coordinateActivity = viewCoordinate.findViewById(R.id.coordinate_activity);
+            EditText coordinateCreateTime = viewCoordinate.findViewById(R.id.coordinate_createTime);
             final EditText coordinateXPosition = viewCoordinate.findViewById(R.id.coordinate_xPosition);
             final EditText coordinateYPosition = viewCoordinate.findViewById(R.id.coordinate_yPosition);
             final EditText coordinateDelay = viewCoordinate.findViewById(R.id.coordinate_clickDelay);
@@ -215,6 +225,7 @@ public class AppConfigActivity extends Activity {
             TextView coordinateDelete = viewCoordinate.findViewById(R.id.coordinate_delete);
             TextView coordinateSure = viewCoordinate.findViewById(R.id.coordinate_sure);
             coordinateActivity.setText(e.appActivity);
+            coordinateCreateTime.setText(dateFormatCreate.format(new Date(e.createTime)));
             coordinateXPosition.setText(String.valueOf(e.xPosition));
             coordinateYPosition.setText(String.valueOf(e.yPosition));
             coordinateDelay.setText(String.valueOf(e.clickDelay));
@@ -264,7 +275,7 @@ public class AppConfigActivity extends Activity {
                     }
                     dataDao.updateCoordinate(e);
                     coordinateModify.setTextColor(0xff000000);
-                    coordinateModify.setText(simpleDateFormat.format(new Date()) + "(修改成功)");
+                    coordinateModify.setText(dateFormatModify.format(new Date()) + "(修改成功)");
                 }
             });
             layoutCoordinate.addView(viewCoordinate);
@@ -275,9 +286,17 @@ public class AppConfigActivity extends Activity {
         List<Set<Widget>> widgetSetList = new ArrayList<>(appDescribe.widgetSetMap.values());
         if (widgetSetList.isEmpty()) layoutWidget.setVisibility(View.GONE);
         for (final Set<Widget> widgetSet : widgetSetList) {
-            for (final Widget e : widgetSet) {
+            final List<Widget> widgetList = new ArrayList<>(widgetSet);
+            Collections.sort(widgetList, new Comparator<Widget>() {
+                @Override
+                public int compare(Widget o1, Widget o2) {
+                    return (int) (o2.createTime - o1.createTime);
+                }
+            });
+            for (final Widget e : widgetList) {
                 final View viewWidget = inflater.inflate(R.layout.view_widget, null);
                 EditText widgetActivity = viewWidget.findViewById(R.id.widget_activity);
+                EditText widgetCreateTime = viewWidget.findViewById(R.id.widget_createTime);
                 EditText widgetClickable = viewWidget.findViewById(R.id.widget_clickable);
                 EditText widgetRect = viewWidget.findViewById(R.id.widget_rect);
                 final EditText widgetId = viewWidget.findViewById(R.id.widget_id);
@@ -289,6 +308,7 @@ public class AppConfigActivity extends Activity {
                 TextView widgetDelete = viewWidget.findViewById(R.id.widget_delete);
                 TextView widgetSure = viewWidget.findViewById(R.id.widget_sure);
                 widgetActivity.setText(e.appActivity);
+                widgetCreateTime.setText(dateFormatCreate.format(new Date(e.createTime)));
                 widgetClickable.setText(String.valueOf(e.widgetClickable));
                 widgetRect.setText(e.widgetRect.toShortString());
                 widgetId.setText(e.widgetId);
@@ -301,6 +321,7 @@ public class AppConfigActivity extends Activity {
                     public void onClick(View v) {
                         dataDao.deleteWidget(e);
                         widgetSet.remove(e);
+                        widgetList.remove(e);
                         layoutWidget.removeView(viewWidget);
                         if (widgetSet.isEmpty()) {
                             appDescribe.widgetSetMap.remove(e.appActivity);
@@ -330,7 +351,7 @@ public class AppConfigActivity extends Activity {
                         widgetText.setText(e.widgetText);
                         dataDao.updateWidget(e);
                         widgetModify.setTextColor(0xff000000);
-                        widgetModify.setText(simpleDateFormat.format(new Date()) + "(修改成功)");
+                        widgetModify.setText(dateFormatModify.format(new Date()) + "(修改成功)");
                     }
                 });
                 layoutWidget.addView(viewWidget);

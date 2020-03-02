@@ -12,6 +12,7 @@ import java.util.Objects;
 public class Widget {
     @PrimaryKey(autoGenerate = true)
     public Integer id;
+    public long createTime;
     public String appPackage;
     public String appActivity;
     public int clickDelay;
@@ -32,9 +33,11 @@ public class Widget {
         this.widgetId = "";
         this.widgetDescribe = "";
         this.widgetText = "";
+        this.createTime = System.currentTimeMillis();
     }
 
     public Widget(Widget widget) {
+        this.createTime = widget.createTime;
         this.appPackage = widget.appPackage;
         this.appActivity = widget.appActivity;
         this.clickDelay = widget.clickDelay;

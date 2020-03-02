@@ -10,6 +10,7 @@ import java.util.Objects;
 public class Coordinate {
     @PrimaryKey(autoGenerate = true)
     public Integer id;
+    public long createTime;
     public String appPackage;
     public String appActivity;
     public int xPosition;
@@ -26,9 +27,11 @@ public class Coordinate {
         this.clickDelay = 2000;
         this.clickInterval = 500;
         this.clickNumber = 1;
+        this.createTime = System.currentTimeMillis();
     }
 
     public Coordinate(Coordinate coordinate) {
+        this.createTime = coordinate.createTime;
         this.appPackage = coordinate.appPackage;
         this.appActivity = coordinate.appActivity;
         this.xPosition = coordinate.xPosition;

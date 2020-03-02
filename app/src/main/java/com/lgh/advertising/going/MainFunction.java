@@ -16,7 +16,6 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,7 +30,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.AutoFinder;
@@ -733,6 +731,7 @@ public class MainFunction {
             saveWidgetButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    widgetSelect.createTime = System.currentTimeMillis();
                     Widget temWidget = new Widget(widgetSelect);
                     AppDescribe temAppDescribe = appDescribeMap.get(temWidget.appPackage);
                     if (temAppDescribe != null) {
@@ -754,6 +753,7 @@ public class MainFunction {
             savePositionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    coordinateSelect.createTime = System.currentTimeMillis();
                     Coordinate temCoordinate = new Coordinate(coordinateSelect);
                     AppDescribe temAppDescribe = appDescribeMap.get(temCoordinate.appPackage);
                     if (temAppDescribe != null) {
