@@ -2,15 +2,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null" />
+
     <ProgressBar
-    android:id="@+id/progress"
-    android:layout_height="50dp"
-    android:layout_width="50dp"
-    android:layout_gravity="center"
-    style="@android:style/Widget.Holo.Light.ProgressBar.Small" />
+        android:id="@+id/progress"
+        style="@android:style/Widget.Holo.Light.ProgressBar.Small"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center" />
 </FrameLayout>

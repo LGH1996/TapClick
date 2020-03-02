@@ -7,6 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +29,7 @@
                 android:enabled="false"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -150,6 +151,7 @@
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -175,6 +177,7 @@
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -192,10 +195,10 @@
                 android:id="@+id/widget_clickOnly"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:background="@drawable/check_select"
                 android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:button="@null"/>
+                android:background="@drawable/check_select"
+                android:button="@null"
+                android:gravity="center" />
         </LinearLayout>
 
         <RelativeLayout
@@ -241,7 +244,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:src="@color/divideLine"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:src="@color/divideLine" />
     </LinearLayout>
 </RelativeLayout>

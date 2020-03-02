@@ -51,7 +51,7 @@ public class AppConfigActivity extends Activity {
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
         final AppDescribe appDescribe = AppSelectActivity.appDescribe;
-        final SimpleDateFormat simpleDateFormat= new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
 
         ImageButton questionBaseSetting = findViewById(R.id.base_setting_question);
         ImageButton questionAutoFinder = findViewById(R.id.auto_finder_question);
@@ -59,15 +59,17 @@ public class AppConfigActivity extends Activity {
         ImageButton questionWidget = findViewById(R.id.widget_question);
         class QuestionClickListener implements View.OnClickListener {
             private int strId;
-            private QuestionClickListener(int strId){
+
+            private QuestionClickListener(int strId) {
                 this.strId = strId;
             }
+
             @Override
             public void onClick(View v) {
-                View view = inflater.inflate(R.layout.view_question,null);
+                View view = inflater.inflate(R.layout.view_question, null);
                 TextView textView = view.findViewById(R.id.question_answer);
                 textView.setText(Html.fromHtml(getString(strId)));
-                AlertDialog alertDialog = new AlertDialog.Builder(AppConfigActivity.this).setView(view).setPositiveButton("确定",null).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(AppConfigActivity.this).setView(view).setPositiveButton("确定", null).create();
                 alertDialog.show();
             }
         }
@@ -109,17 +111,19 @@ public class AppConfigActivity extends Activity {
         baseSettingDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"该选项不允许删除",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "该选项不允许删除", Toast.LENGTH_SHORT).show();
             }
         });
         baseSettingSure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String autoFinderTime= autoFinderSustainTime.getText().toString();
+                String autoFinderTime = autoFinderSustainTime.getText().toString();
                 String coordinateTime = coordinateSustainTime.getText().toString();
                 String widgetTime = widgetSustainTime.getText().toString();
                 baseSettingModify.setTextColor(0xffff0000);
-                if (autoFinderTime.isEmpty()||coordinateTime.isEmpty()||widgetTime.isEmpty()){}{
+                if (autoFinderTime.isEmpty() || coordinateTime.isEmpty() || widgetTime.isEmpty()) {
+                }
+                {
                     baseSettingModify.setText("内容不能为空");
                 }
                 appDescribe.on_off = onOffSwitch.isChecked();
@@ -155,7 +159,7 @@ public class AppConfigActivity extends Activity {
         autoFinderDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"该选项不允许删除",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "该选项不允许删除", Toast.LENGTH_SHORT).show();
             }
         });
         autoFinderSure.setOnClickListener(new View.OnClickListener() {
@@ -177,7 +181,7 @@ public class AppConfigActivity extends Activity {
                 if (retrieveNumber.isEmpty() || clickDelay.isEmpty()) {
                     autoFinderModify.setText("内容不能为空");
                     return;
-                }else if (Integer.valueOf(retrieveNumber) < 1 || Integer.valueOf(retrieveNumber) > 100) {
+                } else if (Integer.valueOf(retrieveNumber) < 1 || Integer.valueOf(retrieveNumber) > 100) {
                     autoFinderModify.setText("检索次数应为１~100次之间");
                     return;
                 } else if (Integer.valueOf(clickDelay) > 4000) {

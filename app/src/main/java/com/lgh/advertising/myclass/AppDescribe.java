@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@Entity(indices = @Index(value = "appPackage",unique = true))
+@Entity(indices = @Index(value = "appPackage", unique = true))
 public class AppDescribe {
     @PrimaryKey(autoGenerate = true)
     public Integer id;
@@ -34,9 +34,9 @@ public class AppDescribe {
     @Ignore
     public AutoFinder autoFinder;
     @Ignore
-    public Map<String,Coordinate> coordinateMap;
+    public Map<String, Coordinate> coordinateMap;
     @Ignore
-    public Map<String,Set<Widget>> widgetSetMap;
+    public Map<String, Set<Widget>> widgetSetMap;
 
     public AppDescribe() {
         this.appName = "";
@@ -56,9 +56,9 @@ public class AppDescribe {
         this.widgetSetMap = null;
     }
 
-    public void getOtherField(DataDao dataDao){
+    public void getOtherField(DataDao dataDao) {
         this.autoFinder = dataDao.getAutoFinder(this.appPackage);
-        this.coordinateMap = new HashMap<>( Maps.uniqueIndex(dataDao.getCoordinates(this.appPackage), new Function<Coordinate, String>() {
+        this.coordinateMap = new HashMap<>(Maps.uniqueIndex(dataDao.getCoordinates(this.appPackage), new Function<Coordinate, String>() {
             @Override
             public String apply(Coordinate input) {
                 return input.appActivity;

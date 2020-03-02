@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(context,AppAuthorizationActivity.class));
+                        startActivity(new Intent(context, AppAuthorizationActivity.class));
                         break;
                     case 1:
                         if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
@@ -127,9 +127,9 @@ public class MainActivity extends Activity {
                         MainActivity.this.startActivity(new Intent(context, AppSelectActivity.class));
                         break;
                     case 3:
-                        Intent intent = new Intent(context,AppSettingActivity.class);
-                        intent.putExtra("myAppConfig.autoHideOnTaskList",myAppConfig.autoHideOnTaskList);
-                        startActivityForResult(intent,0);
+                        Intent intent = new Intent(context, AppSettingActivity.class);
+                        intent.putExtra("myAppConfig.autoHideOnTaskList", myAppConfig.autoHideOnTaskList);
+                        startActivityForResult(intent, 0);
                         break;
                 }
                 startActivity = true;
@@ -137,10 +137,10 @@ public class MainActivity extends Activity {
         });
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd a");
         String forUpdate = dateFormat.format(new Date());
-        if (!forUpdate.equals(myAppConfig.forUpdate)){
+        if (!forUpdate.equals(myAppConfig.forUpdate)) {
             myAppConfig.forUpdate = forUpdate;
             dataDao.insertMyAppConfig(myAppConfig);
-            @SuppressLint("StaticFieldLeak") AsyncTask<String,Integer,String> asyncTask = new AsyncTask<String, Integer, String>() {
+            @SuppressLint("StaticFieldLeak") AsyncTask<String, Integer, String> asyncTask = new AsyncTask<String, Integer, String>() {
                 private LatestMessage latestVersionMessage;
                 private boolean haveNewVersion;
 
@@ -155,17 +155,17 @@ public class MainActivity extends Activity {
                         int versionCode = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionCode;
                         String appName = latestVersionMessage.assets.get(0).name;
                         Matcher matcher = Pattern.compile("\\d+").matcher(appName);
-                        if (matcher.find()){
+                        if (matcher.find()) {
                             int newVersion = Integer.valueOf(matcher.group());
                             haveNewVersion = newVersion > versionCode;
                         }
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
-                    }  catch (IOException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     } catch (PackageManager.NameNotFoundException e) {
                         e.printStackTrace();
-                    } catch (Throwable e){
+                    } catch (Throwable e) {
                         e.printStackTrace();
                     }
                     return null;
@@ -174,11 +174,11 @@ public class MainActivity extends Activity {
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
-                    if (haveNewVersion){
-                        View view = inflater.inflate(R.layout.view_update_message,null);
+                    if (haveNewVersion) {
+                        View view = inflater.inflate(R.layout.view_update_message, null);
                         TextView textView = view.findViewById(R.id.update_massage);
                         textView.setText(Html.fromHtml(latestVersionMessage.body));
-                        AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).setView(view).setNegativeButton("取消",null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).setView(view).setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(latestVersionMessage.assets.get(0).browser_download_url));
@@ -213,7 +213,7 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (myAppConfig.autoHideOnTaskList) {
                 finishAndRemoveTask();
             }
@@ -224,7 +224,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (!startActivity && myAppConfig.autoHideOnTaskList){
+        if (!startActivity && myAppConfig.autoHideOnTaskList) {
             finishAndRemoveTask();
         }
     }
@@ -238,8 +238,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode ==0){
-            myAppConfig.autoHideOnTaskList = data.getBooleanExtra("myAppConfig.autoHideOnTaskList",myAppConfig.autoHideOnTaskList);
+        if (requestCode == 0) {
+            myAppConfig.autoHideOnTaskList = data.getBooleanExtra("myAppConfig.autoHideOnTaskList", myAppConfig.autoHideOnTaskList);
             dataDao.insertMyAppConfig(myAppConfig);
         }
     }

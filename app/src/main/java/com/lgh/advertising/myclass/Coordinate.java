@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
-@Entity(indices = @Index(value = {"appPackage","appActivity"},unique = true))
+@Entity(indices = @Index(value = {"appPackage", "appActivity"}, unique = true))
 public class Coordinate {
     @PrimaryKey(autoGenerate = true)
     public Integer id;
@@ -28,7 +28,7 @@ public class Coordinate {
         this.clickNumber = 1;
     }
 
-    public Coordinate(Coordinate coordinate){
+    public Coordinate(Coordinate coordinate) {
         this.appPackage = coordinate.appPackage;
         this.appActivity = coordinate.appActivity;
         this.xPosition = coordinate.xPosition;
@@ -49,6 +49,6 @@ public class Coordinate {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.appPackage,this.appActivity);
+        return Objects.hash(this.appPackage, this.appActivity);
     }
 }

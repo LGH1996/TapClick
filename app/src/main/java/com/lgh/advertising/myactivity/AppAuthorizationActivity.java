@@ -47,7 +47,7 @@ public class AppAuthorizationActivity extends Activity {
                     case R.id.batteryIgnore_on_off:
                         if (((PowerManager) getSystemService(POWER_SERVICE)).isIgnoringBatteryOptimizations(getPackageName())) {
                             Toast.makeText(context, "忽略电池优化权限已打开", Toast.LENGTH_SHORT).show();
-                        }else {
+                        } else {
                             Intent intentBatteryIgnore = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + getPackageName()));
                             if (intentBatteryIgnore.resolveActivity(packageManager) != null) {
                                 startActivity(intentBatteryIgnore);

@@ -116,9 +116,9 @@ public class MainFunction {
                         String packageName = temPackage.toString();
                         String activityName = temClass.toString();
                         boolean isActivity = !activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.");
-                        if (root != null){
+                        if (root != null) {
                             String rootPackage = root.getPackageName().toString();
-                            if (!packageName.equals(rootPackage)){
+                            if (!packageName.equals(rootPackage)) {
                                 packageName = rootPackage;
                                 if (!isActivity) {
                                     activityName = "Unknown Activity";

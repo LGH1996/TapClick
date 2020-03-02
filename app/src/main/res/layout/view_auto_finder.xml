@@ -16,9 +16,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
                 android:text="检索字词:"
                 android:textColor="@color/textColor"
-                android:layout_marginEnd="5dp"
                 android:textSize="12sp" />
 
             <EditText
@@ -39,10 +39,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
                 android:text="检索次数:"
                 android:textColor="@color/textColor"
-                android:textSize="12sp"
-                android:layout_marginEnd="5dp"/>
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/retrieveNumber"
@@ -66,10 +66,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
                 android:text="点击延迟:"
                 android:textColor="@color/textColor"
-                android:textSize="12sp"
-                android:layout_marginEnd="5dp"/>
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/clickDelay"
@@ -93,19 +93,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
                 android:text="仅模拟点击:"
                 android:textColor="@color/textColor"
-                android:textSize="12sp"
-                android:layout_marginEnd="5dp"/>
+                android:textSize="12sp" />
 
             <CheckBox
                 android:id="@+id/clickOnly"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:background="@drawable/check_select"
                 android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:button="@null"/>
+                android:background="@drawable/check_select"
+                android:button="@null"
+                android:gravity="center" />
         </LinearLayout>
 
         <RelativeLayout

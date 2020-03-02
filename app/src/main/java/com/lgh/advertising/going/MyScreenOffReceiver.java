@@ -7,6 +7,7 @@ import android.content.Intent;
 public class MyScreenOffReceiver extends BroadcastReceiver {
 
     public static String TAG = "MyScreenOffReceiver";
+
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
@@ -14,10 +15,10 @@ public class MyScreenOffReceiver extends BroadcastReceiver {
         try {
             String action = intent.getAction();
             if (action != null && action.equals(Intent.ACTION_SCREEN_OFF)) {
-                if (MyAccessibilityService.mainFunction != null){
+                if (MyAccessibilityService.mainFunction != null) {
                     MyAccessibilityService.mainFunction.onScreenOff();
                 }
-                if (MyAccessibilityServiceNoGesture.mainFunction != null){
+                if (MyAccessibilityServiceNoGesture.mainFunction != null) {
                     MyAccessibilityServiceNoGesture.mainFunction.onScreenOff();
                 }
             }

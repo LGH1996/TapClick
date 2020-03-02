@@ -27,18 +27,18 @@
             android:gravity="center_vertical|start"
             android:paddingLeft="15dp"
             android:singleLine="true"
+            android:text="无障碍服务权限"
             android:textColor="@color/textColor"
-            android:textSize="20sp"
-            android:text="无障碍服务权限"/>
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:alpha="0.7"
             android:clickable="false"
             android:focusable="false"
-            android:alpha="0.7"
             android:src="@drawable/forward" />
     </RelativeLayout>
 
@@ -65,20 +65,21 @@
             android:gravity="center_vertical|start"
             android:paddingLeft="15dp"
             android:singleLine="true"
+            android:text="忽略电池优化权限"
             android:textColor="@color/textColor"
-            android:textSize="20sp"
-            android:text="忽略电池优化权限"/>
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:alpha="0.7"
             android:clickable="false"
             android:focusable="false"
-            android:alpha="0.7"
             android:src="@drawable/forward" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/alertWindow_on_off"
         android:layout_width="match_parent"
@@ -102,27 +103,28 @@
             android:gravity="center_vertical|start"
             android:paddingLeft="15dp"
             android:singleLine="true"
+            android:text="应用悬浮窗权限"
             android:textColor="@color/textColor"
-            android:textSize="20sp"
-            android:text="应用悬浮窗权限"/>
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:alpha="0.7"
             android:clickable="false"
             android:focusable="false"
-            android:alpha="0.7"
             android:src="@drawable/forward" />
     </RelativeLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:lineSpacingMultiplier="1.5"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:lineSpacingMultiplier="1.5"
-        android:textSize="12sp"
-        android:text="@string/authorizationQuestion"/>
+        android:text="@string/authorizationQuestion"
+        android:textSize="12sp" />
 </LinearLayout>

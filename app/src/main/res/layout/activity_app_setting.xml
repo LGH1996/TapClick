@@ -56,6 +56,7 @@
             android:padding="1dp"
             android:text="打开" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

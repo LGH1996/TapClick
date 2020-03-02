@@ -9,7 +9,7 @@ public class MyAppConfig {
     @PrimaryKey
     public Integer id;
     public boolean autoHideOnTaskList;
-    public String  forUpdate;
+    public String forUpdate;
 
     public MyAppConfig() {
         this.id = 0;

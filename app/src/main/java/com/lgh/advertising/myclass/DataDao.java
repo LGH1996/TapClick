@@ -15,42 +15,61 @@ public interface DataDao {
 
     @Query("SELECT * FROM AppDescribe")
     List<AppDescribe> getAppDescribes();
+
     @Query("SELECT * FROM AutoFinder WHERE appPackage = :appPackage")
     AutoFinder getAutoFinder(String appPackage);
+
     @Query("SELECT * FROM Coordinate WHERE appPackage = :appPackage")
     List<Coordinate> getCoordinates(String appPackage);
+
     @Query("SELECT * FROM Widget WHERE appPackage = :appPackage")
     List<Widget> getWidgets(String appPackage);
+
     @Query("SELECT * FROM MyAppConfig WHERE id = 0")
     MyAppConfig getMyAppConfig();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAppDescribe(AppDescribe... appDescribes);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAppDescribe(List<AppDescribe> appDescribes);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAutoFinder(AutoFinder... autoFinders);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAutoFinder(List<AutoFinder> autoFinders);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCoordinate(Coordinate... coordinates);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertWidget(Widget... widgets);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMyAppConfig(MyAppConfig myAppConfig);
+
     @Query("DELETE FROM AppDescribe WHERE appPackage NOT IN (:packageNames)")
     void deleteAppDescribeByNotIn(Set<String> packageNames);
+
     @Query("DELETE FROM AppDescribe WHERE appPackage IN (:packageNames)")
     void deleteAppDescribeByPackageNames(String... packageNames);
+
     @Delete
     void deleteCoordinate(Coordinate... coordinates);
+
     @Delete
     void deleteWidget(Widget... widgets);
+
     @Update
     void updateCoordinate(Coordinate... coordinates);
+
     @Update
     void updateWidget(Widget... widgets);
+
     @Update
     void updateAutoFinder(AutoFinder... autoFinders);
+
     @Update
     void updateAppDescribe(AppDescribe... appDescribe);
 }

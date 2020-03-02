@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
-@Entity(indices = @Index(value = {"appPackage","appActivity","widgetRect"},unique = true))
+@Entity(indices = @Index(value = {"appPackage", "appActivity", "widgetRect"}, unique = true))
 public class Widget {
     @PrimaryKey(autoGenerate = true)
     public Integer id;
@@ -22,7 +22,7 @@ public class Widget {
     public String widgetDescribe;
     public String widgetText;
 
-    public Widget(){
+    public Widget() {
         this.appPackage = "";
         this.appActivity = "";
         this.clickDelay = 0;
@@ -33,6 +33,7 @@ public class Widget {
         this.widgetDescribe = "";
         this.widgetText = "";
     }
+
     public Widget(Widget widget) {
         this.appPackage = widget.appPackage;
         this.appActivity = widget.appActivity;
@@ -57,6 +58,6 @@ public class Widget {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.appPackage,this.appActivity,this.widgetRect);
+        return Objects.hash(this.appPackage, this.appActivity, this.widgetRect);
     }
 }

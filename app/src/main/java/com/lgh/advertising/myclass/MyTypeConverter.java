@@ -11,20 +11,23 @@ import java.util.List;
 
 public class MyTypeConverter {
     @TypeConverter
-    public static List<String> JsonToStringList(String json){
-       return new Gson().fromJson(json, new TypeToken<List<String>>() {
+    public static List<String> JsonToStringList(String json) {
+        return new Gson().fromJson(json, new TypeToken<List<String>>() {
         }.getType());
     }
+
     @TypeConverter
-    public static String StringListToJson(List<String> stringList){
+    public static String StringListToJson(List<String> stringList) {
         return new Gson().toJson(stringList);
     }
+
     @TypeConverter
-    public static Rect JsonToRect(String json){
-        return new Gson().fromJson(json,Rect.class);
+    public static Rect JsonToRect(String json) {
+        return new Gson().fromJson(json, Rect.class);
     }
+
     @TypeConverter
-    public static String RectToJson(Rect rect){
+    public static String RectToJson(Rect rect) {
         return new Gson().toJson(rect);
     }
 }

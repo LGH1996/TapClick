@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.List;
 
-@Entity(indices = @Index(value = "appPackage",unique = true))
+@Entity(indices = @Index(value = "appPackage", unique = true))
 public class AutoFinder {
     @PrimaryKey(autoGenerate = true)
     public Integer id;
