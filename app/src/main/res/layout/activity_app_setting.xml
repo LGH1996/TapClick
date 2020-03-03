@@ -18,18 +18,18 @@
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="5dp"
             android:gravity="center_vertical"
-            android:text="检查应用更新："
+            android:text="应用信息页面："
             android:textColor="@color/textColor"
             android:textSize="15sp" />
 
         <Button
-            android:id="@+id/setting_update"
+            android:id="@+id/setting_open"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:padding="1dp"
-            android:text="开始" />
+            android:text="打开" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,18 +43,18 @@
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="5dp"
             android:gravity="center_vertical"
-            android:text="应用信息页面："
+            android:text="检查应用更新："
             android:textColor="@color/textColor"
             android:textSize="15sp" />
 
         <Button
-            android:id="@+id/setting_open"
+            android:id="@+id/setting_update"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:padding="1dp"
-            android:text="打开" />
+            android:text="开始" />
     </LinearLayout>
 
     <LinearLayout

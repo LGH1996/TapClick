@@ -64,7 +64,7 @@ public class AppSettingActivity extends Activity {
         setResult(Activity.RESULT_OK, intent);
         Button openDetail = findViewById(R.id.setting_open);
         Button checkUpdate = findViewById(R.id.setting_update);
-        final Button submitDebug = findViewById(R.id.setting_submit);
+        Button submitDebug = findViewById(R.id.setting_submit);
         CheckBox checkBox = findViewById(R.id.setting_autoHideOnTaskList);
         checkBox.setChecked(autoHideOnTaskList);
         openDetail.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +157,7 @@ public class AppSettingActivity extends Activity {
                 try {
                     final LayoutInflater inflater = LayoutInflater.from(context);
                     final View view = inflater.inflate(R.layout.view_commit, null);
-                    final AlertDialog dialogCommit = new AlertDialog.Builder(AppSettingActivity.this).setView(view).create();
+                    final AlertDialog dialogCommit = new AlertDialog.Builder(AppSettingActivity.this).setView(view).setCancelable(false).create();
                     final EditText textView = view.findViewById(R.id.editText);
                     TextView but_empty = view.findViewById(R.id.empty);
                     TextView but_cancel = view.findViewById(R.id.cancel);
