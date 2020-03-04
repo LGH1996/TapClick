@@ -105,9 +105,13 @@ public class MainFunction {
     }
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
-//        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName());
         try {
             switch (event.getEventType()) {
+                case AccessibilityEvent.TYPE_WINDOWS_CHANGED:
+                    AccessibilityNodeInfo node = service.getRootInActiveWindow();
+                    if (node == null || node.getPackageName().equals(currentPackage)) {
+                        break;
+                    }
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
                     AccessibilityNodeInfo root = service.getRootInActiveWindow();
                     CharSequence temPackage = event.getPackageName();
@@ -210,7 +214,7 @@ public class MainFunction {
                             }
                         }
                     }
-                    if (packageName == null || packageName.equals(currentPackage)) {
+                    if (packageName != null && packageName.equals(currentPackage)) {
                         if (on_off_widget && appDescribe != null && widgetSet != null) {
                             findSkipButtonByWidget(root, widgetSet);
                         }
@@ -219,7 +223,6 @@ public class MainFunction {
                         }
                     }
                     break;
-
                 case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
                     if (event.getPackageName().equals(currentPackage)) {
                         if (on_off_widget && appDescribe != null && widgetSet != null) {
