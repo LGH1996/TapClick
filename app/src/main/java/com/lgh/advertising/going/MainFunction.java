@@ -16,6 +16,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -104,6 +105,7 @@ public class MainFunction {
     }
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
+//        Log.i(TAG, AccessibilityEvent.eventTypeToString(event.getEventType()) + "-" + event.getPackageName() + "-" + event.getClassName());
         try {
             switch (event.getEventType()) {
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
@@ -176,7 +178,6 @@ public class MainFunction {
                     if (activityName != null) {
                         if (!activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.")) {
                             currentActivity = activityName;
-
                             if (appDescribe != null) {
                                 if (on_off_coordinate) {
                                     final Coordinate coordinate = appDescribe.coordinateMap.get(activityName);
