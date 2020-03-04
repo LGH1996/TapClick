@@ -204,7 +204,7 @@ public class AppSettingActivity extends Activity {
                                     protected String doInBackground(String... strings) {
                                         try {
                                             HashMap<String, String> postMessage = new HashMap<>();
-                                            postMessage.put("message", new SimpleDateFormat("yyyy:MM:dd HH:mm:ss a", Locale.ENGLISH).format(new Date()));
+                                            postMessage.put("message", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.ENGLISH).format(new Date()));
                                             postMessage.put("content", Base64.encodeToString(commitMessage.getBytes(), Base64.DEFAULT));
                                             RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(postMessage));
                                             Headers headers = new Headers.Builder().add("Authorization", "token b487ac9fc2cd667854db7bf81ee8c36e23ca3bb3").build();
