@@ -148,7 +148,7 @@ public class AppSettingActivity extends Activity {
                         }
                     }
                 };
-                asyncTask.execute("https://api.github.com/repos/LGH1996/UPDATEADGO/releases/latest");
+                asyncTask.execute("https://api.github.com/repos/LGH1996/ADGORELEASE/releases/latest");
             }
         });
         submitDebug.setOnClickListener(new View.OnClickListener() {
@@ -180,6 +180,7 @@ public class AppSettingActivity extends Activity {
                             try {
                                 final String commitMessage = textView.getText().toString().trim();
                                 if (commitMessage.isEmpty()) {
+                                    textView.setText("");
                                     Toast.makeText(context, "内容不能为空", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
@@ -206,7 +207,7 @@ public class AppSettingActivity extends Activity {
                                             postMessage.put("message", new SimpleDateFormat("yyyy:MM:dd HH:mm:ss a", Locale.ENGLISH).format(new Date()));
                                             postMessage.put("content", Base64.encodeToString(commitMessage.getBytes(), Base64.DEFAULT));
                                             RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(postMessage));
-                                            Headers headers = new Headers.Builder().add("Authorization", "token ccb492b65726eafa5a66eb53fac607ccaa021c62").build();
+                                            Headers headers = new Headers.Builder().add("Authorization", "token b487ac9fc2cd667854db7bf81ee8c36e23ca3bb3").build();
                                             Request request = new Request.Builder().put(requestBody).headers(headers).url(strings[0]).build();
                                             OkHttpClient httpClient = new OkHttpClient();
                                             Response response = httpClient.newCall(request).execute();
@@ -230,7 +231,7 @@ public class AppSettingActivity extends Activity {
                                         }
                                     }
                                 };
-                                asyncTask.execute("https://api.github.com/repos/lgh1996/UPDATEADGO/contents/" + Build.PRODUCT + "_" + Build.VERSION.SDK_INT + "(" + Build.VERSION.RELEASE + ")" + "_" + SystemClock.uptimeMillis() + ".doc");
+                                asyncTask.execute("https://api.github.com/repos/LGH1996/ADGORELEASE/contents/" + Build.PRODUCT + "_" + Build.VERSION.SDK_INT + "(" + Build.VERSION.RELEASE + ")" + "_" + SystemClock.uptimeMillis() + ".doc");
                             } catch (Throwable e) {
                                 e.printStackTrace();
                             }

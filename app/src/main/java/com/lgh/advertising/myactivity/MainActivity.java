@@ -184,7 +184,7 @@ public class MainActivity extends Activity {
                     }
                 }
             };
-            asyncTask.execute("https://api.github.com/repos/LGH1996/UPDATEADGO/releases/latest");
+            asyncTask.execute("https://api.github.com/repos/LGH1996/ADGORELEASE/releases/latest");
         }
 
     }
