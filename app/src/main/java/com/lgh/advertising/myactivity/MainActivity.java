@@ -10,11 +10,15 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Html;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -171,8 +175,10 @@ public class MainActivity extends Activity {
                     super.onPostExecute(s);
                     if (haveNewVersion) {
                         View view = inflater.inflate(R.layout.view_update_message, null);
-                        TextView textView = view.findViewById(R.id.update_massage);
-                        textView.setText(Html.fromHtml(latestVersionMessage.body));
+                        WebView webView = view.findViewById(R.id.webView_update);
+                        WebSettings settings = webView.getSettings();
+                        settings.setJavaScriptEnabled(true);
+                        webView.loadData(latestVersionMessage.body, "text/html", "utf-8");
                         AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).setView(view).setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -181,6 +187,13 @@ public class MainActivity extends Activity {
                             }
                         }).create();
                         dialog.show();
+                        DisplayMetrics metrics = new DisplayMetrics();
+                        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+                        Window window = dialog.getWindow();
+                        WindowManager.LayoutParams params = window.getAttributes();
+                        params.width = (metrics.widthPixels / 6) * 5;
+                        params.height = metrics.heightPixels / 2;
+                        window.setAttributes(params);
                     }
                 }
             };

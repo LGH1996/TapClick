@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ScrollView
+    <WebView
+        android:id="@+id/webView_update"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/update_massage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:lineSpacingMultiplier="1.5"
-            android:textColor="@color/textColor"
-            android:textSize="12sp" />
-    </ScrollView>
+        android:layout_height="match_parent"></WebView>
 </LinearLayout>

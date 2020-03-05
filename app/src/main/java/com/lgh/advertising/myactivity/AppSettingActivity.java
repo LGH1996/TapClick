@@ -9,12 +9,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -22,12 +27,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.base.Charsets;
 import com.google.gson.Gson;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.myclass.LatestMessage;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -121,8 +128,10 @@ public class AppSettingActivity extends Activity {
                         waitDialog.dismiss();
                         if (haveNewVersion) {
                             View view = LayoutInflater.from(context).inflate(R.layout.view_update_message, null);
-                            TextView textView = view.findViewById(R.id.update_massage);
-                            textView.setText(Html.fromHtml(latestVersionMessage.body));
+                            WebView webView = view.findViewById(R.id.webView_update);
+                            WebSettings settings = webView.getSettings();
+                            settings.setJavaScriptEnabled(true);
+                            webView.loadData(latestVersionMessage.body, "text/html", "utf-8");
                             AlertDialog dialog = new AlertDialog.Builder(AppSettingActivity.this).setView(view).setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -131,6 +140,13 @@ public class AppSettingActivity extends Activity {
                                 }
                             }).create();
                             dialog.show();
+                            DisplayMetrics metrics = new DisplayMetrics();
+                            getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+                            Window window = dialog.getWindow();
+                            WindowManager.LayoutParams params = window.getAttributes();
+                            params.width = (metrics.widthPixels / 6) * 5;
+                            params.height = metrics.heightPixels / 2;
+                            window.setAttributes(params);
                         } else {
                             Toast.makeText(context, "当前已是最新版本", Toast.LENGTH_SHORT).show();
                         }
