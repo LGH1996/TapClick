@@ -16,7 +16,6 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -498,7 +497,7 @@ public class MainFunction {
             dataDao.insertAutoFinder(autoFinderList);
             appDescribeList = dataDao.getAppDescribes();
             for (AppDescribe e : appDescribeList) {
-                e.getOtherField(dataDao);
+                e.getOtherFieldsFromDatabase(dataDao);
                 appDescribeMap.put(e.appPackage, e);
             }
         } catch (Throwable e) {
@@ -728,21 +727,13 @@ public class MainFunction {
             saveWidgetButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    widgetSelect.createTime = System.currentTimeMillis();
                     Widget temWidget = new Widget(widgetSelect);
+                    temWidget.createTime = System.currentTimeMillis();
+                    dataDao.insertWidget(temWidget);
                     AppDescribe temAppDescribe = appDescribeMap.get(temWidget.appPackage);
                     if (temAppDescribe != null) {
-                        Set<Widget> temWidgetSet = temAppDescribe.widgetSetMap.get(temWidget.appActivity);
-                        if (temWidgetSet == null) {
-                            temWidgetSet = new HashSet<>();
-                            temWidgetSet.add(temWidget);
-                            temAppDescribe.widgetSetMap.put(temWidget.appActivity, temWidgetSet);
-                        } else {
-                            temWidgetSet.remove(temWidget);
-                            temWidgetSet.add(temWidget);
-                        }
+                        temAppDescribe.getWidgetSetMapFromDatabase(dataDao);
                     }
-                    dataDao.insertWidget(temWidget);
                     saveWidgetButton.setEnabled(false);
                     pacName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
                 }
@@ -750,13 +741,13 @@ public class MainFunction {
             savePositionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    coordinateSelect.createTime = System.currentTimeMillis();
                     Coordinate temCoordinate = new Coordinate(coordinateSelect);
+                    temCoordinate.createTime = System.currentTimeMillis();
+                    dataDao.insertCoordinate(temCoordinate);
                     AppDescribe temAppDescribe = appDescribeMap.get(temCoordinate.appPackage);
                     if (temAppDescribe != null) {
-                        temAppDescribe.coordinateMap.put(temCoordinate.appActivity, temCoordinate);
+                        temAppDescribe.getCoordinateMapFromDatabase(dataDao);
                     }
-                    dataDao.insertCoordinate(temCoordinate);
                     savePositionButton.setEnabled(false);
                     pacName.setText(temCoordinate.appPackage + " (以下坐标数据已保存)");
                 }

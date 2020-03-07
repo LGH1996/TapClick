@@ -11,7 +11,7 @@ import com.lgh.advertising.myclass.AutoFinder;
 import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 public class MyInstallReceiver extends BroadcastReceiver {
 
@@ -36,10 +36,10 @@ public class MyInstallReceiver extends BroadcastReceiver {
                         appDescribe.appPackage = packageName;
                         AutoFinder autoFinder = new AutoFinder();
                         autoFinder.appPackage = packageName;
-                        autoFinder.keywordList = Arrays.asList("跳过");
+                        autoFinder.keywordList = Collections.singletonList("跳过");
                         dataDao.insertAppDescribe(appDescribe);
                         dataDao.insertAutoFinder(autoFinder);
-                        appDescribe.getOtherField(dataDao);
+                        appDescribe.getOtherFieldsFromDatabase(dataDao);
                         if (MyAccessibilityService.mainFunction != null) {
                             MyAccessibilityService.mainFunction.getAppDescribeMap().put(appDescribe.appPackage, appDescribe);
                         }

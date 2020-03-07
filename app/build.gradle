@@ -6,8 +6,8 @@ android {
         applicationId "com.lgh.advertising.going"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 10
-        versionName "1.0"
+        versionCode 11
+        versionName "1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
@@ -25,8 +25,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'android.arch.persistence.room:compiler:1.1.1'
-    implementation 'android.arch.persistence.room:runtime:1.1.1'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.10.0'
+    implementation group: 'androidx.room', name: 'room-runtime', version: '2.2.4'
+    annotationProcessor group: 'androidx.room', name: 'room-compiler', version: '2.2.4'
 }

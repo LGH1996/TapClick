@@ -21,7 +21,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.common.collect.Lists;
 import com.lgh.advertising.going.MyAccessibilityService;
 import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
@@ -78,7 +77,7 @@ public class AppSelectActivity extends Activity {
                     }
                 }
                 if (appDescribeMap != null) {
-                    appDescribeList = Lists.newArrayList(appDescribeMap.values());
+                    appDescribeList = new ArrayList<>(appDescribeMap.values());
                 } else {
                     appDescribeList = dataDao.getAppDescribes();
                 }
@@ -148,7 +147,7 @@ public class AppSelectActivity extends Activity {
                                 }
                                 if (appDescribe == null) {
                                     appDescribe = appDescribeList.get(position);
-                                    appDescribe.getOtherField(dataDao);
+                                    appDescribe.getOtherFieldsFromDatabase(dataDao);
                                 }
                                 startActivity(new Intent(context, AppConfigActivity.class));
                             }
@@ -182,12 +181,12 @@ public class AppSelectActivity extends Activity {
         super.onDestroy();
         if (MyAccessibilityService.mainFunction != null) {
             for (AppDescribe e : MyAccessibilityService.mainFunction.getAppDescribeMap().values()) {
-                e.getOtherField(dataDao);
+                e.getOtherFieldsFromDatabase(dataDao);
             }
         }
         if (MyAccessibilityServiceNoGesture.mainFunction != null) {
             for (AppDescribe e : MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap().values()) {
-                e.getOtherField(dataDao);
+                e.getOtherFieldsFromDatabase(dataDao);
             }
         }
     }

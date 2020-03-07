@@ -42,6 +42,11 @@ public class AppConfigActivity extends Activity {
     LayoutInflater inflater;
     DataDao dataDao;
     DisplayMetrics metrics;
+    AppDescribe appDescribe;
+    SimpleDateFormat dateFormatModify;
+    SimpleDateFormat dateFormatCreate;
+    LinearLayout layoutCoordinate;
+    LinearLayout layoutWidget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +57,11 @@ public class AppConfigActivity extends Activity {
         dataDao = DataDaoFactory.getInstance(context);
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
-        final AppDescribe appDescribe = AppSelectActivity.appDescribe;
-        final SimpleDateFormat dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
-        final SimpleDateFormat dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.ENGLISH);
+        appDescribe = AppSelectActivity.appDescribe;
+        dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
+        dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.ENGLISH);
+        layoutCoordinate = findViewById(R.id.coordinate_layout);
+        layoutWidget = findViewById(R.id.widget_layout);
 
         ImageButton questionBaseSetting = findViewById(R.id.base_setting_question);
         ImageButton questionAutoFinder = findViewById(R.id.auto_finder_question);
@@ -202,16 +209,27 @@ public class AppConfigActivity extends Activity {
             }
         });
         layoutAutoFinder.addView(viewAutoFinder);
+    }
 
-        final LinearLayout layoutCoordinate = findViewById(R.id.coordinate_layout);
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         final List<Coordinate> coordinateList = new ArrayList<>(appDescribe.coordinateMap.values());
-        if (coordinateList.isEmpty()) layoutCoordinate.setVisibility(View.GONE);
+        if (coordinateList.isEmpty()) {
+            layoutCoordinate.setVisibility(View.GONE);
+        } else {
+            layoutCoordinate.setVisibility(View.VISIBLE);
+        }
         Collections.sort(coordinateList, new Comparator<Coordinate>() {
             @Override
             public int compare(Coordinate o1, Coordinate o2) {
                 return (int) (o2.createTime - o1.createTime);
             }
         });
+        if (layoutCoordinate.getChildCount() > 2) {
+            layoutCoordinate.removeViews(2, layoutCoordinate.getChildCount() - 2);
+        }
         for (final Coordinate e : coordinateList) {
             final View viewCoordinate = inflater.inflate(R.layout.view_coordinate, null);
             EditText coordinateActivity = viewCoordinate.findViewById(R.id.coordinate_activity);
@@ -282,9 +300,15 @@ public class AppConfigActivity extends Activity {
         }
 
 
-        final LinearLayout layoutWidget = findViewById(R.id.widget_layout);
         List<Set<Widget>> widgetSetList = new ArrayList<>(appDescribe.widgetSetMap.values());
-        if (widgetSetList.isEmpty()) layoutWidget.setVisibility(View.GONE);
+        if (widgetSetList.isEmpty()) {
+            layoutWidget.setVisibility(View.GONE);
+        } else {
+            layoutWidget.setVisibility(View.VISIBLE);
+        }
+        if (layoutWidget.getChildCount() > 2) {
+            layoutWidget.removeViews(2, layoutWidget.getChildCount() - 2);
+        }
         for (final Set<Widget> widgetSet : widgetSetList) {
             final List<Widget> widgetList = new ArrayList<>(widgetSet);
             Collections.sort(widgetList, new Comparator<Widget>() {

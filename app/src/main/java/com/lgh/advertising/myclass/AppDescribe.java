@@ -5,9 +5,6 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Maps;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -56,14 +53,24 @@ public class AppDescribe {
         this.widgetSetMap = null;
     }
 
-    public void getOtherField(DataDao dataDao) {
+    public void getOtherFieldsFromDatabase(DataDao dataDao) {
+        getAutoFinderFromDatabase(dataDao);
+        getCoordinateMapFromDatabase(dataDao);
+        getWidgetSetMapFromDatabase(dataDao);
+    }
+
+    public void getAutoFinderFromDatabase(DataDao dataDao) {
         this.autoFinder = dataDao.getAutoFinder(this.appPackage);
-        this.coordinateMap = new HashMap<>(Maps.uniqueIndex(dataDao.getCoordinates(this.appPackage), new Function<Coordinate, String>() {
-            @Override
-            public String apply(Coordinate input) {
-                return input.appActivity;
-            }
-        }));
+    }
+
+    public void getCoordinateMapFromDatabase(DataDao dataDao) {
+        this.coordinateMap = new HashMap<>();
+        for (Coordinate e : dataDao.getCoordinates(this.appPackage)) {
+            this.coordinateMap.put(e.appActivity, e);
+        }
+    }
+
+    public void getWidgetSetMapFromDatabase(DataDao dataDao) {
         List<Widget> widgetList = dataDao.getWidgets(this.appPackage);
         this.widgetSetMap = new HashMap<>();
         for (Widget w : widgetList) {
