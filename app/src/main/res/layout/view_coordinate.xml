@@ -121,7 +121,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="点击延迟(ms):"
+                        android:text="延迟点击(ms):"
                         android:textColor="@color/textColor"
                         android:textSize="12sp" />
 

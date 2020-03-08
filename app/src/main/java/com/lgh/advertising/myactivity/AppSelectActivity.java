@@ -61,44 +61,6 @@ public class AppSelectActivity extends Activity {
         final LayoutInflater inflater = LayoutInflater.from(context);
         progressBar.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
-                    handler.sendEmptyMessage(0x01);
-                } else if (MyAccessibilityService.mainFunction != null && MyAccessibilityServiceNoGesture.mainFunction != null) {
-                    handler.sendEmptyMessage(0x02);
-                } else {
-                    if (MyAccessibilityService.mainFunction != null) {
-                        appDescribeMap = MyAccessibilityService.mainFunction.getAppDescribeMap();
-                    }
-                    if (MyAccessibilityServiceNoGesture.mainFunction != null) {
-                        appDescribeMap = MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap();
-                    }
-                }
-                if (appDescribeMap != null) {
-                    appDescribeList = new ArrayList<>(appDescribeMap.values());
-                } else {
-                    appDescribeList = dataDao.getAppDescribes();
-                }
-                Collections.sort(appDescribeList, new Comparator<AppDescribe>() {
-                    @Override
-                    public int compare(AppDescribe o1, AppDescribe o2) {
-                        return Collator.getInstance(Locale.CHINESE).compare(o1.appName, o2.appName);
-                    }
-                });
-                for (AppDescribe e : appDescribeList) {
-                    try {
-                        Drawable icon = packageManager.getApplicationIcon(e.appPackage);
-                        appDescribeAndIconList.add(new AppDescribeAndIcon(e, icon));
-                    } catch (PackageManager.NameNotFoundException nameNotFoundException) {
-                        appDescribeList.remove(e);
-                        nameNotFoundException.printStackTrace();
-                    }
-                }
-                handler.sendEmptyMessage(0x00);
-            }
-        }).start();
         handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message msg) {
@@ -166,7 +128,44 @@ public class AppSelectActivity extends Activity {
                 return true;
             }
         });
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
+                    handler.sendEmptyMessage(0x01);
+                } else if (MyAccessibilityService.mainFunction != null && MyAccessibilityServiceNoGesture.mainFunction != null) {
+                    handler.sendEmptyMessage(0x02);
+                } else {
+                    if (MyAccessibilityService.mainFunction != null) {
+                        appDescribeMap = MyAccessibilityService.mainFunction.getAppDescribeMap();
+                    }
+                    if (MyAccessibilityServiceNoGesture.mainFunction != null) {
+                        appDescribeMap = MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap();
+                    }
+                }
+                if (appDescribeMap != null) {
+                    appDescribeList = new ArrayList<>(appDescribeMap.values());
+                } else {
+                    appDescribeList = dataDao.getAppDescribes();
+                }
+                Collections.sort(appDescribeList, new Comparator<AppDescribe>() {
+                    @Override
+                    public int compare(AppDescribe o1, AppDescribe o2) {
+                        return Collator.getInstance(Locale.CHINESE).compare(o1.appName, o2.appName);
+                    }
+                });
+                for (AppDescribe e : appDescribeList) {
+                    try {
+                        Drawable icon = packageManager.getApplicationIcon(e.appPackage);
+                        appDescribeAndIconList.add(new AppDescribeAndIcon(e, icon));
+                    } catch (PackageManager.NameNotFoundException nameNotFoundException) {
+                        appDescribeList.remove(e);
+                        nameNotFoundException.printStackTrace();
+                    }
+                }
+                handler.sendEmptyMessage(0x00);
+            }
+        }).start();
     }
 
 

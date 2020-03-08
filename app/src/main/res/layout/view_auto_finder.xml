@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
-                android:text="点击延迟:"
+                android:text="延迟点击(ms):"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
 
@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
-                android:text="仅模拟点击:"
+                android:text="仅进行模拟点击:"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
 

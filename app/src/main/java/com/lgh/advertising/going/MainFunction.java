@@ -117,6 +117,11 @@ public class MainFunction {
                     CharSequence temClass = event.getClassName();
                     String packageName = root != null ? root.getPackageName().toString() : temPackage != null ? temPackage.toString() : null;
                     String activityName = temClass != null ? temClass.toString() : null;
+                    if (root != null && temPackage != null) {
+                        if (!root.getPackageName().equals(temPackage)) {
+                            activityName = root.getPackageName() + ".unknownActivity";
+                        }
+                    }
                     if (packageName != null) {
                         if (!packageName.equals(currentPackage)) {
                             appDescribe = appDescribeMap.get(packageName);
