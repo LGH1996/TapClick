@@ -3,4 +3,5 @@
     <color name="divideLine">#25000000</color>
     <color name="textColor">#ff000000</color>
     <color name="transparent">#00000000</color>
+    <color name="background">#ffffffff</color>
 </resources>

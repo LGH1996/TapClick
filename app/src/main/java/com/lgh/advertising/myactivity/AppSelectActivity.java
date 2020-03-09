@@ -10,11 +10,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -40,89 +43,128 @@ public class AppSelectActivity extends Activity {
 
     public static AppDescribe appDescribe;
     Context context;
-    PackageManager packageManager;
     DataDao dataDao;
+    PackageManager packageManager;
+    LayoutInflater inflater;
     Map<String, AppDescribe> appDescribeMap;
     List<AppDescribe> appDescribeList;
     List<AppDescribeAndIcon> appDescribeAndIconList;
+    List<AppDescribeAndIcon> appDescribeAndIconFilterList;
     BaseAdapter baseAdapter;
-    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_select);
+        setContentView(R.layout.activity_select_app);
         context = getApplicationContext();
+        dataDao = DataDaoFactory.getInstance(context);
         packageManager = getPackageManager();
-        dataDao = DataDaoFactory.getInstance(getApplicationContext());
+        inflater = LayoutInflater.from(context);
         appDescribeAndIconList = new ArrayList<>();
+        appDescribeAndIconFilterList = new ArrayList<>();
         final ListView listView = findViewById(R.id.listView);
         final ProgressBar progressBar = findViewById(R.id.progress);
-        final LayoutInflater inflater = LayoutInflater.from(context);
-        progressBar.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
-        handler = new Handler(new Handler.Callback() {
+        progressBar.setVisibility(View.VISIBLE);
+
+        if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
+            Toast.makeText(context, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
+        } else if (MyAccessibilityService.mainFunction != null && MyAccessibilityServiceNoGesture.mainFunction != null) {
+            Toast.makeText(context, "无障碍服务冲突", Toast.LENGTH_SHORT).show();
+        } else {
+            if (MyAccessibilityService.mainFunction != null) {
+                appDescribeMap = MyAccessibilityService.mainFunction.getAppDescribeMap();
+            }
+            if (MyAccessibilityServiceNoGesture.mainFunction != null) {
+                appDescribeMap = MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap();
+            }
+        }
+
+        View searchView = inflater.inflate(R.layout.view_search, null);
+        EditText searchBox = searchView.findViewById(R.id.searchBox);
+        final Filter filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                appDescribeAndIconFilterList.clear();
+                for (AppDescribeAndIcon e : appDescribeAndIconList) {
+                    if (e.appDescribe.appName.contains(constraint)) {
+                        appDescribeAndIconFilterList.add(e);
+                    }
+                }
+                return null;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                baseAdapter.notifyDataSetChanged();
+            }
+        };
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filter.filter(s.toString().trim());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        listView.addHeaderView(searchView);
+        baseAdapter = new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return appDescribeAndIconFilterList.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return position;
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                AppSelectActivity.ViewHolder holder;
+                if (convertView == null) {
+                    convertView = inflater.inflate(R.layout.view_select_item, null);
+                    holder = new AppSelectActivity.ViewHolder(convertView);
+                    convertView.setTag(holder);
+                } else {
+                    holder = (AppSelectActivity.ViewHolder) convertView.getTag();
+                }
+                final AppDescribeAndIcon tem = appDescribeAndIconFilterList.get(position);
+                holder.textView.setText(tem.appDescribe.appName + " (" + (tem.appDescribe.on_off ? "开启" : "关闭") + ")");
+                holder.imageView.setImageDrawable(tem.icon);
+                convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        appDescribe = tem.appDescribe;
+                        if (appDescribeMap == null) {
+                            appDescribe.getOtherFieldsFromDatabase(dataDao);
+                        }
+                        startActivity(new Intent(context, AppConfigActivity.class));
+                    }
+                });
+                return convertView;
+            }
+        };
+        listView.setAdapter(baseAdapter);
+        final Handler handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
                     case 0x00:
-                        baseAdapter = new BaseAdapter() {
-                            @Override
-                            public int getCount() {
-                                return appDescribeAndIconList.size();
-                            }
-
-                            @Override
-                            public Object getItem(int position) {
-                                return position;
-                            }
-
-                            @Override
-                            public long getItemId(int position) {
-                                return position;
-                            }
-
-                            @Override
-                            public View getView(int position, View convertView, ViewGroup parent) {
-                                AppSelectActivity.ViewHolder holder;
-                                if (convertView == null) {
-                                    convertView = inflater.inflate(R.layout.view_select_item, null);
-                                    holder = new AppSelectActivity.ViewHolder(convertView);
-                                    convertView.setTag(holder);
-                                } else {
-                                    holder = (AppSelectActivity.ViewHolder) convertView.getTag();
-                                }
-                                AppDescribeAndIcon tem = appDescribeAndIconList.get(position);
-                                holder.textView.setText(tem.appDescribe.appName + " (" + (tem.appDescribe.on_off ? "开启" : "关闭") + ")");
-                                holder.imageView.setImageDrawable(tem.icon);
-                                return convertView;
-                            }
-                        };
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                appDescribe = null;
-                                String packageName = appDescribeList.get(position).appPackage;
-                                if (appDescribeMap != null) {
-                                    appDescribe = appDescribeMap.get(packageName);
-                                }
-                                if (appDescribe == null) {
-                                    appDescribe = appDescribeList.get(position);
-                                    appDescribe.getOtherFieldsFromDatabase(dataDao);
-                                }
-                                startActivity(new Intent(context, AppConfigActivity.class));
-                            }
-                        });
-                        listView.setAdapter(baseAdapter);
-                        listView.setVisibility(View.VISIBLE);
+                        baseAdapter.notifyDataSetChanged();
                         progressBar.setVisibility(View.GONE);
-                        break;
-                    case 0x01:
-                        Toast.makeText(context, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 0x02:
-                        Toast.makeText(context, "无障碍服务冲突", Toast.LENGTH_SHORT).show();
+                        listView.setVisibility(View.VISIBLE);
                         break;
                 }
                 return true;
@@ -131,18 +173,6 @@ public class AppSelectActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
-                    handler.sendEmptyMessage(0x01);
-                } else if (MyAccessibilityService.mainFunction != null && MyAccessibilityServiceNoGesture.mainFunction != null) {
-                    handler.sendEmptyMessage(0x02);
-                } else {
-                    if (MyAccessibilityService.mainFunction != null) {
-                        appDescribeMap = MyAccessibilityService.mainFunction.getAppDescribeMap();
-                    }
-                    if (MyAccessibilityServiceNoGesture.mainFunction != null) {
-                        appDescribeMap = MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap();
-                    }
-                }
                 if (appDescribeMap != null) {
                     appDescribeList = new ArrayList<>(appDescribeMap.values());
                 } else {
@@ -163,11 +193,11 @@ public class AppSelectActivity extends Activity {
                         nameNotFoundException.printStackTrace();
                     }
                 }
+                appDescribeAndIconFilterList.addAll(appDescribeAndIconList);
                 handler.sendEmptyMessage(0x00);
             }
         }).start();
     }
-
 
     @Override
     protected void onRestart() {

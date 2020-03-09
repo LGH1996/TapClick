@@ -27,6 +27,7 @@
             android:layout_toEndOf="@+id/main_img"
             android:gravity="center_vertical|start"
             android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:singleLine="true"
             android:textColor="@color/textColor"
             android:textSize="20sp" />
