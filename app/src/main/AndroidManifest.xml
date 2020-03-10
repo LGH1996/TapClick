@@ -34,7 +34,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.lgh.advertising.myactivity.MainActivity"
+            android:name="com.lgh.advertising.myactivity.AppMainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

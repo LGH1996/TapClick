@@ -1,15 +1,15 @@
 <resources>
-    <string name="app_name">AdGo</string>
-    <string name="accessibilityName">AdGo(支持坐标点击)</string>
-    <string name="accessibilityNameNoGesture">AdGo(不支持坐标点击)</string>
+    <string name="app_name">开屏即达</string>
+    <string name="accessibilityName">开屏即达(支持坐标点击)</string>
+    <string name="accessibilityNameNoGesture">开屏即达(不支持坐标点击)</string>
     <string name="description">
         该服务支持坐标点击，但某些机型可能因此出现卡顿掉帧的情况，如果出现上述情况，请关闭此服务，开启另一个不支持坐标点击的服务。\n\n
         注意:不能同时开启两个服务，否则会因为冲突而产生异常。在开启该服务后，请确保另一个不支持坐标点击的服务已关闭。\n\n
         提示:打开开关时会收到系统例行风险提示,点击"确认"即可,本应用不会收集任何隐私数据。
     </string>
     <string name="descriptionNoGesture">
-        该服务不支持坐标点击，所以某些依赖坐标点击的跳过启动广告功能会失效。\n\n
-        只有在开启支持坐标点击的服务出现卡顿掉帧时才需要选择该服务，否则请前往开启另一个服务。\n\n
+        该服务不支持坐标点击，所以某些依赖坐标的模拟点击功能会失效。\n\n
+        只有在开启支持坐标点击的服务时会出现卡顿掉帧的情况才需要选择该服务，否则请前往开启另一个服务。\n\n
         注意:不能同时开启两个服务，否则会因为冲突而产生异常。在开启该服务后，请确保另一个支持坐标点击的服务已关闭。\n\n
         提示:打开开关时会收到系统例行风险提示,点击"确认"即可,本应用不会收集任何隐私数据。
     </string>

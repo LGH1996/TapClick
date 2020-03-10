@@ -54,7 +54,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MainFunction {
 
-    public static final String TAG = "MainFunction";
+//    public static final String TAG = "MainFunction";
     private Map<String, AppDescribe> appDescribeMap;
     private AppDescribe appDescribe;
     private AccessibilityService service;
@@ -522,7 +522,7 @@ public class MainFunction {
             final Widget widgetSelect = new Widget();
             final Coordinate coordinateSelect = new Coordinate();
             LayoutInflater inflater = LayoutInflater.from(service);
-            viewAdvertisingMessage = inflater.inflate(R.layout.view_advertising, null);
+            viewAdvertisingMessage = inflater.inflate(R.layout.view_add_data, null);
             final TextView pacName = viewAdvertisingMessage.findViewById(R.id.pacName);
             final TextView actName = viewAdvertisingMessage.findViewById(R.id.actName);
             final TextView widget = viewAdvertisingMessage.findViewById(R.id.widget);

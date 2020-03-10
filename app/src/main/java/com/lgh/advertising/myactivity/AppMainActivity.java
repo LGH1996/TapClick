@@ -49,7 +49,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class MainActivity extends Activity {
+public class AppMainActivity extends Activity {
 
     private Context context;
     private MyAppConfig myAppConfig;
@@ -69,8 +69,8 @@ public class MainActivity extends Activity {
         final LayoutInflater inflater = LayoutInflater.from(context);
         final List<Resource> source = new ArrayList<>();
         source.add(new Resource("授权管理", R.drawable.authorization));
-        source.add(new Resource("添加广告", R.drawable.advertising));
-        source.add(new Resource("数据管理", R.drawable.edit));
+        source.add(new Resource("添加数据", R.drawable.add_data));
+        source.add(new Resource("数据管理", R.drawable.edit_data));
         source.add(new Resource("应用设置", R.drawable.setting));
         BaseAdapter baseAdapter = new BaseAdapter() {
             @Override
@@ -123,7 +123,7 @@ public class MainActivity extends Activity {
                         }
                         break;
                     case 2:
-                        MainActivity.this.startActivity(new Intent(context, AppSelectActivity.class));
+                        AppMainActivity.this.startActivity(new Intent(context, AppSelectActivity.class));
                         break;
                     case 3:
                         Intent intent = new Intent(context, AppSettingActivity.class);
@@ -179,7 +179,7 @@ public class MainActivity extends Activity {
                         WebSettings settings = webView.getSettings();
                         settings.setJavaScriptEnabled(true);
                         webView.loadData(latestVersionMessage.body, "text/html", "utf-8");
-                        AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).setView(view).setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        AlertDialog dialog = new AlertDialog.Builder(AppMainActivity.this).setView(view).setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(latestVersionMessage.assets.get(0).browser_download_url));
