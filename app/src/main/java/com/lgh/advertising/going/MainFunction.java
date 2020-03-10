@@ -39,7 +39,6 @@ import com.lgh.advertising.myclass.DataDaoFactory;
 import com.lgh.advertising.myclass.Widget;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -54,7 +53,6 @@ import java.util.concurrent.TimeUnit;
 
 public class MainFunction {
 
-//    public static final String TAG = "MainFunction";
     private Map<String, AppDescribe> appDescribeMap;
     private AppDescribe appDescribe;
     private AccessibilityService service;
@@ -89,7 +87,7 @@ public class MainFunction {
             installReceiver = new MyInstallReceiver();
             IntentFilter filterInstall = new IntentFilter();
             filterInstall.addAction(Intent.ACTION_PACKAGE_ADDED);
-            filterInstall.addAction(Intent.ACTION_PACKAGE_REMOVED);
+            filterInstall.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
             filterInstall.addDataScheme("package");
             service.registerReceiver(installReceiver, filterInstall);
             updatePackage();
@@ -493,14 +491,14 @@ public class MainFunction {
                     appDescribeList.add(appDescribe);
                     AutoFinder autoFinder = new AutoFinder();
                     autoFinder.appPackage = packageName;
-                    autoFinder.keywordList = Arrays.asList("跳过");
+                    autoFinder.keywordList = Collections.singletonList("跳过");
                     autoFinderList.add(autoFinder);
                 }
             }
             dataDao.deleteAppDescribeByNotIn(packageInstall);
             dataDao.insertAppDescribe(appDescribeList);
             dataDao.insertAutoFinder(autoFinderList);
-            appDescribeList = dataDao.getAppDescribes();
+            appDescribeList = dataDao.getAllAppDescribes();
             for (AppDescribe e : appDescribeList) {
                 e.getOtherFieldsFromDatabase(dataDao);
                 appDescribeMap.put(e.appPackage, e);

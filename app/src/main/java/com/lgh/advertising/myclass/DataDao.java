@@ -14,27 +14,30 @@ import java.util.Set;
 public interface DataDao {
 
     @Query("SELECT * FROM AppDescribe")
-    List<AppDescribe> getAppDescribes();
+    List<AppDescribe> getAllAppDescribes();
+
+    @Query("SELECT * FROM AppDescribe WHERE appPackage = :appPackage")
+    AppDescribe getAppDescribeByPackage(String appPackage);
 
     @Query("SELECT * FROM AutoFinder WHERE appPackage = :appPackage")
-    AutoFinder getAutoFinder(String appPackage);
+    AutoFinder getAutoFinderByPackage(String appPackage);
 
     @Query("SELECT * FROM Coordinate WHERE appPackage = :appPackage")
-    List<Coordinate> getCoordinates(String appPackage);
+    List<Coordinate> getCoordinatesByPackage(String appPackage);
 
     @Query("SELECT * FROM Widget WHERE appPackage = :appPackage")
-    List<Widget> getWidgets(String appPackage);
+    List<Widget> getWidgetsByPackage(String appPackage);
 
     @Query("SELECT * FROM MyAppConfig WHERE id = 0")
     MyAppConfig getMyAppConfig();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAppDescribe(AppDescribe... appDescribes);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAppDescribe(List<AppDescribe> appDescribes);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAutoFinder(AutoFinder... autoFinders);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -49,11 +52,11 @@ public interface DataDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMyAppConfig(MyAppConfig myAppConfig);
 
-    @Query("DELETE FROM AppDescribe WHERE appPackage NOT IN (:packageNames)")
-    void deleteAppDescribeByNotIn(Set<String> packageNames);
+    @Query("DELETE FROM AppDescribe WHERE appPackage NOT IN (:appPackages)")
+    void deleteAppDescribeByNotIn(Set<String> appPackages);
 
-    @Query("DELETE FROM AppDescribe WHERE appPackage IN (:packageNames)")
-    void deleteAppDescribeByPackageNames(String... packageNames);
+    @Query("DELETE FROM AppDescribe WHERE appPackage = :appPackage")
+    void deleteAppDescribeByPackage(String appPackage);
 
     @Delete
     void deleteCoordinate(Coordinate... coordinates);

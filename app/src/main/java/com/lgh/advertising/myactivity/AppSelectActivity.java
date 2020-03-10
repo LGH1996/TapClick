@@ -141,7 +141,8 @@ public class AppSelectActivity extends Activity {
                     holder = (AppSelectActivity.ViewHolder) convertView.getTag();
                 }
                 final AppDescribeAndIcon tem = appDescribeAndIconFilterList.get(position);
-                holder.textView.setText(tem.appDescribe.appName + " (" + (tem.appDescribe.on_off ? "开启" : "关闭") + ")");
+                holder.textName.setText(tem.appDescribe.appName);
+                holder.textOnOff.setText(tem.appDescribe.on_off ? "开启" : "关闭");
                 holder.imageView.setImageDrawable(tem.icon);
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -176,7 +177,7 @@ public class AppSelectActivity extends Activity {
                 if (appDescribeMap != null) {
                     appDescribeList = new ArrayList<>(appDescribeMap.values());
                 } else {
-                    appDescribeList = dataDao.getAppDescribes();
+                    appDescribeList = dataDao.getAllAppDescribes();
                 }
                 Collections.sort(appDescribeList, new Comparator<AppDescribe>() {
                     @Override
@@ -221,11 +222,13 @@ public class AppSelectActivity extends Activity {
     }
 
     class ViewHolder {
-        TextView textView;
+        TextView textName;
+        TextView textOnOff;
         ImageView imageView;
 
         public ViewHolder(View v) {
-            textView = v.findViewById(R.id.name);
+            textName = v.findViewById(R.id.name);
+            textOnOff = v.findViewById(R.id.on_off);
             imageView = v.findViewById(R.id.img);
         }
     }

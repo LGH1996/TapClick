@@ -29,20 +29,33 @@
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_toEndOf="@+id/img"
+                android:layout_toEndOf="@id/img"
                 android:gravity="center_vertical|start"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/on_off"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toStartOf="@id/img_forward"
+                android:alpha="0.5"
+                android:gravity="center_vertical|end"
+                android:paddingEnd="15dp"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="15sp" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:id="@+id/img_forward"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:alpha="0.7"
+                android:alpha="0.5"
                 android:src="@drawable/forward" />
         </RelativeLayout>
 

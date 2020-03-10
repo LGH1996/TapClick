@@ -60,18 +60,18 @@ public class AppDescribe {
     }
 
     public void getAutoFinderFromDatabase(DataDao dataDao) {
-        this.autoFinder = dataDao.getAutoFinder(this.appPackage);
+        this.autoFinder = dataDao.getAutoFinderByPackage(this.appPackage);
     }
 
     public void getCoordinateMapFromDatabase(DataDao dataDao) {
         this.coordinateMap = new HashMap<>();
-        for (Coordinate e : dataDao.getCoordinates(this.appPackage)) {
+        for (Coordinate e : dataDao.getCoordinatesByPackage(this.appPackage)) {
             this.coordinateMap.put(e.appActivity, e);
         }
     }
 
     public void getWidgetSetMapFromDatabase(DataDao dataDao) {
-        List<Widget> widgetList = dataDao.getWidgets(this.appPackage);
+        List<Widget> widgetList = dataDao.getWidgetsByPackage(this.appPackage);
         this.widgetSetMap = new HashMap<>();
         for (Widget w : widgetList) {
             Set<Widget> widgetSet = this.widgetSetMap.get(w.appActivity);
