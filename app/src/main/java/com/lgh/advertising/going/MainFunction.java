@@ -70,7 +70,7 @@ public class MainFunction {
     private MyInstallReceiver installReceiver;
 
     private WindowManager.LayoutParams aParams, bParams, cParams;
-    private View viewAdvertisingMessage, viewLayoutAnalyze;
+    private View viewDataShow, viewLayoutAnalyze;
     private ImageView viewClickPosition;
 
     public MainFunction(AccessibilityService service) {
@@ -245,7 +245,7 @@ public class MainFunction {
 
     public void onConfigurationChanged(Configuration newConfig) {
         try {
-            if (viewAdvertisingMessage != null && viewClickPosition != null && viewLayoutAnalyze != null) {
+            if (viewDataShow != null && viewClickPosition != null && viewLayoutAnalyze != null) {
                 DisplayMetrics metrics = new DisplayMetrics();
                 WindowManager windowManager = (WindowManager) service.getSystemService(Context.WINDOW_SERVICE);
                 windowManager.getDefaultDisplay().getRealMetrics(metrics);
@@ -255,7 +255,7 @@ public class MainFunction {
                 bParams.height = metrics.heightPixels;
                 cParams.x = (metrics.widthPixels - cParams.width) / 2;
                 cParams.y = (metrics.heightPixels - cParams.height) / 2;
-                windowManager.updateViewLayout(viewAdvertisingMessage, aParams);
+                windowManager.updateViewLayout(viewDataShow, aParams);
                 windowManager.updateViewLayout(viewClickPosition, cParams);
                 FrameLayout layout = viewLayoutAnalyze.findViewById(R.id.frame);
                 layout.removeAllViews();
@@ -514,7 +514,7 @@ public class MainFunction {
     @SuppressLint("ClickableViewAccessibility")
     public void showAddAdvertisingFloat() {
         try {
-            if (viewClickPosition != null || viewAdvertisingMessage != null || viewLayoutAnalyze != null) {
+            if (viewClickPosition != null || viewDataShow != null || viewLayoutAnalyze != null) {
                 return;
             }
             final WindowManager windowManager = (WindowManager) service.getSystemService(Context.WINDOW_SERVICE);
@@ -522,16 +522,16 @@ public class MainFunction {
             final Widget widgetSelect = new Widget();
             final Coordinate coordinateSelect = new Coordinate();
             LayoutInflater inflater = LayoutInflater.from(service);
-            viewAdvertisingMessage = inflater.inflate(R.layout.view_add_data, null);
-            final TextView pacName = viewAdvertisingMessage.findViewById(R.id.pacName);
-            final TextView actName = viewAdvertisingMessage.findViewById(R.id.actName);
-            final TextView widget = viewAdvertisingMessage.findViewById(R.id.widget);
-            final TextView xyPosition = viewAdvertisingMessage.findViewById(R.id.xy);
-            Button switchWid = viewAdvertisingMessage.findViewById(R.id.switch_wid);
-            final Button saveWidgetButton = viewAdvertisingMessage.findViewById(R.id.save_wid);
-            Button switchAim = viewAdvertisingMessage.findViewById(R.id.switch_aim);
-            final Button savePositionButton = viewAdvertisingMessage.findViewById(R.id.save_aim);
-            Button quitButton = viewAdvertisingMessage.findViewById(R.id.quit);
+            viewDataShow = inflater.inflate(R.layout.view_add_data, null);
+            final TextView pacName = viewDataShow.findViewById(R.id.pacName);
+            final TextView actName = viewDataShow.findViewById(R.id.actName);
+            final TextView widget = viewDataShow.findViewById(R.id.widget);
+            final TextView xyPosition = viewDataShow.findViewById(R.id.xy);
+            Button switchWid = viewDataShow.findViewById(R.id.switch_wid);
+            final Button saveWidgetButton = viewDataShow.findViewById(R.id.save_wid);
+            Button switchAim = viewDataShow.findViewById(R.id.switch_aim);
+            final Button savePositionButton = viewDataShow.findViewById(R.id.save_aim);
+            Button quitButton = viewDataShow.findViewById(R.id.quit);
 
             viewLayoutAnalyze = inflater.inflate(R.layout.view_widget_select, null);
             final FrameLayout layoutParent = viewLayoutAnalyze.findViewById(R.id.frame);
@@ -573,7 +573,7 @@ public class MainFunction {
             cParams.y = (metrics.heightPixels - cParams.height) / 2;
             cParams.alpha = 0f;
 
-            viewAdvertisingMessage.setOnTouchListener(new View.OnTouchListener() {
+            viewDataShow.setOnTouchListener(new View.OnTouchListener() {
                 int x = 0, y = 0;
 
                 @Override
@@ -588,7 +588,7 @@ public class MainFunction {
                             aParams.y = Math.round(aParams.y + (event.getRawY() - y));
                             x = Math.round(event.getRawX());
                             y = Math.round(event.getRawY());
-                            windowManager.updateViewLayout(viewAdvertisingMessage, aParams);
+                            windowManager.updateViewLayout(viewDataShow, aParams);
                             break;
                     }
                     return true;
@@ -761,10 +761,10 @@ public class MainFunction {
                 @Override
                 public void onClick(View v) {
                     windowManager.removeViewImmediate(viewLayoutAnalyze);
-                    windowManager.removeViewImmediate(viewAdvertisingMessage);
+                    windowManager.removeViewImmediate(viewDataShow);
                     windowManager.removeViewImmediate(viewClickPosition);
                     viewLayoutAnalyze = null;
-                    viewAdvertisingMessage = null;
+                    viewDataShow = null;
                     viewClickPosition = null;
                     aParams = null;
                     bParams = null;
@@ -772,7 +772,7 @@ public class MainFunction {
                 }
             });
             windowManager.addView(viewLayoutAnalyze, bParams);
-            windowManager.addView(viewAdvertisingMessage, aParams);
+            windowManager.addView(viewDataShow, aParams);
             windowManager.addView(viewClickPosition, cParams);
         } catch (Throwable e) {
             e.printStackTrace();
