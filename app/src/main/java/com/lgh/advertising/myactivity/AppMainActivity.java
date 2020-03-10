@@ -69,8 +69,8 @@ public class AppMainActivity extends Activity {
         final LayoutInflater inflater = LayoutInflater.from(context);
         final List<Resource> source = new ArrayList<>();
         source.add(new Resource("授权管理", R.drawable.authorization));
-        source.add(new Resource("添加数据", R.drawable.add_data));
-        source.add(new Resource("数据管理", R.drawable.edit_data));
+        source.add(new Resource("创建规则", R.drawable.add_data));
+        source.add(new Resource("规则管理", R.drawable.edit_data));
         source.add(new Resource("应用设置", R.drawable.setting));
         BaseAdapter baseAdapter = new BaseAdapter() {
             @Override
