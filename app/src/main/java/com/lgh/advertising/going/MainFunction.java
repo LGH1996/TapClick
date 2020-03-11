@@ -480,8 +480,8 @@ public class MainFunction {
             ResolveInfoList.addAll(packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL));
             for (ResolveInfo e : ResolveInfoList) {
                 String packageName = e.activityInfo.packageName;
-                packageInstall.add(packageName);
                 if (!packageRemove.contains(packageName)) {
+                    packageInstall.add(packageName);
                     AppDescribe appDescribe = new AppDescribe();
                     appDescribe.appName = packageManager.getApplicationLabel(e.activityInfo.applicationInfo).toString();
                     appDescribe.appPackage = packageName;

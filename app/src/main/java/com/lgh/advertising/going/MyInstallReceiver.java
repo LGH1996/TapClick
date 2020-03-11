@@ -1,10 +1,13 @@
 package com.lgh.advertising.going;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.AutoFinder;
@@ -28,6 +31,14 @@ public class MyInstallReceiver extends BroadcastReceiver {
                     DataDao dataDao = DataDaoFactory.getInstance(context);
                     PackageManager packageManager = context.getPackageManager();
                     if (action.equals(Intent.ACTION_PACKAGE_ADDED)) {
+                        PackageInfo packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SERVICES);
+                        if (packageInfo != null && packageInfo.services != null) {
+                            for (ServiceInfo e : packageInfo.services) {
+                                if (e != null && e.permission != null && e.permission.equals(Manifest.permission.BIND_INPUT_METHOD)) {
+                                    return;
+                                }
+                            }
+                        }
                         AppDescribe appDescribe = dataDao.getAppDescribeByPackage(packageName);
                         if (appDescribe == null) {
                             appDescribe = new AppDescribe();
