@@ -11,7 +11,7 @@
         android:lineSpacingMultiplier="1.5"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:text="你可以通过出现的悬浮窗口添加某些页面的控件或者坐标，这样在该控件或坐标再次出现时就会自动触发程序的点击功能，所以你可以灵活的运用该功能来跳过开屏广告或者关闭某些弹窗或者完成一些其他的自动点击操作。"
+        android:text="你可以通过出现的悬浮窗口添加某些页面的控件或者坐标，这样在该控件或坐标再次出现时就会自动触发程序的点击功能，所以你可以灵活运用该功能来跳过开屏广告或者关闭某些弹窗或者完成一些其他的自动点击操作。"
         android:textColor="@color/textColor" />
 
     <TextView
