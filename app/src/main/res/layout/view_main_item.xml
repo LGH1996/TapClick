@@ -24,6 +24,7 @@
             android:id="@+id/main_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_centerVertical="true"
             android:layout_toStartOf="@id/img_forward"
             android:layout_toEndOf="@+id/main_img"
             android:gravity="center_vertical|start"

@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
@@ -29,10 +29,12 @@
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/on_off"
                 android:layout_toEndOf="@id/img"
                 android:gravity="center_vertical|start"
                 android:paddingStart="15dp"
-                android:paddingEnd="15dp"
+                android:paddingEnd="10dp"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="15sp" />
@@ -41,9 +43,11 @@
                 android:id="@+id/on_off"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/img_forward"
                 android:alpha="0.5"
                 android:gravity="center_vertical|end"
+                android:paddingStart="5dp"
                 android:paddingEnd="15dp"
                 android:singleLine="true"
                 android:textColor="@color/textColor"

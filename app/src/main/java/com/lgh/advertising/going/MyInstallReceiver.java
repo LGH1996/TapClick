@@ -47,7 +47,6 @@ public class MyInstallReceiver extends BroadcastReceiver {
                                 MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap().put(appDescribe.appPackage, appDescribe);
                             }
                         }
-
                     }
                     if (action.equals(Intent.ACTION_PACKAGE_FULLY_REMOVED)) {
                         dataDao.deleteAppDescribeByPackage(packageName);
