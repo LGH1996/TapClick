@@ -14,8 +14,10 @@ import android.content.res.Configuration;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,6 +40,7 @@ import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
 import com.lgh.advertising.myclass.Widget;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -81,7 +84,6 @@ public class MainFunction {
             currentActivity = "Initialize CurrentActivity";
             executorService = Executors.newSingleThreadScheduledExecutor();
             serviceInfo = service.getServiceInfo();
-            appDescribeMap = new HashMap<>();
             screenOffReceiver = new MyScreenOffReceiver();
             service.registerReceiver(screenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
             installReceiver = new MyInstallReceiver();
@@ -455,30 +457,32 @@ public class MainFunction {
      */
     private void updatePackage() {
         try {
+            appDescribeMap = new HashMap<>();
             DataDao dataDao = DataDaoFactory.getInstance(service);
             PackageManager packageManager = service.getPackageManager();
             Set<String> packageInstall = new HashSet<>();
             Set<String> packageOff = new HashSet<>();
             Set<String> packageRemove = new HashSet<>();
-            List<ResolveInfo> ResolveInfoList = new ArrayList<>();
-            Intent intent;
-            intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME);
-            ResolveInfoList.addAll(packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL));
-            for (ResolveInfo e : ResolveInfoList) {
+            List<ResolveInfo> resolveInfoList = new ArrayList<>();
+            Intent intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME);
+            resolveInfoList.addAll(packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL));
+            for (ResolveInfo e : resolveInfoList) {
                 packageOff.add(e.activityInfo.packageName);
             }
             List<InputMethodInfo> inputMethodInfoList = ((InputMethodManager) service.getSystemService(AccessibilityService.INPUT_METHOD_SERVICE)).getInputMethodList();
             for (InputMethodInfo e : inputMethodInfoList) {
                 packageRemove.add(e.getPackageName());
             }
-            packageRemove.add("com.android.systemui");
             packageOff.add(service.getPackageName());
-            packageOff.add("com.android.packageinstaller");
+            packageRemove.add("com.android.systemui");
+            intent = new Intent(Intent.ACTION_VIEW).addCategory(Intent.CATEGORY_DEFAULT);
+            intent.setDataAndType(Uri.fromFile(new File("install.apk")), "application/vnd.android.package-archive");
+            resolveInfoList.addAll(packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL));
+            intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER);
+            resolveInfoList.addAll(packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL));
             List<AppDescribe> appDescribeList = new ArrayList<>();
             List<AutoFinder> autoFinderList = new ArrayList<>();
-            intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER);
-            ResolveInfoList.addAll(packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL));
-            for (ResolveInfo e : ResolveInfoList) {
+            for (ResolveInfo e : resolveInfoList) {
                 String packageName = e.activityInfo.packageName;
                 if (!packageRemove.contains(packageName)) {
                     packageInstall.add(packageName);
