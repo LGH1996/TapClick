@@ -1,36 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="10dp">
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:shrinkColumns="*">
+            android:layout_marginBottom="5dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="活动名:"
+                android:textColor="@color/textColor"
+                android:textSize="12sp" />
 
-            <LinearLayout android:layout_marginBottom="10dp">
+            <EditText
+                android:id="@+id/coordinate_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:enabled="false"
+                android:gravity="center_vertical"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="创建时间:"
+                android:textColor="@color/textColor"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/coordinate_createTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:enabled="false"
+                android:gravity="center_vertical"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <LinearLayout
+                android:id="@+id/coordinate_xPosition_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/coordinate_clickDelay_layout"
+                app:layout_constraintEnd_toEndOf="@+id/coordinate_clickDelay_layout"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="@+id/coordinate_clickDelay_layout"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="活动名:"
+                    android:text="X轴坐标:"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
 
                 <EditText
-                    android:id="@+id/coordinate_activity"
+                    android:id="@+id/coordinate_xPosition"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:enabled="false"
+                    android:ems="3"
                     android:gravity="center_vertical"
+                    android:inputType="number"
+                    android:maxLength="4"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"
                     android:singleLine="true"
@@ -38,22 +101,34 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-            <LinearLayout android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:id="@+id/coordinate_yPosition_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/coordinate_clickInterval_layout"
+                app:layout_constraintEnd_toEndOf="@+id/coordinate_clickInterval_layout"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="@+id/coordinate_clickInterval_layout"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="创建时间:"
+                    android:text="Y轴坐标:"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
 
                 <EditText
-                    android:id="@+id/coordinate_createTime"
+                    android:id="@+id/coordinate_yPosition"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:enabled="false"
+                    android:ems="3"
                     android:gravity="center_vertical"
+                    android:inputType="number"
+                    android:maxLength="4"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"
                     android:singleLine="true"
@@ -61,142 +136,130 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-            <TableRow android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:id="@+id/coordinate_clickDelay_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/coordinate_clickInterval_layout"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent">
 
-                <LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="延迟点击(ms):"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="X轴坐标:"
-                        android:textColor="@color/textColor"
-                        android:textSize="12sp" />
+                <EditText
+                    android:id="@+id/coordinate_clickDelay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:ems="2"
+                    android:gravity="center_vertical"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:paddingStart="2dp"
+                    android:singleLine="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/coordinate_xPosition"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:ems="4"
-                        android:gravity="center_vertical"
-                        android:inputType="number"
-                        android:maxLength="4"
-                        android:paddingStart="2dp"
-                        android:paddingEnd="2dp"
-                        android:singleLine="true"
-                        android:textColor="@color/textColor"
-                        android:textSize="12sp" />
-                </LinearLayout>
+            <LinearLayout
+                android:id="@+id/coordinate_clickInterval_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/coordinate_clickNumber_layout"
+                app:layout_constraintStart_toEndOf="@+id/coordinate_clickDelay_layout">
 
-                <LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="点击间隔(ms):"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Y轴坐标:"
-                        android:textColor="@color/textColor"
-                        android:textSize="12sp" />
+                <EditText
+                    android:id="@+id/coordinate_ClickInterval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:ems="2"
+                    android:gravity="center_vertical"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:paddingStart="2dp"
+                    android:singleLine="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/coordinate_yPosition"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:ems="4"
-                        android:gravity="center_vertical"
-                        android:inputType="number"
-                        android:maxLength="4"
-                        android:paddingStart="2dp"
-                        android:paddingEnd="2dp"
-                        android:singleLine="true"
-                        android:textColor="@color/textColor"
-                        android:textSize="12sp" />
-                </LinearLayout>
-            </TableRow>
+            <LinearLayout
+                android:id="@+id/coordinate_clickNumber_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/coordinate_clickInterval_layout">
 
-            <TableRow android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="点击次数:"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
 
-                <LinearLayout>
+                <EditText
+                    android:id="@+id/coordinate_clickNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:ems="2"
+                    android:gravity="center_vertical"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:paddingStart="2dp"
+                    android:singleLine="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="延迟点击(ms):"
-                        android:textColor="@color/textColor"
-                        android:textSize="12sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/coordinate_clickDelay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:ems="4"
-                        android:gravity="center_vertical"
-                        android:inputType="number"
-                        android:maxLength="4"
-                        android:paddingStart="2dp"
-                        android:paddingEnd="2dp"
-                        android:singleLine="true"
-                        android:textColor="@color/textColor"
-                        android:textSize="12sp" />
-                </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="备注:"
+                android:textColor="@color/textColor"
+                android:textSize="12sp" />
 
-                <LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="点击间隔(ms):"
-                        android:textColor="@color/textColor"
-                        android:textSize="12sp" />
-
-                    <EditText
-                        android:id="@+id/coordinate_ClickInterval"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:ems="4"
-                        android:gravity="center_vertical"
-                        android:inputType="number"
-                        android:maxLength="4"
-                        android:paddingStart="2dp"
-                        android:paddingEnd="2dp"
-                        android:singleLine="true"
-                        android:textColor="@color/textColor"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="点击次数:"
-                        android:textColor="@color/textColor"
-                        android:textSize="12sp" />
-
-                    <EditText
-                        android:id="@+id/coordinate_clickNumber"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:ems="4"
-                        android:gravity="center_vertical"
-                        android:inputType="number"
-                        android:maxLength="4"
-                        android:paddingStart="2dp"
-                        android:paddingEnd="2dp"
-                        android:singleLine="true"
-                        android:textColor="@color/textColor"
-                        android:textSize="12sp" />
-                </LinearLayout>
-            </TableRow>
-        </TableLayout>
+            <EditText
+                android:id="@+id/coordinate_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入该坐标的备注内容"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:singleLine="true"
+                android:textColor="@color/textColor"
+                android:textSize="12sp" />
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:gravity="end"
             android:orientation="horizontal">
 
@@ -236,7 +299,6 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:src="@color/divideLine" />
     </LinearLayout>
 </RelativeLayout>

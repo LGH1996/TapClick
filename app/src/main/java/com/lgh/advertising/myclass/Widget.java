@@ -22,6 +22,7 @@ public class Widget {
     public String widgetId;
     public String widgetDescribe;
     public String widgetText;
+    public String comment;
 
     public Widget() {
         this.appPackage = "";
@@ -34,6 +35,7 @@ public class Widget {
         this.widgetDescribe = "";
         this.widgetText = "";
         this.createTime = System.currentTimeMillis();
+        this.comment = "";
     }
 
     public Widget(Widget widget) {
@@ -47,6 +49,7 @@ public class Widget {
         this.widgetId = widget.widgetId;
         this.widgetDescribe = widget.widgetDescribe;
         this.widgetText = widget.widgetText;
+        this.comment = widget.comment;
     }
 
 

@@ -18,6 +18,7 @@ public class Coordinate {
     public int clickDelay;
     public int clickInterval;
     public int clickNumber;
+    public String comment;
 
     public Coordinate() {
         this.appPackage = "";
@@ -28,6 +29,7 @@ public class Coordinate {
         this.clickInterval = 500;
         this.clickNumber = 1;
         this.createTime = System.currentTimeMillis();
+        this.comment = "";
     }
 
     public Coordinate(Coordinate coordinate) {
@@ -39,6 +41,7 @@ public class Coordinate {
         this.clickDelay = coordinate.clickDelay;
         this.clickInterval = coordinate.clickInterval;
         this.clickNumber = coordinate.clickNumber;
+        this.comment = coordinate.comment;
     }
 
     @Override

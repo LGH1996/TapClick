@@ -6,8 +6,8 @@ android {
         applicationId "com.lgh.advertising.going"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 14
-        versionName "1.4"
+        versionCode 15
+        versionName "1.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
@@ -29,4 +29,5 @@ dependencies {
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.10.0'
     implementation group: 'androidx.room', name: 'room-runtime', version: '2.2.4'
     annotationProcessor group: 'androidx.room', name: 'room-compiler', version: '2.2.4'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }

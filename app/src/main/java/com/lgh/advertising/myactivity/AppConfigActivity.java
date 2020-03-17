@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -88,36 +89,39 @@ public class AppConfigActivity extends Activity {
         questionCoordinate.setOnClickListener(new QuestionClickListener(R.string.coordinateQuestion));
         questionWidget.setOnClickListener(new QuestionClickListener(R.string.widgetQuestion));
 
-        final Switch onOffSwitch = findViewById(R.id.on_off_switch);
-        EditText onOffName = findViewById(R.id.on_off_name);
+
+        LinearLayout layoutBaseSetting = findViewById(R.id.base_setting_layout);
+        View viewBaseSetting = inflater.inflate(R.layout.view_base_setting, null);
+        final Switch onOffSwitch = viewBaseSetting.findViewById(R.id.on_off_switch);
+        EditText onOffName = viewBaseSetting.findViewById(R.id.on_off_name);
         onOffName.setText(appDescribe.appName);
         onOffSwitch.setChecked(appDescribe.on_off);
 
-        final Switch autoFinderSwitch = findViewById(R.id.auto_finder_switch);
-        final EditText autoFinderSustainTime = findViewById(R.id.auto_finder_sustainTime);
-        final CheckBox autoFinderRetrieveAllTime = findViewById(R.id.auto_finder_retrieveAllTime);
+        final Switch autoFinderSwitch = viewBaseSetting.findViewById(R.id.auto_finder_switch);
+        final EditText autoFinderSustainTime = viewBaseSetting.findViewById(R.id.auto_finder_sustainTime);
+        final CheckBox autoFinderRetrieveAllTime = viewBaseSetting.findViewById(R.id.auto_finder_retrieveAllTime);
         autoFinderSwitch.setChecked(appDescribe.autoFinderOnOFF);
         autoFinderSustainTime.setText(String.valueOf(appDescribe.autoFinderRetrieveTime));
         autoFinderRetrieveAllTime.setChecked(appDescribe.autoFinderRetrieveAllTime);
 
 
-        final Switch coordinateSwitch = findViewById(R.id.coordinate_switch);
-        final EditText coordinateSustainTime = findViewById(R.id.coordinate_sustainTime);
-        final CheckBox coordinateRetrieveAllTime = findViewById(R.id.coordinate_retrieveAllTime);
+        final Switch coordinateSwitch = viewBaseSetting.findViewById(R.id.coordinate_switch);
+        final EditText coordinateSustainTime = viewBaseSetting.findViewById(R.id.coordinate_sustainTime);
+        final CheckBox coordinateRetrieveAllTime = viewBaseSetting.findViewById(R.id.coordinate_retrieveAllTime);
         coordinateSwitch.setChecked(appDescribe.coordinateOnOff);
         coordinateSustainTime.setText(String.valueOf(appDescribe.coordinateRetrieveTime));
         coordinateRetrieveAllTime.setChecked(appDescribe.coordinateRetrieveAllTime);
 
-        final Switch widgetSwitch = findViewById(R.id.widget_switch);
-        final EditText widgetSustainTime = findViewById(R.id.widget_sustainTime);
-        final CheckBox widgetRetrieveAllTime = findViewById(R.id.widget_retrieveAllTime);
+        final Switch widgetSwitch = viewBaseSetting.findViewById(R.id.widget_switch);
+        final EditText widgetSustainTime = viewBaseSetting.findViewById(R.id.widget_sustainTime);
+        final CheckBox widgetRetrieveAllTime = viewBaseSetting.findViewById(R.id.widget_retrieveAllTime);
         widgetSwitch.setChecked(appDescribe.widgetOnOff);
         widgetSustainTime.setText(String.valueOf(appDescribe.widgetRetrieveTime));
         widgetRetrieveAllTime.setChecked(appDescribe.widgetRetrieveAllTime);
 
-        final TextView baseSettingModify = findViewById(R.id.base_setting_modify);
-        TextView baseSettingDelete = findViewById(R.id.base_setting_delete);
-        TextView baseSettingSure = findViewById(R.id.base_setting_sure);
+        final TextView baseSettingModify = viewBaseSetting.findViewById(R.id.base_setting_modify);
+        TextView baseSettingDelete = viewBaseSetting.findViewById(R.id.base_setting_delete);
+        TextView baseSettingSure = viewBaseSetting.findViewById(R.id.base_setting_sure);
         baseSettingDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,9 +136,8 @@ public class AppConfigActivity extends Activity {
                 String widgetTime = widgetSustainTime.getText().toString();
                 baseSettingModify.setTextColor(0xffff0000);
                 if (autoFinderTime.isEmpty() || coordinateTime.isEmpty() || widgetTime.isEmpty()) {
-                }
-                {
                     baseSettingModify.setText("内容不能为空");
+                    return;
                 }
                 appDescribe.on_off = onOffSwitch.isChecked();
                 appDescribe.autoFinderOnOFF = autoFinderSwitch.isChecked();
@@ -151,6 +154,7 @@ public class AppConfigActivity extends Activity {
                 baseSettingModify.setText(dateFormatModify.format(new Date()) + "(修改成功)");
             }
         });
+        layoutBaseSetting.addView(viewBaseSetting);
 
         LinearLayout layoutAutoFinder = findViewById(R.id.auto_finder_layout);
         View viewAutoFinder = inflater.inflate(R.layout.view_auto_finder, null);
@@ -240,6 +244,7 @@ public class AppConfigActivity extends Activity {
             final EditText coordinateInterval = viewCoordinate.findViewById(R.id.coordinate_ClickInterval);
             final EditText coordinateNumber = viewCoordinate.findViewById(R.id.coordinate_clickNumber);
             final TextView coordinateModify = viewCoordinate.findViewById(R.id.coordinate_modify);
+            final EditText coordinateComment = viewCoordinate.findViewById(R.id.coordinate_comment);
             TextView coordinateDelete = viewCoordinate.findViewById(R.id.coordinate_delete);
             TextView coordinateSure = viewCoordinate.findViewById(R.id.coordinate_sure);
             coordinateActivity.setText(e.appActivity);
@@ -249,6 +254,7 @@ public class AppConfigActivity extends Activity {
             coordinateDelay.setText(String.valueOf(e.clickDelay));
             coordinateInterval.setText(String.valueOf(e.clickInterval));
             coordinateNumber.setText(String.valueOf(e.clickNumber));
+            coordinateComment.setText(e.comment);
             coordinateDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -265,6 +271,7 @@ public class AppConfigActivity extends Activity {
                     String sDelay = coordinateDelay.getText().toString();
                     String sInterval = coordinateInterval.getText().toString();
                     String sNumber = coordinateNumber.getText().toString();
+                    String sComment = coordinateComment.getText().toString().trim();
                     coordinateModify.setTextColor(0xffff0000);
                     if (sX.isEmpty() || sY.isEmpty() || sInterval.isEmpty() || sNumber.isEmpty()) {
                         coordinateModify.setText("内容不能为空");
@@ -290,8 +297,10 @@ public class AppConfigActivity extends Activity {
                         e.clickDelay = Integer.valueOf(sDelay);
                         e.clickInterval = Integer.valueOf(sInterval);
                         e.clickNumber = Integer.valueOf(sNumber);
+                        e.comment = sComment;
                     }
                     dataDao.updateCoordinate(e);
+                    coordinateComment.setText(sComment);
                     coordinateModify.setTextColor(0xff000000);
                     coordinateModify.setText(dateFormatModify.format(new Date()) + "(修改成功)");
                 }
@@ -329,6 +338,7 @@ public class AppConfigActivity extends Activity {
                 final EditText widgetClickDelay = viewWidget.findViewById(R.id.widget_clickDelay);
                 final CheckBox widgetClickOnly = viewWidget.findViewById(R.id.widget_clickOnly);
                 final TextView widgetModify = viewWidget.findViewById(R.id.widget_modify);
+                final EditText widgetComment = viewWidget.findViewById(R.id.widget_comment);
                 TextView widgetDelete = viewWidget.findViewById(R.id.widget_delete);
                 TextView widgetSure = viewWidget.findViewById(R.id.widget_sure);
                 widgetActivity.setText(e.appActivity);
@@ -340,6 +350,7 @@ public class AppConfigActivity extends Activity {
                 widgetText.setText(e.widgetText);
                 widgetClickDelay.setText(String.valueOf(e.clickDelay));
                 widgetClickOnly.setChecked(e.clickOnly);
+                widgetComment.setText(e.comment);
                 widgetDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -370,10 +381,12 @@ public class AppConfigActivity extends Activity {
                         e.widgetText = widgetText.getText().toString().trim();
                         e.clickDelay = Integer.valueOf(clickDelay);
                         e.clickOnly = widgetClickOnly.isChecked();
+                        e.comment = widgetComment.getText().toString().trim();
+                        dataDao.updateWidget(e);
                         widgetId.setText(e.widgetId);
                         widgetDescribe.setText(e.widgetDescribe);
                         widgetText.setText(e.widgetText);
-                        dataDao.updateWidget(e);
+                        widgetComment.setText(e.comment);
                         widgetModify.setTextColor(0xff000000);
                         widgetModify.setText(dateFormatModify.format(new Date()) + "(修改成功)");
                     }
