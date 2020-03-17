@@ -17,6 +17,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
                 android:text="活动名:"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
@@ -28,8 +29,6 @@
                 android:background="@null"
                 android:enabled="false"
                 android:gravity="center_vertical"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
@@ -43,6 +42,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
                 android:text="创建时间:"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
@@ -54,8 +54,6 @@
                 android:background="@null"
                 android:enabled="false"
                 android:gravity="center_vertical"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
@@ -81,6 +79,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="5dp"
                     android:text="X轴坐标:"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
@@ -94,8 +93,6 @@
                     android:gravity="center_vertical"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
                     android:singleLine="true"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
@@ -116,6 +113,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="5dp"
                     android:text="Y轴坐标:"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
@@ -129,8 +127,6 @@
                     android:gravity="center_vertical"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
                     android:singleLine="true"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
@@ -149,6 +145,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="5dp"
                     android:text="延迟点击(ms):"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
@@ -162,7 +159,6 @@
                     android:gravity="center_vertical"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:paddingStart="2dp"
                     android:singleLine="true"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
@@ -180,12 +176,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="5dp"
                     android:text="点击间隔(ms):"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
 
                 <EditText
-                    android:id="@+id/coordinate_ClickInterval"
+                    android:id="@+id/coordinate_clickInterval"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -193,7 +190,6 @@
                     android:gravity="center_vertical"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:paddingStart="2dp"
                     android:singleLine="true"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
@@ -211,6 +207,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="5dp"
                     android:text="点击次数:"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
@@ -224,7 +221,6 @@
                     android:gravity="center_vertical"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:paddingStart="2dp"
                     android:singleLine="true"
                     android:textColor="@color/textColor"
                     android:textSize="12sp" />
@@ -238,6 +234,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
                 android:text="备注:"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
@@ -249,8 +246,6 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="请输入该坐标的备注内容"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
@@ -268,7 +263,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:padding="1dp"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
@@ -279,7 +273,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_toStartOf="@+id/coordinate_sure"
-                android:padding="1dp"
                 android:text="删除"
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
@@ -289,7 +282,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:padding="1dp"
                 android:text="确认"
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />

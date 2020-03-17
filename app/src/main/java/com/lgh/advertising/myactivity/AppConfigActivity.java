@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -241,7 +240,7 @@ public class AppConfigActivity extends Activity {
             final EditText coordinateXPosition = viewCoordinate.findViewById(R.id.coordinate_xPosition);
             final EditText coordinateYPosition = viewCoordinate.findViewById(R.id.coordinate_yPosition);
             final EditText coordinateDelay = viewCoordinate.findViewById(R.id.coordinate_clickDelay);
-            final EditText coordinateInterval = viewCoordinate.findViewById(R.id.coordinate_ClickInterval);
+            final EditText coordinateInterval = viewCoordinate.findViewById(R.id.coordinate_clickInterval);
             final EditText coordinateNumber = viewCoordinate.findViewById(R.id.coordinate_clickNumber);
             final TextView coordinateModify = viewCoordinate.findViewById(R.id.coordinate_modify);
             final EditText coordinateComment = viewCoordinate.findViewById(R.id.coordinate_comment);

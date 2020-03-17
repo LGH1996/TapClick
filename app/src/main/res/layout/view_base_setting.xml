@@ -368,7 +368,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:padding="1dp"
             android:singleLine="true"
             android:textColor="@color/textColor"
             android:textSize="12sp" />
@@ -379,7 +378,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_toStartOf="@+id/base_setting_sure"
-            android:padding="1dp"
             android:text="删除"
             android:textColor="@drawable/text_click_color"
             android:textSize="12sp" />
@@ -389,7 +387,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:padding="1dp"
             android:text="确认"
             android:textColor="@drawable/text_click_color"
             android:textSize="12sp" />
