@@ -23,6 +23,7 @@ import com.lgh.advertising.going.R;
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.AutoFinder;
 import com.lgh.advertising.myclass.Coordinate;
+import com.lgh.advertising.myclass.DataBridge;
 import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
 import com.lgh.advertising.myclass.Widget;
@@ -57,7 +58,7 @@ public class AppConfigActivity extends Activity {
         dataDao = DataDaoFactory.getInstance(context);
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
-        appDescribe = AppSelectActivity.appDescribe;
+        appDescribe = DataBridge.appDescribe;
         dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
         dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.ENGLISH);
         layoutCoordinate = findViewById(R.id.coordinate_layout);

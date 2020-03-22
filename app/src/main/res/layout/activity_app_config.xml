@@ -70,7 +70,7 @@
                 android:id="@+id/auto_finder_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="35dp"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -118,7 +118,7 @@
                 android:id="@+id/coordinate_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="35dp"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -166,7 +166,7 @@
                 android:id="@+id/widget_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="35dp"
                 android:orientation="vertical">
 
                 <RelativeLayout

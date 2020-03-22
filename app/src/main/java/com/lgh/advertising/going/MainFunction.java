@@ -33,9 +33,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lgh.advertising.myactivity.AppConfigActivity;
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.AutoFinder;
 import com.lgh.advertising.myclass.Coordinate;
+import com.lgh.advertising.myclass.DataBridge;
 import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
 import com.lgh.advertising.myclass.Widget;
@@ -53,6 +55,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainFunction {
 
@@ -523,7 +527,7 @@ public class MainFunction {
             final DataDao dataDao = DataDaoFactory.getInstance(service);
             final Widget widgetSelect = new Widget();
             final Coordinate coordinateSelect = new Coordinate();
-            LayoutInflater inflater = LayoutInflater.from(service);
+            final LayoutInflater inflater = LayoutInflater.from(service);
             viewDataShow = inflater.inflate(R.layout.view_add_data, null);
             final TextView pacName = viewDataShow.findViewById(R.id.pacName);
             final TextView actName = viewDataShow.findViewById(R.id.actName);
@@ -576,14 +580,35 @@ public class MainFunction {
             cParams.alpha = 0f;
 
             viewDataShow.setOnTouchListener(new View.OnTouchListener() {
-                int x = 0, y = 0;
+                int startX = 0, startY = 0, x = 0, y = 0;
+                ScheduledFuture future = executorService.schedule(new Runnable() {
+                    @Override
+                    public void run() {
+                    }
+                }, 0, TimeUnit.MILLISECONDS);
 
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
-                            x = Math.round(event.getRawX());
-                            y = Math.round(event.getRawY());
+                            startX = x = Math.round(event.getRawX());
+                            startY = y = Math.round(event.getRawY());
+                            future = executorService.schedule(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (Math.abs(startX - x) < 10 && Math.abs(startY - y) < 10) {
+                                        Matcher matcher = Pattern.compile("(\\w|\\.)+").matcher(pacName.getText().toString());
+                                        if (matcher.find()) {
+                                            DataBridge.appDescribe = appDescribeMap.get(matcher.group());
+                                            if (DataBridge.appDescribe != null) {
+                                                Intent intent = new Intent(service, AppConfigActivity.class);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                service.startActivity(intent);
+                                            }
+                                        }
+                                    }
+                                }
+                            }, 500, TimeUnit.MILLISECONDS);
                             break;
                         case MotionEvent.ACTION_MOVE:
                             aParams.x = Math.round(aParams.x + (event.getRawX() - x));
@@ -591,6 +616,9 @@ public class MainFunction {
                             x = Math.round(event.getRawX());
                             y = Math.round(event.getRawY());
                             windowManager.updateViewLayout(viewDataShow, aParams);
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            future.cancel(false);
                             break;
                     }
                     return true;
@@ -756,7 +784,7 @@ public class MainFunction {
                         temAppDescribe.getCoordinateMapFromDatabase(dataDao);
                     }
                     savePositionButton.setEnabled(false);
-                    pacName.setText(temCoordinate.appPackage + " (以下坐标数据已保存)");
+                    pacName.setText(coordinateSelect.appPackage + " (以下坐标数据已保存)");
                 }
             });
             quitButton.setOnClickListener(new View.OnClickListener() {

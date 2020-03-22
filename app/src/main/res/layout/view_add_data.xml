@@ -43,7 +43,7 @@
 
             <TextView
                 android:id="@+id/actName"
-                android:hint="显示当前页面的活动名"
+                android:hint="显示当前页面的活动"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
@@ -61,7 +61,7 @@
             <TextView
                 android:id="@+id/widget"
                 android:layout_span="2"
-                android:hint="显示控件信息"
+                android:hint="显示控件信息，长按快速打开规则管理页面"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
@@ -79,7 +79,7 @@
             <TextView
                 android:id="@+id/xy"
                 android:layout_span="2"
-                android:hint="显示坐标信息"
+                android:hint="显示坐标信息，长按快速打开规则管理页面"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />

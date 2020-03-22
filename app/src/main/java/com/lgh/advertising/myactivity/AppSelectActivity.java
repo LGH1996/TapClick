@@ -28,6 +28,7 @@ import com.lgh.advertising.going.MyAccessibilityService;
 import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.myclass.AppDescribe;
+import com.lgh.advertising.myclass.DataBridge;
 import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
 
@@ -41,7 +42,6 @@ import java.util.Map;
 
 public class AppSelectActivity extends Activity {
 
-    public static AppDescribe appDescribe;
     Context context;
     DataDao dataDao;
     PackageManager packageManager;
@@ -147,9 +147,9 @@ public class AppSelectActivity extends Activity {
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        appDescribe = tem.appDescribe;
+                        DataBridge.appDescribe = tem.appDescribe;
                         if (appDescribeMap == null) {
-                            appDescribe.getOtherFieldsFromDatabase(dataDao);
+                            DataBridge.appDescribe.getOtherFieldsFromDatabase(dataDao);
                         }
                         startActivity(new Intent(context, AppConfigActivity.class));
                     }

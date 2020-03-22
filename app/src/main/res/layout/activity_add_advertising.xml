@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:lineSpacingMultiplier="1.5"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
@@ -42,6 +42,16 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="添加坐标：点击“显示准心”按键，将准心对准相应的控件中心，然后点击“添加坐标”按键即可。"
+        android:textColor="@color/textColor" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:lineSpacingMultiplier="1.5"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="重要提示：长按出现的悬浮窗口，可以快速打开当前应用的规则管理页面。"
         android:textColor="@color/textColor" />
 
 </LinearLayout>
