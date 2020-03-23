@@ -21,7 +21,6 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.myclass.AppDescribe;
-import com.lgh.advertising.myclass.AutoFinder;
 import com.lgh.advertising.myclass.Coordinate;
 import com.lgh.advertising.myclass.DataBridge;
 import com.lgh.advertising.myclass.DataDao;
@@ -78,7 +77,6 @@ public class AppConfigActivity extends Activity {
     TextView baseSettingSure;
 
     View viewAutoFinder;
-    AutoFinder autoFinder;
     EditText autoFinderKeyword;
     EditText autoFinderRetrieveNumber;
     EditText autoFinderClickDelay;
@@ -184,7 +182,6 @@ public class AppConfigActivity extends Activity {
 
 
         viewAutoFinder = inflater.inflate(R.layout.view_auto_finder, null);
-        autoFinder = appDescribe.autoFinder;
         autoFinderKeyword = viewAutoFinder.findViewById(R.id.retrieveKeyword);
         autoFinderRetrieveNumber = viewAutoFinder.findViewById(R.id.retrieveNumber);
         autoFinderClickDelay = viewAutoFinder.findViewById(R.id.clickDelay);
@@ -224,12 +221,12 @@ public class AppConfigActivity extends Activity {
                     autoFinderModify.setText("点击延迟应为0~4000(ms)之间");
                     return;
                 } else {
-                    autoFinder.keywordList = temKeyword;
-                    autoFinder.retrieveNumber = Integer.valueOf(retrieveNumber);
-                    autoFinder.clickDelay = Integer.valueOf(clickDelay);
-                    autoFinder.clickOnly = autoFinderClickOnly.isChecked();
+                    appDescribe.autoFinder.keywordList = temKeyword;
+                    appDescribe.autoFinder.retrieveNumber = Integer.valueOf(retrieveNumber);
+                    appDescribe.autoFinder.clickDelay = Integer.valueOf(clickDelay);
+                    appDescribe.autoFinder.clickOnly = autoFinderClickOnly.isChecked();
                 }
-                dataDao.updateAutoFinder(autoFinder);
+                dataDao.updateAutoFinder(appDescribe.autoFinder);
                 autoFinderModify.setTextColor(0xff000000);
                 autoFinderModify.setText(dateFormatModify.format(new Date()) + "(修改成功)");
             }
@@ -256,10 +253,10 @@ public class AppConfigActivity extends Activity {
         widgetSustainTime.setText(String.valueOf(appDescribe.widgetRetrieveTime));
         widgetRetrieveAllTime.setChecked(appDescribe.widgetRetrieveAllTime);
 
-        autoFinderKeyword.setText(new Gson().toJson(autoFinder.keywordList));
-        autoFinderRetrieveNumber.setText(String.valueOf(autoFinder.retrieveNumber));
-        autoFinderClickDelay.setText(String.valueOf(autoFinder.clickDelay));
-        autoFinderClickOnly.setChecked(autoFinder.clickOnly);
+        autoFinderKeyword.setText(new Gson().toJson(appDescribe.autoFinder.keywordList));
+        autoFinderRetrieveNumber.setText(String.valueOf(appDescribe.autoFinder.retrieveNumber));
+        autoFinderClickDelay.setText(String.valueOf(appDescribe.autoFinder.clickDelay));
+        autoFinderClickOnly.setChecked(appDescribe.autoFinder.clickOnly);
 
         final List<Coordinate> coordinateList = new ArrayList<>(appDescribe.coordinateMap.values());
         if (coordinateList.isEmpty()) {
