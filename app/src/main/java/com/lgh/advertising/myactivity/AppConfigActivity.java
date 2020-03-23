@@ -40,34 +40,74 @@ import java.util.Set;
 public class AppConfigActivity extends Activity {
 
     Context context;
+    AppDescribe appDescribe;
     LayoutInflater inflater;
     DataDao dataDao;
     DisplayMetrics metrics;
-    AppDescribe appDescribe;
     SimpleDateFormat dateFormatModify;
     SimpleDateFormat dateFormatCreate;
+
+    LinearLayout layoutBaseSetting;
+    LinearLayout layoutAutoFinder;
     LinearLayout layoutCoordinate;
     LinearLayout layoutWidget;
+
+    ImageButton questionBaseSetting;
+    ImageButton questionAutoFinder;
+    ImageButton questionCoordinate;
+    ImageButton questionWidget;
+
+    View viewBaseSetting;
+    Switch onOffSwitch;
+    EditText onOffName;
+
+    Switch autoFinderSwitch;
+    EditText autoFinderSustainTime;
+    CheckBox autoFinderRetrieveAllTime;
+
+    Switch coordinateSwitch;
+    EditText coordinateSustainTime;
+    CheckBox coordinateRetrieveAllTime;
+
+    Switch widgetSwitch;
+    EditText widgetSustainTime;
+    CheckBox widgetRetrieveAllTime;
+
+    TextView baseSettingModify;
+    TextView baseSettingDelete;
+    TextView baseSettingSure;
+
+    View viewAutoFinder;
+    AutoFinder autoFinder;
+    EditText autoFinderKeyword;
+    EditText autoFinderRetrieveNumber;
+    EditText autoFinderClickDelay;
+    CheckBox autoFinderClickOnly;
+    TextView autoFinderModify;
+    TextView autoFinderDelete;
+    TextView autoFinderSure;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_config);
         context = getApplicationContext();
+        appDescribe = DataBridge.appDescribe;
         inflater = LayoutInflater.from(context);
         dataDao = DataDaoFactory.getInstance(context);
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
-        appDescribe = DataBridge.appDescribe;
         dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
         dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.ENGLISH);
+        layoutBaseSetting = findViewById(R.id.base_setting_layout);
+        layoutAutoFinder = findViewById(R.id.auto_finder_layout);
         layoutCoordinate = findViewById(R.id.coordinate_layout);
         layoutWidget = findViewById(R.id.widget_layout);
 
-        ImageButton questionBaseSetting = findViewById(R.id.base_setting_question);
-        ImageButton questionAutoFinder = findViewById(R.id.auto_finder_question);
-        ImageButton questionCoordinate = findViewById(R.id.coordinate_question);
-        ImageButton questionWidget = findViewById(R.id.widget_question);
+        questionBaseSetting = findViewById(R.id.base_setting_question);
+        questionAutoFinder = findViewById(R.id.auto_finder_question);
+        questionCoordinate = findViewById(R.id.coordinate_question);
+        questionWidget = findViewById(R.id.widget_question);
         class QuestionClickListener implements View.OnClickListener {
             private int strId;
 
@@ -89,39 +129,25 @@ public class AppConfigActivity extends Activity {
         questionCoordinate.setOnClickListener(new QuestionClickListener(R.string.coordinateQuestion));
         questionWidget.setOnClickListener(new QuestionClickListener(R.string.widgetQuestion));
 
+        viewBaseSetting = inflater.inflate(R.layout.view_base_setting, null);
+        onOffSwitch = viewBaseSetting.findViewById(R.id.on_off_switch);
+        onOffName = viewBaseSetting.findViewById(R.id.on_off_name);
 
-        LinearLayout layoutBaseSetting = findViewById(R.id.base_setting_layout);
-        View viewBaseSetting = inflater.inflate(R.layout.view_base_setting, null);
-        final Switch onOffSwitch = viewBaseSetting.findViewById(R.id.on_off_switch);
-        EditText onOffName = viewBaseSetting.findViewById(R.id.on_off_name);
-        onOffName.setText(appDescribe.appName);
-        onOffSwitch.setChecked(appDescribe.on_off);
+        autoFinderSwitch = viewBaseSetting.findViewById(R.id.auto_finder_switch);
+        autoFinderSustainTime = viewBaseSetting.findViewById(R.id.auto_finder_sustainTime);
+        autoFinderRetrieveAllTime = viewBaseSetting.findViewById(R.id.auto_finder_retrieveAllTime);
 
-        final Switch autoFinderSwitch = viewBaseSetting.findViewById(R.id.auto_finder_switch);
-        final EditText autoFinderSustainTime = viewBaseSetting.findViewById(R.id.auto_finder_sustainTime);
-        final CheckBox autoFinderRetrieveAllTime = viewBaseSetting.findViewById(R.id.auto_finder_retrieveAllTime);
-        autoFinderSwitch.setChecked(appDescribe.autoFinderOnOFF);
-        autoFinderSustainTime.setText(String.valueOf(appDescribe.autoFinderRetrieveTime));
-        autoFinderRetrieveAllTime.setChecked(appDescribe.autoFinderRetrieveAllTime);
+        coordinateSwitch = viewBaseSetting.findViewById(R.id.coordinate_switch);
+        coordinateSustainTime = viewBaseSetting.findViewById(R.id.coordinate_sustainTime);
+        coordinateRetrieveAllTime = viewBaseSetting.findViewById(R.id.coordinate_retrieveAllTime);
 
+        widgetSwitch = viewBaseSetting.findViewById(R.id.widget_switch);
+        widgetSustainTime = viewBaseSetting.findViewById(R.id.widget_sustainTime);
+        widgetRetrieveAllTime = viewBaseSetting.findViewById(R.id.widget_retrieveAllTime);
 
-        final Switch coordinateSwitch = viewBaseSetting.findViewById(R.id.coordinate_switch);
-        final EditText coordinateSustainTime = viewBaseSetting.findViewById(R.id.coordinate_sustainTime);
-        final CheckBox coordinateRetrieveAllTime = viewBaseSetting.findViewById(R.id.coordinate_retrieveAllTime);
-        coordinateSwitch.setChecked(appDescribe.coordinateOnOff);
-        coordinateSustainTime.setText(String.valueOf(appDescribe.coordinateRetrieveTime));
-        coordinateRetrieveAllTime.setChecked(appDescribe.coordinateRetrieveAllTime);
-
-        final Switch widgetSwitch = viewBaseSetting.findViewById(R.id.widget_switch);
-        final EditText widgetSustainTime = viewBaseSetting.findViewById(R.id.widget_sustainTime);
-        final CheckBox widgetRetrieveAllTime = viewBaseSetting.findViewById(R.id.widget_retrieveAllTime);
-        widgetSwitch.setChecked(appDescribe.widgetOnOff);
-        widgetSustainTime.setText(String.valueOf(appDescribe.widgetRetrieveTime));
-        widgetRetrieveAllTime.setChecked(appDescribe.widgetRetrieveAllTime);
-
-        final TextView baseSettingModify = viewBaseSetting.findViewById(R.id.base_setting_modify);
-        TextView baseSettingDelete = viewBaseSetting.findViewById(R.id.base_setting_delete);
-        TextView baseSettingSure = viewBaseSetting.findViewById(R.id.base_setting_sure);
+        baseSettingModify = viewBaseSetting.findViewById(R.id.base_setting_modify);
+        baseSettingDelete = viewBaseSetting.findViewById(R.id.base_setting_delete);
+        baseSettingSure = viewBaseSetting.findViewById(R.id.base_setting_sure);
         baseSettingDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,20 +182,16 @@ public class AppConfigActivity extends Activity {
         });
         layoutBaseSetting.addView(viewBaseSetting);
 
-        LinearLayout layoutAutoFinder = findViewById(R.id.auto_finder_layout);
-        View viewAutoFinder = inflater.inflate(R.layout.view_auto_finder, null);
-        final AutoFinder autoFinder = appDescribe.autoFinder;
-        final EditText autoFinderKeyword = viewAutoFinder.findViewById(R.id.retrieveKeyword);
-        final EditText autoFinderRetrieveNumber = viewAutoFinder.findViewById(R.id.retrieveNumber);
-        final EditText autoFinderClickDelay = viewAutoFinder.findViewById(R.id.clickDelay);
-        final CheckBox autoFinderClickOnly = viewAutoFinder.findViewById(R.id.clickOnly);
-        final TextView autoFinderModify = viewAutoFinder.findViewById(R.id.auto_finder_modify);
-        TextView autoFinderDelete = viewAutoFinder.findViewById(R.id.auto_finder_delete);
-        TextView autoFinderSure = viewAutoFinder.findViewById(R.id.auto_finder_sure);
-        autoFinderKeyword.setText(new Gson().toJson(autoFinder.keywordList));
-        autoFinderRetrieveNumber.setText(String.valueOf(autoFinder.retrieveNumber));
-        autoFinderClickDelay.setText(String.valueOf(autoFinder.clickDelay));
-        autoFinderClickOnly.setChecked(autoFinder.clickOnly);
+
+        viewAutoFinder = inflater.inflate(R.layout.view_auto_finder, null);
+        autoFinder = appDescribe.autoFinder;
+        autoFinderKeyword = viewAutoFinder.findViewById(R.id.retrieveKeyword);
+        autoFinderRetrieveNumber = viewAutoFinder.findViewById(R.id.retrieveNumber);
+        autoFinderClickDelay = viewAutoFinder.findViewById(R.id.clickDelay);
+        autoFinderClickOnly = viewAutoFinder.findViewById(R.id.clickOnly);
+        autoFinderModify = viewAutoFinder.findViewById(R.id.auto_finder_modify);
+        autoFinderDelete = viewAutoFinder.findViewById(R.id.auto_finder_delete);
+        autoFinderSure = viewAutoFinder.findViewById(R.id.auto_finder_sure);
         autoFinderDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,6 +240,26 @@ public class AppConfigActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        onOffName.setText(appDescribe.appName);
+        onOffSwitch.setChecked(appDescribe.on_off);
+
+        autoFinderSwitch.setChecked(appDescribe.autoFinderOnOFF);
+        autoFinderSustainTime.setText(String.valueOf(appDescribe.autoFinderRetrieveTime));
+        autoFinderRetrieveAllTime.setChecked(appDescribe.autoFinderRetrieveAllTime);
+
+        coordinateSwitch.setChecked(appDescribe.coordinateOnOff);
+        coordinateSustainTime.setText(String.valueOf(appDescribe.coordinateRetrieveTime));
+        coordinateRetrieveAllTime.setChecked(appDescribe.coordinateRetrieveAllTime);
+
+        widgetSwitch.setChecked(appDescribe.widgetOnOff);
+        widgetSustainTime.setText(String.valueOf(appDescribe.widgetRetrieveTime));
+        widgetRetrieveAllTime.setChecked(appDescribe.widgetRetrieveAllTime);
+
+        autoFinderKeyword.setText(new Gson().toJson(autoFinder.keywordList));
+        autoFinderRetrieveNumber.setText(String.valueOf(autoFinder.retrieveNumber));
+        autoFinderClickDelay.setText(String.valueOf(autoFinder.clickDelay));
+        autoFinderClickOnly.setChecked(autoFinder.clickOnly);
 
         final List<Coordinate> coordinateList = new ArrayList<>(appDescribe.coordinateMap.values());
         if (coordinateList.isEmpty()) {

@@ -9,5 +9,9 @@ import org.junit.Test;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect(){
+        String a = "aaaaaa";
+        String b = a;
+        a = "ddd";
+        System.out.println(b);
     }
 }

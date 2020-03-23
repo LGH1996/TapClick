@@ -604,7 +604,7 @@ public class MainFunction {
                                             DataBridge.appDescribe = appDescribeMap.get(matcher.group());
                                             if (DataBridge.appDescribe != null) {
                                                 Intent intent = new Intent(service, AppConfigActivity.class);
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                                 service.startActivity(intent);
                                             }
                                         }
