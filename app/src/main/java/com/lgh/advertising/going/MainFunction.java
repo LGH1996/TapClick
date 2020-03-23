@@ -60,6 +60,7 @@ import java.util.regex.Pattern;
 
 public class MainFunction {
 
+    private WindowManager windowManager;
     private Map<String, AppDescribe> appDescribeMap;
     private AppDescribe appDescribe;
     private AccessibilityService service;
@@ -84,6 +85,7 @@ public class MainFunction {
 
     protected void onServiceConnected() {
         try {
+            windowManager = (WindowManager) service.getSystemService(Context.WINDOW_SERVICE);
             currentPackage = "Initialize CurrentPackage";
             currentActivity = "Initialize CurrentActivity";
             executorService = Executors.newSingleThreadScheduledExecutor();
@@ -251,7 +253,6 @@ public class MainFunction {
         try {
             if (viewDataShow != null && viewClickPosition != null && viewLayoutAnalyze != null) {
                 DisplayMetrics metrics = new DisplayMetrics();
-                WindowManager windowManager = (WindowManager) service.getSystemService(Context.WINDOW_SERVICE);
                 windowManager.getDefaultDisplay().getRealMetrics(metrics);
                 aParams.x = (metrics.widthPixels - aParams.width) / 2;
                 aParams.y = metrics.heightPixels - aParams.height;
@@ -523,11 +524,11 @@ public class MainFunction {
             if (viewClickPosition != null || viewDataShow != null || viewLayoutAnalyze != null) {
                 return;
             }
-            final WindowManager windowManager = (WindowManager) service.getSystemService(Context.WINDOW_SERVICE);
             final DataDao dataDao = DataDaoFactory.getInstance(service);
             final Widget widgetSelect = new Widget();
             final Coordinate coordinateSelect = new Coordinate();
             final LayoutInflater inflater = LayoutInflater.from(service);
+
             viewDataShow = inflater.inflate(R.layout.view_add_data, null);
             final TextView pacName = viewDataShow.findViewById(R.id.pacName);
             final TextView actName = viewDataShow.findViewById(R.id.actName);
@@ -544,11 +545,12 @@ public class MainFunction {
 
             viewClickPosition = new ImageView(service);
             viewClickPosition.setImageResource(R.drawable.p);
-            DisplayMetrics metrics = new DisplayMetrics();
+
+            final DisplayMetrics metrics = new DisplayMetrics();
             windowManager.getDefaultDisplay().getRealMetrics(metrics);
-            final boolean b = metrics.heightPixels > metrics.widthPixels;
-            int width = b ? metrics.widthPixels : metrics.heightPixels;
-            int height = b ? metrics.heightPixels : metrics.widthPixels;
+            int width = metrics.heightPixels > metrics.widthPixels ? metrics.widthPixels : metrics.heightPixels;
+            int height = metrics.heightPixels > metrics.widthPixels ? metrics.heightPixels : metrics.widthPixels;
+
             aParams = new WindowManager.LayoutParams();
             aParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
             aParams.format = PixelFormat.TRANSPARENT;
@@ -596,7 +598,7 @@ public class MainFunction {
                             future = executorService.schedule(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (Math.abs(startX - x) < 10 && Math.abs(startY - y) < 10) {
+                                    if (Math.abs(startX - x) < 5 && Math.abs(startY - y) < 5) {
                                         Matcher matcher = Pattern.compile("(\\w|\\.)+").matcher(pacName.getText().toString());
                                         if (matcher.find()) {
                                             DataBridge.appDescribe = appDescribeMap.get(matcher.group());
@@ -608,7 +610,7 @@ public class MainFunction {
                                         }
                                     }
                                 }
-                            }, 500, TimeUnit.MILLISECONDS);
+                            }, 800, TimeUnit.MILLISECONDS);
                             break;
                         case MotionEvent.ACTION_MOVE:
                             aParams.x = Math.round(aParams.x + (event.getRawX() - x));
@@ -619,6 +621,11 @@ public class MainFunction {
                             break;
                         case MotionEvent.ACTION_UP:
                             future.cancel(false);
+                            windowManager.getDefaultDisplay().getRealMetrics(metrics);
+                            aParams.x = aParams.x < 0 ? 0 : aParams.x;
+                            aParams.x = aParams.x > metrics.widthPixels - aParams.width ? metrics.widthPixels - aParams.width : aParams.x;
+                            aParams.y = aParams.y < 0 ? 0 : aParams.y;
+                            aParams.y = aParams.y > metrics.heightPixels - aParams.height ? metrics.heightPixels - aParams.height : aParams.y;
                             break;
                     }
                     return true;
