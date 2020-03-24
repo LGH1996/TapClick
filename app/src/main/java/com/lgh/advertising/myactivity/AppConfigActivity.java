@@ -282,8 +282,8 @@ public class AppConfigActivity extends Activity {
             final EditText coordinateDelay = viewCoordinate.findViewById(R.id.coordinate_clickDelay);
             final EditText coordinateInterval = viewCoordinate.findViewById(R.id.coordinate_clickInterval);
             final EditText coordinateNumber = viewCoordinate.findViewById(R.id.coordinate_clickNumber);
-            final TextView coordinateModify = viewCoordinate.findViewById(R.id.coordinate_modify);
             final EditText coordinateComment = viewCoordinate.findViewById(R.id.coordinate_comment);
+            final TextView coordinateModify = viewCoordinate.findViewById(R.id.coordinate_modify);
             TextView coordinateDelete = viewCoordinate.findViewById(R.id.coordinate_delete);
             TextView coordinateSure = viewCoordinate.findViewById(R.id.coordinate_sure);
             coordinateActivity.setText(e.appActivity);
@@ -376,8 +376,8 @@ public class AppConfigActivity extends Activity {
                 final EditText widgetText = viewWidget.findViewById(R.id.widget_text);
                 final EditText widgetClickDelay = viewWidget.findViewById(R.id.widget_clickDelay);
                 final CheckBox widgetClickOnly = viewWidget.findViewById(R.id.widget_clickOnly);
-                final TextView widgetModify = viewWidget.findViewById(R.id.widget_modify);
                 final EditText widgetComment = viewWidget.findViewById(R.id.widget_comment);
+                final TextView widgetModify = viewWidget.findViewById(R.id.widget_modify);
                 TextView widgetDelete = viewWidget.findViewById(R.id.widget_delete);
                 TextView widgetSure = viewWidget.findViewById(R.id.widget_sure);
                 widgetActivity.setText(e.appActivity);
