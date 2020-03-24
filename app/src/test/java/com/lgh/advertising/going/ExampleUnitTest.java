@@ -1,6 +1,7 @@
 package com.lgh.advertising.going;
 
 import org.junit.Test;
+
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
@@ -8,10 +9,6 @@ import org.junit.Test;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect(){
-        String a = "aaaaaa";
-        String b = a;
-        a = "ddd";
-        System.out.println(b);
+    public void addition_isCorrect() {
     }
 }
