@@ -324,7 +324,7 @@ public class MainFunction {
                             }
                         }
                     }, autoFinder.clickDelay, TimeUnit.MILLISECONDS);
-                    if (++autoRetrieveNumber >= appDescribe.autoFinder.retrieveNumber) {
+                    if (++autoRetrieveNumber >= autoFinder.retrieveNumber) {
                         on_off_autoFinder = false;
                     }
                     return;
@@ -339,7 +339,7 @@ public class MainFunction {
 
     /**
      * 查找并点击由
-     * WidgetButtonDescribe
+     * Widget
      * 定义的控件
      */
     private void findSkipButtonByWidget(AccessibilityNodeInfo root, Set<Widget> set) {
@@ -604,7 +604,7 @@ public class MainFunction {
                                             DataBridge.appDescribe = appDescribeMap.get(matcher.group());
                                             if (DataBridge.appDescribe != null) {
                                                 Intent intent = new Intent(service, AppConfigActivity.class);
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 service.startActivity(intent);
                                             }
                                         }

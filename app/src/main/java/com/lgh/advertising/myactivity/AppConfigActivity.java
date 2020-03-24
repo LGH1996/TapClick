@@ -339,7 +339,7 @@ public class AppConfigActivity extends Activity {
                         e.comment = sComment;
                     }
                     dataDao.updateCoordinate(e);
-                    coordinateComment.setText(sComment);
+                    coordinateComment.setText(e.comment);
                     coordinateModify.setTextColor(0xff000000);
                     coordinateModify.setText(dateFormatModify.format(new Date()) + "(修改成功)");
                 }
