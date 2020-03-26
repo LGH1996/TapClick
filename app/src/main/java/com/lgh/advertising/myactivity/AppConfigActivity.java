@@ -175,7 +175,7 @@ public class AppConfigActivity extends Activity {
                 appDescribe.widgetRetrieveAllTime = widgetRetrieveAllTime.isChecked();
                 dataDao.updateAppDescribe(appDescribe);
                 baseSettingModify.setTextColor(0xff000000);
-                baseSettingModify.setText(dateFormatModify.format(new Date()) + "(修改成功)");
+                baseSettingModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
             }
         });
         layoutBaseSetting.addView(viewBaseSetting);
@@ -228,7 +228,7 @@ public class AppConfigActivity extends Activity {
                 }
                 dataDao.updateAutoFinder(appDescribe.autoFinder);
                 autoFinderModify.setTextColor(0xff000000);
-                autoFinderModify.setText(dateFormatModify.format(new Date()) + "(修改成功)");
+                autoFinderModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
             }
         });
         layoutAutoFinder.addView(viewAutoFinder);
@@ -341,7 +341,7 @@ public class AppConfigActivity extends Activity {
                     dataDao.updateCoordinate(e);
                     coordinateComment.setText(e.comment);
                     coordinateModify.setTextColor(0xff000000);
-                    coordinateModify.setText(dateFormatModify.format(new Date()) + "(修改成功)");
+                    coordinateModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
                 }
             });
             layoutCoordinate.addView(viewCoordinate);
@@ -427,7 +427,7 @@ public class AppConfigActivity extends Activity {
                         widgetText.setText(e.widgetText);
                         widgetComment.setText(e.comment);
                         widgetModify.setTextColor(0xff000000);
-                        widgetModify.setText(dateFormatModify.format(new Date()) + "(修改成功)");
+                        widgetModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
                     }
                 });
                 layoutWidget.addView(viewWidget);
