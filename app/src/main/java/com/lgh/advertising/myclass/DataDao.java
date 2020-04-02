@@ -49,7 +49,7 @@ public interface DataDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertWidget(Widget... widgets);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertMyAppConfig(MyAppConfig myAppConfig);
 
     @Query("DELETE FROM AppDescribe WHERE appPackage NOT IN (:appPackages)")
@@ -75,4 +75,7 @@ public interface DataDao {
 
     @Update
     void updateAppDescribe(AppDescribe... appDescribe);
+
+    @Update
+    void updateMyAppConfig(MyAppConfig myAppConfig);
 }

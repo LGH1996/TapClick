@@ -28,7 +28,7 @@ public class MyInstallReceiver extends BroadcastReceiver {
                 String dataString = intent.getDataString();
                 String packageName = dataString != null ? dataString.substring(8) : null;
                 if (packageName != null) {
-                    DataDao dataDao = DataDaoFactory.getInstance(context);
+                    DataDao dataDao = DataDaoFactory.getInstance(context.getApplicationContext());
                     PackageManager packageManager = context.getPackageManager();
                     if (action.equals(Intent.ACTION_PACKAGE_ADDED)) {
                         PackageInfo packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SERVICES);

@@ -6,8 +6,6 @@ import android.content.Intent;
 
 public class MyScreenOffReceiver extends BroadcastReceiver {
 
-    public static String TAG = "MyScreenOffReceiver";
-
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving

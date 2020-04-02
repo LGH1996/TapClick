@@ -17,7 +17,6 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,13 +32,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lgh.advertising.myactivity.AppConfigActivity;
+import com.lgh.advertising.myactivity.EditDataActivity;
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.AutoFinder;
 import com.lgh.advertising.myclass.Coordinate;
 import com.lgh.advertising.myclass.DataBridge;
 import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
+import com.lgh.advertising.myclass.MyAppConfig;
 import com.lgh.advertising.myclass.Widget;
 
 import java.io.File;
@@ -61,6 +61,8 @@ import java.util.regex.Pattern;
 public class MainFunction {
 
     private WindowManager windowManager;
+    private PackageManager packageManager;
+    private DataDao dataDao;
     private Map<String, AppDescribe> appDescribeMap;
     private AppDescribe appDescribe;
     private AccessibilityService service;
@@ -86,10 +88,12 @@ public class MainFunction {
     protected void onServiceConnected() {
         try {
             windowManager = (WindowManager) service.getSystemService(Context.WINDOW_SERVICE);
+            packageManager = service.getPackageManager();
             currentPackage = "Initialize CurrentPackage";
             currentActivity = "Initialize CurrentActivity";
             executorService = Executors.newSingleThreadScheduledExecutor();
             serviceInfo = service.getServiceInfo();
+            dataDao = DataDaoFactory.getInstance(service);
             screenOffReceiver = new MyScreenOffReceiver();
             service.registerReceiver(screenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
             installReceiver = new MyInstallReceiver();
@@ -441,30 +445,38 @@ public class MainFunction {
         }
     }
 
+    /**
+     * 接收到锁屏事件时调用
+     */
     public void onScreenOff() {
         currentPackage = "ScreenOff Package";
         currentActivity = "ScreenOff Activity";
     }
 
+    /**
+     * android 7.0 以上
+     * 避免无障碍服务冲突
+     */
     public void closeService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             service.disableSelf();
         }
     }
 
+    /**
+     * 把数据暴露给其他Activity
+     */
     public Map<String, AppDescribe> getAppDescribeMap() {
         return appDescribeMap;
     }
 
     /**
-     * 在安装卸载软件时触发调用，
+     * 开启无障碍服务时调用，
      * 更新相关包名的集合
      */
     private void updatePackage() {
         try {
             appDescribeMap = new HashMap<>();
-            DataDao dataDao = DataDaoFactory.getInstance(service);
-            PackageManager packageManager = service.getPackageManager();
             Set<String> packageInstall = new HashSet<>();
             Set<String> packageOff = new HashSet<>();
             Set<String> packageRemove = new HashSet<>();
@@ -517,14 +529,15 @@ public class MainFunction {
         }
     }
 
-
+    /**
+     * 创建规则时调用
+     */
     @SuppressLint("ClickableViewAccessibility")
-    public void showAddAdvertisingFloat() {
+    public void showAddDataFloat() {
         try {
             if (viewClickPosition != null || viewDataShow != null || viewLayoutAnalyze != null) {
                 return;
             }
-            final DataDao dataDao = DataDaoFactory.getInstance(service);
             final Widget widgetSelect = new Widget();
             final Coordinate coordinateSelect = new Coordinate();
             final LayoutInflater inflater = LayoutInflater.from(service);
@@ -560,7 +573,7 @@ public class MainFunction {
             aParams.height = height / 5;
             aParams.x = (metrics.widthPixels - aParams.width) / 2;
             aParams.y = metrics.heightPixels - aParams.height;
-            aParams.alpha = 0.8f;
+            aParams.alpha = 0.9f;
 
             bParams = new WindowManager.LayoutParams();
             bParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
@@ -595,6 +608,11 @@ public class MainFunction {
                         case MotionEvent.ACTION_DOWN:
                             startX = x = Math.round(event.getRawX());
                             startY = y = Math.round(event.getRawY());
+                            windowManager.getDefaultDisplay().getRealMetrics(metrics);
+                            aParams.x = aParams.x < 0 ? 0 : aParams.x;
+                            aParams.x = aParams.x > metrics.widthPixels - aParams.width ? metrics.widthPixels - aParams.width : aParams.x;
+                            aParams.y = aParams.y < 0 ? 0 : aParams.y;
+                            aParams.y = aParams.y > metrics.heightPixels - aParams.height ? metrics.heightPixels - aParams.height : aParams.y;
                             future = executorService.schedule(new Runnable() {
                                 @Override
                                 public void run() {
@@ -603,7 +621,7 @@ public class MainFunction {
                                         if (matcher.find()) {
                                             DataBridge.appDescribe = appDescribeMap.get(matcher.group());
                                             if (DataBridge.appDescribe != null) {
-                                                Intent intent = new Intent(service, AppConfigActivity.class);
+                                                Intent intent = new Intent(service, EditDataActivity.class);
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 service.startActivity(intent);
                                             }
@@ -621,11 +639,6 @@ public class MainFunction {
                             break;
                         case MotionEvent.ACTION_UP:
                             future.cancel(false);
-                            windowManager.getDefaultDisplay().getRealMetrics(metrics);
-                            aParams.x = aParams.x < 0 ? 0 : aParams.x;
-                            aParams.x = aParams.x > metrics.widthPixels - aParams.width ? metrics.widthPixels - aParams.width : aParams.x;
-                            aParams.y = aParams.y < 0 ? 0 : aParams.y;
-                            aParams.y = aParams.y > metrics.heightPixels - aParams.height ? metrics.heightPixels - aParams.height : aParams.y;
                             break;
                     }
                     return true;
@@ -814,5 +827,120 @@ public class MainFunction {
         } catch (Throwable e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 检查是否有通过应用市场
+     * 分享该应用到朋友圈
+     */
+    public void checkShare() {
+        try {
+            final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+            params.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
+            params.format = PixelFormat.TRANSPARENT;
+            params.gravity = Gravity.START | Gravity.TOP;
+            params.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+            final DisplayMetrics metrics = new DisplayMetrics();
+            windowManager.getDefaultDisplay().getMetrics(metrics);
+            params.height = (metrics.heightPixels / 40) * 9;
+            params.width = (metrics.widthPixels / 20) * 19;
+            params.x = (metrics.widthPixels - params.width) / 2;
+            params.y = metrics.heightPixels - params.height;
+            final View view = LayoutInflater.from(service).inflate(R.layout.view_check_share, null);
+            final TextView message = view.findViewById(R.id.message);
+            Button close = view.findViewById(R.id.close);
+            Button next = view.findViewById(R.id.next);
+
+            view.setOnTouchListener(new View.OnTouchListener() {
+                int x = 0, y = 0;
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            x = Math.round(event.getRawX());
+                            y = Math.round(event.getRawY());
+                            windowManager.getDefaultDisplay().getRealMetrics(metrics);
+                            params.x = params.x < 0 ? 0 : params.x;
+                            params.x = params.x > metrics.widthPixels - params.width ? metrics.widthPixels - params.width : params.x;
+                            params.y = params.y < 0 ? 0 : params.y;
+                            params.y = params.y > metrics.heightPixels - params.height ? metrics.heightPixels - params.height : params.y;
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            params.x = Math.round(params.x + (event.getRawX() - x));
+                            params.y = Math.round(params.y + (event.getRawY() - y));
+                            x = Math.round(event.getRawX());
+                            y = Math.round(event.getRawY());
+                            windowManager.updateViewLayout(view, params);
+                            break;
+                    }
+                    return true;
+                }
+            });
+
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    windowManager.removeViewImmediate(view);
+                }
+            });
+
+            message.setText("该过程会检测您是否有通过应用市场分享该应用到微信朋友圈，请确保已经分享后点击“下一步”继续。");
+            next.setOnClickListener(new View.OnClickListener() {
+                short process = 0;
+                String appName = packageManager.getApplicationLabel(packageManager.getApplicationInfo(service.getPackageName(), PackageManager.GET_META_DATA)).toString();
+
+                @Override
+                public void onClick(View v) {
+                    if (process == 0) {
+                        message.setText("请打开微信朋友圈，找到你所分享的内容后，点击”下一步“。");
+                        process = 1;
+                        return;
+                    }
+
+                    if (process == 1) {
+                        if (currentPackage.equals("com.tencent.mm") && currentActivity.equals("com.tencent.mm.plugin.sns.ui.SnsTimeLineUI")) {
+                            AccessibilityNodeInfo root = service.getRootInActiveWindow();
+                            if (root != null) {
+                                if (!root.findAccessibilityNodeInfosByText(appName).isEmpty()) {
+                                    message.setText("请打开你所分享的内容，并在内容加载完成后点击“下一步”。");
+                                    process = 2;
+                                } else {
+                                    message.setText("未发现相关的分享，请点击“下一步”重试。");
+                                }
+                            }
+                        }
+                        return;
+                    }
+
+                    if (process == 2) {
+                        if (currentPackage.equals("com.tencent.mm") && currentActivity.equals("com.tencent.mm.plugin.webview.ui.tools.WebViewUI")) {
+                            AccessibilityNodeInfo root = service.getRootInActiveWindow();
+                            if (root != null) {
+                                if (!root.findAccessibilityNodeInfosByText(appName).isEmpty()) {
+                                    MyAppConfig config = dataDao.getMyAppConfig();
+                                    config.isVip = true;
+                                    dataDao.updateMyAppConfig(config);
+                                    message.setText("完整版激活成功，点击”下一步“即可关闭该窗口。");
+                                    process = 3;
+                                } else {
+                                    message.setText("未发现有效的内容，请点击“下一步”重试。");
+                                }
+                            }
+                        }
+                        return;
+                    }
+
+                    if (process == 3) {
+                        windowManager.removeViewImmediate(view);
+                        return;
+                    }
+                }
+            });
+            windowManager.addView(view, params);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
     }
 }

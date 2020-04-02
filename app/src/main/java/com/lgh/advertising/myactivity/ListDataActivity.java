@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class AppSelectActivity extends Activity {
+public class ListDataActivity extends Activity {
 
     Context context;
     DataDao dataDao;
@@ -55,7 +55,7 @@ public class AppSelectActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_app);
+        setContentView(R.layout.activity_list_data);
         context = getApplicationContext();
         dataDao = DataDaoFactory.getInstance(context);
         packageManager = getPackageManager();
@@ -132,13 +132,13 @@ public class AppSelectActivity extends Activity {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                AppSelectActivity.ViewHolder holder;
+                ListDataActivity.ViewHolder holder;
                 if (convertView == null) {
                     convertView = inflater.inflate(R.layout.view_select_item, null);
-                    holder = new AppSelectActivity.ViewHolder(convertView);
+                    holder = new ListDataActivity.ViewHolder(convertView);
                     convertView.setTag(holder);
                 } else {
-                    holder = (AppSelectActivity.ViewHolder) convertView.getTag();
+                    holder = (ListDataActivity.ViewHolder) convertView.getTag();
                 }
                 final AppDescribeAndIcon tem = appDescribeAndIconFilterList.get(position);
                 holder.textName.setText(tem.appDescribe.appName);
@@ -151,7 +151,7 @@ public class AppSelectActivity extends Activity {
                         if (appDescribeMap == null) {
                             DataBridge.appDescribe.getOtherFieldsFromDatabase(dataDao);
                         }
-                        startActivity(new Intent(context, AppConfigActivity.class));
+                        startActivity(new Intent(context, EditDataActivity.class));
                     }
                 });
                 return convertView;
@@ -221,7 +221,7 @@ public class AppSelectActivity extends Activity {
         }
     }
 
-    class ViewHolder {
+    static class ViewHolder {
         TextView textName;
         TextView textOnOff;
         ImageView imageView;
@@ -233,7 +233,7 @@ public class AppSelectActivity extends Activity {
         }
     }
 
-    class AppDescribeAndIcon {
+    static class AppDescribeAndIcon {
         AppDescribe appDescribe;
         Drawable icon;
 

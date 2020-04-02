@@ -18,23 +18,32 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
         <activity
-            android:name="com.lgh.advertising.myactivity.AppSettingActivity"
+            android:name="com.lgh.advertising.myactivity.UpdateActivity"
+            android:process=":UpdateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar" />
+        <activity
+            android:name="com.lgh.advertising.myactivity.MoreMessageActivity"
+            android:process=":MoreMessageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lgh.advertising.myactivity.AppAuthorizationActivity"
+            android:name="com.lgh.advertising.myactivity.SettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lgh.advertising.myactivity.AddAdvertisingActivity"
+            android:name="com.lgh.advertising.myactivity.AuthorizationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lgh.advertising.myactivity.AppSelectActivity"
+            android:name="com.lgh.advertising.myactivity.AddDataActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lgh.advertising.myactivity.AppConfigActivity"
+            android:name="com.lgh.advertising.myactivity.ListDataActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lgh.advertising.myactivity.EditDataActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.lgh.advertising.myactivity.AppMainActivity"
+            android:name="com.lgh.advertising.myactivity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

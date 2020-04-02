@@ -10,10 +10,12 @@ public class MyAppConfig {
     public Integer id;
     public boolean autoHideOnTaskList;
     public String forUpdate;
+    public boolean isVip;
 
     public MyAppConfig() {
         this.id = 0;
         this.autoHideOnTaskList = false;
         this.forUpdate = "";
+        this.isVip = false;
     }
 }

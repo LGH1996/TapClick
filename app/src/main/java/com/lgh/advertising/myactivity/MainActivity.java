@@ -4,23 +4,19 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,7 +45,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class AppMainActivity extends Activity {
+public class MainActivity extends Activity {
 
     private Context context;
     private MyAppConfig myAppConfig;
@@ -63,7 +59,10 @@ public class AppMainActivity extends Activity {
         context = getApplicationContext();
         dataDao = DataDaoFactory.getInstance(context);
         myAppConfig = dataDao.getMyAppConfig();
-        if (myAppConfig == null) myAppConfig = new MyAppConfig();
+        if (myAppConfig == null) {
+            myAppConfig = new MyAppConfig();
+            dataDao.insertMyAppConfig(myAppConfig);
+        }
 
         ListView listView = findViewById(R.id.main_listView);
         final LayoutInflater inflater = LayoutInflater.from(context);
@@ -105,30 +104,17 @@ public class AppMainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(context, AppAuthorizationActivity.class));
+                        startActivity(new Intent(context, AuthorizationActivity.class));
                         break;
                     case 1:
-                        if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
-                            Toast.makeText(context, "请先开启无障碍服务", Toast.LENGTH_SHORT).show();
-                        } else if (MyAccessibilityService.mainFunction != null && MyAccessibilityServiceNoGesture.mainFunction != null) {
-                            Toast.makeText(context, "无障碍服务冲突", Toast.LENGTH_SHORT).show();
-                        } else {
-                            startActivity(new Intent(context, AddAdvertisingActivity.class));
-                            if (MyAccessibilityService.mainFunction != null) {
-                                MyAccessibilityService.mainFunction.showAddAdvertisingFloat();
-                            }
-                            if (MyAccessibilityServiceNoGesture.mainFunction != null) {
-                                MyAccessibilityServiceNoGesture.mainFunction.showAddAdvertisingFloat();
-                            }
-                        }
+                        startActivity(new Intent(context, AddDataActivity.class));
                         break;
                     case 2:
-                        AppMainActivity.this.startActivity(new Intent(context, AppSelectActivity.class));
+                        MainActivity.this.startActivity(new Intent(context, ListDataActivity.class));
                         break;
                     case 3:
-                        Intent intent = new Intent(context, AppSettingActivity.class);
-                        intent.putExtra("myAppConfig.autoHideOnTaskList", myAppConfig.autoHideOnTaskList);
-                        startActivityForResult(intent, 0);
+                        Intent intent = new Intent(context, SettingActivity.class);
+                        startActivityForResult(intent, 0x00);
                         break;
                 }
                 startActivity = true;
@@ -138,7 +124,7 @@ public class AppMainActivity extends Activity {
         String forUpdate = dateFormat.format(new Date());
         if (!forUpdate.equals(myAppConfig.forUpdate)) {
             myAppConfig.forUpdate = forUpdate;
-            dataDao.insertMyAppConfig(myAppConfig);
+            dataDao.updateMyAppConfig(myAppConfig);
             @SuppressLint("StaticFieldLeak") AsyncTask<String, Integer, String> asyncTask = new AsyncTask<String, Integer, String>() {
                 private LatestMessage latestVersionMessage;
                 private boolean haveNewVersion;
@@ -174,32 +160,19 @@ public class AppMainActivity extends Activity {
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
                     if (haveNewVersion) {
-                        View view = inflater.inflate(R.layout.view_update_message, null);
-                        WebView webView = view.findViewById(R.id.webView_update);
-                        WebSettings settings = webView.getSettings();
-                        settings.setJavaScriptEnabled(true);
-                        webView.loadData(latestVersionMessage.body, "text/html", "utf-8");
-                        AlertDialog dialog = new AlertDialog.Builder(AppMainActivity.this).setView(view).setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(latestVersionMessage.assets.get(0).browser_download_url));
-                                startActivity(intent);
-                            }
-                        }).create();
-                        dialog.show();
-                        DisplayMetrics metrics = new DisplayMetrics();
-                        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
-                        Window window = dialog.getWindow();
-                        WindowManager.LayoutParams params = window.getAttributes();
-                        params.width = (metrics.widthPixels / 6) * 5;
-                        params.height = metrics.heightPixels / 2;
-                        window.setAttributes(params);
+                        Intent intent = new Intent(context, UpdateActivity.class);
+                        intent.putExtra("updateMessage", latestVersionMessage.body);
+                        intent.putExtra("updateUrl", latestVersionMessage.assets.get(0).browser_download_url);
+                        startActivity(intent);
                     }
                 }
             };
             asyncTask.execute("https://api.github.com/repos/LGH1996/ADGORELEASE/releases/latest");
         }
 
+        if (!myAppConfig.isVip) {
+            showDialog();
+        }
     }
 
     @Override
@@ -215,7 +188,7 @@ public class AppMainActivity extends Activity {
             statusTip.setText("无障碍服务冲突");
         } else {
             statusImg.setImageResource(R.drawable.ok);
-            statusTip.setText("无障碍服务已开启\n请确保允许该应用后台运行\n并在任务列表中下拉锁定该页面");
+            statusTip.setText("无障碍服务已开启");
         }
     }
 
@@ -246,13 +219,49 @@ public class AppMainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0) {
-            myAppConfig.autoHideOnTaskList = data.getBooleanExtra("myAppConfig.autoHideOnTaskList", myAppConfig.autoHideOnTaskList);
-            dataDao.insertMyAppConfig(myAppConfig);
+        if (requestCode == 0x00) {
+            myAppConfig = dataDao.getMyAppConfig();
         }
     }
 
-    class Resource {
+    private void showDialog() {
+        View view = LayoutInflater.from(context).inflate(R.layout.view_for_share, null);
+        Button close = view.findViewById(R.id.close);
+        Button activate = view.findViewById(R.id.activate);
+        final AlertDialog dialog = new AlertDialog.Builder(this).setView(view).setCancelable(false).create();
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        activate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
+                    Toast.makeText(context, "请先开启无障碍服务", Toast.LENGTH_SHORT).show();
+                } else if (MyAccessibilityService.mainFunction != null && MyAccessibilityServiceNoGesture.mainFunction != null) {
+                    Toast.makeText(context, "无障碍服务冲突", Toast.LENGTH_SHORT).show();
+                } else {
+                    dialog.dismiss();
+                    if (MyAccessibilityService.mainFunction != null) {
+                        MyAccessibilityService.mainFunction.checkShare();
+                    }
+                    if (MyAccessibilityServiceNoGesture.mainFunction != null) {
+                        MyAccessibilityServiceNoGesture.mainFunction.checkShare();
+                    }
+                }
+            }
+        });
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
+            window.setBackgroundDrawableResource(R.drawable.for_share_background);
+        }
+        dialog.show();
+    }
+
+    static class Resource {
         public String name;
         public int drawableId;
 

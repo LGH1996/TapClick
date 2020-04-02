@@ -133,13 +133,18 @@
             android:src="@drawable/forward" />
     </RelativeLayout>
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:lineSpacingMultiplier="1.5"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:text="@string/authorizationQuestion"
-        android:textSize="12sp" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:lineSpacingMultiplier="1.5"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="@string/authorizationQuestion"
+            android:textSize="12sp" />
+    </ScrollView>
 </LinearLayout>

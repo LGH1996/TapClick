@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/start"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,7 +22,7 @@
                 android:lineSpacingMultiplier="1.5"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="你可以通过出现的悬浮窗口添加某些页面的控件或者坐标，这样在该控件或坐标再次出现时就会自动触发程序的点击功能，所以你可以灵活运用该功能来跳过开屏广告或者关闭某些弹窗或者完成一些其他的自动点击操作。"
+                android:text="点击下方的“开始”按键，将会出现一个用于创建规则的悬浮窗口，你可以通过该悬浮窗口添加某些页面的控件或者坐标，这样在该控件或坐标再次出现时就会自动触发程序的点击功能，所以你可以灵活运用该功能来跳过开屏广告或者关闭某些弹窗或者完成一些其他的自动点击操作。"
                 android:textColor="@color/textColor" />
 
             <TextView
@@ -74,4 +76,14 @@
                 android:textColor="@color/textColor" />
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <Button
+        android:id="@+id/start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:alpha="0.8"
+        android:text="开始" />
+</RelativeLayout>

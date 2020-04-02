@@ -18,23 +18,31 @@ import com.lgh.advertising.going.MyAccessibilityService;
 import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
 
-public class AppAuthorizationActivity extends Activity {
+public class AuthorizationActivity extends Activity {
 
     Context context;
     AppOpsManager appOps;
     PackageManager packageManager;
 
+    ImageView accessibilityOnOffImg;
+    ImageView batteryOnOffImg;
+    ImageView alertWindowOnOffImg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_app_authorization);
+        setContentView(R.layout.activity_authorization);
         context = getApplicationContext();
         appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
         packageManager = getPackageManager();
+
+        accessibilityOnOffImg = findViewById(R.id.accessibility_on_off_img);
+        batteryOnOffImg = findViewById(R.id.batteryIgnore_on_off_img);
+        alertWindowOnOffImg = findViewById(R.id.alert_window_on_off_img);
         RelativeLayout accessibilityOnOff = findViewById(R.id.accessibility_on_off);
         RelativeLayout batteryIgnoreOnOff = findViewById(R.id.batteryIgnore_on_off);
         RelativeLayout alertWindowOnOff = findViewById(R.id.alertWindow_on_off);
-        ImageView.OnClickListener onOffClickListener = new View.OnClickListener() {
+        View.OnClickListener onOffClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
@@ -74,9 +82,6 @@ public class AppAuthorizationActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        ImageView accessibilityOnOffImg = findViewById(R.id.accessibility_on_off_img);
-        ImageView batteryOnOffImg = findViewById(R.id.batteryIgnore_on_off_img);
-        ImageView alertWindowOnOffImg = findViewById(R.id.alert_window_on_off_img);
         if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
             accessibilityOnOffImg.setImageResource(R.drawable.error);
         } else {

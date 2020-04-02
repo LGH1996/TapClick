@@ -8,6 +8,7 @@ import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -36,7 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-public class AppConfigActivity extends Activity {
+public class EditDataActivity extends Activity {
 
     Context context;
     AppDescribe appDescribe;
@@ -88,7 +89,7 @@ public class AppConfigActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_app_config);
+        setContentView(R.layout.activity_edit_data);
         context = getApplicationContext();
         appDescribe = DataBridge.appDescribe;
         inflater = LayoutInflater.from(context);
@@ -118,7 +119,11 @@ public class AppConfigActivity extends Activity {
                 View view = inflater.inflate(R.layout.view_question, null);
                 TextView textView = view.findViewById(R.id.question_answer);
                 textView.setText(Html.fromHtml(getString(strId)));
-                AlertDialog alertDialog = new AlertDialog.Builder(AppConfigActivity.this).setView(view).setPositiveButton("确定", null).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(EditDataActivity.this).setView(view).setPositiveButton("确定", null).create();
+                Window window = alertDialog.getWindow();
+                if (window != null) {
+                    window.setBackgroundDrawableResource(R.drawable.add_data_background);
+                }
                 alertDialog.show();
             }
         }
@@ -198,13 +203,13 @@ public class AppConfigActivity extends Activity {
         autoFinderSure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                List<String> temKeyword;
                 String keywordList = autoFinderKeyword.getText().toString().trim();
                 String retrieveNumber = autoFinderRetrieveNumber.getText().toString();
                 String clickDelay = autoFinderClickDelay.getText().toString();
-                List<String> temKeyword;
                 autoFinderModify.setTextColor(0xffff0000);
                 try {
-                    temKeyword = new Gson().fromJson(keywordList, new TypeToken<List<String>>() {
+                    temKeyword = new Gson().fromJson(keywordList.isEmpty() || keywordList.equalsIgnoreCase("null") ? "[]" : keywordList, new TypeToken<List<String>>() {
                     }.getType());
                     autoFinderKeyword.setText(keywordList);
                 } catch (JsonSyntaxException jse) {
@@ -253,7 +258,8 @@ public class AppConfigActivity extends Activity {
         widgetSustainTime.setText(String.valueOf(appDescribe.widgetRetrieveTime));
         widgetRetrieveAllTime.setChecked(appDescribe.widgetRetrieveAllTime);
 
-        autoFinderKeyword.setText(new Gson().toJson(appDescribe.autoFinder.keywordList));
+
+        autoFinderKeyword.setText(appDescribe.autoFinder.keywordList == null || appDescribe.autoFinder.keywordList.isEmpty() ? "" : new Gson().toJson(appDescribe.autoFinder.keywordList));
         autoFinderRetrieveNumber.setText(String.valueOf(appDescribe.autoFinder.retrieveNumber));
         autoFinderClickDelay.setText(String.valueOf(appDescribe.autoFinder.clickDelay));
         autoFinderClickOnly.setChecked(appDescribe.autoFinder.clickOnly);

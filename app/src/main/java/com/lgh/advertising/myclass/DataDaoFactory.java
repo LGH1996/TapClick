@@ -19,7 +19,13 @@ public class DataDaoFactory {
                     database.execSQL("ALTER TABLE 'Widget' ADD 'comment' TEXT");
                 }
             };
-            dataDao = Room.databaseBuilder(context, MyDatabase.class, "applicationData.db").addMigrations(migration_1_2).allowMainThreadQueries().build().dataDao();
+            Migration migration_2_3 = new Migration(2, 3) {
+                @Override
+                public void migrate(@NonNull SupportSQLiteDatabase database) {
+                    database.execSQL("ALTER TABLE 'MyAppConfig' ADD 'isVip' INTEGER NOT NULL DEFAULT 0");
+                }
+            };
+            dataDao = Room.databaseBuilder(context, MyDatabase.class, "applicationData.db").addMigrations(migration_1_2, migration_2_3).allowMainThreadQueries().build().dataDao();
         }
         return dataDao;
     }
