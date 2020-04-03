@@ -65,6 +65,7 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/configure" />
         </service>
+
         <service
             android:name=".MyAccessibilityServiceNoGesture"
             android:enabled="true"
@@ -83,11 +84,8 @@
         <receiver
             android:name=".MyScreenOffReceiver"
             android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.SCREEN_OFF" />
-            </intent-filter>
-        </receiver>
+            android:exported="true"></receiver>
+
         <receiver
             android:name=".MyInstallReceiver"
             android:enabled="true"

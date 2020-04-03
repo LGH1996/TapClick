@@ -258,7 +258,6 @@ public class EditDataActivity extends Activity {
         widgetSustainTime.setText(String.valueOf(appDescribe.widgetRetrieveTime));
         widgetRetrieveAllTime.setChecked(appDescribe.widgetRetrieveAllTime);
 
-
         autoFinderKeyword.setText(appDescribe.autoFinder.keywordList == null || appDescribe.autoFinder.keywordList.isEmpty() ? "" : new Gson().toJson(appDescribe.autoFinder.keywordList));
         autoFinderRetrieveNumber.setText(String.valueOf(appDescribe.autoFinder.retrieveNumber));
         autoFinderClickDelay.setText(String.valueOf(appDescribe.autoFinder.clickDelay));

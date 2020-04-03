@@ -24,7 +24,6 @@
             android:background="@color/divideLine"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <Button
             android:id="@+id/cancel"
             android:layout_width="0dp"
