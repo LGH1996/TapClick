@@ -159,9 +159,14 @@ public class MainFunction {
                                             @Override
                                             public void run() {
                                                 on_off_widget = false;
+                                                if (!on_off_autoFinder) {
+                                                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                                    service.setServiceInfo(serviceInfo);
+                                                }
                                             }
                                         }, appDescribe.widgetRetrieveTime, TimeUnit.MILLISECONDS);
                                     }
+
                                     if (on_off_autoFinder) {
                                         serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                                         service.setServiceInfo(serviceInfo);
@@ -170,8 +175,10 @@ public class MainFunction {
                                                 @Override
                                                 public void run() {
                                                     on_off_autoFinder = false;
-                                                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                                    service.setServiceInfo(serviceInfo);
+                                                    if (!on_off_widget) {
+                                                        serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                                        service.setServiceInfo(serviceInfo);
+                                                    }
                                                 }
                                             }, appDescribe.autoFinderRetrieveTime, TimeUnit.MILLISECONDS);
                                         }
@@ -329,6 +336,10 @@ public class MainFunction {
                     }, autoFinder.clickDelay, TimeUnit.MILLISECONDS);
                     if (++autoRetrieveNumber >= autoFinder.retrieveNumber) {
                         on_off_autoFinder = false;
+                        if (!on_off_widget) {
+                            serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                            service.setServiceInfo(serviceInfo);
+                        }
                     }
                     return;
                 }
