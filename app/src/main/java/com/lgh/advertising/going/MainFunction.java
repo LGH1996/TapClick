@@ -17,6 +17,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -140,6 +141,8 @@ public class MainFunction {
                                     future_coordinate.cancel(false);
                                     future_widget.cancel(false);
                                     future_autoFinder.cancel(false);
+                                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                    service.setServiceInfo(serviceInfo);
                                     on_off_coordinate = appDescribe.coordinateOnOff;
                                     on_off_widget = appDescribe.widgetOnOff;
                                     on_off_autoFinder = appDescribe.autoFinderOnOFF;
