@@ -236,20 +236,21 @@ public class MainFunction {
                     }
                     if (packageName != null && packageName.equals(currentPackage)) {
                         if (on_off_widget && appDescribe != null && widgetSet != null) {
-                            findSkipButtonByWidget(root, widgetSet);
+                            findButtonByWidget(root, widgetSet);
                         }
                         if (on_off_autoFinder && appDescribe != null) {
-                            findSkipButtonByText(root, appDescribe.autoFinder);
+                            findButtonByText(root, appDescribe.autoFinder);
                         }
                     }
                     break;
                 case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
                     if (event.getPackageName().equals(currentPackage)) {
+                        AccessibilityNodeInfo source = event.getSource();
                         if (on_off_widget && appDescribe != null && widgetSet != null) {
-                            findSkipButtonByWidget(event.getSource(), widgetSet);
+                            findButtonByWidget(source, widgetSet);
                         }
                         if (on_off_autoFinder && appDescribe != null) {
-                            findSkipButtonByText(event.getSource(), appDescribe.autoFinder);
+                            findButtonByText(source, appDescribe.autoFinder);
                         }
                     }
                     break;
@@ -302,7 +303,7 @@ public class MainFunction {
      * 自动查找启动广告的
      * “跳过”的控件
      */
-    private void findSkipButtonByText(AccessibilityNodeInfo nodeInfo, final AutoFinder autoFinder) {
+    private void findButtonByText(AccessibilityNodeInfo nodeInfo, final AutoFinder autoFinder) {
         try {
             if (nodeInfo == null) return;
             for (int n = 0; n < autoFinder.keywordList.size(); n++) {
@@ -356,7 +357,7 @@ public class MainFunction {
      * Widget
      * 定义的控件
      */
-    private void findSkipButtonByWidget(AccessibilityNodeInfo root, Set<Widget> set) {
+    private void findButtonByWidget(AccessibilityNodeInfo root, Set<Widget> set) {
         try {
             int a = 0;
             int b = 1;
