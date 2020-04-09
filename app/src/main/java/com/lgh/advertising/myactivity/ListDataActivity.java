@@ -191,7 +191,7 @@ public class ListDataActivity extends Activity {
                         appDescribeAndIconList.add(new AppDescribeAndIcon(e, icon));
                     } catch (PackageManager.NameNotFoundException nameNotFoundException) {
                         appDescribeList.remove(e);
-                        nameNotFoundException.printStackTrace();
+//                        nameNotFoundException.printStackTrace();
                     }
                 }
                 appDescribeAndIconFilterList.addAll(appDescribeAndIconList);

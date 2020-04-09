@@ -21,7 +21,7 @@ public class MyScreenOffReceiver extends BroadcastReceiver {
                 }
             }
         } catch (Throwable e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 }

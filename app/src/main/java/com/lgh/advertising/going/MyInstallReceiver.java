@@ -71,7 +71,7 @@ public class MyInstallReceiver extends BroadcastReceiver {
                 }
             }
         } catch (Throwable throwable) {
-            throwable.printStackTrace();
+//            throwable.printStackTrace();
         }
     }
 }

@@ -140,13 +140,13 @@ public class MainActivity extends Activity {
                             haveNewVersion = newVersion > versionCode;
                         }
                     } catch (MalformedURLException e) {
-                        e.printStackTrace();
+//                        e.printStackTrace();
                     } catch (IOException e) {
-                        e.printStackTrace();
+//                        e.printStackTrace();
                     } catch (PackageManager.NameNotFoundException e) {
-                        e.printStackTrace();
+//                        e.printStackTrace();
                     } catch (Throwable e) {
-                        e.printStackTrace();
+//                        e.printStackTrace();
                     }
                     return null;
                 }

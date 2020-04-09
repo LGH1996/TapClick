@@ -108,7 +108,7 @@ public class MainFunction {
                 }
             }, 0, TimeUnit.MILLISECONDS);
         } catch (Throwable throwable) {
-            throwable.printStackTrace();
+//            throwable.printStackTrace();
         }
     }
 
@@ -248,7 +248,7 @@ public class MainFunction {
                     break;
             }
         } catch (Throwable throwable) {
-            throwable.printStackTrace();
+//            throwable.printStackTrace();
         }
     }
 
@@ -276,7 +276,7 @@ public class MainFunction {
                 layout.addView(text, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT, Gravity.CENTER));
             }
         } catch (Throwable e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
     }
@@ -286,7 +286,7 @@ public class MainFunction {
             service.unregisterReceiver(screenOffReceiver);
             service.unregisterReceiver(installReceiver);
         } catch (Throwable e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return true;
     }
@@ -336,7 +336,7 @@ public class MainFunction {
             }
             nodeInfo.recycle();
         } catch (Throwable e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -403,7 +403,7 @@ public class MainFunction {
                 }
             }
         } catch (Throwable e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -425,7 +425,7 @@ public class MainFunction {
                 findAllNode(temList, list);
             }
         } catch (Throwable e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -524,7 +524,7 @@ public class MainFunction {
                 appDescribeMap.put(e.appPackage, e);
             }
         } catch (Throwable e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -824,7 +824,7 @@ public class MainFunction {
             windowManager.addView(viewDataShow, aParams);
             windowManager.addView(viewClickPosition, cParams);
         } catch (Throwable e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 }
