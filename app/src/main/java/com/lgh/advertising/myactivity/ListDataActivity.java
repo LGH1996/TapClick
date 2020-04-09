@@ -134,7 +134,7 @@ public class ListDataActivity extends Activity {
             public View getView(int position, View convertView, ViewGroup parent) {
                 ListDataActivity.ViewHolder holder;
                 if (convertView == null) {
-                    convertView = inflater.inflate(R.layout.view_select_item, null);
+                    convertView = inflater.inflate(R.layout.view_list_item, null);
                     holder = new ListDataActivity.ViewHolder(convertView);
                     convertView.setTag(holder);
                 } else {

@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.lgh.advertising.myactivity.UpdateActivity">
 
     <WebView
         android:id="@+id/webView_update"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="250dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/buttonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/webView_update">
@@ -48,7 +48,7 @@
         <Button
             android:id="@+id/sure"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/item_click"
             android:text="确定"
             app:layout_constraintBottom_toBottomOf="parent"

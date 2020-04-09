@@ -2,25 +2,20 @@ package com.lgh.advertising.myactivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lgh.advertising.going.MyAccessibilityService;
@@ -169,10 +164,6 @@ public class MainActivity extends Activity {
             };
             asyncTask.execute("https://api.github.com/repos/LGH1996/ADGORELEASE/releases/latest");
         }
-
-        if (!myAppConfig.isVip) {
-            showDialog();
-        }
     }
 
     @Override
@@ -222,43 +213,6 @@ public class MainActivity extends Activity {
         if (requestCode == 0x00) {
             myAppConfig = dataDao.getMyAppConfig();
         }
-    }
-
-    private void showDialog() {
-        View view = LayoutInflater.from(context).inflate(R.layout.view_for_share, null);
-        Button close = view.findViewById(R.id.close);
-        Button activate = view.findViewById(R.id.activate);
-        final AlertDialog dialog = new AlertDialog.Builder(this).setView(view).setCancelable(false).create();
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        activate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
-                    Toast.makeText(context, "请先开启无障碍服务", Toast.LENGTH_SHORT).show();
-                } else if (MyAccessibilityService.mainFunction != null && MyAccessibilityServiceNoGesture.mainFunction != null) {
-                    Toast.makeText(context, "无障碍服务冲突", Toast.LENGTH_SHORT).show();
-                } else {
-                    dialog.dismiss();
-                    if (MyAccessibilityService.mainFunction != null) {
-                        MyAccessibilityService.mainFunction.checkShare();
-                    }
-                    if (MyAccessibilityServiceNoGesture.mainFunction != null) {
-                        MyAccessibilityServiceNoGesture.mainFunction.checkShare();
-                    }
-                }
-            }
-        });
-        Window window = dialog.getWindow();
-        if (window != null) {
-            window.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
-            window.setBackgroundDrawableResource(R.drawable.for_share_background);
-        }
-        dialog.show();
     }
 
     static class Resource {

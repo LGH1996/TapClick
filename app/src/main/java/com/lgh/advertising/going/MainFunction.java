@@ -39,7 +39,6 @@ import com.lgh.advertising.myclass.Coordinate;
 import com.lgh.advertising.myclass.DataBridge;
 import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.DataDaoFactory;
-import com.lgh.advertising.myclass.MyAppConfig;
 import com.lgh.advertising.myclass.Widget;
 
 import java.io.File;
@@ -827,120 +826,5 @@ public class MainFunction {
         } catch (Throwable e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * 检查是否有通过应用市场
-     * 分享该应用到朋友圈
-     */
-    public void checkShare() {
-        try {
-            final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-            params.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
-            params.format = PixelFormat.TRANSPARENT;
-            params.gravity = Gravity.START | Gravity.TOP;
-            params.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-            final DisplayMetrics metrics = new DisplayMetrics();
-            windowManager.getDefaultDisplay().getMetrics(metrics);
-            params.height = (metrics.heightPixels / 40) * 9;
-            params.width = (metrics.widthPixels / 20) * 19;
-            params.x = (metrics.widthPixels - params.width) / 2;
-            params.y = metrics.heightPixels - params.height;
-            final View view = LayoutInflater.from(service).inflate(R.layout.view_check_share, null);
-            final TextView message = view.findViewById(R.id.message);
-            Button close = view.findViewById(R.id.close);
-            Button next = view.findViewById(R.id.next);
-
-            view.setOnTouchListener(new View.OnTouchListener() {
-                int x = 0, y = 0;
-
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            x = Math.round(event.getRawX());
-                            y = Math.round(event.getRawY());
-                            windowManager.getDefaultDisplay().getRealMetrics(metrics);
-                            params.x = params.x < 0 ? 0 : params.x;
-                            params.x = params.x > metrics.widthPixels - params.width ? metrics.widthPixels - params.width : params.x;
-                            params.y = params.y < 0 ? 0 : params.y;
-                            params.y = params.y > metrics.heightPixels - params.height ? metrics.heightPixels - params.height : params.y;
-                            break;
-                        case MotionEvent.ACTION_MOVE:
-                            params.x = Math.round(params.x + (event.getRawX() - x));
-                            params.y = Math.round(params.y + (event.getRawY() - y));
-                            x = Math.round(event.getRawX());
-                            y = Math.round(event.getRawY());
-                            windowManager.updateViewLayout(view, params);
-                            break;
-                    }
-                    return true;
-                }
-            });
-
-            close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    windowManager.removeViewImmediate(view);
-                }
-            });
-
-            message.setText("该过程会检测您是否有通过应用市场分享该应用到微信朋友圈，请确保已经分享后点击“下一步”继续。");
-            next.setOnClickListener(new View.OnClickListener() {
-                short process = 0;
-                String appName = packageManager.getApplicationLabel(packageManager.getApplicationInfo(service.getPackageName(), PackageManager.GET_META_DATA)).toString();
-
-                @Override
-                public void onClick(View v) {
-                    if (process == 0) {
-                        message.setText("请打开微信朋友圈，找到你所分享的内容后，点击”下一步“。");
-                        process = 1;
-                        return;
-                    }
-
-                    if (process == 1) {
-                        if (currentPackage.equals("com.tencent.mm") && currentActivity.equals("com.tencent.mm.plugin.sns.ui.SnsTimeLineUI")) {
-                            AccessibilityNodeInfo root = service.getRootInActiveWindow();
-                            if (root != null) {
-                                if (!root.findAccessibilityNodeInfosByText(appName).isEmpty()) {
-                                    message.setText("请打开你所分享的内容，并在内容加载完成后点击“下一步”。");
-                                    process = 2;
-                                } else {
-                                    message.setText("未发现相关的分享，请点击“下一步”重试。");
-                                }
-                            }
-                        }
-                        return;
-                    }
-
-                    if (process == 2) {
-                        if (currentPackage.equals("com.tencent.mm") && currentActivity.equals("com.tencent.mm.plugin.webview.ui.tools.WebViewUI")) {
-                            AccessibilityNodeInfo root = service.getRootInActiveWindow();
-                            if (root != null) {
-                                if (!root.findAccessibilityNodeInfosByText(appName).isEmpty()) {
-                                    MyAppConfig config = dataDao.getMyAppConfig();
-                                    config.isVip = true;
-                                    dataDao.updateMyAppConfig(config);
-                                    message.setText("完整版激活成功，点击”下一步“即可关闭该窗口。");
-                                    process = 3;
-                                } else {
-                                    message.setText("未发现有效的内容，请点击“下一步”重试。");
-                                }
-                            }
-                        }
-                        return;
-                    }
-
-                    if (process == 3) {
-                        windowManager.removeViewImmediate(view);
-                        return;
-                    }
-                }
-            });
-            windowManager.addView(view, params);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-
     }
 }

@@ -40,7 +40,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/base_name_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"

@@ -49,6 +49,7 @@ public class SettingActivity extends Activity {
 
         Button openDetail = findViewById(R.id.setting_open);
         Button checkUpdate = findViewById(R.id.setting_update);
+        final Button shareTo = findViewById(R.id.setting_share);
         Button givePraise = findViewById(R.id.setting_praise);
         Button moreMessage = findViewById(R.id.setting_more);
         TextView authorChat = findViewById(R.id.authorChat);
@@ -126,14 +127,69 @@ public class SettingActivity extends Activity {
             }
         });
 
+        shareTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                @SuppressLint("StaticFieldLeak") AsyncTask<String, Integer, String> asyncTask = new AsyncTask<String, Integer, String>() {
+                    private AlertDialog waitDialog;
+                    private String shareContent;
+                    private boolean occurError;
+
+
+                    @Override
+                    protected void onPreExecute() {
+                        super.onPreExecute();
+                        waitDialog = new AlertDialog.Builder(SettingActivity.this).setView(new ProgressBar(context)).setCancelable(false).create();
+                        Window window = waitDialog.getWindow();
+                        if (window != null) {
+                            window.setBackgroundDrawableResource(R.color.transparent);
+                        }
+                        waitDialog.show();
+
+                    }
+
+                    @Override
+                    protected String doInBackground(String... strings) {
+                        try {
+                            OkHttpClient httpClient = new OkHttpClient();
+                            Request request = new Request.Builder().get().url(strings[0]).build();
+                            Response response = httpClient.newCall(request).execute();
+                            shareContent = response.body().string();
+                            response.close();
+                        } catch (Throwable e) {
+                            occurError = true;
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(String s) {
+                        super.onPostExecute(s);
+                        waitDialog.dismiss();
+                        if (occurError) {
+                            Toast.makeText(context, "获取分享内容时出现错误", Toast.LENGTH_SHORT).show();
+                        } else if (shareContent != null && !shareContent.isEmpty()) {
+                            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                            shareIntent.setType("text/plain");
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, shareContent);
+                            startActivity(Intent.createChooser(shareIntent, "请选择分享方式"));
+                        } else {
+                            Toast.makeText(context, "暂时不支持分享", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                };
+                asyncTask.execute("https://raw.githubusercontent.com/LGH1996/ADGORELEASE/master/shareContent");
+            }
+        });
+
         givePraise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName()));
                 if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(Intent.createChooser(intent, "请选择酷安应用市场或华为应用市场"));
+                    startActivity(Intent.createChooser(intent, "请选择应用市场"));
                 } else {
-                    Toast.makeText(context, "请到酷安应用市场或华为应用市场评分", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "请到应用市场评分", Toast.LENGTH_SHORT).show();
                 }
             }
         });

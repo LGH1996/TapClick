@@ -1,153 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
     android:background="@drawable/add_data_background"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp">
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:stretchColumns="1">
-
-        <TableRow
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="2dp">
-
-            <TextView
-                android:text="包名："
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/pacName"
-                android:hint="显示当前应用的包名"
-                android:singleLine="true"
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp">
-
-            <TextView
-                android:text="活动："
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/actName"
-                android:hint="显示当前页面的活动"
-                android:singleLine="true"
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp">
-
-            <TextView
-                android:text="控件："
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/widget"
-                android:layout_span="2"
-                android:hint="显示控件信息，长按快速打开规则管理页面"
-                android:singleLine="true"
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp">
-
-            <TextView
-                android:text="坐标："
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/xy"
-                android:layout_span="2"
-                android:hint="显示坐标信息，长按快速打开规则管理页面"
-                android:singleLine="true"
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-        </TableRow>
-    </TableLayout>
+    android:padding="5dp">
 
     <LinearLayout
+        android:id="@+id/layout_pac"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/layout_act"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside">
 
-        <Button
-            android:id="@+id/quit"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:padding="0dp"
-            android:text="退出"
+            android:text="包名："
             android:textColor="@color/textColor"
             android:textSize="12sp" />
 
-        <Button
-            android:id="@+id/switch_wid"
+        <TextView
+            android:id="@+id/pacName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="显示当前应用的包名"
+            android:singleLine="true"
+            android:textColor="@color/textColor"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layout_act"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/layout_widget"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_pac">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:padding="0dp"
-            android:text="显示布局"
+            android:text="活动："
             android:textColor="@color/textColor"
             android:textSize="12sp" />
 
-        <Button
-            android:id="@+id/save_wid"
+        <TextView
+            android:id="@+id/actName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="显示当前页面的活动"
+            android:singleLine="true"
+            android:textColor="@color/textColor"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layout_widget"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/layout_xy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_act">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:enabled="false"
-            android:padding="0dp"
-            android:text="添加控件"
+            android:text="控件："
             android:textColor="@color/textColor"
             android:textSize="12sp" />
 
+        <TextView
+            android:id="@+id/widget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="显示控件信息，长按快速打开规则管理页面"
+            android:singleLine="true"
+            android:textColor="@color/textColor"
+            android:textSize="12sp" />
+    </LinearLayout>
 
-        <Button
-            android:id="@+id/switch_aim"
+
+    <LinearLayout
+        android:id="@+id/layout_xy"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/layout_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_widget">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:padding="0dp"
-            android:text="显示准心"
+            android:text="坐标："
             android:textColor="@color/textColor"
             android:textSize="12sp" />
 
-        <Button
-            android:id="@+id/save_aim"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/xy"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:enabled="false"
-            android:padding="0dp"
-            android:text="添加坐标"
+            android:hint="显示坐标信息，长按快速打开规则管理页面"
+            android:singleLine="true"
             android:textColor="@color/textColor"
             android:textSize="12sp" />
 
     </LinearLayout>
-</LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_button"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_xy">
+
+        <Button
+            android:id="@+id/quit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:padding="0dp"
+            android:text="退出"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/switch_wid"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/switch_wid"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:padding="0dp"
+            android:text="显示布局"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/save_wid"
+            app:layout_constraintStart_toEndOf="@+id/quit" />
+
+        <Button
+            android:id="@+id/save_wid"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:enabled="false"
+            android:padding="0dp"
+            android:text="添加控件"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/switch_aim"
+            app:layout_constraintStart_toEndOf="@+id/switch_wid" />
+
+
+        <Button
+            android:id="@+id/switch_aim"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:padding="0dp"
+            android:text="显示准心"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/save_aim"
+            app:layout_constraintStart_toEndOf="@+id/save_wid" />
+
+        <Button
+            android:id="@+id/save_aim"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:enabled="false"
+            android:padding="0dp"
+            android:text="添加坐标"
+            android:textColor="@color/textColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/switch_aim" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
