@@ -17,7 +17,6 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -68,6 +67,7 @@ public class MainFunction {
     private AccessibilityService service;
     private String currentPackage;
     private String currentActivity;
+    private String homeLaunch;
     private boolean on_off_coordinate, on_off_widget, on_off_autoFinder;
     private int autoRetrieveNumber;
     private AccessibilityServiceInfo serviceInfo;
@@ -102,7 +102,9 @@ public class MainFunction {
             filterInstall.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
             filterInstall.addDataScheme("package");
             service.registerReceiver(installReceiver, filterInstall);
-            updatePackage();
+            ResolveInfo homeInfo = packageManager.resolveActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_SYSTEM_ONLY);
+            homeLaunch = homeInfo != null ? homeInfo.activityInfo.packageName : null;
+            getRunningData();
             future_coordinate = future_widget = future_autoFinder = executorService.schedule(new Runnable() {
                 @Override
                 public void run() {
@@ -127,10 +129,8 @@ public class MainFunction {
                     CharSequence temClass = event.getClassName();
                     String packageName = root != null ? root.getPackageName().toString() : temPackage != null ? temPackage.toString() : null;
                     String activityName = temClass != null ? temClass.toString() : null;
-                    if (root != null && temPackage != null) {
-                        if (!root.getPackageName().equals(temPackage)) {
-                            activityName = root.getPackageName() + ".unknownActivity";
-                        }
+                    if (temPackage != null && !temPackage.equals(packageName) && temPackage.equals(homeLaunch)) {
+                        activityName = packageName + ".unknownActivity";
                     }
                     if (packageName != null) {
                         if (!packageName.equals(currentPackage)) {
@@ -203,7 +203,7 @@ public class MainFunction {
                         }
                     }
                     if (activityName != null) {
-                        if (!activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.")) {
+                        if (!activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.") && !activityName.equals("android.inputmethodservice.SoftInputWindow")) {
                             currentActivity = activityName;
                             if (appDescribe != null) {
                                 if (on_off_coordinate) {
@@ -347,9 +347,7 @@ public class MainFunction {
                     }
                     return;
                 }
-
             }
-            nodeInfo.recycle();
         } catch (Throwable e) {
 //            e.printStackTrace();
         }
@@ -485,32 +483,27 @@ public class MainFunction {
     }
 
     /**
-     * 开启无障碍服务时调用，
-     * 更新相关包名的集合
+     * 开启无障碍服务时调用
+     * 获取运行时需要的数据
      */
-    private void updatePackage() {
+    private void getRunningData() {
         try {
             appDescribeMap = new HashMap<>();
             Set<String> packageInstall = new HashSet<>();
             Set<String> packageOff = new HashSet<>();
             Set<String> packageRemove = new HashSet<>();
-            List<ResolveInfo> resolveInfoList = new ArrayList<>();
-            Intent intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME);
-            resolveInfoList.addAll(packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL));
+            List<ResolveInfo> resolveInfoList = packageManager.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL);
             for (ResolveInfo e : resolveInfoList) {
                 packageOff.add(e.activityInfo.packageName);
             }
-            List<InputMethodInfo> inputMethodInfoList = ((InputMethodManager) service.getSystemService(AccessibilityService.INPUT_METHOD_SERVICE)).getInputMethodList();
+            List<InputMethodInfo> inputMethodInfoList = ((InputMethodManager) service.getSystemService(Context.INPUT_METHOD_SERVICE)).getInputMethodList();
             for (InputMethodInfo e : inputMethodInfoList) {
                 packageRemove.add(e.getPackageName());
             }
             packageOff.add(service.getPackageName());
             packageRemove.add("com.android.systemui");
-            intent = new Intent(Intent.ACTION_VIEW).addCategory(Intent.CATEGORY_DEFAULT);
-            intent.setDataAndType(Uri.fromFile(new File("install.apk")), "application/vnd.android.package-archive");
-            resolveInfoList.addAll(packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL));
-            intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER);
-            resolveInfoList.addAll(packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL));
+            resolveInfoList.addAll(packageManager.queryIntentActivities(new Intent(Intent.ACTION_VIEW).setDataAndType(Uri.fromFile(new File("install.apk")), "application/vnd.android.package-archive"), PackageManager.MATCH_ALL));
+            resolveInfoList.addAll(packageManager.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER), PackageManager.MATCH_ALL));
             List<AppDescribe> appDescribeList = new ArrayList<>();
             List<AutoFinder> autoFinderList = new ArrayList<>();
             for (ResolveInfo e : resolveInfoList) {
@@ -533,8 +526,7 @@ public class MainFunction {
             dataDao.deleteAppDescribeByNotIn(packageInstall);
             dataDao.insertAppDescribe(appDescribeList);
             dataDao.insertAutoFinder(autoFinderList);
-            appDescribeList = dataDao.getAllAppDescribes();
-            for (AppDescribe e : appDescribeList) {
+            for (AppDescribe e : dataDao.getAllAppDescribes()) {
                 e.getOtherFieldsFromDatabase(dataDao);
                 appDescribeMap.put(e.appPackage, e);
             }
