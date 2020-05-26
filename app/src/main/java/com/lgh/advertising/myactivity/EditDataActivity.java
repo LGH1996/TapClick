@@ -380,6 +380,7 @@ public class EditDataActivity extends Activity {
                 final EditText widgetDescribe = viewWidget.findViewById(R.id.widget_describe);
                 final EditText widgetText = viewWidget.findViewById(R.id.widget_text);
                 final EditText widgetClickDelay = viewWidget.findViewById(R.id.widget_clickDelay);
+                final CheckBox widgetNoRepeat = viewWidget.findViewById(R.id.widget_noRepeat);
                 final CheckBox widgetClickOnly = viewWidget.findViewById(R.id.widget_clickOnly);
                 final EditText widgetComment = viewWidget.findViewById(R.id.widget_comment);
                 final TextView widgetModify = viewWidget.findViewById(R.id.widget_modify);
@@ -393,6 +394,7 @@ public class EditDataActivity extends Activity {
                 widgetDescribe.setText(e.widgetDescribe);
                 widgetText.setText(e.widgetText);
                 widgetClickDelay.setText(String.valueOf(e.clickDelay));
+                widgetNoRepeat.setChecked(e.noRepeat);
                 widgetClickOnly.setChecked(e.clickOnly);
                 widgetComment.setText(e.comment);
                 widgetDelete.setOnClickListener(new View.OnClickListener() {
@@ -424,6 +426,7 @@ public class EditDataActivity extends Activity {
                         e.widgetDescribe = widgetDescribe.getText().toString().trim();
                         e.widgetText = widgetText.getText().toString().trim();
                         e.clickDelay = Integer.valueOf(clickDelay);
+                        e.noRepeat = widgetNoRepeat.isChecked();
                         e.clickOnly = widgetClickOnly.isChecked();
                         e.comment = widgetComment.getText().toString().trim();
                         dataDao.updateWidget(e);

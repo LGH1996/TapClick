@@ -76,6 +76,7 @@ public class MainFunction {
     private MyScreenOffReceiver screenOffReceiver;
     private Set<Widget> widgetSet;
     private MyInstallReceiver installReceiver;
+    private HashSet<Widget> alreadyClickSet;
 
     private WindowManager.LayoutParams aParams, bParams, cParams;
     private View viewDataShow, viewLayoutAnalyze;
@@ -118,11 +119,6 @@ public class MainFunction {
     public void onAccessibilityEvent(AccessibilityEvent event) {
         try {
             switch (event.getEventType()) {
-                case AccessibilityEvent.TYPE_WINDOWS_CHANGED:
-                    AccessibilityNodeInfo node = service.getRootInActiveWindow();
-                    if (node == null || node.getPackageName().equals(currentPackage)) {
-                        break;
-                    }
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
                     AccessibilityNodeInfo root = service.getRootInActiveWindow();
                     CharSequence temPackage = event.getPackageName();
@@ -223,6 +219,7 @@ public class MainFunction {
                                 }
                                 if (on_off_widget) {
                                     widgetSet = appDescribe.widgetSetMap.get(activityName);
+                                    alreadyClickSet = new HashSet<>();
                                     if (widgetSet != null) {
                                         serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                                         service.setServiceInfo(serviceInfo);
@@ -382,22 +379,25 @@ public class MainFunction {
                             isFind = true;
                         }
                         if (isFind) {
-                            executorService.schedule(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (node.refresh()) {
-                                        if (e.clickOnly) {
-                                            click(temRect.centerX(), temRect.centerY(), 0, 20);
-                                        } else {
-                                            if (!node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                                if (!node.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                                    click(temRect.centerX(), temRect.centerY(), 0, 20);
+                            if (!(e.noRepeat && alreadyClickSet.contains(e))) {
+                                executorService.schedule(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (node.refresh()) {
+                                            if (e.clickOnly) {
+                                                click(temRect.centerX(), temRect.centerY(), 0, 20);
+                                            } else {
+                                                if (!node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                                                    if (!node.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                                                        click(temRect.centerX(), temRect.centerY(), 0, 20);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
-                            }, e.clickDelay, TimeUnit.MILLISECONDS);
+                                }, e.clickDelay, TimeUnit.MILLISECONDS);
+                                alreadyClickSet.add(e);
+                            }
                             break;
                         }
                     }

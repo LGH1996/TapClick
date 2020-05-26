@@ -16,6 +16,7 @@ public class Widget {
     public String appPackage;
     public String appActivity;
     public int clickDelay;
+    public boolean noRepeat;
     public boolean clickOnly;
     public boolean widgetClickable;
     public Rect widgetRect;
@@ -28,6 +29,7 @@ public class Widget {
         this.appPackage = "";
         this.appActivity = "";
         this.clickDelay = 0;
+        this.noRepeat = false;
         this.clickOnly = false;
         this.widgetClickable = false;
         this.widgetRect = null;
@@ -43,6 +45,7 @@ public class Widget {
         this.appPackage = widget.appPackage;
         this.appActivity = widget.appActivity;
         this.clickDelay = widget.clickDelay;
+        this.noRepeat = widget.noRepeat;
         this.clickOnly = widget.clickOnly;
         this.widgetClickable = widget.widgetClickable;
         this.widgetRect = widget.widgetRect;

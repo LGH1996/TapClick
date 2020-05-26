@@ -4,7 +4,7 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(version = 3, entities = {AppDescribe.class, AutoFinder.class, Coordinate.class, Widget.class, MyAppConfig.class}, exportSchema = false)
+@Database(version = 4, entities = {AppDescribe.class, AutoFinder.class, Coordinate.class, Widget.class, MyAppConfig.class}, exportSchema = false)
 @TypeConverters(MyTypeConverter.class)
 public abstract class MyDatabase extends RoomDatabase {
     abstract DataDao dataDao();

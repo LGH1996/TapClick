@@ -25,7 +25,13 @@ public class DataDaoFactory {
                     database.execSQL("ALTER TABLE 'MyAppConfig' ADD 'isVip' INTEGER NOT NULL DEFAULT 0");
                 }
             };
-            dataDao = Room.databaseBuilder(context, MyDatabase.class, "applicationData.db").addMigrations(migration_1_2, migration_2_3).allowMainThreadQueries().build().dataDao();
+            Migration migration_3_4 = new Migration(3, 4) {
+                @Override
+                public void migrate(@NonNull SupportSQLiteDatabase database) {
+                    database.execSQL("ALTER TABLE 'Widget' ADD `noRepeat` INTEGER NOT NULL DEFAULT 0");
+                }
+            };
+            dataDao = Room.databaseBuilder(context, MyDatabase.class, "applicationData.db").addMigrations(migration_1_2, migration_2_3, migration_3_4).allowMainThreadQueries().build().dataDao();
         }
         return dataDao;
     }

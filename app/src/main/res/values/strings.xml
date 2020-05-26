@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">开屏即达</string>
-    <string name="accessibilityName">开屏即达(支持坐标点击)</string>
-    <string name="accessibilityNameNoGesture">开屏即达(不支持坐标点击)</string>
+    <string name="app_name">即达</string>
+    <string name="accessibilityName">即达(支持坐标点击)</string>
+    <string name="accessibilityNameNoGesture">即达(不支持坐标点击)</string>
     <string name="description">
         该服务支持坐标点击，但某些机型可能因此出现卡顿掉帧的情况，如果出现上述情况，请关闭此服务，开启另一个不支持坐标点击的服务。\n\n
         注意:不能同时开启两个服务，否则会因为冲突而产生异常。在开启该服务后，请确保另一个不支持坐标点击的服务已关闭。\n\n
@@ -39,6 +39,7 @@
     <string name="widgetQuestion">
         <![CDATA[一个活动页面可以添加多个控件，在检测到该活动页面出现时就会对该页面的控件进行检索，如果存在与该控件“Id”属性或“Describe”属性或“Text”属性或“Bonus”属性相同的控件，就会对其执行点击动作。<br><br>
         延迟点击：某些控件在出现时会处于不可用状态，需要延迟一定的时间后才能响应点击动作；<br>
+        不允许重复点击：某些控件会不断地触发程序的点击动作，如果不希望此现象发生，可以尝试把该选项打开；<br>
         仅进行模拟点击：某些控件对无障碍服务的点击动作不生效，需要进行坐标的模拟点击，该选项仅在支持坐标点击的无障碍服务中生效；<br><br>
         注意：如果该活动页面还存在其他“Id”属性或“Describe”属性或“Text”属性相同的控件，则可能被干扰导致误判而失效，如果出现这种情况，可以尝试把该控件的“Id”属性或“Describe”属性或“Text”属性删除，只留下“Bonus”属性作为该控件的唯一标识；<br>
         注意：控件检索是个比较耗性能的操作，所以可以为某些弹窗或某些不经常出现的活动页面添加控件，但不要为一个普通的活动页面添加控件，否则会影响性能；]]>
