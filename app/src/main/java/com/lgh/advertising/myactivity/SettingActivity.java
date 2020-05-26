@@ -178,7 +178,7 @@ public class SettingActivity extends Activity {
                         }
                     }
                 };
-                asyncTask.execute("https://raw.githubusercontent.com/LGH1996/ADGORELEASE/master/shareContent");
+                asyncTask.execute("https://gitee.com/lingh1996/ADGO/raw/master/shareContent");
             }
         });
 

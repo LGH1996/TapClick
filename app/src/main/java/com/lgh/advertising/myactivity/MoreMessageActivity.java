@@ -39,7 +39,7 @@ public class MoreMessageActivity extends Activity {
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setLoadsImagesAutomatically(true);
         settings.supportMultipleWindows();
-        webView.loadUrl("https://github.com/LGH1996/ADGORELEASE/wiki");
+        webView.loadUrl("https://gitee.com/lingh1996/ADGO/blob/master/README.md");
     }
 
     @Override
