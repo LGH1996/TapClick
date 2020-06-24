@@ -44,5 +44,5 @@ public class MyApplication extends Application {
             myAppConfig = dataDao.getMyAppConfig();
         }
     }
-    
+
 }
