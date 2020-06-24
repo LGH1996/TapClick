@@ -1,215 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/base_setting_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:orientation="vertical">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/base_setting_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/base_setting_img"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/retrieve_setting" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_toEndOf="@+id/base_setting_img"
+                            android:gravity="center_vertical|start"
+                            android:paddingStart="10dp"
+                            android:singleLine="true"
+                            android:text="基础功能设置"
+                            android:textColor="@color/textColor"
+                            android:textSize="15sp" />
+
+                        <ImageButton
+                            android:id="@+id/base_setting_question"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:alpha="0.1"
+                            android:background="@drawable/question" />
+                    </RelativeLayout>
 
                     <ImageView
-                        android:id="@+id/base_setting_img"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/retrieve_setting" />
-
-                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_toEndOf="@+id/base_setting_img"
-                        android:gravity="center_vertical|start"
-                        android:paddingStart="10dp"
-                        android:singleLine="true"
-                        android:text="基础功能设置"
-                        android:textColor="@color/textColor"
-                        android:textSize="15sp" />
+                        android:layout_height="1px"
+                        android:background="@color/divideLine" />
 
-                    <ImageButton
-                        android:id="@+id/base_setting_question"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:alpha="0.1"
-                        android:background="@drawable/question" />
-                </RelativeLayout>
+                </LinearLayout>
 
-                <ImageView
+
+                <LinearLayout
+                    android:id="@+id/auto_finder_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/divideLine" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
+                        <ImageView
+                            android:id="@+id/auto_finder_img"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/auto_finder" />
 
-            <LinearLayout
-                android:id="@+id/auto_finder_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
-                android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_toEndOf="@+id/auto_finder_img"
+                            android:gravity="center_vertical|start"
+                            android:paddingStart="10dp"
+                            android:singleLine="true"
+                            android:text="字词检索管理"
+                            android:textColor="@color/textColor"
+                            android:textSize="15sp" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                        <ImageButton
+                            android:id="@+id/auto_finder_question"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:alpha="0.1"
+                            android:background="@drawable/question" />
+                    </RelativeLayout>
 
                     <ImageView
-                        android:id="@+id/auto_finder_img"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/auto_finder" />
-
-                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_toEndOf="@+id/auto_finder_img"
-                        android:gravity="center_vertical|start"
-                        android:paddingStart="10dp"
-                        android:singleLine="true"
-                        android:text="字词检索管理"
-                        android:textColor="@color/textColor"
-                        android:textSize="15sp" />
+                        android:layout_height="1px"
+                        android:background="@color/divideLine" />
+                </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/auto_finder_question"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:alpha="0.1"
-                        android:background="@drawable/question" />
-                </RelativeLayout>
-
-                <ImageView
+                <LinearLayout
+                    android:id="@+id/coordinate_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/divideLine" />
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/coordinate_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
-                android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/coordinate_img"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/coordinate" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_toEndOf="@+id/coordinate_img"
+                            android:gravity="center_vertical|start"
+                            android:paddingStart="10dp"
+                            android:singleLine="true"
+                            android:text="坐标检索管理"
+                            android:textColor="@color/textColor"
+                            android:textSize="15sp" />
+
+                        <ImageButton
+                            android:id="@+id/coordinate_question"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:alpha="0.1"
+                            android:background="@drawable/question" />
+                    </RelativeLayout>
 
                     <ImageView
-                        android:id="@+id/coordinate_img"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/coordinate" />
-
-                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_toEndOf="@+id/coordinate_img"
-                        android:gravity="center_vertical|start"
-                        android:paddingStart="10dp"
-                        android:singleLine="true"
-                        android:text="坐标检索管理"
-                        android:textColor="@color/textColor"
-                        android:textSize="15sp" />
+                        android:layout_height="1px"
+                        android:background="@color/divideLine" />
+                </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/coordinate_question"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:alpha="0.1"
-                        android:background="@drawable/question" />
-                </RelativeLayout>
-
-                <ImageView
+                <LinearLayout
+                    android:id="@+id/widget_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/divideLine" />
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/widget_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
-                android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/widget_img"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/widget" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_toEndOf="@+id/widget_img"
+                            android:gravity="center_vertical|start"
+                            android:paddingStart="10dp"
+                            android:singleLine="true"
+                            android:text="控件检索管理"
+                            android:textColor="@color/textColor"
+                            android:textSize="15sp" />
+
+                        <ImageButton
+                            android:id="@+id/widget_question"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:alpha="0.1"
+                            android:background="@drawable/question" />
+                    </RelativeLayout>
 
                     <ImageView
-                        android:id="@+id/widget_img"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/widget" />
-
-                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_toEndOf="@+id/widget_img"
-                        android:gravity="center_vertical|start"
-                        android:paddingStart="10dp"
-                        android:singleLine="true"
-                        android:text="控件检索管理"
-                        android:textColor="@color/textColor"
-                        android:textSize="15sp" />
-
-                    <ImageButton
-                        android:id="@+id/widget_question"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:alpha="0.1"
-                        android:background="@drawable/question" />
-                </RelativeLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/divideLine" />
+                        android:layout_height="1px"
+                        android:background="@color/divideLine" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
 
-</LinearLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/no_vip"
+        layout="@layout/view_no_vip"
+        android:visibility="gone" />
+</FrameLayout>

@@ -2,14 +2,21 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <WebView
         android:id="@+id/webViewMore"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
     <ProgressBar
         android:id="@+id/progress"
         style="@android:style/Widget.Holo.Light.ProgressBar.Small"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center" />
+
+    <include
+        android:id="@+id/no_vip"
+        layout="@layout/view_no_vip"
+        android:visibility="gone" />
 </FrameLayout>

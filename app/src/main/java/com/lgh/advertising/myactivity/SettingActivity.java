@@ -22,9 +22,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.myclass.DataDao;
-import com.lgh.advertising.myclass.DataDaoFactory;
 import com.lgh.advertising.myclass.LatestMessage;
 import com.lgh.advertising.myclass.MyAppConfig;
+import com.lgh.advertising.myclass.MyApplication;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,8 +44,13 @@ public class SettingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         context = getApplicationContext();
-        dataDao = DataDaoFactory.getInstance(context);
-        myAppConfig = dataDao.getMyAppConfig();
+        dataDao = MyApplication.dataDao;
+        myAppConfig = MyApplication.myAppConfig;
+
+        if (!myAppConfig.isVip) {
+            View noVip = findViewById(R.id.no_vip);
+            noVip.setVisibility(View.VISIBLE);
+        }
 
         Button openDetail = findViewById(R.id.setting_open);
         Button checkUpdate = findViewById(R.id.setting_update);

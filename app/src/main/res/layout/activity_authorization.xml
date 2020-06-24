@@ -1,150 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/accessibility_on_off"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@drawable/item_click"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/accessibility_on_off_img"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/accessibility_forward"
-            android:layout_toEndOf="@id/accessibility_on_off_img"
-            android:gravity="center_vertical|start"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:singleLine="true"
-            android:text="无障碍服务权限"
-            android:textColor="@color/textColor"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/accessibility_forward"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:alpha="0.5"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/forward" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/batteryIgnore_on_off"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@drawable/item_click"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp">
-
-        <ImageView
-            android:id="@+id/batteryIgnore_on_off_img"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/batteryIgnore_forward"
-            android:layout_toEndOf="@id/batteryIgnore_on_off_img"
-            android:gravity="center_vertical|start"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:singleLine="true"
-            android:text="忽略电池优化权限"
-            android:textColor="@color/textColor"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/batteryIgnore_forward"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:alpha="0.5"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/forward" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/alertWindow_on_off"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@drawable/item_click"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp">
-
-        <ImageView
-            android:id="@+id/alert_window_on_off_img"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/alert_window_forward"
-            android:layout_toEndOf="@id/alert_window_on_off_img"
-            android:gravity="center_vertical|start"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:singleLine="true"
-            android:text="应用悬浮窗权限"
-            android:textColor="@color/textColor"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/alert_window_forward"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:alpha="0.5"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/forward" />
-    </RelativeLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
+        <RelativeLayout
+            android:id="@+id/accessibility_on_off"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:lineSpacingMultiplier="1.5"
+            android:layout_height="55dp"
+            android:background="@drawable/item_click"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:text="@string/authorizationQuestion"
-            android:textSize="12sp" />
-    </ScrollView>
-</LinearLayout>
+            android:paddingEnd="10dp">
+
+            <ImageView
+                android:id="@+id/accessibility_on_off_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/accessibility_forward"
+                android:layout_toEndOf="@id/accessibility_on_off_img"
+                android:gravity="center_vertical|start"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:singleLine="true"
+                android:text="无障碍服务权限"
+                android:textColor="@color/textColor"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/accessibility_forward"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:alpha="0.5"
+                android:clickable="false"
+                android:focusable="false"
+                android:src="@drawable/forward" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/batteryIgnore_on_off"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/item_click"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
+
+            <ImageView
+                android:id="@+id/batteryIgnore_on_off_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/batteryIgnore_forward"
+                android:layout_toEndOf="@id/batteryIgnore_on_off_img"
+                android:gravity="center_vertical|start"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:singleLine="true"
+                android:text="忽略电池优化权限"
+                android:textColor="@color/textColor"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/batteryIgnore_forward"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:alpha="0.5"
+                android:clickable="false"
+                android:focusable="false"
+                android:src="@drawable/forward" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/alertWindow_on_off"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/item_click"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
+
+            <ImageView
+                android:id="@+id/alert_window_on_off_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/alert_window_forward"
+                android:layout_toEndOf="@id/alert_window_on_off_img"
+                android:gravity="center_vertical|start"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:singleLine="true"
+                android:text="应用悬浮窗权限"
+                android:textColor="@color/textColor"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/alert_window_forward"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:alpha="0.5"
+                android:clickable="false"
+                android:focusable="false"
+                android:src="@drawable/forward" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:lineSpacingMultiplier="1.5"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/authorizationQuestion"
+                android:textSize="12sp" />
+        </ScrollView>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/no_vip"
+        layout="@layout/view_no_vip"
+        android:visibility="gone" />
+</FrameLayout>

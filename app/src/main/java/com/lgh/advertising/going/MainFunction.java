@@ -36,9 +36,8 @@ import com.lgh.advertising.myactivity.EditDataActivity;
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.AutoFinder;
 import com.lgh.advertising.myclass.Coordinate;
-import com.lgh.advertising.myclass.DataBridge;
 import com.lgh.advertising.myclass.DataDao;
-import com.lgh.advertising.myclass.DataDaoFactory;
+import com.lgh.advertising.myclass.MyApplication;
 import com.lgh.advertising.myclass.Widget;
 
 import java.io.File;
@@ -94,7 +93,7 @@ public class MainFunction {
             currentActivity = "Initialize CurrentActivity";
             executorService = Executors.newSingleThreadScheduledExecutor();
             serviceInfo = service.getServiceInfo();
-            dataDao = DataDaoFactory.getInstance(service);
+            dataDao = MyApplication.dataDao;
             screenOffReceiver = new MyScreenOffReceiver();
             service.registerReceiver(screenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
             installReceiver = new MyInstallReceiver();
@@ -622,8 +621,8 @@ public class MainFunction {
                                     if (Math.abs(startX - x) < 5 && Math.abs(startY - y) < 5) {
                                         Matcher matcher = Pattern.compile("(\\w|\\.)+").matcher(pacName.getText().toString());
                                         if (matcher.find()) {
-                                            DataBridge.appDescribe = appDescribeMap.get(matcher.group());
-                                            if (DataBridge.appDescribe != null) {
+                                            MyApplication.appDescribe = appDescribeMap.get(matcher.group());
+                                            if (MyApplication.appDescribe != null) {
                                                 Intent intent = new Intent(service, EditDataActivity.class);
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 service.startActivity(intent);

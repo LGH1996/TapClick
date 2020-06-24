@@ -23,9 +23,8 @@ import com.google.gson.reflect.TypeToken;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.Coordinate;
-import com.lgh.advertising.myclass.DataBridge;
 import com.lgh.advertising.myclass.DataDao;
-import com.lgh.advertising.myclass.DataDaoFactory;
+import com.lgh.advertising.myclass.MyApplication;
 import com.lgh.advertising.myclass.Widget;
 
 import java.text.SimpleDateFormat;
@@ -91,13 +90,19 @@ public class EditDataActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_data);
         context = getApplicationContext();
-        appDescribe = DataBridge.appDescribe;
+        appDescribe = MyApplication.appDescribe;
         inflater = LayoutInflater.from(context);
-        dataDao = DataDaoFactory.getInstance(context);
+        dataDao = MyApplication.dataDao;
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
         dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
         dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.ENGLISH);
+
+        if (!MyApplication.myAppConfig.isVip) {
+            View noVip = findViewById(R.id.no_vip);
+            noVip.setVisibility(View.VISIBLE);
+        }
+
         layoutBaseSetting = findViewById(R.id.base_setting_layout);
         layoutAutoFinder = findViewById(R.id.auto_finder_layout);
         layoutCoordinate = findViewById(R.id.coordinate_layout);

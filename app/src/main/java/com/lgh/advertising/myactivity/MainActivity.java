@@ -22,9 +22,9 @@ import com.lgh.advertising.going.MyAccessibilityService;
 import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.myclass.DataDao;
-import com.lgh.advertising.myclass.DataDaoFactory;
 import com.lgh.advertising.myclass.LatestMessage;
 import com.lgh.advertising.myclass.MyAppConfig;
+import com.lgh.advertising.myclass.MyApplication;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -52,11 +52,16 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = getApplicationContext();
-        dataDao = DataDaoFactory.getInstance(context);
-        myAppConfig = dataDao.getMyAppConfig();
+        dataDao = MyApplication.dataDao;
+        myAppConfig = MyApplication.myAppConfig;
         if (myAppConfig == null) {
             myAppConfig = new MyAppConfig();
             dataDao.insertMyAppConfig(myAppConfig);
+        }
+
+        if (!MyApplication.myAppConfig.isVip) {
+            View noVip = findViewById(R.id.no_vip);
+            noVip.setVisibility(View.VISIBLE);
         }
 
         ListView listView = findViewById(R.id.main_listView);

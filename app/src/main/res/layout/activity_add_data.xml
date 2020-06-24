@@ -1,89 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/start"
-        android:layout_alignParentTop="true">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_above="@+id/start"
+            android:layout_alignParentTop="true">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:lineSpacingMultiplier="1.5"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="点击下方的“开始”按键，将会出现一个用于创建规则的悬浮窗口，你可以通过该悬浮窗口添加某些页面的控件或者坐标，这样在该控件或坐标再次出现时就会自动触发程序的点击功能，所以你可以灵活运用该功能来跳过开屏广告或者关闭某些弹窗或者完成一些其他的自动点击操作。"
-                android:textColor="@color/textColor" />
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:lineSpacingMultiplier="1.5"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="如果你添加了某个页面的控件或者坐标，则在该页面出现时程序就会自动检索该页面的内容，这也许会在一定的程度上造成卡顿，所以为了不影响体验，请合理添加控件或坐标。"
-                android:textColor="@color/textColor" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingMultiplier="1.5"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="点击下方的“开始”按键，将会出现一个用于创建规则的悬浮窗口，你可以通过该悬浮窗口添加某些页面的控件或者坐标，这样在该控件或坐标再次出现时就会自动触发程序的点击功能，所以你可以灵活运用该功能来跳过开屏广告或者关闭某些弹窗或者完成一些其他的自动点击操作。"
+                    android:textColor="@color/textColor" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:lineSpacingMultiplier="1.5"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="添加控件：点击“显示布局”按键，在布局分析框出现后选择相应的控件，然后点击“添加控件”按键即可。"
-                android:textColor="@color/textColor" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingMultiplier="1.5"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="如果你添加了某个页面的控件或者坐标，则在该页面出现时程序就会自动检索该页面的内容，这也许会在一定的程度上造成卡顿，所以为了不影响体验，请合理添加控件或坐标。"
+                    android:textColor="@color/textColor" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:lineSpacingMultiplier="1.5"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="添加坐标：点击“显示准心”按键，将准心对准相应的控件中心，然后点击“添加坐标”按键即可。"
-                android:textColor="@color/textColor" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingMultiplier="1.5"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="添加控件：点击“显示布局”按键，在布局分析框出现后选择相应的控件，然后点击“添加控件”按键即可。"
+                    android:textColor="@color/textColor" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:lineSpacingMultiplier="1.5"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="重要提示：长按出现的悬浮窗口，可以快速打开当前应用的规则管理页面。"
-                android:textColor="@color/textColor" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingMultiplier="1.5"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="添加坐标：点击“显示准心”按键，将准心对准相应的控件中心，然后点击“添加坐标”按键即可。"
+                    android:textColor="@color/textColor" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:lineSpacingMultiplier="1.5"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="额外说明：为了避免某些误判情况的发生，所以特意忽略了对输入法应用的检测，因此它们不会出现在规则管理的列表中，也无法为它们创建规则。"
-                android:textColor="@color/textColor" />
-        </LinearLayout>
-    </ScrollView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingMultiplier="1.5"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="重要提示：长按出现的悬浮窗口，可以快速打开当前应用的规则管理页面。"
+                    android:textColor="@color/textColor" />
 
-    <Button
-        android:id="@+id/start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:alpha="0.8"
-        android:text="开始" />
-</RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingMultiplier="1.5"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="额外说明：为了避免某些误判情况的发生，所以特意忽略了对输入法应用的检测，因此它们不会出现在规则管理的列表中，也无法为它们创建规则。"
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:alpha="0.8"
+            android:text="开始" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/no_vip"
+        layout="@layout/view_no_vip"
+        android:visibility="gone" />
+</FrameLayout>

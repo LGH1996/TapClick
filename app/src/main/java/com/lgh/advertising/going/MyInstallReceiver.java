@@ -12,7 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.AutoFinder;
 import com.lgh.advertising.myclass.DataDao;
-import com.lgh.advertising.myclass.DataDaoFactory;
+import com.lgh.advertising.myclass.MyApplication;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +29,7 @@ public class MyInstallReceiver extends BroadcastReceiver {
                 String dataString = intent.getDataString();
                 String packageName = dataString != null ? dataString.substring(8) : null;
                 if (packageName != null) {
-                    DataDao dataDao = DataDaoFactory.getInstance(context.getApplicationContext());
+                    DataDao dataDao = MyApplication.dataDao;
                     PackageManager packageManager = context.getPackageManager();
                     InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 

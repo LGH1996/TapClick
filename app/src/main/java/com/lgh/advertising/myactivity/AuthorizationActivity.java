@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.lgh.advertising.going.MyAccessibilityService;
 import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
+import com.lgh.advertising.myclass.MyApplication;
 
 public class AuthorizationActivity extends Activity {
 
@@ -35,6 +36,11 @@ public class AuthorizationActivity extends Activity {
         context = getApplicationContext();
         appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
         packageManager = getPackageManager();
+
+        if (!MyApplication.myAppConfig.isVip) {
+            View noVip = findViewById(R.id.no_vip);
+            noVip.setVisibility(View.VISIBLE);
+        }
 
         accessibilityOnOffImg = findViewById(R.id.accessibility_on_off_img);
         batteryOnOffImg = findViewById(R.id.batteryIgnore_on_off_img);

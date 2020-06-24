@@ -28,9 +28,8 @@ import com.lgh.advertising.going.MyAccessibilityService;
 import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.myclass.AppDescribe;
-import com.lgh.advertising.myclass.DataBridge;
 import com.lgh.advertising.myclass.DataDao;
-import com.lgh.advertising.myclass.DataDaoFactory;
+import com.lgh.advertising.myclass.MyApplication;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -57,11 +56,17 @@ public class ListDataActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_data);
         context = getApplicationContext();
-        dataDao = DataDaoFactory.getInstance(context);
+        dataDao = MyApplication.dataDao;
         packageManager = getPackageManager();
         inflater = LayoutInflater.from(context);
         appDescribeAndIconList = new ArrayList<>();
         appDescribeAndIconFilterList = new ArrayList<>();
+
+        if (!MyApplication.myAppConfig.isVip) {
+            View noVip = findViewById(R.id.no_vip);
+            noVip.setVisibility(View.VISIBLE);
+        }
+
         final ListView listView = findViewById(R.id.listView);
         final ProgressBar progressBar = findViewById(R.id.progress);
         listView.setVisibility(View.GONE);
@@ -147,9 +152,9 @@ public class ListDataActivity extends Activity {
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DataBridge.appDescribe = tem.appDescribe;
+                        MyApplication.appDescribe = tem.appDescribe;
                         if (appDescribeMap == null) {
-                            DataBridge.appDescribe.getOtherFieldsFromDatabase(dataDao);
+                            MyApplication.appDescribe.getOtherFieldsFromDatabase(dataDao);
                         }
                         startActivity(new Intent(context, EditDataActivity.class));
                     }

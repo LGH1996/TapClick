@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name="com.lgh.advertising.myclass.MyApplication"
         android:allowBackup="true"
         android:hasFragileUserData="true"
         android:icon="@drawable/app"
@@ -37,11 +38,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.lgh.advertising.myactivity.ListDataActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.lgh.advertising.myactivity.EditDataActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.lgh.advertising.myactivity.MainActivity"
             android:screenOrientation="portrait">
