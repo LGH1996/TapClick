@@ -26,7 +26,7 @@ public class AuthorizationActivity extends Activity {
     PackageManager packageManager;
 
     ImageView accessibilityOnOffImg;
-    ImageView batteryOnOffImg;
+    ImageView batteryIgnoreOnOffImg;
     ImageView alertWindowOnOffImg;
 
     @Override
@@ -43,7 +43,7 @@ public class AuthorizationActivity extends Activity {
         }
 
         accessibilityOnOffImg = findViewById(R.id.accessibility_on_off_img);
-        batteryOnOffImg = findViewById(R.id.batteryIgnore_on_off_img);
+        batteryIgnoreOnOffImg = findViewById(R.id.batteryIgnore_on_off_img);
         alertWindowOnOffImg = findViewById(R.id.alert_window_on_off_img);
         RelativeLayout accessibilityOnOff = findViewById(R.id.accessibility_on_off);
         RelativeLayout batteryIgnoreOnOff = findViewById(R.id.batteryIgnore_on_off);
@@ -94,9 +94,9 @@ public class AuthorizationActivity extends Activity {
             accessibilityOnOffImg.setImageResource(R.drawable.ok);
         }
         if (((PowerManager) getSystemService(POWER_SERVICE)).isIgnoringBatteryOptimizations(getPackageName())) {
-            batteryOnOffImg.setImageResource(R.drawable.ok);
+            batteryIgnoreOnOffImg.setImageResource(R.drawable.ok);
         } else {
-            batteryOnOffImg.setImageResource(R.drawable.error);
+            batteryIgnoreOnOffImg.setImageResource(R.drawable.error);
         }
         if (Settings.canDrawOverlays(context)) {
             alertWindowOnOffImg.setImageResource(R.drawable.ok);
