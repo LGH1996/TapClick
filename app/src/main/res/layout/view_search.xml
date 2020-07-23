@@ -14,7 +14,7 @@
         android:layout_marginBottom="0dp"
         android:background="@drawable/search_box"
         android:gravity="center_vertical"
-        android:hint="搜索..."
+        android:hint="搜索 应用名称 @开启 ＠关闭 ＠已创建规则 ＠未创建规则 ..."
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:singleLine="true"

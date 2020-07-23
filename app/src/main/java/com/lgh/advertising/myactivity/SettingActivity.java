@@ -177,7 +177,7 @@ public class SettingActivity extends Activity {
                             Intent shareIntent = new Intent(Intent.ACTION_SEND);
                             shareIntent.setType("text/plain");
                             shareIntent.putExtra(Intent.EXTRA_TEXT, shareContent);
-                            startActivity(Intent.createChooser(shareIntent, "请选择分享方式"));
+                            startActivityForResult(Intent.createChooser(shareIntent, "请选择分享方式"), 0x00);
                         } else {
                             Toast.makeText(context, "暂时不支持分享", Toast.LENGTH_SHORT).show();
                         }
@@ -223,5 +223,17 @@ public class SettingActivity extends Activity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0x00) {
+            if (!MyApplication.myAppConfig.isVip) {
+                MyApplication.myAppConfig.isVip = true;
+                dataDao.updateMyAppConfig(MyApplication.myAppConfig);
+                Toast.makeText(context, "水印已去除，重启后生效", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

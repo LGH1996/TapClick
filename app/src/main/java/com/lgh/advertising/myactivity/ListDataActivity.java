@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -91,6 +92,39 @@ public class ListDataActivity extends Activity {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 appDescribeAndIconFilterList.clear();
+                if (constraint.equals("@开启")) {
+                    for (AppDescribeAndIcon e : appDescribeAndIconList) {
+                        if (e.appDescribe.on_off) {
+                            appDescribeAndIconFilterList.add(e);
+                        }
+                    }
+                    return null;
+                }
+                if (constraint.equals("@关闭")) {
+                    for (AppDescribeAndIcon e : appDescribeAndIconList) {
+                        if (!e.appDescribe.on_off) {
+                            appDescribeAndIconFilterList.add(e);
+                        }
+                    }
+                    return null;
+                }
+                if (constraint.equals("@已创建规则")) {
+                    for (AppDescribeAndIcon e : appDescribeAndIconList) {
+                        if (!e.appDescribe.coordinateMap.isEmpty() || !e.appDescribe.widgetSetMap.isEmpty()) {
+                            appDescribeAndIconFilterList.add(e);
+                        }
+                    }
+                    return null;
+                }
+                if (constraint.equals("@未创建规则")) {
+                    for (AppDescribeAndIcon e : appDescribeAndIconList) {
+                        if (e.appDescribe.coordinateMap.isEmpty() && e.appDescribe.widgetSetMap.isEmpty()) {
+                            appDescribeAndIconFilterList.add(e);
+                        }
+                    }
+                    return null;
+                }
+
                 for (AppDescribeAndIcon e : appDescribeAndIconList) {
                     if (e.appDescribe.appName.contains(constraint)) {
                         appDescribeAndIconFilterList.add(e);
@@ -119,6 +153,7 @@ public class ListDataActivity extends Activity {
             }
         });
         listView.addHeaderView(searchView);
+
         baseAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
@@ -153,9 +188,6 @@ public class ListDataActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         MyApplication.appDescribe = tem.appDescribe;
-                        if (appDescribeMap == null) {
-                            MyApplication.appDescribe.getOtherFieldsFromDatabase(dataDao);
-                        }
                         startActivity(new Intent(context, EditDataActivity.class));
                     }
                 });
@@ -183,6 +215,9 @@ public class ListDataActivity extends Activity {
                     appDescribeList = new ArrayList<>(appDescribeMap.values());
                 } else {
                     appDescribeList = dataDao.getAllAppDescribes();
+                    for (AppDescribe e : appDescribeList) {
+                        e.getOtherFieldsFromDatabase(dataDao);
+                    }
                 }
                 Collections.sort(appDescribeList, new Comparator<AppDescribe>() {
                     @Override
@@ -190,12 +225,14 @@ public class ListDataActivity extends Activity {
                         return Collator.getInstance(Locale.CHINESE).compare(o1.appName, o2.appName);
                     }
                 });
-                for (AppDescribe e : appDescribeList) {
+                ListIterator<AppDescribe> iterator = appDescribeList.listIterator();
+                while (iterator.hasNext()) {
                     try {
+                        AppDescribe e = iterator.next();
                         Drawable icon = packageManager.getApplicationIcon(e.appPackage);
                         appDescribeAndIconList.add(new AppDescribeAndIcon(e, icon));
                     } catch (PackageManager.NameNotFoundException nameNotFoundException) {
-                        appDescribeList.remove(e);
+                        iterator.remove();
 //                        nameNotFoundException.printStackTrace();
                     }
                 }

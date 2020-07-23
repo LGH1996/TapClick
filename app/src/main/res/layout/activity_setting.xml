@@ -76,7 +76,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="5dp"
                     android:gravity="center_vertical"
-                    android:text="推荐好友使用："
+                    android:text="分享去除水印："
                     android:textColor="@color/textColor"
                     android:textSize="15sp" />
 
