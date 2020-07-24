@@ -5,19 +5,19 @@
     android:alpha="0.1">
 
     <ImageView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
         android:layout_gravity="center"
         android:scaleType="center"
         android:src="@drawable/no_vip_circle" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:rotation="-45"
         android:text="体验版"
         android:textColor="#ff0000"
-        android:textSize="65sp" />
+        android:textSize="60sp" />
 </FrameLayout>
