@@ -54,12 +54,14 @@ public class MainActivity extends Activity {
         context = getApplicationContext();
         dataDao = MyApplication.dataDao;
         myAppConfig = MyApplication.myAppConfig;
+
         if (myAppConfig == null) {
             myAppConfig = new MyAppConfig();
+            MyApplication.myAppConfig = myAppConfig;
             dataDao.insertMyAppConfig(myAppConfig);
         }
 
-        if (!MyApplication.myAppConfig.isVip) {
+        if (!myAppConfig.isVip) {
             View noVip = findViewById(R.id.no_vip);
             noVip.setVisibility(View.VISIBLE);
         }
