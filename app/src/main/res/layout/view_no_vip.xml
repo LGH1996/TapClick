@@ -19,5 +19,5 @@
         android:rotation="-45"
         android:text="体验版"
         android:textColor="#ff0000"
-        android:textSize="60sp" />
+        android:textSize="50sp" />
 </FrameLayout>
