@@ -1,6 +1,7 @@
 package com.lgh.advertising.myactivity;
 
-import android.app.Activity;
+import android.animation.AnimatorInflater;
+import android.animation.LayoutTransition;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -36,7 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-public class EditDataActivity extends Activity {
+public class EditDataActivity extends BaseActivity {
 
     Context context;
     AppDescribe appDescribe;
@@ -46,6 +47,7 @@ public class EditDataActivity extends Activity {
     SimpleDateFormat dateFormatModify;
     SimpleDateFormat dateFormatCreate;
 
+    LinearLayout layoutRoot;
     LinearLayout layoutBaseSetting;
     LinearLayout layoutAutoFinder;
     LinearLayout layoutCoordinate;
@@ -98,15 +100,19 @@ public class EditDataActivity extends Activity {
         dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
         dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.ENGLISH);
 
-        if (!MyApplication.myAppConfig.isVip) {
-            View noVip = findViewById(R.id.no_vip);
-            noVip.setVisibility(View.VISIBLE);
-        }
-
+        layoutRoot = findViewById(R.id.root_layout);
         layoutBaseSetting = findViewById(R.id.base_setting_layout);
         layoutAutoFinder = findViewById(R.id.auto_finder_layout);
         layoutCoordinate = findViewById(R.id.coordinate_layout);
         layoutWidget = findViewById(R.id.widget_layout);
+        LayoutTransition transition = new LayoutTransition();
+        transition.setAnimator(LayoutTransition.DISAPPEARING, AnimatorInflater.loadAnimator(context, R.animator.fade_out));
+        transition.enableTransitionType(LayoutTransition.CHANGING);
+        layoutRoot.setLayoutTransition(transition);
+        layoutBaseSetting.setLayoutTransition(transition);
+        layoutAutoFinder.setLayoutTransition(transition);
+        layoutCoordinate.setLayoutTransition(transition);
+        layoutWidget.setLayoutTransition(transition);
 
         questionBaseSetting = findViewById(R.id.base_setting_question);
         questionAutoFinder = findViewById(R.id.auto_finder_question);
@@ -310,6 +316,9 @@ public class EditDataActivity extends Activity {
                     dataDao.deleteCoordinate(e);
                     appDescribe.coordinateMap.remove(e.appActivity);
                     layoutCoordinate.removeView(viewCoordinate);
+                    if (appDescribe.coordinateMap.isEmpty()) {
+                        layoutCoordinate.setVisibility(View.GONE);
+                    }
                 }
             });
             coordinateSure.setOnClickListener(new View.OnClickListener() {
@@ -412,7 +421,9 @@ public class EditDataActivity extends Activity {
                         if (widgetSet.isEmpty()) {
                             appDescribe.widgetSetMap.remove(e.appActivity);
                         }
-
+                        if (appDescribe.widgetSetMap.isEmpty()) {
+                            layoutWidget.setVisibility(View.GONE);
+                        }
                     }
                 });
                 widgetSure.setOnClickListener(new View.OnClickListener() {

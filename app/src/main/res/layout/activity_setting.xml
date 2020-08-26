@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -211,8 +212,5 @@
         </LinearLayout>
     </ScrollView>
 
-    <include
-        android:id="@+id/no_vip"
-        layout="@layout/view_no_vip"
-        android:visibility="gone" />
+    <include layout="@layout/view_no_vip" />
 </FrameLayout>

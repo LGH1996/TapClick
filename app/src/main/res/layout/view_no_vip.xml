@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/no_vip"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0.1">
+    android:alpha="0.1"
+    android:visibility="gone">
 
     <ImageView
         android:layout_width="280dp"

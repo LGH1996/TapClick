@@ -1,7 +1,6 @@
 package com.lgh.advertising.myactivity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -33,7 +32,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class SettingActivity extends Activity {
+public class SettingActivity extends BaseActivity {
 
     private Context context;
     private DataDao dataDao;
@@ -46,11 +45,6 @@ public class SettingActivity extends Activity {
         context = getApplicationContext();
         dataDao = MyApplication.dataDao;
         myAppConfig = MyApplication.myAppConfig;
-
-        if (!myAppConfig.isVip) {
-            View noVip = findViewById(R.id.no_vip);
-            noVip.setVisibility(View.VISIBLE);
-        }
 
         Button openDetail = findViewById(R.id.setting_open);
         Button checkUpdate = findViewById(R.id.setting_update);

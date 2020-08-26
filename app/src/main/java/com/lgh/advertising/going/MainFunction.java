@@ -56,6 +56,16 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * adb shell pm  grant com.lgh.advertising.going android.permission.WRITE_SECURE_SETTINGS
+ * adb shell settings put secure enabled_accessibility_services com.lgh.advertising.going/com.lgh.advertising.going.MyAccessibilityService
+ * adb shell settings put secure accessibility_enabled 1
+ *
+ * Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, getPackageName()+"/"+MyAccessibilityService.class.getName());
+ * Settings.Secure.putString(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED, "1");
+ *
+ */
+
 public class MainFunction {
 
     private WindowManager windowManager;

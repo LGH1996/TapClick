@@ -1,6 +1,5 @@
 package com.lgh.advertising.myactivity;
 
-import android.app.Activity;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.Intent;
@@ -17,9 +16,8 @@ import android.widget.Toast;
 import com.lgh.advertising.going.MyAccessibilityService;
 import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
-import com.lgh.advertising.myclass.MyApplication;
 
-public class AuthorizationActivity extends Activity {
+public class AuthorizationActivity extends BaseActivity {
 
     Context context;
     AppOpsManager appOps;
@@ -36,11 +34,6 @@ public class AuthorizationActivity extends Activity {
         context = getApplicationContext();
         appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
         packageManager = getPackageManager();
-
-        if (!MyApplication.myAppConfig.isVip) {
-            View noVip = findViewById(R.id.no_vip);
-            noVip.setVisibility(View.VISIBLE);
-        }
 
         accessibilityOnOffImg = findViewById(R.id.accessibility_on_off_img);
         batteryIgnoreOnOffImg = findViewById(R.id.batteryIgnore_on_off_img);

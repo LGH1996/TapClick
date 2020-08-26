@@ -1,6 +1,5 @@
 package com.lgh.advertising.myactivity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -10,20 +9,13 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.lgh.advertising.going.R;
-import com.lgh.advertising.myclass.MyApplication;
 
-public class MoreMessageActivity extends Activity {
+public class MoreMessageActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_message);
-
-
-        if (!MyApplication.myAppConfig.isVip) {
-            View noVip = findViewById(R.id.no_vip);
-            noVip.setVisibility(View.VISIBLE);
-        }
 
         WebView webView = findViewById(R.id.webViewMore);
         final ProgressBar progressBar = findViewById(R.id.progress);

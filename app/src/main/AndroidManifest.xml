@@ -17,7 +17,7 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/app"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        android:theme="@style/AppTheme">
         <activity
             android:name="com.lgh.advertising.myactivity.UpdateActivity"
             android:process=":UpdateActivity"

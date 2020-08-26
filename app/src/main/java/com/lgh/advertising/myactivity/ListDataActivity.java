@@ -2,7 +2,6 @@ package com.lgh.advertising.myactivity;
 
 import androidx.annotation.NonNull;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -40,7 +39,7 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 
-public class ListDataActivity extends Activity {
+public class ListDataActivity extends BaseActivity {
 
     Context context;
     DataDao dataDao;
@@ -62,11 +61,6 @@ public class ListDataActivity extends Activity {
         inflater = LayoutInflater.from(context);
         appDescribeAndIconList = new ArrayList<>();
         appDescribeAndIconFilterList = new ArrayList<>();
-
-        if (!MyApplication.myAppConfig.isVip) {
-            View noVip = findViewById(R.id.no_vip);
-            noVip.setVisibility(View.VISIBLE);
-        }
 
         final ListView listView = findViewById(R.id.listView);
         final ProgressBar progressBar = findViewById(R.id.progress);
@@ -153,6 +147,7 @@ public class ListDataActivity extends Activity {
             }
         });
         listView.addHeaderView(searchView);
+
 
         baseAdapter = new BaseAdapter() {
             @Override

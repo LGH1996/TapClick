@@ -1,6 +1,5 @@
 package com.lgh.advertising.myactivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,7 +11,7 @@ import android.widget.Button;
 
 import com.lgh.advertising.going.R;
 
-public class UpdateActivity extends Activity {
+public class UpdateActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
