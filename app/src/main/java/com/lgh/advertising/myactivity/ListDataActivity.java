@@ -120,7 +120,7 @@ public class ListDataActivity extends BaseActivity {
                 }
 
                 for (AppDescribeAndIcon e : appDescribeAndIconList) {
-                    if (e.appDescribe.appName.contains(constraint)) {
+                    if (e.appDescribe.appName.toLowerCase().contains(constraint.toString().toLowerCase())) {
                         appDescribeAndIconFilterList.add(e);
                     }
                 }

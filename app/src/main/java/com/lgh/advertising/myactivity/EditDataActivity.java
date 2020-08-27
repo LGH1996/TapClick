@@ -1,6 +1,5 @@
 package com.lgh.advertising.myactivity;
 
-import android.animation.AnimatorInflater;
 import android.animation.LayoutTransition;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -106,7 +105,6 @@ public class EditDataActivity extends BaseActivity {
         layoutCoordinate = findViewById(R.id.coordinate_layout);
         layoutWidget = findViewById(R.id.widget_layout);
         LayoutTransition transition = new LayoutTransition();
-        transition.setAnimator(LayoutTransition.DISAPPEARING, AnimatorInflater.loadAnimator(context, R.animator.fade_out));
         transition.enableTransitionType(LayoutTransition.CHANGING);
         layoutRoot.setLayoutTransition(transition);
         layoutBaseSetting.setLayoutTransition(transition);
@@ -129,7 +127,7 @@ public class EditDataActivity extends BaseActivity {
             public void onClick(View v) {
                 View view = inflater.inflate(R.layout.view_question, null);
                 TextView textView = view.findViewById(R.id.question_answer);
-                textView.setText(Html.fromHtml(getString(strId)));
+                textView.setText(Html.fromHtml(getString(strId), Html.FROM_HTML_MODE_COMPACT));
                 AlertDialog alertDialog = new AlertDialog.Builder(EditDataActivity.this).setView(view).setPositiveButton("确定", null).create();
                 Window window = alertDialog.getWindow();
                 if (window != null) {
