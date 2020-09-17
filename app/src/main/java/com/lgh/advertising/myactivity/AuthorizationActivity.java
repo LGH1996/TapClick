@@ -9,38 +9,29 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.lgh.advertising.going.MyAccessibilityService;
 import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
+import com.lgh.advertising.going.databinding.ActivityAuthorizationBinding;
 
 public class AuthorizationActivity extends BaseActivity {
 
     Context context;
     AppOpsManager appOps;
     PackageManager packageManager;
-
-    ImageView accessibilityOnOffImg;
-    ImageView batteryIgnoreOnOffImg;
-    ImageView alertWindowOnOffImg;
+    ActivityAuthorizationBinding authorizationBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_authorization);
+        authorizationBinding = ActivityAuthorizationBinding.inflate(getLayoutInflater());
+        setContentView(authorizationBinding.getRoot());
         context = getApplicationContext();
         appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
         packageManager = getPackageManager();
 
-        accessibilityOnOffImg = findViewById(R.id.accessibility_on_off_img);
-        batteryIgnoreOnOffImg = findViewById(R.id.batteryIgnore_on_off_img);
-        alertWindowOnOffImg = findViewById(R.id.alert_window_on_off_img);
-        RelativeLayout accessibilityOnOff = findViewById(R.id.accessibility_on_off);
-        RelativeLayout batteryIgnoreOnOff = findViewById(R.id.batteryIgnore_on_off);
-        RelativeLayout alertWindowOnOff = findViewById(R.id.alertWindow_on_off);
         View.OnClickListener onOffClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,28 +64,28 @@ public class AuthorizationActivity extends BaseActivity {
                 }
             }
         };
-        accessibilityOnOff.setOnClickListener(onOffClickListener);
-        batteryIgnoreOnOff.setOnClickListener(onOffClickListener);
-        alertWindowOnOff.setOnClickListener(onOffClickListener);
+        authorizationBinding.accessibilityOnOff.setOnClickListener(onOffClickListener);
+        authorizationBinding.batteryIgnoreOnOff.setOnClickListener(onOffClickListener);
+        authorizationBinding.alertWindowOnOff.setOnClickListener(onOffClickListener);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
-            accessibilityOnOffImg.setImageResource(R.drawable.error);
+            authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.error);
         } else {
-            accessibilityOnOffImg.setImageResource(R.drawable.ok);
+            authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ok);
         }
         if (((PowerManager) getSystemService(POWER_SERVICE)).isIgnoringBatteryOptimizations(getPackageName())) {
-            batteryIgnoreOnOffImg.setImageResource(R.drawable.ok);
+            authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.ok);
         } else {
-            batteryIgnoreOnOffImg.setImageResource(R.drawable.error);
+            authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.error);
         }
         if (Settings.canDrawOverlays(context)) {
-            alertWindowOnOffImg.setImageResource(R.drawable.ok);
+            authorizationBinding.alertWindowOnOffImg.setImageResource(R.drawable.ok);
         } else {
-            alertWindowOnOffImg.setImageResource(R.drawable.error);
+            authorizationBinding.alertWindowOnOffImg.setImageResource(R.drawable.error);
         }
     }
 }

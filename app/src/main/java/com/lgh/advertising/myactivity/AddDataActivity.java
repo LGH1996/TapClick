@@ -2,22 +2,21 @@ package com.lgh.advertising.myactivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.lgh.advertising.going.MyAccessibilityService;
 import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
-import com.lgh.advertising.going.R;
+import com.lgh.advertising.going.databinding.ActivityAddDataBinding;
 
 public class AddDataActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_data);
+        ActivityAddDataBinding addDataBinding = ActivityAddDataBinding.inflate(getLayoutInflater());
+        setContentView(addDataBinding.getRoot());
 
-        Button button = findViewById(R.id.start);
-        button.setOnClickListener(new View.OnClickListener() {
+        addDataBinding.start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {

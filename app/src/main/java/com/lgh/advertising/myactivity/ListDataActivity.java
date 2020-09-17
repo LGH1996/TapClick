@@ -15,17 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.Filter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lgh.advertising.going.MyAccessibilityService;
 import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
-import com.lgh.advertising.going.R;
+import com.lgh.advertising.going.databinding.ActivityListDataBinding;
+import com.lgh.advertising.going.databinding.ViewListItemBinding;
+import com.lgh.advertising.going.databinding.ViewSearchBinding;
 import com.lgh.advertising.myclass.AppDescribe;
 import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.MyApplication;
@@ -50,22 +47,21 @@ public class ListDataActivity extends BaseActivity {
     List<AppDescribeAndIcon> appDescribeAndIconList;
     List<AppDescribeAndIcon> appDescribeAndIconFilterList;
     BaseAdapter baseAdapter;
+    ActivityListDataBinding listDataBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_data);
+        listDataBinding = ActivityListDataBinding.inflate(inflater = getLayoutInflater());
+        setContentView(listDataBinding.getRoot());
         context = getApplicationContext();
         dataDao = MyApplication.dataDao;
         packageManager = getPackageManager();
-        inflater = LayoutInflater.from(context);
         appDescribeAndIconList = new ArrayList<>();
         appDescribeAndIconFilterList = new ArrayList<>();
 
-        final ListView listView = findViewById(R.id.listView);
-        final ProgressBar progressBar = findViewById(R.id.progress);
-        listView.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
+        listDataBinding.listView.setVisibility(View.GONE);
+        listDataBinding.progress.setVisibility(View.VISIBLE);
 
         if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
             Toast.makeText(context, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
@@ -80,8 +76,7 @@ public class ListDataActivity extends BaseActivity {
             }
         }
 
-        View searchView = inflater.inflate(R.layout.view_search, null);
-        EditText searchBox = searchView.findViewById(R.id.searchBox);
+        ViewSearchBinding searchBinding = ViewSearchBinding.inflate(inflater);
         final Filter filter = new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
@@ -132,7 +127,7 @@ public class ListDataActivity extends BaseActivity {
                 baseAdapter.notifyDataSetChanged();
             }
         };
-        searchBox.addTextChangedListener(new TextWatcher() {
+        searchBinding.searchBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -146,7 +141,7 @@ public class ListDataActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-        listView.addHeaderView(searchView);
+        listDataBinding.listView.addHeaderView(searchBinding.getRoot());
 
 
         baseAdapter = new BaseAdapter() {
@@ -167,18 +162,18 @@ public class ListDataActivity extends BaseActivity {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                ListDataActivity.ViewHolder holder;
+                ViewListItemBinding listItemBinding;
                 if (convertView == null) {
-                    convertView = inflater.inflate(R.layout.view_list_item, null);
-                    holder = new ListDataActivity.ViewHolder(convertView);
-                    convertView.setTag(holder);
+                    listItemBinding = ViewListItemBinding.inflate(inflater);
+                    convertView = listItemBinding.getRoot();
+                    convertView.setTag(listItemBinding);
                 } else {
-                    holder = (ListDataActivity.ViewHolder) convertView.getTag();
+                    listItemBinding = (ViewListItemBinding) convertView.getTag();
                 }
                 final AppDescribeAndIcon tem = appDescribeAndIconFilterList.get(position);
-                holder.textName.setText(tem.appDescribe.appName);
-                holder.textOnOff.setText(tem.appDescribe.on_off ? "开启" : "关闭");
-                holder.imageView.setImageDrawable(tem.icon);
+                listItemBinding.name.setText(tem.appDescribe.appName);
+                listItemBinding.onOff.setText(tem.appDescribe.on_off ? "开启" : "关闭");
+                listItemBinding.img.setImageDrawable(tem.icon);
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -189,15 +184,15 @@ public class ListDataActivity extends BaseActivity {
                 return convertView;
             }
         };
-        listView.setAdapter(baseAdapter);
+        listDataBinding.listView.setAdapter(baseAdapter);
         final Handler handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
                     case 0x00:
                         baseAdapter.notifyDataSetChanged();
-                        progressBar.setVisibility(View.GONE);
-                        listView.setVisibility(View.VISIBLE);
+                        listDataBinding.progress.setVisibility(View.GONE);
+                        listDataBinding.listView.setVisibility(View.VISIBLE);
                         break;
                 }
                 return true;
@@ -255,18 +250,6 @@ public class ListDataActivity extends BaseActivity {
             for (AppDescribe e : MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap().values()) {
                 e.getOtherFieldsFromDatabase(dataDao);
             }
-        }
-    }
-
-    static class ViewHolder {
-        TextView textName;
-        TextView textOnOff;
-        ImageView imageView;
-
-        public ViewHolder(View v) {
-            textName = v.findViewById(R.id.name);
-            textOnOff = v.findViewById(R.id.on_off);
-            imageView = v.findViewById(R.id.img);
         }
     }
 

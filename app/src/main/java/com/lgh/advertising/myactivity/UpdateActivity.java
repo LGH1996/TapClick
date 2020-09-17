@@ -1,5 +1,6 @@
 package com.lgh.advertising.myactivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,23 +8,21 @@ import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 
-import com.lgh.advertising.going.R;
+import com.lgh.advertising.going.databinding.ActivityUpdateBinding;
 
 public class UpdateActivity extends BaseActivity {
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update);
+        ActivityUpdateBinding updateBinding = ActivityUpdateBinding.inflate(getLayoutInflater());
+        setContentView(updateBinding.getRoot());
         setFinishOnTouchOutside(false);
-        WebView webView = findViewById(R.id.webView_update);
-        Button cancel = findViewById(R.id.cancel);
-        Button sure = findViewById(R.id.sure);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadData(getIntent().getStringExtra("updateMessage"), "text/html", "utf-8");
-        webView.setWebViewClient(new WebViewClient() {
+        updateBinding.webViewUpdate.getSettings().setJavaScriptEnabled(true);
+        updateBinding.webViewUpdate.loadData(getIntent().getStringExtra("updateMessage"), "text/html", "utf-8");
+        updateBinding.webViewUpdate.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 UpdateActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, request.getUrl()));
@@ -31,13 +30,13 @@ public class UpdateActivity extends BaseActivity {
                 return true;
             }
         });
-        cancel.setOnClickListener(new View.OnClickListener() {
+        updateBinding.cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UpdateActivity.this.finishAndRemoveTask();
             }
         });
-        sure.setOnClickListener(new View.OnClickListener() {
+        updateBinding.sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getIntent().getStringExtra("updateUrl"))));

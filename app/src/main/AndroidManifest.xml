@@ -10,43 +10,29 @@
     <application
         android:name="com.lgh.advertising.myclass.MyApplication"
         android:allowBackup="true"
-        android:hasFragileUserData="true"
         android:icon="@drawable/app"
         android:label="@string/app_name"
         android:persistent="true"
-        android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name="com.lgh.advertising.myactivity.UpdateActivity"
             android:process=":UpdateActivity"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar" />
         <activity
             android:name="com.lgh.advertising.myactivity.MoreMessageActivity"
-            android:process=":MoreMessageActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.lgh.advertising.myactivity.SettingActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.lgh.advertising.myactivity.AuthorizationActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.lgh.advertising.myactivity.AddDataActivity"
-            android:screenOrientation="portrait" />
+            android:process=":MoreMessageActivity" />
+        <activity android:name="com.lgh.advertising.myactivity.SettingActivity" />
+        <activity android:name="com.lgh.advertising.myactivity.AuthorizationActivity" />
+        <activity android:name="com.lgh.advertising.myactivity.AddDataActivity" />
         <activity
             android:name="com.lgh.advertising.myactivity.ListDataActivity"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.lgh.advertising.myactivity.EditDataActivity"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.lgh.advertising.myactivity.MainActivity"
-            android:screenOrientation="portrait">
+        <activity android:name="com.lgh.advertising.myactivity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -86,12 +72,12 @@
         <receiver
             android:name=".MyScreenOffReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
 
         <receiver
             android:name=".MyInstallReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
     </application>
 
 </manifest>

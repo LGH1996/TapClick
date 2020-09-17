@@ -47,8 +47,9 @@
                             android:src="@drawable/retrieve_setting" />
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_toStartOf="@+id/base_setting_question"
                             android:layout_toEndOf="@+id/base_setting_img"
                             android:gravity="center_vertical|start"
                             android:paddingStart="10dp"
@@ -98,8 +99,9 @@
                             android:src="@drawable/auto_finder" />
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_toStartOf="@+id/auto_finder_question"
                             android:layout_toEndOf="@+id/auto_finder_img"
                             android:gravity="center_vertical|start"
                             android:paddingStart="10dp"
@@ -147,8 +149,9 @@
                             android:src="@drawable/coordinate" />
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_toStartOf="@+id/coordinate_question"
                             android:layout_toEndOf="@+id/coordinate_img"
                             android:gravity="center_vertical|start"
                             android:paddingStart="10dp"
@@ -196,8 +199,9 @@
                             android:src="@drawable/widget" />
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_toStartOf="@+id/widget_question"
                             android:layout_toEndOf="@+id/widget_img"
                             android:gravity="center_vertical|start"
                             android:paddingStart="10dp"

@@ -11,15 +11,12 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.lgh.advertising.going.R;
+import com.lgh.advertising.going.databinding.ActivitySettingBinding;
 import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.LatestMessage;
 import com.lgh.advertising.myclass.MyAppConfig;
@@ -28,6 +25,13 @@ import com.lgh.advertising.myclass.MyApplication;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -41,21 +45,15 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        ActivitySettingBinding settingBinding = ActivitySettingBinding.inflate(getLayoutInflater());
+        setContentView(settingBinding.getRoot());
         context = getApplicationContext();
         dataDao = MyApplication.dataDao;
         myAppConfig = MyApplication.myAppConfig;
 
-        Button openDetail = findViewById(R.id.setting_open);
-        Button checkUpdate = findViewById(R.id.setting_update);
-        final Button shareTo = findViewById(R.id.setting_share);
-        Button givePraise = findViewById(R.id.setting_praise);
-        Button moreMessage = findViewById(R.id.setting_more);
-        TextView authorChat = findViewById(R.id.authorChat);
-        CheckBox checkBox = findViewById(R.id.setting_autoHideOnTaskList);
-        checkBox.setChecked(myAppConfig.autoHideOnTaskList);
+        settingBinding.settingAutoHideOnTaskList.setChecked(myAppConfig.autoHideOnTaskList);
 
-        openDetail.setOnClickListener(new View.OnClickListener() {
+        settingBinding.settingOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()));
@@ -63,70 +61,62 @@ public class SettingActivity extends BaseActivity {
             }
         });
 
-        checkUpdate.setOnClickListener(new View.OnClickListener() {
+        settingBinding.settingUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                @SuppressLint("StaticFieldLeak") AsyncTask<String, Integer, String> asyncTask = new AsyncTask<String, Integer, String>() {
-                    private LatestMessage latestVersionMessage;
-                    private AlertDialog waitDialog;
-                    private boolean haveNewVersion;
-                    private boolean occurError;
 
+                Observable<LatestMessage> observable = MyApplication.myHttpRequest.getLatestMessage();
+                observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<LatestMessage>() {
+                    AlertDialog waitDialog;
 
                     @Override
-                    protected void onPreExecute() {
-                        super.onPreExecute();
+                    public void onSubscribe(@NonNull Disposable d) {
                         waitDialog = new AlertDialog.Builder(SettingActivity.this).setView(new ProgressBar(context)).setCancelable(false).create();
                         Window window = waitDialog.getWindow();
                         if (window != null) {
                             window.setBackgroundDrawableResource(R.color.transparent);
                         }
                         waitDialog.show();
-
                     }
 
                     @Override
-                    protected String doInBackground(String... strings) {
+                    public void onNext(@NonNull LatestMessage latestMessage) {
                         try {
-                            OkHttpClient httpClient = new OkHttpClient();
-                            Request request = new Request.Builder().get().url(strings[0]).build();
-                            Response response = httpClient.newCall(request).execute();
-                            latestVersionMessage = new Gson().fromJson(response.body().string(), LatestMessage.class);
-                            response.close();
                             int versionCode = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionCode;
-                            String appName = latestVersionMessage.assets.get(0).name;
+                            String appName = latestMessage.assets.get(0).name;
                             Matcher matcher = Pattern.compile("\\d+").matcher(appName);
                             if (matcher.find()) {
-                                int newVersion = Integer.valueOf(matcher.group());
-                                haveNewVersion = newVersion > versionCode;
+                                int newVersion = Integer.parseInt(matcher.group());
+                                if (newVersion > versionCode) {
+                                    Intent intent = new Intent(context, UpdateActivity.class);
+                                    intent.putExtra("updateMessage", latestMessage.body);
+                                    intent.putExtra("updateUrl", latestMessage.assets.get(0).browser_download_url);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(context, "当前已是最新版本", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        } catch (Throwable e) {
-                            occurError = true;
+                        } catch (PackageManager.NameNotFoundException e) {
+//                            e.printStackTrace();
                         }
-                        return null;
+                        waitDialog.dismiss();
                     }
 
                     @Override
-                    protected void onPostExecute(String s) {
-                        super.onPostExecute(s);
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "查询新版本时出现错误", Toast.LENGTH_SHORT).show();
                         waitDialog.dismiss();
-                        if (occurError) {
-                            Toast.makeText(context, "查询新版本时出现错误", Toast.LENGTH_SHORT).show();
-                        } else if (haveNewVersion) {
-                            Intent intent = new Intent(context, UpdateActivity.class);
-                            intent.putExtra("updateMessage", latestVersionMessage.body);
-                            intent.putExtra("updateUrl", latestVersionMessage.assets.get(0).browser_download_url);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(context, "当前已是最新版本", Toast.LENGTH_SHORT).show();
-                        }
                     }
-                };
-                asyncTask.execute("https://api.github.com/repos/LGH1996/ADGORELEASE/releases/latest");
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
             }
         });
 
-        shareTo.setOnClickListener(new View.OnClickListener() {
+        settingBinding.settingShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 @SuppressLint("StaticFieldLeak") AsyncTask<String, Integer, String> asyncTask = new AsyncTask<String, Integer, String>() {
@@ -181,7 +171,7 @@ public class SettingActivity extends BaseActivity {
             }
         });
 
-        givePraise.setOnClickListener(new View.OnClickListener() {
+        settingBinding.settingPraise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName()));
@@ -193,14 +183,14 @@ public class SettingActivity extends BaseActivity {
             }
         });
 
-        moreMessage.setOnClickListener(new View.OnClickListener() {
+        settingBinding.settingMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(context, MoreMessageActivity.class));
             }
         });
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        settingBinding.settingAutoHideOnTaskList.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 myAppConfig.autoHideOnTaskList = isChecked;
@@ -208,7 +198,17 @@ public class SettingActivity extends BaseActivity {
             }
         });
 
-        authorChat.setOnClickListener(new View.OnClickListener() {
+        settingBinding.settingGroupChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent openChat = new Intent(Intent.ACTION_VIEW, Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3Dw3oVSTyApiatRQNpBpZbdxWYVdK5f-08"));
+                if (openChat.resolveActivity(getPackageManager()) != null) {
+                    startActivity(openChat);
+                }
+            }
+        });
+
+        settingBinding.settingAuthorChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent openChat = new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=wpa&uin=2281442260"));
@@ -217,6 +217,7 @@ public class SettingActivity extends BaseActivity {
                 }
             }
         });
+
     }
 
     @Override

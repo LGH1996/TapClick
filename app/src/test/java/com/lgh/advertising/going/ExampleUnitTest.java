@@ -2,6 +2,9 @@ package com.lgh.advertising.going;
 
 import org.junit.Test;
 
+import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
+
 /**
  * Example local unit test, which will execute on the development machine (host).
  *

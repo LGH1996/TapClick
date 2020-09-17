@@ -1,10 +1,8 @@
 package com.lgh.advertising.myactivity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -12,21 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.lgh.advertising.going.MyAccessibilityService;
 import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
+import com.lgh.advertising.going.databinding.ActivityMainBinding;
+import com.lgh.advertising.going.databinding.ViewMainItemBinding;
 import com.lgh.advertising.myclass.DataDao;
 import com.lgh.advertising.myclass.LatestMessage;
 import com.lgh.advertising.myclass.MyAppConfig;
 import com.lgh.advertising.myclass.MyApplication;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,9 +28,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class MainActivity extends BaseActivity {
@@ -44,12 +41,15 @@ public class MainActivity extends BaseActivity {
     private Context context;
     private MyAppConfig myAppConfig;
     private DataDao dataDao;
+    private LayoutInflater inflater;
     private boolean startActivity;
+    ActivityMainBinding mainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        mainBinding = ActivityMainBinding.inflate(inflater = getLayoutInflater());
+        setContentView(mainBinding.getRoot());
         context = getApplicationContext();
         dataDao = MyApplication.dataDao;
         myAppConfig = MyApplication.myAppConfig;
@@ -60,8 +60,6 @@ public class MainActivity extends BaseActivity {
             dataDao.insertMyAppConfig(myAppConfig);
         }
 
-        ListView listView = findViewById(R.id.main_listView);
-        final LayoutInflater inflater = LayoutInflater.from(context);
         final List<Resource> source = new ArrayList<>();
         source.add(new Resource("授权管理", R.drawable.authorization));
         source.add(new Resource("创建规则", R.drawable.add_data));
@@ -85,17 +83,15 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                convertView = inflater.inflate(R.layout.view_main_item, null);
-                ImageView imageView = convertView.findViewById(R.id.main_img);
-                TextView textView = convertView.findViewById(R.id.main_name);
+                ViewMainItemBinding itemBinding = ViewMainItemBinding.inflate(inflater);
                 Resource resource = source.get(position);
-                imageView.setImageResource(resource.drawableId);
-                textView.setText(resource.name);
-                return convertView;
+                itemBinding.mainImg.setImageResource(resource.drawableId);
+                itemBinding.mainName.setText(resource.name);
+                return itemBinding.getRoot();
             }
         };
-        listView.setAdapter(baseAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mainBinding.mainListView.setAdapter(baseAdapter);
+        mainBinding.mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
@@ -116,71 +112,63 @@ public class MainActivity extends BaseActivity {
                 startActivity = true;
             }
         });
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd a");
         String forUpdate = dateFormat.format(new Date());
         if (!forUpdate.equals(myAppConfig.forUpdate)) {
             myAppConfig.forUpdate = forUpdate;
             dataDao.updateMyAppConfig(myAppConfig);
-            @SuppressLint("StaticFieldLeak") AsyncTask<String, Integer, String> asyncTask = new AsyncTask<String, Integer, String>() {
-                private LatestMessage latestVersionMessage;
-                private boolean haveNewVersion;
+
+            Observable<LatestMessage> observable = MyApplication.myHttpRequest.getLatestMessage();
+            observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<LatestMessage>() {
+                @Override
+                public void onSubscribe(@NonNull Disposable d) {
+                }
 
                 @Override
-                protected String doInBackground(String... strings) {
+                public void onNext(@NonNull LatestMessage latestMessage) {
                     try {
-                        OkHttpClient httpClient = new OkHttpClient();
-                        Request request = new Request.Builder().get().url(strings[0]).build();
-                        Response response = httpClient.newCall(request).execute();
-                        latestVersionMessage = new Gson().fromJson(response.body().string(), LatestMessage.class);
-                        response.close();
                         int versionCode = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionCode;
-                        String appName = latestVersionMessage.assets.get(0).name;
+                        String appName = latestMessage.assets.get(0).name;
                         Matcher matcher = Pattern.compile("\\d+").matcher(appName);
                         if (matcher.find()) {
-                            int newVersion = Integer.valueOf(matcher.group());
-                            haveNewVersion = newVersion > versionCode;
+                            int newVersion = Integer.parseInt(matcher.group());
+                            if (newVersion > versionCode) {
+                                Intent intent = new Intent(context, UpdateActivity.class);
+                                intent.putExtra("updateMessage", latestMessage.body);
+                                intent.putExtra("updateUrl", latestMessage.assets.get(0).browser_download_url);
+                                startActivity(intent);
+                            }
                         }
-                    } catch (MalformedURLException e) {
-//                        e.printStackTrace();
-                    } catch (IOException e) {
-//                        e.printStackTrace();
                     } catch (PackageManager.NameNotFoundException e) {
 //                        e.printStackTrace();
-                    } catch (Throwable e) {
-//                        e.printStackTrace();
                     }
-                    return null;
                 }
 
                 @Override
-                protected void onPostExecute(String s) {
-                    super.onPostExecute(s);
-                    if (haveNewVersion) {
-                        Intent intent = new Intent(context, UpdateActivity.class);
-                        intent.putExtra("updateMessage", latestVersionMessage.body);
-                        intent.putExtra("updateUrl", latestVersionMessage.assets.get(0).browser_download_url);
-                        startActivity(intent);
-                    }
+                public void onError(@NonNull Throwable e) {
+                    e.printStackTrace();
                 }
-            };
-            asyncTask.execute("https://api.github.com/repos/LGH1996/ADGORELEASE/releases/latest");
+
+                @Override
+                public void onComplete() {
+                }
+            });
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        ImageView statusImg = findViewById(R.id.status_img);
-        TextView statusTip = findViewById(R.id.status_tip);
         if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
-            statusImg.setImageResource(R.drawable.error);
-            statusTip.setText("无障碍服务未开启");
+            mainBinding.statusImg.setImageResource(R.drawable.error);
+            mainBinding.statusTip.setText("无障碍服务未开启");
         } else if (MyAccessibilityService.mainFunction != null && MyAccessibilityServiceNoGesture.mainFunction != null) {
-            statusImg.setImageResource(R.drawable.error);
-            statusTip.setText("无障碍服务冲突");
+            mainBinding.statusImg.setImageResource(R.drawable.error);
+            mainBinding.statusTip.setText("无障碍服务冲突");
         } else {
-            statusImg.setImageResource(R.drawable.ok);
-            statusTip.setText("无障碍服务已开启");
+            mainBinding.statusImg.setImageResource(R.drawable.ok);
+            mainBinding.statusTip.setText("无障碍服务已开启");
         }
     }
 

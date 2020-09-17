@@ -6,30 +6,28 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
-import com.lgh.advertising.going.R;
+import com.lgh.advertising.going.databinding.ActivityMoreMessageBinding;
 
 public class MoreMessageActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_more_message);
+        final ActivityMoreMessageBinding moreMessageBinding = ActivityMoreMessageBinding.inflate(getLayoutInflater());
+        setContentView(moreMessageBinding.getRoot());
 
-        WebView webView = findViewById(R.id.webViewMore);
-        final ProgressBar progressBar = findViewById(R.id.progress);
-        webView.setWebViewClient(new WebViewClient());
-        webView.setWebChromeClient(new WebChromeClient() {
+        moreMessageBinding.webViewMore.setWebViewClient(new WebViewClient());
+        moreMessageBinding.webViewMore.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
                 if (newProgress == 100) {
-                    progressBar.setVisibility(View.GONE);
+                    moreMessageBinding.progress.setVisibility(View.GONE);
                 }
             }
         });
-        WebSettings settings = webView.getSettings();
+        WebSettings settings = moreMessageBinding.webViewMore.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
@@ -39,7 +37,7 @@ public class MoreMessageActivity extends BaseActivity {
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setLoadsImagesAutomatically(true);
         settings.supportMultipleWindows();
-        webView.loadUrl("https://gitee.com/lingh1996/ADGO/blob/master/README.md");
+        moreMessageBinding.webViewMore.loadUrl("https://gitee.com/lingh1996/ADGO/blob/master/README.md");
     }
 
     @Override

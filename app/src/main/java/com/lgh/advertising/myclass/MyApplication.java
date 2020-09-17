@@ -7,11 +7,16 @@ import androidx.room.Room;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MyApplication extends Application {
 
     public static DataDao dataDao;
     public static MyAppConfig myAppConfig;
     public static AppDescribe appDescribe;
+    public static MyHttpRequest myHttpRequest;
 
     @Override
     public void onCreate() {
@@ -43,6 +48,10 @@ public class MyApplication extends Application {
         if (myAppConfig == null) {
             myAppConfig = dataDao.getMyAppConfig();
         }
-    }
 
+        if (myHttpRequest == null) {
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.github.com/").addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJava3CallAdapterFactory.create()).build();
+            myHttpRequest = retrofit.create(MyHttpRequest.class);
+        }
+    }
 }
