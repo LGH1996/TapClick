@@ -1,14 +1,10 @@
 package com.lgh.advertising.myactivity;
 
-import androidx.annotation.NonNull;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -36,6 +32,15 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class ListDataActivity extends BaseActivity {
 
     Context context;
@@ -59,9 +64,6 @@ public class ListDataActivity extends BaseActivity {
         packageManager = getPackageManager();
         appDescribeAndIconList = new ArrayList<>();
         appDescribeAndIconFilterList = new ArrayList<>();
-
-        listDataBinding.listView.setVisibility(View.GONE);
-        listDataBinding.progress.setVisibility(View.VISIBLE);
 
         if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
             Toast.makeText(context, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
@@ -185,22 +187,10 @@ public class ListDataActivity extends BaseActivity {
             }
         };
         listDataBinding.listView.setAdapter(baseAdapter);
-        final Handler handler = new Handler(new Handler.Callback() {
+
+        Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
-            public boolean handleMessage(@NonNull Message msg) {
-                switch (msg.what) {
-                    case 0x00:
-                        baseAdapter.notifyDataSetChanged();
-                        listDataBinding.progress.setVisibility(View.GONE);
-                        listDataBinding.listView.setVisibility(View.VISIBLE);
-                        break;
-                }
-                return true;
-            }
-        });
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+            public void subscribe(@NonNull ObservableEmitter<Boolean> emitter) throws Throwable {
                 if (appDescribeMap != null) {
                     appDescribeList = new ArrayList<>(appDescribeMap.values());
                 } else {
@@ -227,9 +217,33 @@ public class ListDataActivity extends BaseActivity {
                     }
                 }
                 appDescribeAndIconFilterList.addAll(appDescribeAndIconList);
-                handler.sendEmptyMessage(0x00);
+                emitter.onComplete();
             }
-        }).start();
+        }).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Boolean>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+                listDataBinding.listView.setVisibility(View.GONE);
+                listDataBinding.progress.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onNext(@NonNull Boolean aBoolean) {
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Toast.makeText(context, "出现错误", Toast.LENGTH_SHORT).show();
+                listDataBinding.progress.setVisibility(View.GONE);
+                listDataBinding.listView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onComplete() {
+                baseAdapter.notifyDataSetChanged();
+                listDataBinding.progress.setVisibility(View.GONE);
+                listDataBinding.listView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override

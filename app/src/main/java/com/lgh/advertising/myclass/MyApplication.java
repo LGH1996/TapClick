@@ -10,6 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MyApplication extends Application {
 
@@ -50,7 +51,7 @@ public class MyApplication extends Application {
         }
 
         if (myHttpRequest == null) {
-            Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.github.com/").addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJava3CallAdapterFactory.create()).build();
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.github.com/").addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJava3CallAdapterFactory.create()).build();
             myHttpRequest = retrofit.create(MyHttpRequest.class);
         }
     }

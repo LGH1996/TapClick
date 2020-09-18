@@ -140,14 +140,14 @@ public class MainActivity extends BaseActivity {
                                 startActivity(intent);
                             }
                         }
-                    } catch (PackageManager.NameNotFoundException e) {
+                    } catch (Throwable e) {
 //                        e.printStackTrace();
                     }
                 }
 
                 @Override
                 public void onError(@NonNull Throwable e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
 
                 @Override

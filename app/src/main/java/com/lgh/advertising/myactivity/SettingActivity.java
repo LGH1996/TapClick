@@ -1,12 +1,10 @@
 package com.lgh.advertising.myactivity;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -32,9 +30,6 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class SettingActivity extends BaseActivity {
 
@@ -96,21 +91,22 @@ public class SettingActivity extends BaseActivity {
                                     Toast.makeText(context, "当前已是最新版本", Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        } catch (PackageManager.NameNotFoundException e) {
+                        } catch (Throwable e) {
 //                            e.printStackTrace();
+                            Toast.makeText(context, "解析版本号时出现错误", Toast.LENGTH_SHORT).show();
                         }
-                        waitDialog.dismiss();
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        e.printStackTrace();
+//                        e.printStackTrace();
                         Toast.makeText(context, "查询新版本时出现错误", Toast.LENGTH_SHORT).show();
                         waitDialog.dismiss();
                     }
 
                     @Override
                     public void onComplete() {
+                        waitDialog.dismiss();
                     }
                 });
             }
@@ -119,55 +115,44 @@ public class SettingActivity extends BaseActivity {
         settingBinding.settingShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                @SuppressLint("StaticFieldLeak") AsyncTask<String, Integer, String> asyncTask = new AsyncTask<String, Integer, String>() {
-                    private AlertDialog waitDialog;
-                    private String shareContent;
-                    private boolean occurError;
 
+                Observable<String> observable = MyApplication.myHttpRequest.getShareContent();
+                observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
+                    private AlertDialog waitDialog;
 
                     @Override
-                    protected void onPreExecute() {
-                        super.onPreExecute();
+                    public void onSubscribe(@NonNull Disposable d) {
                         waitDialog = new AlertDialog.Builder(SettingActivity.this).setView(new ProgressBar(context)).setCancelable(false).create();
                         Window window = waitDialog.getWindow();
                         if (window != null) {
                             window.setBackgroundDrawableResource(R.color.transparent);
                         }
                         waitDialog.show();
-
                     }
 
                     @Override
-                    protected String doInBackground(String... strings) {
-                        try {
-                            OkHttpClient httpClient = new OkHttpClient();
-                            Request request = new Request.Builder().get().url(strings[0]).build();
-                            Response response = httpClient.newCall(request).execute();
-                            shareContent = response.body().string();
-                            response.close();
-                        } catch (Throwable e) {
-                            occurError = true;
-                        }
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(String s) {
-                        super.onPostExecute(s);
-                        waitDialog.dismiss();
-                        if (occurError) {
-                            Toast.makeText(context, "获取分享内容时出现错误", Toast.LENGTH_SHORT).show();
-                        } else if (shareContent != null && !shareContent.isEmpty()) {
+                    public void onNext(@NonNull String s) {
+                        if (s != null && !s.isEmpty()) {
                             Intent shareIntent = new Intent(Intent.ACTION_SEND);
                             shareIntent.setType("text/plain");
-                            shareIntent.putExtra(Intent.EXTRA_TEXT, shareContent);
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, s);
                             startActivityForResult(Intent.createChooser(shareIntent, "请选择分享方式"), 0x00);
                         } else {
                             Toast.makeText(context, "暂时不支持分享", Toast.LENGTH_SHORT).show();
                         }
                     }
-                };
-                asyncTask.execute("https://gitee.com/lingh1996/ADGO/raw/master/shareContent");
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Toast.makeText(context, "获取分享内容时出现错误", Toast.LENGTH_SHORT).show();
+                        waitDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        waitDialog.dismiss();
+                    }
+                });
             }
         });
 
@@ -198,16 +183,6 @@ public class SettingActivity extends BaseActivity {
             }
         });
 
-        settingBinding.settingGroupChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent openChat = new Intent(Intent.ACTION_VIEW, Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3Dw3oVSTyApiatRQNpBpZbdxWYVdK5f-08"));
-                if (openChat.resolveActivity(getPackageManager()) != null) {
-                    startActivity(openChat);
-                }
-            }
-        });
-
         settingBinding.settingAuthorChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,6 +193,15 @@ public class SettingActivity extends BaseActivity {
             }
         });
 
+        settingBinding.settingGroupChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent openChat = new Intent(Intent.ACTION_VIEW, Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3Dw3oVSTyApiatRQNpBpZbdxWYVdK5f-08"));
+                if (openChat.resolveActivity(getPackageManager()) != null) {
+                    startActivity(openChat);
+                }
+            }
+        });
     }
 
     @Override
