@@ -1,4 +1,4 @@
-package com.lgh.advertising.myclass;
+package com.lgh.advertising.going.myclass;
 
 import android.app.Application;
 
@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.room.Room;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import com.lgh.advertising.going.mybean.AppDescribe;
+import com.lgh.advertising.going.mybean.MyAppConfig;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;

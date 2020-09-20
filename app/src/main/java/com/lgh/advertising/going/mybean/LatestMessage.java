@@ -1,4 +1,4 @@
-package com.lgh.advertising.myclass;
+package com.lgh.advertising.going.mybean;
 
 import java.util.List;
 

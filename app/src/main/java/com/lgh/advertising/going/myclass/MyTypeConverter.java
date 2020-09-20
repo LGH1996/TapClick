@@ -1,4 +1,4 @@
-package com.lgh.advertising.myclass;
+package com.lgh.advertising.going.myclass;
 
 import android.graphics.Rect;
 

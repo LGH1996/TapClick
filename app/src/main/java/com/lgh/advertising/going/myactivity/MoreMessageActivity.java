@@ -1,4 +1,4 @@
-package com.lgh.advertising.myactivity;
+package com.lgh.advertising.going.myactivity;
 
 import android.os.Bundle;
 import android.view.View;

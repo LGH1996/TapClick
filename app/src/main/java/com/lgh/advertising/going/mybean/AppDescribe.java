@@ -1,9 +1,11 @@
-package com.lgh.advertising.myclass;
+package com.lgh.advertising.going.mybean;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+
+import com.lgh.advertising.going.myclass.DataDao;
 
 import java.util.HashMap;
 import java.util.HashSet;

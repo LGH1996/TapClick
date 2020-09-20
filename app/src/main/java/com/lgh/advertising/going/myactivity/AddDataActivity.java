@@ -1,11 +1,11 @@
-package com.lgh.advertising.myactivity;
+package com.lgh.advertising.going.myactivity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.lgh.advertising.going.MyAccessibilityService;
-import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
+import com.lgh.advertising.going.myfunction.MyAccessibilityService;
+import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.databinding.ActivityAddDataBinding;
 
 public class AddDataActivity extends BaseActivity {

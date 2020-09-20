@@ -1,4 +1,4 @@
-package com.lgh.advertising.going;
+package com.lgh.advertising.going.myfunction;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;

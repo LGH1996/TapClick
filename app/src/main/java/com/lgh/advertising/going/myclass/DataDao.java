@@ -1,4 +1,4 @@
-package com.lgh.advertising.myclass;
+package com.lgh.advertising.going.myclass;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -6,6 +6,12 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.lgh.advertising.going.mybean.AppDescribe;
+import com.lgh.advertising.going.mybean.AutoFinder;
+import com.lgh.advertising.going.mybean.Coordinate;
+import com.lgh.advertising.going.mybean.MyAppConfig;
+import com.lgh.advertising.going.mybean.Widget;
 
 import java.util.List;
 import java.util.Set;

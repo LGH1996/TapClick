@@ -1,4 +1,4 @@
-package com.lgh.advertising.myactivity;
+package com.lgh.advertising.going.myactivity;
 
 import android.animation.LayoutTransition;
 import android.app.AlertDialog;
@@ -21,11 +21,11 @@ import com.lgh.advertising.going.databinding.ViewBaseSettingBinding;
 import com.lgh.advertising.going.databinding.ViewCoordinateBinding;
 import com.lgh.advertising.going.databinding.ViewQuestionBinding;
 import com.lgh.advertising.going.databinding.ViewWidgetBinding;
-import com.lgh.advertising.myclass.AppDescribe;
-import com.lgh.advertising.myclass.Coordinate;
-import com.lgh.advertising.myclass.DataDao;
-import com.lgh.advertising.myclass.MyApplication;
-import com.lgh.advertising.myclass.Widget;
+import com.lgh.advertising.going.mybean.AppDescribe;
+import com.lgh.advertising.going.mybean.Coordinate;
+import com.lgh.advertising.going.myclass.DataDao;
+import com.lgh.advertising.going.myclass.MyApplication;
+import com.lgh.advertising.going.mybean.Widget;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,16 +38,16 @@ import java.util.Set;
 
 public class EditDataActivity extends BaseActivity {
 
-    Context context;
-    AppDescribe appDescribe;
-    LayoutInflater inflater;
-    DataDao dataDao;
-    DisplayMetrics metrics;
-    SimpleDateFormat dateFormatModify;
-    SimpleDateFormat dateFormatCreate;
-    ActivityEditDataBinding editDataBinding;
-    ViewBaseSettingBinding baseSettingBinding;
-    ViewAutoFinderBinding autoFinderBinding;
+    private Context context;
+    private AppDescribe appDescribe;
+    private LayoutInflater inflater;
+    private DataDao dataDao;
+    private DisplayMetrics metrics;
+    private SimpleDateFormat dateFormatModify;
+    private SimpleDateFormat dateFormatCreate;
+    private ActivityEditDataBinding editDataBinding;
+    private ViewBaseSettingBinding baseSettingBinding;
+    private ViewAutoFinderBinding autoFinderBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

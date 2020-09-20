@@ -1,4 +1,4 @@
-package com.lgh.advertising.going;
+package com.lgh.advertising.going.myfunction;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

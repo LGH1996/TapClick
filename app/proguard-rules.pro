@@ -20,8 +20,8 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.lgh.advertising.myclass.LatestMessage {*;}
--keep class com.lgh.advertising.myclass.LatestMessage$Asset {*;}
--keep class com.lgh.advertising.myclass.LatestMessage$Author {*;}
--keep class com.lgh.advertising.myclass.LatestMessage$Uploader {*;}
+-keep class com.lgh.advertising.going.mybean.LatestMessage {*;}
+-keep class com.lgh.advertising.going.mybean.LatestMessage$Asset {*;}
+-keep class com.lgh.advertising.going.mybean.LatestMessage$Author {*;}
+-keep class com.lgh.advertising.going.mybean.LatestMessage$Uploader {*;}
 

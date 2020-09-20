@@ -1,4 +1,4 @@
-package com.lgh.advertising.myactivity;
+package com.lgh.advertising.going.myactivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,15 +11,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
-import com.lgh.advertising.going.MyAccessibilityService;
-import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
+import com.lgh.advertising.going.myfunction.MyAccessibilityService;
+import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivityMainBinding;
 import com.lgh.advertising.going.databinding.ViewMainItemBinding;
-import com.lgh.advertising.myclass.DataDao;
-import com.lgh.advertising.myclass.LatestMessage;
-import com.lgh.advertising.myclass.MyAppConfig;
-import com.lgh.advertising.myclass.MyApplication;
+import com.lgh.advertising.going.myclass.DataDao;
+import com.lgh.advertising.going.mybean.LatestMessage;
+import com.lgh.advertising.going.mybean.MyAppConfig;
+import com.lgh.advertising.going.myclass.MyApplication;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity {
     private DataDao dataDao;
     private LayoutInflater inflater;
     private boolean startActivity;
-    ActivityMainBinding mainBinding;
+    private ActivityMainBinding mainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

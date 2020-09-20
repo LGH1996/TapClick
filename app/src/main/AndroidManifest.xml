@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.lgh.advertising.myclass.MyApplication"
+        android:name=".myclass.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/app"
         android:label="@string/app_name"
@@ -17,22 +17,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.lgh.advertising.myactivity.UpdateActivity"
+            android:name=".myactivity.UpdateActivity"
             android:process=":UpdateActivity"
             android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar" />
         <activity
-            android:name="com.lgh.advertising.myactivity.MoreMessageActivity"
+            android:name=".myactivity.MoreMessageActivity"
             android:process=":MoreMessageActivity" />
-        <activity android:name="com.lgh.advertising.myactivity.SettingActivity" />
-        <activity android:name="com.lgh.advertising.myactivity.AuthorizationActivity" />
-        <activity android:name="com.lgh.advertising.myactivity.AddDataActivity" />
+        <activity android:name=".myactivity.SettingActivity" />
+        <activity android:name=".myactivity.AuthorizationActivity" />
+        <activity android:name=".myactivity.AddDataActivity" />
         <activity
-            android:name="com.lgh.advertising.myactivity.ListDataActivity"
+            android:name=".myactivity.ListDataActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.lgh.advertising.myactivity.EditDataActivity"
+            android:name=".myactivity.EditDataActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name="com.lgh.advertising.myactivity.MainActivity">
+        <activity android:name=".myactivity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -40,7 +40,7 @@
         </activity>
 
         <service
-            android:name=".MyAccessibilityService"
+            android:name=".myfunction.MyAccessibilityService"
             android:enabled="true"
             android:exported="true"
             android:label="@string/accessibilityName"
@@ -55,7 +55,7 @@
         </service>
 
         <service
-            android:name=".MyAccessibilityServiceNoGesture"
+            android:name=".myfunction.MyAccessibilityServiceNoGesture"
             android:enabled="true"
             android:exported="true"
             android:label="@string/accessibilityNameNoGesture"
@@ -70,12 +70,12 @@
         </service>
 
         <receiver
-            android:name=".MyScreenOffReceiver"
+            android:name=".myfunction.MyScreenOffReceiver"
             android:enabled="true"
             android:exported="true" />
 
         <receiver
-            android:name=".MyInstallReceiver"
+            android:name=".myfunction.MyInstallReceiver"
             android:enabled="true"
             android:exported="true" />
     </application>

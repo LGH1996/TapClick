@@ -1,4 +1,4 @@
-package com.lgh.advertising.going;
+package com.lgh.advertising.going.myfunction;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,10 +9,10 @@ import android.content.pm.ResolveInfo;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 
-import com.lgh.advertising.myclass.AppDescribe;
-import com.lgh.advertising.myclass.AutoFinder;
-import com.lgh.advertising.myclass.DataDao;
-import com.lgh.advertising.myclass.MyApplication;
+import com.lgh.advertising.going.mybean.AppDescribe;
+import com.lgh.advertising.going.mybean.AutoFinder;
+import com.lgh.advertising.going.myclass.DataDao;
+import com.lgh.advertising.going.myclass.MyApplication;
 
 import java.util.Collections;
 import java.util.List;

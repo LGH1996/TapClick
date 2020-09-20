@@ -1,4 +1,4 @@
-package com.lgh.advertising.myactivity;
+package com.lgh.advertising.going.myactivity;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,10 +15,10 @@ import android.widget.Toast;
 
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivitySettingBinding;
-import com.lgh.advertising.myclass.DataDao;
-import com.lgh.advertising.myclass.LatestMessage;
-import com.lgh.advertising.myclass.MyAppConfig;
-import com.lgh.advertising.myclass.MyApplication;
+import com.lgh.advertising.going.myclass.DataDao;
+import com.lgh.advertising.going.mybean.LatestMessage;
+import com.lgh.advertising.going.mybean.MyAppConfig;
+import com.lgh.advertising.going.myclass.MyApplication;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

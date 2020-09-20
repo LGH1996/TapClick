@@ -1,4 +1,4 @@
-package com.lgh.advertising.going;
+package com.lgh.advertising.going.myfunction;
 
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
@@ -32,15 +32,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ViewAddDataBinding;
 import com.lgh.advertising.going.databinding.ViewWidgetSelectBinding;
-import com.lgh.advertising.myactivity.EditDataActivity;
-import com.lgh.advertising.myclass.AppDescribe;
-import com.lgh.advertising.myclass.AutoFinder;
-import com.lgh.advertising.myclass.Coordinate;
-import com.lgh.advertising.myclass.DataDao;
-import com.lgh.advertising.myclass.MyApplication;
-import com.lgh.advertising.myclass.Widget;
+import com.lgh.advertising.going.myactivity.EditDataActivity;
+import com.lgh.advertising.going.mybean.AppDescribe;
+import com.lgh.advertising.going.mybean.AutoFinder;
+import com.lgh.advertising.going.mybean.Coordinate;
+import com.lgh.advertising.going.myclass.DataDao;
+import com.lgh.advertising.going.myclass.MyApplication;
+import com.lgh.advertising.going.mybean.Widget;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ import java.util.regex.Pattern;
 
 /**
  * adb shell pm  grant com.lgh.advertising.going android.permission.WRITE_SECURE_SETTINGS
- * adb shell settings put secure enabled_accessibility_services com.lgh.advertising.going/com.lgh.advertising.going.MyAccessibilityService
+ * adb shell settings put secure enabled_accessibility_services com.lgh.advertising.going/com.lgh.advertising.going.myfunction.MyAccessibilityService
  * adb shell settings put secure accessibility_enabled 1
  * <p>
  * Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, getPackageName()+"/"+MyAccessibilityService.class.getName());

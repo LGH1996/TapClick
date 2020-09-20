@@ -1,4 +1,4 @@
-package com.lgh.advertising.myactivity;
+package com.lgh.advertising.going.myactivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,14 +14,14 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Toast;
 
-import com.lgh.advertising.going.MyAccessibilityService;
-import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
+import com.lgh.advertising.going.myfunction.MyAccessibilityService;
+import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.databinding.ActivityListDataBinding;
 import com.lgh.advertising.going.databinding.ViewListItemBinding;
 import com.lgh.advertising.going.databinding.ViewSearchBinding;
-import com.lgh.advertising.myclass.AppDescribe;
-import com.lgh.advertising.myclass.DataDao;
-import com.lgh.advertising.myclass.MyApplication;
+import com.lgh.advertising.going.mybean.AppDescribe;
+import com.lgh.advertising.going.myclass.DataDao;
+import com.lgh.advertising.going.myclass.MyApplication;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -43,16 +43,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ListDataActivity extends BaseActivity {
 
-    Context context;
-    DataDao dataDao;
-    PackageManager packageManager;
-    LayoutInflater inflater;
-    Map<String, AppDescribe> appDescribeMap;
-    List<AppDescribe> appDescribeList;
-    List<AppDescribeAndIcon> appDescribeAndIconList;
-    List<AppDescribeAndIcon> appDescribeAndIconFilterList;
-    BaseAdapter baseAdapter;
-    ActivityListDataBinding listDataBinding;
+    private Context context;
+    private DataDao dataDao;
+    private PackageManager packageManager;
+    private LayoutInflater inflater;
+    private Map<String, AppDescribe> appDescribeMap;
+    private List<AppDescribe> appDescribeList;
+    private List<AppDescribeAndIcon> appDescribeAndIconList;
+    private List<AppDescribeAndIcon> appDescribeAndIconFilterList;
+    private BaseAdapter baseAdapter;
+    private ActivityListDataBinding listDataBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

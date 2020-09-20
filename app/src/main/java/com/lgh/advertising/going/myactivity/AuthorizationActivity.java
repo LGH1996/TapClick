@@ -1,4 +1,4 @@
-package com.lgh.advertising.myactivity;
+package com.lgh.advertising.going.myactivity;
 
 import android.app.AppOpsManager;
 import android.content.Context;
@@ -11,17 +11,17 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 
-import com.lgh.advertising.going.MyAccessibilityService;
-import com.lgh.advertising.going.MyAccessibilityServiceNoGesture;
+import com.lgh.advertising.going.myfunction.MyAccessibilityService;
+import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivityAuthorizationBinding;
 
 public class AuthorizationActivity extends BaseActivity {
 
-    Context context;
-    AppOpsManager appOps;
-    PackageManager packageManager;
-    ActivityAuthorizationBinding authorizationBinding;
+    private Context context;
+    private AppOpsManager appOps;
+    private PackageManager packageManager;
+    private ActivityAuthorizationBinding authorizationBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

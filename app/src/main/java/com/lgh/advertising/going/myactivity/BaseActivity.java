@@ -1,11 +1,11 @@
-package com.lgh.advertising.myactivity;
+package com.lgh.advertising.going.myactivity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.lgh.advertising.going.R;
-import com.lgh.advertising.myclass.MyApplication;
+import com.lgh.advertising.going.myclass.MyApplication;
 
 public class BaseActivity extends Activity {
 
