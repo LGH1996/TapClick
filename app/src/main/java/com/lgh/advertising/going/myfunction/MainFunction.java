@@ -78,7 +78,6 @@ public class MainFunction {
     private AccessibilityService service;
     private String currentPackage;
     private String currentActivity;
-    private String homeLaunch;
     private boolean on_off_coordinate, on_off_widget, on_off_autoFinder;
     private int autoRetrieveNumber;
     private AccessibilityServiceInfo serviceInfo;
@@ -115,8 +114,6 @@ public class MainFunction {
             filterInstall.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
             filterInstall.addDataScheme("package");
             service.registerReceiver(installReceiver, filterInstall);
-            ResolveInfo homeInfo = packageManager.resolveActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_SYSTEM_ONLY);
-            homeLaunch = homeInfo != null ? homeInfo.activityInfo.packageName : null;
             getRunningData();
             future_coordinate = future_widget = future_autoFinder = executorService.schedule(new Runnable() {
                 @Override
@@ -137,9 +134,6 @@ public class MainFunction {
                     CharSequence temClass = event.getClassName();
                     String packageName = root != null ? root.getPackageName().toString() : temPackage != null ? temPackage.toString() : null;
                     String activityName = temClass != null ? temClass.toString() : null;
-                    if (temPackage != null && !temPackage.equals(packageName) && temPackage.equals(homeLaunch)) {
-                        activityName = packageName + ".unknownActivity";
-                    }
                     if (packageName != null && !packageName.equals(currentPackage)) {
                         appDescribe = appDescribeMap.get(packageName);
                         if (appDescribe != null) {
