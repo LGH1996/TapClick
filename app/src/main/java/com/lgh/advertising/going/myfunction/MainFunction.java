@@ -114,7 +114,12 @@ public class MainFunction {
             filterInstall.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
             filterInstall.addDataScheme("package");
             service.registerReceiver(installReceiver, filterInstall);
-            getRunningData();
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    getRunningData();
+                }
+            });
             future_coordinate = future_widget = future_autoFinder = executorService.schedule(new Runnable() {
                 @Override
                 public void run() {
