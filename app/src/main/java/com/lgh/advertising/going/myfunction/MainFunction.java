@@ -75,13 +75,13 @@ public class MainFunction {
     private DataDao dataDao;
     private Map<String, AppDescribe> appDescribeMap;
     private AppDescribe appDescribe;
-    private AccessibilityService service;
+    private final AccessibilityService service;
     private String currentPackage;
     private String currentActivity;
     private boolean on_off_coordinate, on_off_widget, on_off_autoFinder;
     private int autoRetrieveNumber;
     private AccessibilityServiceInfo serviceInfo;
-    private ScheduledFuture future_coordinate, future_widget, future_autoFinder;
+    private ScheduledFuture<?> future_coordinate, future_widget, future_autoFinder;
     private ScheduledExecutorService executorService;
     private MyScreenOffReceiver screenOffReceiver;
     private Set<Widget> widgetSet;

@@ -1,19 +1,17 @@
 {
-  "version": 1,
+  "version": 2,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
   "applicationId": "com.lgh.advertising.going",
-  "variantName": "release",
+  "variantName": "processReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "properties": [],
-      "versionCode": 26,
-      "versionName": "2.6",
-      "enabled": true,
+      "versionCode": 27,
+      "versionName": "2.7",
       "outputFile": "app-release.apk"
     }
   ]

@@ -159,8 +159,8 @@ public class EditDataActivity extends BaseActivity {
                 } else if (Integer.parseInt(retrieveNumber) < 1 || Integer.parseInt(retrieveNumber) > 100) {
                     autoFinderBinding.autoFinderModify.setText("检索次数应为１~100次之间");
                     return;
-                } else if (Integer.parseInt(clickDelay) > 4000) {
-                    autoFinderBinding.autoFinderModify.setText("点击延迟应为0~4000(ms)之间");
+                } else if (Integer.parseInt(clickDelay) > 8000) {
+                    autoFinderBinding.autoFinderModify.setText("点击延迟应为0~8000(ms)之间");
                     return;
                 } else {
                     appDescribe.autoFinder.keywordList = temKeyword;
@@ -255,8 +255,8 @@ public class EditDataActivity extends BaseActivity {
                     } else if (Integer.parseInt(sY) > metrics.heightPixels) {
                         coordinateBinding.coordinateModify.setText("Y坐标超出屏幕寸");
                         return;
-                    } else if (Integer.parseInt(sDelay) > 4000) {
-                        coordinateBinding.coordinateModify.setText("点击延迟应为0~4000(ms)之间");
+                    } else if (Integer.parseInt(sDelay) > 8000) {
+                        coordinateBinding.coordinateModify.setText("点击延迟应为0~8000(ms)之间");
                         return;
                     } else if (Integer.parseInt(sInterval) < 100 || Integer.parseInt(sInterval) > 2000) {
                         coordinateBinding.coordinateModify.setText("点击间隔应为100~2000(ms)之间");
@@ -335,8 +335,8 @@ public class EditDataActivity extends BaseActivity {
                         if (clickDelay.isEmpty()) {
                             widgetBinding.widgetModify.setText("延迟点击不能为空");
                             return;
-                        } else if (Integer.parseInt(clickDelay) > 4000) {
-                            widgetBinding.widgetModify.setText("点击延迟应为0~4000(ms)之间");
+                        } else if (Integer.parseInt(clickDelay) > 8000) {
+                            widgetBinding.widgetModify.setText("点击延迟应为0~8000(ms)之间");
                             return;
                         }
                         e.widgetId = widgetBinding.widgetId.getText().toString().trim();
