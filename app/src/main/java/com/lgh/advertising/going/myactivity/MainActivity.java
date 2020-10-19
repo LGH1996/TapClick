@@ -163,9 +163,6 @@ public class MainActivity extends BaseActivity {
         if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
             mainBinding.statusImg.setImageResource(R.drawable.error);
             mainBinding.statusTip.setText("无障碍服务未开启");
-        } else if (MyAccessibilityService.mainFunction != null && MyAccessibilityServiceNoGesture.mainFunction != null) {
-            mainBinding.statusImg.setImageResource(R.drawable.error);
-            mainBinding.statusTip.setText("无障碍服务冲突");
         } else {
             mainBinding.statusImg.setImageResource(R.drawable.ok);
             mainBinding.statusTip.setText("无障碍服务已开启");

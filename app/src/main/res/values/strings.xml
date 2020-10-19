@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">即达</string>
-    <string name="accessibilityName">即达(支持坐标点击)</string>
-    <string name="accessibilityNameNoGesture">即达(不支持坐标点击)</string>
+    <string name="app_name">TapClick</string>
+    <string name="accessibilityName">TapClick(支持坐标点击)</string>
+    <string name="accessibilityNameNoGesture">TapClick(不支持坐标点击)</string>
+    <string name="add_data_short">创建规则</string>
     <string name="description">
         该服务支持坐标点击，但某些机型可能因此出现卡顿掉帧的情况，如果出现上述情况，请关闭此服务，开启另一个不支持坐标点击的服务。\n\n
         注意:不能同时开启两个服务，否则会因为冲突而产生异常。在开启该服务后，请确保另一个不支持坐标点击的服务已关闭。\n\n

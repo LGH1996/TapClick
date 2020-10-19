@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/add_data"
+        android:shortcutId="add_data"
+        android:shortcutShortLabel="@string/add_data_short"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="com.lgh.action.addData"
+            android:targetClass="com.lgh.advertising.going.myactivity.ShortCutActivity"
+            android:targetPackage="com.lgh.advertising.going" />
+    </shortcut>
+</shortcuts>

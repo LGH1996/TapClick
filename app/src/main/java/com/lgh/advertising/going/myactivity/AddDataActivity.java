@@ -1,6 +1,8 @@
 package com.lgh.advertising.going.myactivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,9 +22,9 @@ public class AddDataActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
+                    Intent intentAccessibility = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                    startActivity(intentAccessibility);
                     Toast.makeText(getApplicationContext(), "请先开启无障碍服务", Toast.LENGTH_SHORT).show();
-                } else if (MyAccessibilityService.mainFunction != null && MyAccessibilityServiceNoGesture.mainFunction != null) {
-                    Toast.makeText(getApplicationContext(), "无障碍服务冲突", Toast.LENGTH_SHORT).show();
                 } else {
                     if (MyAccessibilityService.mainFunction != null) {
                         MyAccessibilityService.mainFunction.showAddDataFloat();

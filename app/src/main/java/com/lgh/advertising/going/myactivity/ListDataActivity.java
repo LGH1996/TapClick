@@ -67,8 +67,6 @@ public class ListDataActivity extends BaseActivity {
 
         if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
             Toast.makeText(context, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
-        } else if (MyAccessibilityService.mainFunction != null && MyAccessibilityServiceNoGesture.mainFunction != null) {
-            Toast.makeText(context, "无障碍服务冲突", Toast.LENGTH_SHORT).show();
         } else {
             if (MyAccessibilityService.mainFunction != null) {
                 appDescribeMap = MyAccessibilityService.mainFunction.getAppDescribeMap();

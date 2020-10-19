@@ -16,6 +16,9 @@
         android:roundIcon="@drawable/app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".myactivity.SettingActivity" />
+        <activity android:name=".myactivity.AuthorizationActivity" />
+        <activity android:name=".myactivity.AddDataActivity" />
         <activity
             android:name=".myactivity.UpdateActivity"
             android:process=":UpdateActivity"
@@ -23,9 +26,9 @@
         <activity
             android:name=".myactivity.MoreMessageActivity"
             android:process=":MoreMessageActivity" />
-        <activity android:name=".myactivity.SettingActivity" />
-        <activity android:name=".myactivity.AuthorizationActivity" />
-        <activity android:name=".myactivity.AddDataActivity" />
+        <activity
+            android:name=".myactivity.ShortCutActivity"
+            android:theme="@android:style/Theme.NoDisplay" />
         <activity
             android:name=".myactivity.ListDataActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -37,6 +40,9 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
 
         <service
