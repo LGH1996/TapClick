@@ -140,7 +140,10 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="15dp"
+            android:requiresFadingEdge="vertical">
 
             <TextView
                 android:layout_width="match_parent"

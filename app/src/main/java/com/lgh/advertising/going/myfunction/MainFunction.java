@@ -287,8 +287,8 @@ public class MainFunction {
                 text.setGravity(Gravity.CENTER);
                 text.setTextColor(0xffff0000);
                 text.setText("请重新刷新布局");
-                windowManager.updateViewLayout(widgetSelectBinding.frame, bParams);
                 widgetSelectBinding.frame.addView(text, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT, Gravity.CENTER));
+                windowManager.updateViewLayout(widgetSelectBinding.frame, bParams);
             }
         } catch (Throwable e) {
 //            e.printStackTrace();
@@ -695,7 +695,7 @@ public class MainFunction {
                         roots.add(root);
                         ArrayList<AccessibilityNodeInfo> nodeList = new ArrayList<>();
                         findAllNode(roots, nodeList);
-                        Collections.sort(nodeList, new Comparator<AccessibilityNodeInfo>() {
+                        nodeList.sort(new Comparator<AccessibilityNodeInfo>() {
                             @Override
                             public int compare(AccessibilityNodeInfo a, AccessibilityNodeInfo b) {
                                 Rect rectA = new Rect();
@@ -714,6 +714,7 @@ public class MainFunction {
                             final ImageView img = new ImageView(service);
                             img.setBackgroundResource(R.drawable.node);
                             img.setFocusableInTouchMode(true);
+                            img.setFocusable(true);
                             img.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
