@@ -130,7 +130,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="5dp"
                     android:gravity="center_vertical"
-                    android:text="更多相关内容："
+                    android:text="相关使用说明："
                     android:textColor="@color/textColor"
                     android:textSize="15sp" />
 

@@ -322,8 +322,7 @@ public class MainFunction {
                             if (autoFinder.clickOnly) {
                                 for (AccessibilityNodeInfo e : list) {
                                     if (e.refresh()) {
-                                        Rect rect = new Rect();
-                                        e.getBoundsInScreen(rect);
+                                        Rect rect = e.getBoundsInScreen();
                                         click(rect.centerX(), rect.centerY(), 0, 20);
                                     }
                                 }
@@ -332,8 +331,7 @@ public class MainFunction {
                                     if (e.refresh()) {
                                         if (!e.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
                                             if (!e.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                                Rect rect = new Rect();
-                                                e.getBoundsInScreen(rect);
+                                                Rect rect = e.getBoundsInScreen();
                                                 click(rect.centerX(), rect.centerY(), 0, 20);
                                             }
                                         }
@@ -372,8 +370,7 @@ public class MainFunction {
             while (a < b) {
                 final AccessibilityNodeInfo node = listA.get(a++);
                 if (node != null) {
-                    final Rect temRect = new Rect();
-                    node.getBoundsInScreen(temRect);
+                    final Rect temRect = node.getBoundsInScreen();
                     CharSequence cId = node.getViewIdResourceName();
                     CharSequence cDescribe = node.getContentDescription();
                     CharSequence cText = node.getText();
@@ -433,16 +430,18 @@ public class MainFunction {
      */
     private void findAllNode(List<AccessibilityNodeInfo> roots, List<AccessibilityNodeInfo> list) {
         try {
-            ArrayList<AccessibilityNodeInfo> temList = new ArrayList<>();
+            ArrayList<AccessibilityNodeInfo> tem = new ArrayList<>();
             for (AccessibilityNodeInfo e : roots) {
                 if (e == null) continue;
+                Rect rect = e.getBoundsInScreen();
+                if (rect.width() <= 0 || rect.height() <= 0) continue;
                 list.add(e);
                 for (int n = 0; n < e.getChildCount(); n++) {
-                    temList.add(e.getChild(n));
+                    tem.add(e.getChild(n));
                 }
             }
-            if (!temList.isEmpty()) {
-                findAllNode(temList, list);
+            if (!tem.isEmpty()) {
+                findAllNode(tem, list);
             }
         } catch (Throwable e) {
 //            e.printStackTrace();
@@ -698,16 +697,13 @@ public class MainFunction {
                         nodeList.sort(new Comparator<AccessibilityNodeInfo>() {
                             @Override
                             public int compare(AccessibilityNodeInfo a, AccessibilityNodeInfo b) {
-                                Rect rectA = new Rect();
-                                Rect rectB = new Rect();
-                                a.getBoundsInScreen(rectA);
-                                b.getBoundsInScreen(rectB);
+                                Rect rectA = a.getBoundsInScreen();
+                                Rect rectB = b.getBoundsInScreen();
                                 return rectB.width() * rectB.height() - rectA.width() * rectA.height();
                             }
                         });
                         for (final AccessibilityNodeInfo e : nodeList) {
-                            final Rect temRect = new Rect();
-                            e.getBoundsInScreen(temRect);
+                            final Rect temRect = e.getBoundsInScreen();
                             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(temRect.width(), temRect.height());
                             params.leftMargin = temRect.left;
                             params.topMargin = temRect.top;

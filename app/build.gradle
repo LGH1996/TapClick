@@ -6,8 +6,8 @@ android {
         applicationId "com.lgh.advertising.going"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 28
-        versionName "2.8"
+        versionCode 29
+        versionName "2.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
