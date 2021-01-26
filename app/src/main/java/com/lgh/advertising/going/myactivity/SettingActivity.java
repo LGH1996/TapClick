@@ -186,10 +186,12 @@ public class SettingActivity extends BaseActivity {
         settingBinding.settingAuthorChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent openChat = new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=wpa&uin=2281442260"));
-                if (openChat.resolveActivity(getPackageManager()) != null) {
-                    startActivity(openChat);
-                }
+                Intent weiBo = new Intent(Intent.ACTION_VIEW);
+                weiBo.addCategory(Intent.CATEGORY_DEFAULT);
+                weiBo.addCategory(Intent.CATEGORY_BROWSABLE);
+                weiBo.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                weiBo.setData(Uri.parse("http://weibo.cn/qr/userinfo?uid=6271910684"));
+                startActivity(Intent.createChooser(weiBo, "WeiBo"));
             }
         });
 
