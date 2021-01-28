@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.lgh.advertising.going"
         minSdkVersion 24
-        targetSdkVersion 29
-        versionCode 29
-        versionName "2.9"
+        targetSdkVersion 30
+        versionCode 30
+        versionName "3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }

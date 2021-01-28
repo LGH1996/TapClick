@@ -322,7 +322,8 @@ public class MainFunction {
                             if (autoFinder.clickOnly) {
                                 for (AccessibilityNodeInfo e : list) {
                                     if (e.refresh()) {
-                                        Rect rect = e.getBoundsInScreen();
+                                        Rect rect = new Rect();
+                                        e.getBoundsInScreen(rect);
                                         click(rect.centerX(), rect.centerY(), 0, 20);
                                     }
                                 }
@@ -331,7 +332,8 @@ public class MainFunction {
                                     if (e.refresh()) {
                                         if (!e.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
                                             if (!e.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                                Rect rect = e.getBoundsInScreen();
+                                                Rect rect = new Rect();
+                                                e.getBoundsInScreen(rect);
                                                 click(rect.centerX(), rect.centerY(), 0, 20);
                                             }
                                         }
@@ -370,7 +372,8 @@ public class MainFunction {
             while (a < b) {
                 final AccessibilityNodeInfo node = listA.get(a++);
                 if (node != null) {
-                    final Rect temRect = node.getBoundsInScreen();
+                    final Rect temRect = new Rect();
+                    node.getBoundsInScreen(temRect);
                     CharSequence cId = node.getViewIdResourceName();
                     CharSequence cDescribe = node.getContentDescription();
                     CharSequence cText = node.getText();
@@ -433,7 +436,8 @@ public class MainFunction {
             ArrayList<AccessibilityNodeInfo> tem = new ArrayList<>();
             for (AccessibilityNodeInfo e : roots) {
                 if (e == null) continue;
-                Rect rect = e.getBoundsInScreen();
+                Rect rect = new Rect();
+                e.getBoundsInScreen(rect);
                 if (rect.width() <= 0 || rect.height() <= 0) continue;
                 list.add(e);
                 for (int n = 0; n < e.getChildCount(); n++) {
@@ -697,13 +701,16 @@ public class MainFunction {
                         nodeList.sort(new Comparator<AccessibilityNodeInfo>() {
                             @Override
                             public int compare(AccessibilityNodeInfo a, AccessibilityNodeInfo b) {
-                                Rect rectA = a.getBoundsInScreen();
-                                Rect rectB = b.getBoundsInScreen();
+                                Rect rectA = new Rect();
+                                Rect rectB = new Rect();
+                                a.getBoundsInScreen(rectA);
+                                b.getBoundsInScreen(rectB);
                                 return rectB.width() * rectB.height() - rectA.width() * rectA.height();
                             }
                         });
                         for (final AccessibilityNodeInfo e : nodeList) {
-                            final Rect temRect = e.getBoundsInScreen();
+                            final Rect temRect = new Rect();
+                            e.getBoundsInScreen(temRect);
                             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(temRect.width(), temRect.height());
                             params.leftMargin = temRect.left;
                             params.topMargin = temRect.top;
