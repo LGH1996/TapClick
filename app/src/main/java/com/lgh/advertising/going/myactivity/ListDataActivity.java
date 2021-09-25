@@ -25,7 +25,6 @@ import com.lgh.advertising.going.myclass.MyApplication;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
@@ -197,7 +196,7 @@ public class ListDataActivity extends BaseActivity {
                         e.getOtherFieldsFromDatabase(dataDao);
                     }
                 }
-                Collections.sort(appDescribeList, new Comparator<AppDescribe>() {
+                appDescribeList.sort(new Comparator<AppDescribe>() {
                     @Override
                     public int compare(AppDescribe o1, AppDescribe o2) {
                         return Collator.getInstance(Locale.CHINESE).compare(o1.appName, o2.appName);

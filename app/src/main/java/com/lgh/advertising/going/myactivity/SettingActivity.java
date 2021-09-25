@@ -68,9 +68,7 @@ public class SettingActivity extends BaseActivity {
                     public void onSubscribe(@NonNull Disposable d) {
                         waitDialog = new AlertDialog.Builder(SettingActivity.this).setView(new ProgressBar(context)).setCancelable(false).create();
                         Window window = waitDialog.getWindow();
-                        if (window != null) {
-                            window.setBackgroundDrawableResource(R.color.transparent);
-                        }
+                        window.setBackgroundDrawableResource(R.color.transparent);
                         waitDialog.show();
                     }
 
@@ -132,7 +130,7 @@ public class SettingActivity extends BaseActivity {
 
                     @Override
                     public void onNext(@NonNull String s) {
-                        if (s != null && !s.isEmpty()) {
+                        if (!s.isEmpty()) {
                             Intent shareIntent = new Intent(Intent.ACTION_SEND);
                             shareIntent.setType("text/plain");
                             shareIntent.putExtra(Intent.EXTRA_TEXT, s);

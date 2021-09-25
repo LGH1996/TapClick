@@ -22,11 +22,12 @@
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/widget_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:ellipsize="end"
                 android:enabled="false"
                 android:singleLine="true"
                 android:textColor="@color/textColor"

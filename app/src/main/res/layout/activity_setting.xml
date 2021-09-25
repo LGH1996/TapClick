@@ -208,7 +208,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:text="请穷逼作者喝杯茶："
+                    android:text="请作者喝杯茶："
                     android:textColor="@color/textColor"
                     android:textSize="15sp" />
 

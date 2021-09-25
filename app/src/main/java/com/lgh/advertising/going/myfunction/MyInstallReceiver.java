@@ -31,7 +31,7 @@ public class MyInstallReceiver extends BroadcastReceiver {
                 if (packageName != null) {
                     DataDao dataDao = MyApplication.dataDao;
                     PackageManager packageManager = context.getPackageManager();
-                    InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager inputMethodManager = context.getSystemService(InputMethodManager.class);
 
                     if (action.equals(Intent.ACTION_PACKAGE_ADDED)) {
                         List<InputMethodInfo> inputMethodInfoList = inputMethodManager.getInputMethodList();

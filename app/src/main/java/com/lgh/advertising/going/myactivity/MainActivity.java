@@ -1,15 +1,22 @@
 package com.lgh.advertising.going.myactivity;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ProgressBar;
 
 import com.lgh.advertising.going.myfunction.MyAccessibilityService;
 import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
@@ -21,6 +28,7 @@ import com.lgh.advertising.going.mybean.LatestMessage;
 import com.lgh.advertising.going.mybean.MyAppConfig;
 import com.lgh.advertising.going.myclass.MyApplication;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -113,6 +121,27 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        mainBinding.statusImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                Settings.Secure.putString(getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, getPackageName() + File.separator + MyAccessibilityService.class.getName());
+                AlertDialog waitDialog = new AlertDialog.Builder(MainActivity.this).setView(new ProgressBar(context)).setCancelable(false).create();
+                Window window = waitDialog.getWindow();
+                window.setBackgroundDrawableResource(R.color.transparent);
+                waitDialog.show();
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshAccessibilityServiceStatus();
+                        waitDialog.dismiss();
+                    }
+                }, 2000);
+            }
+        });
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd a");
         String forUpdate = dateFormat.format(new Date());
         if (!forUpdate.equals(myAppConfig.forUpdate)) {
@@ -160,13 +189,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
-            mainBinding.statusImg.setImageResource(R.drawable.error);
-            mainBinding.statusTip.setText("无障碍服务未开启");
-        } else {
-            mainBinding.statusImg.setImageResource(R.drawable.ok);
-            mainBinding.statusTip.setText("无障碍服务已开启");
-        }
+        refreshAccessibilityServiceStatus();
     }
 
     @Override
@@ -198,6 +221,16 @@ public class MainActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0x00) {
             myAppConfig = dataDao.getMyAppConfig();
+        }
+    }
+
+    private void refreshAccessibilityServiceStatus() {
+        if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
+            mainBinding.statusImg.setImageResource(R.drawable.error);
+            mainBinding.statusTip.setText(checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED ? "可尝试点击上方图标启动无障碍服务" : "无障碍服务未开启");
+        } else {
+            mainBinding.statusImg.setImageResource(R.drawable.ok);
+            mainBinding.statusTip.setText("无障碍服务已开启");
         }
     }
 

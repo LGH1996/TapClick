@@ -29,7 +29,6 @@ import com.lgh.advertising.going.mybean.Widget;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -59,7 +58,7 @@ public class EditDataActivity extends BaseActivity {
 
         dataDao = MyApplication.dataDao;
         metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+        getDisplay().getRealMetrics(metrics);
         dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
         dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.ENGLISH);
 
@@ -206,7 +205,7 @@ public class EditDataActivity extends BaseActivity {
         } else {
             editDataBinding.coordinateLayout.setVisibility(View.VISIBLE);
         }
-        Collections.sort(coordinateList, new Comparator<Coordinate>() {
+        coordinateList.sort(new Comparator<Coordinate>() {
             @Override
             public int compare(Coordinate o1, Coordinate o2) {
                 return (int) (o2.createTime - o1.createTime);
@@ -293,7 +292,7 @@ public class EditDataActivity extends BaseActivity {
         }
         for (final Set<Widget> widgetSet : widgetSetList) {
             final List<Widget> widgetList = new ArrayList<>(widgetSet);
-            Collections.sort(widgetList, new Comparator<Widget>() {
+            widgetList.sort(new Comparator<Widget>() {
                 @Override
                 public int compare(Widget o1, Widget o2) {
                     return (int) (o2.createTime - o1.createTime);

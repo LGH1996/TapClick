@@ -145,7 +145,7 @@
             android:fadingEdgeLength="15dp"
             android:requiresFadingEdge="vertical">
 
-            <TextView
+            <me.codeboy.android.aligntextview.AlignTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"

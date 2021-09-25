@@ -22,11 +22,12 @@
                 android:textColor="@color/textColor"
                 android:textSize="12sp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/coordinate_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@null"
+                android:ellipsize="end"
                 android:enabled="false"
                 android:gravity="center_vertical"
                 android:singleLine="true"

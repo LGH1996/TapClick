@@ -1,6 +1,5 @@
 package com.lgh.advertising.going.myactivity;
 
-import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,7 +18,6 @@ import com.lgh.advertising.going.databinding.ActivityAuthorizationBinding;
 public class AuthorizationActivity extends BaseActivity {
 
     private Context context;
-    private AppOpsManager appOps;
     private PackageManager packageManager;
     private ActivityAuthorizationBinding authorizationBinding;
 
@@ -29,7 +27,6 @@ public class AuthorizationActivity extends BaseActivity {
         authorizationBinding = ActivityAuthorizationBinding.inflate(getLayoutInflater());
         setContentView(authorizationBinding.getRoot());
         context = getApplicationContext();
-        appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
         packageManager = getPackageManager();
 
         View.OnClickListener onOffClickListener = new View.OnClickListener() {
@@ -41,7 +38,7 @@ public class AuthorizationActivity extends BaseActivity {
                         startActivity(intentAccessibility);
                         break;
                     case R.id.batteryIgnore_on_off:
-                        if (((PowerManager) getSystemService(POWER_SERVICE)).isIgnoringBatteryOptimizations(getPackageName())) {
+                        if ((getSystemService(PowerManager.class)).isIgnoringBatteryOptimizations(getPackageName())) {
                             Toast.makeText(context, "忽略电池优化权限已打开", Toast.LENGTH_SHORT).show();
                         } else {
                             Intent intentBatteryIgnore = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + getPackageName()));
@@ -77,7 +74,7 @@ public class AuthorizationActivity extends BaseActivity {
         } else {
             authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ok);
         }
-        if (((PowerManager) getSystemService(POWER_SERVICE)).isIgnoringBatteryOptimizations(getPackageName())) {
+        if ((getSystemService(PowerManager.class)).isIgnoringBatteryOptimizations(getPackageName())) {
             authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.ok);
         } else {
             authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.error);

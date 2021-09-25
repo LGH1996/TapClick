@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 
     <application
         android:name=".myclass.MyApplication"
@@ -18,6 +20,7 @@
         android:roundIcon="@drawable/app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".myactivity.SettingActivity" />
         <activity android:name=".myactivity.AuthorizationActivity" />
         <activity android:name=".myactivity.AddDataActivity" />
@@ -40,8 +43,10 @@
         <activity android:name=".myactivity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
@@ -61,7 +66,6 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/configure" />
         </service>
-
         <service
             android:name=".myfunction.MyAccessibilityServiceNoGesture"
             android:enabled="true"
@@ -81,11 +85,18 @@
             android:name=".myfunction.MyScreenOffReceiver"
             android:enabled="true"
             android:exported="true" />
-
         <receiver
             android:name=".myfunction.MyInstallReceiver"
             android:enabled="true"
             android:exported="true" />
+        <receiver
+            android:name=".myfunction.MyBootCompletedReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
