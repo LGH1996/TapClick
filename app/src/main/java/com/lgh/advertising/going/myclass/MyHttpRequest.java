@@ -13,4 +13,7 @@ public interface MyHttpRequest {
     @HTTP(method = "GET", path = "https://gitee.com/lingh1996/ADGO/raw/master/shareContent")
     Observable<String> getShareContent();
 
+    @HTTP(method = "GET", path = "https://gitee.com/lingh1996/ADGO/raw/master/privacyAgreement")
+    Observable<String> getPrivacyAgreement();
+
 }

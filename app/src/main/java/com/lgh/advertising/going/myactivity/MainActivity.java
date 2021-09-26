@@ -4,20 +4,24 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ProgressBar;
 
+import com.lgh.advertising.going.databinding.ViewPrivacyAgreementBinding;
 import com.lgh.advertising.going.myfunction.MyAccessibilityService;
 import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
@@ -33,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,6 +57,7 @@ public class MainActivity extends BaseActivity {
     private LayoutInflater inflater;
     private boolean startActivity;
     private ActivityMainBinding mainBinding;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,7 @@ public class MainActivity extends BaseActivity {
         context = getApplicationContext();
         dataDao = MyApplication.dataDao;
         myAppConfig = MyApplication.myAppConfig;
+        sharedPreferences = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
         if (myAppConfig == null) {
             myAppConfig = new MyAppConfig();
@@ -142,47 +149,16 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd a");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH", Locale.getDefault());
         String forUpdate = dateFormat.format(new Date());
         if (!forUpdate.equals(myAppConfig.forUpdate)) {
             myAppConfig.forUpdate = forUpdate;
             dataDao.updateMyAppConfig(myAppConfig);
+            showUpdateInfo();
+        }
 
-            Observable<LatestMessage> observable = MyApplication.myHttpRequest.getLatestMessage();
-            observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<LatestMessage>() {
-                @Override
-                public void onSubscribe(@NonNull Disposable d) {
-                }
-
-                @Override
-                public void onNext(@NonNull LatestMessage latestMessage) {
-                    try {
-                        int versionCode = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionCode;
-                        String appName = latestMessage.assets.get(0).name;
-                        Matcher matcher = Pattern.compile("\\d+").matcher(appName);
-                        if (matcher.find()) {
-                            int newVersion = Integer.parseInt(matcher.group());
-                            if (newVersion > versionCode) {
-                                Intent intent = new Intent(context, UpdateActivity.class);
-                                intent.putExtra("updateMessage", latestMessage.body);
-                                intent.putExtra("updateUrl", latestMessage.assets.get(0).browser_download_url);
-                                startActivity(intent);
-                            }
-                        }
-                    } catch (Throwable e) {
-//                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onError(@NonNull Throwable e) {
-//                    e.printStackTrace();
-                }
-
-                @Override
-                public void onComplete() {
-                }
-            });
+        if (sharedPreferences.getBoolean("isFirstStart", true)) {
+            showPrivacyAgreement();
         }
     }
 
@@ -232,6 +208,92 @@ public class MainActivity extends BaseActivity {
             mainBinding.statusImg.setImageResource(R.drawable.ok);
             mainBinding.statusTip.setText("无障碍服务已开启");
         }
+    }
+
+    private void showUpdateInfo() {
+        Observable<LatestMessage> observable = MyApplication.myHttpRequest.getLatestMessage();
+        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<LatestMessage>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+            }
+
+            @Override
+            public void onNext(@NonNull LatestMessage latestMessage) {
+                try {
+                    int versionCode = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionCode;
+                    String appName = latestMessage.assets.get(0).name;
+                    Matcher matcher = Pattern.compile("\\d+").matcher(appName);
+                    if (matcher.find()) {
+                        int newVersion = Integer.parseInt(matcher.group());
+                        if (newVersion > versionCode) {
+                            Intent intent = new Intent(context, UpdateActivity.class);
+                            intent.putExtra("updateMessage", latestMessage.body);
+                            intent.putExtra("updateUrl", latestMessage.assets.get(0).browser_download_url);
+                            startActivity(intent);
+                        }
+                    }
+                } catch (Throwable e) {
+//                        e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+//                    e.printStackTrace();
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        });
+    }
+
+    private void showPrivacyAgreement() {
+        Observable<String> observable = MyApplication.myHttpRequest.getPrivacyAgreement();
+        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+            }
+
+            @Override
+            public void onNext(@NonNull String str) {
+                ViewPrivacyAgreementBinding privacyAgreementBinding = ViewPrivacyAgreementBinding.inflate(getLayoutInflater());
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setCancelable(false).setView(privacyAgreementBinding.getRoot()).create();
+                privacyAgreementBinding.content.setText(str);
+                privacyAgreementBinding.sure.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sharedPreferences.edit().putBoolean("isFirstStart", false).apply();
+                        alertDialog.dismiss();
+                    }
+                });
+                privacyAgreementBinding.cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                        finishAndRemoveTask();
+                    }
+                });
+                Window window = alertDialog.getWindow();
+                window.setBackgroundDrawableResource(R.drawable.add_data_background);
+                alertDialog.show();
+                WindowManager.LayoutParams lp = window.getAttributes();
+                DisplayMetrics metrics = new DisplayMetrics();
+                getDisplay().getRealMetrics(metrics);
+                lp.width = metrics.widthPixels / 5 * 4;
+                lp.height = metrics.heightPixels / 5 * 3;
+                window.setAttributes(lp);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+//                    e.printStackTrace();
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        });
     }
 
     static class Resource {

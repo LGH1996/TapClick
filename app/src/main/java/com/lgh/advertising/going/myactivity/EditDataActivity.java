@@ -59,8 +59,8 @@ public class EditDataActivity extends BaseActivity {
         dataDao = MyApplication.dataDao;
         metrics = new DisplayMetrics();
         getDisplay().getRealMetrics(metrics);
-        dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.ENGLISH);
-        dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.ENGLISH);
+        dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
+        dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.getDefault());
 
         LayoutTransition transition = new LayoutTransition();
         transition.enableTransitionType(LayoutTransition.CHANGING);
@@ -83,9 +83,7 @@ public class EditDataActivity extends BaseActivity {
                 questionBinding.questionAnswer.setText(Html.fromHtml(getString(strId), Html.FROM_HTML_MODE_COMPACT));
                 AlertDialog alertDialog = new AlertDialog.Builder(EditDataActivity.this).setView(questionBinding.getRoot()).setPositiveButton("确定", null).create();
                 Window window = alertDialog.getWindow();
-                if (window != null) {
-                    window.setBackgroundDrawableResource(R.drawable.add_data_background);
-                }
+                window.setBackgroundDrawableResource(R.drawable.add_data_background);
                 alertDialog.show();
             }
         }
