@@ -131,7 +131,7 @@ public class MainActivity extends BaseActivity {
         mainBinding.statusImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) != PackageManager.PERMISSION_GRANTED) {
+                if (checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) != PackageManager.PERMISSION_GRANTED || isAccessibilityServiceRunning()) {
                     return;
                 }
                 Settings.Secure.putString(getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, getPackageName() + File.separator + MyAccessibilityService.class.getName());
@@ -201,12 +201,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void refreshAccessibilityServiceStatus() {
-        if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
-            mainBinding.statusImg.setImageResource(R.drawable.error);
-            mainBinding.statusTip.setText(checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED ? "可尝试点击上方图标启动无障碍服务" : "无障碍服务未开启");
-        } else {
+        if (isAccessibilityServiceRunning()) {
             mainBinding.statusImg.setImageResource(R.drawable.ok);
             mainBinding.statusTip.setText("无障碍服务已开启");
+        } else {
+            mainBinding.statusImg.setImageResource(R.drawable.error);
+            mainBinding.statusTip.setText(checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED ? "点击图标开启无障碍服务" : "无障碍服务未开启");
         }
     }
 
@@ -257,32 +257,36 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onNext(@NonNull String str) {
-                ViewPrivacyAgreementBinding privacyAgreementBinding = ViewPrivacyAgreementBinding.inflate(getLayoutInflater());
-                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setCancelable(false).setView(privacyAgreementBinding.getRoot()).create();
-                privacyAgreementBinding.content.setText(str);
-                privacyAgreementBinding.sure.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sharedPreferences.edit().putBoolean("isFirstStart", false).apply();
-                        alertDialog.dismiss();
-                    }
-                });
-                privacyAgreementBinding.cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                        finishAndRemoveTask();
-                    }
-                });
-                Window window = alertDialog.getWindow();
-                window.setBackgroundDrawableResource(R.drawable.add_data_background);
-                alertDialog.show();
-                WindowManager.LayoutParams lp = window.getAttributes();
-                DisplayMetrics metrics = new DisplayMetrics();
-                getDisplay().getRealMetrics(metrics);
-                lp.width = metrics.widthPixels / 5 * 4;
-                lp.height = metrics.heightPixels / 5 * 3;
-                window.setAttributes(lp);
+                try {
+                    ViewPrivacyAgreementBinding privacyAgreementBinding = ViewPrivacyAgreementBinding.inflate(getLayoutInflater());
+                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setCancelable(false).setView(privacyAgreementBinding.getRoot()).create();
+                    privacyAgreementBinding.content.setText(str);
+                    privacyAgreementBinding.sure.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sharedPreferences.edit().putBoolean("isFirstStart", false).apply();
+                            alertDialog.dismiss();
+                        }
+                    });
+                    privacyAgreementBinding.cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alertDialog.dismiss();
+                            finishAndRemoveTask();
+                        }
+                    });
+                    Window window = alertDialog.getWindow();
+                    window.setBackgroundDrawableResource(R.drawable.add_data_background);
+                    alertDialog.show();
+                    WindowManager.LayoutParams lp = window.getAttributes();
+                    DisplayMetrics metrics = new DisplayMetrics();
+                    getDisplay().getRealMetrics(metrics);
+                    lp.width = metrics.widthPixels / 5 * 4;
+                    lp.height = metrics.heightPixels / 5 * 3;
+                    window.setAttributes(lp);
+                } catch (Throwable e) {
+//                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -294,6 +298,10 @@ public class MainActivity extends BaseActivity {
             public void onComplete() {
             }
         });
+    }
+
+    private boolean isAccessibilityServiceRunning() {
+        return MyAccessibilityService.mainFunction != null || MyAccessibilityServiceNoGesture.mainFunction != null;
     }
 
     static class Resource {
