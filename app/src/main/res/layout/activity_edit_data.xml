@@ -67,7 +67,6 @@
                             android:layout_height="25dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:alpha="0.1"
                             android:background="@drawable/question" />
                     </RelativeLayout>
 
@@ -119,7 +118,6 @@
                             android:layout_height="25dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:alpha="0.1"
                             android:background="@drawable/question" />
                     </RelativeLayout>
 
@@ -169,7 +167,6 @@
                             android:layout_height="25dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:alpha="0.1"
                             android:background="@drawable/question" />
                     </RelativeLayout>
 
@@ -219,7 +216,6 @@
                             android:layout_height="25dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:alpha="0.1"
                             android:background="@drawable/question" />
                     </RelativeLayout>
 

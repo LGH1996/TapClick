@@ -279,8 +279,7 @@ public class MainActivity extends BaseActivity {
                     window.setBackgroundDrawableResource(R.drawable.add_data_background);
                     alertDialog.show();
                     WindowManager.LayoutParams lp = window.getAttributes();
-                    DisplayMetrics metrics = new DisplayMetrics();
-                    getDisplay().getRealMetrics(metrics);
+                    DisplayMetrics metrics = getResources().getDisplayMetrics();
                     lp.width = metrics.widthPixels / 5 * 4;
                     lp.height = metrics.heightPixels / 5 * 3;
                     window.setAttributes(lp);

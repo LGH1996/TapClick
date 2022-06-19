@@ -57,8 +57,7 @@ public class EditDataActivity extends BaseActivity {
         appDescribe = MyApplication.appDescribe;
 
         dataDao = MyApplication.dataDao;
-        metrics = new DisplayMetrics();
-        getDisplay().getRealMetrics(metrics);
+        metrics = getResources().getDisplayMetrics();
         dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
         dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.getDefault());
 

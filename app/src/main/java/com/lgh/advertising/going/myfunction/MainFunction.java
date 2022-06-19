@@ -270,8 +270,7 @@ public class MainFunction {
     public void onConfigurationChanged(Configuration newConfig) {
         try {
             if (addDataBinding != null && viewClickPosition != null && widgetSelectBinding != null) {
-                DisplayMetrics metrics = new DisplayMetrics();
-                service.getDisplay().getRealMetrics(metrics);
+                DisplayMetrics metrics = service.getResources().getDisplayMetrics();
                 aParams.x = (metrics.widthPixels - aParams.width) / 2;
                 aParams.y = metrics.heightPixels - aParams.height;
                 bParams.width = metrics.widthPixels;
@@ -455,15 +454,11 @@ public class MainFunction {
      * 模拟
      * 点击
      */
-    private boolean click(int X, int Y, long start_time, long duration) {
+    private boolean click(int X, int Y, long startTime, long duration) {
         Path path = new Path();
         path.moveTo(X, Y);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            GestureDescription.Builder builder = new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path, start_time, duration));
-            return service.dispatchGesture(builder.build(), null, null);
-        } else {
-            return false;
-        }
+        GestureDescription.Builder builder = new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path, startTime, duration));
+        return service.dispatchGesture(builder.build(), null, null);
     }
 
     /**
@@ -479,9 +474,7 @@ public class MainFunction {
      * 避免无障碍服务冲突
      */
     public void closeService() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            service.disableSelf();
-        }
+        service.disableSelf();
     }
 
     /**
@@ -563,8 +556,7 @@ public class MainFunction {
             viewClickPosition = new ImageView(service);
             viewClickPosition.setImageResource(R.drawable.p);
 
-            final DisplayMetrics metrics = new DisplayMetrics();
-            service.getDisplay().getRealMetrics(metrics);
+            DisplayMetrics metrics = service.getResources().getDisplayMetrics();
             int width = Math.min(metrics.heightPixels, metrics.widthPixels);
             int height = Math.max(metrics.heightPixels, metrics.widthPixels);
 
@@ -600,7 +592,7 @@ public class MainFunction {
 
             addDataBinding.getRoot().setOnTouchListener(new View.OnTouchListener() {
                 int startX = 0, startY = 0, x = 0, y = 0;
-                ScheduledFuture future = executorService.schedule(new Runnable() {
+                ScheduledFuture<?> future = executorService.schedule(new Runnable() {
                     @Override
                     public void run() {
                     }
@@ -610,13 +602,13 @@ public class MainFunction {
                 public boolean onTouch(View v, MotionEvent event) {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
+                            DisplayMetrics metrics = service.getResources().getDisplayMetrics();
                             startX = x = Math.round(event.getRawX());
                             startY = y = Math.round(event.getRawY());
-                            service.getDisplay().getRealMetrics(metrics);
-                            aParams.x = aParams.x < 0 ? 0 : aParams.x;
-                            aParams.x = aParams.x > metrics.widthPixels - aParams.width ? metrics.widthPixels - aParams.width : aParams.x;
-                            aParams.y = aParams.y < 0 ? 0 : aParams.y;
-                            aParams.y = aParams.y > metrics.heightPixels - aParams.height ? metrics.heightPixels - aParams.height : aParams.y;
+                            aParams.x = Math.max(aParams.x, 0);
+                            aParams.x = Math.min(aParams.x, metrics.widthPixels - aParams.width);
+                            aParams.y = Math.max(aParams.y, 0);
+                            aParams.y = Math.min(aParams.y, metrics.heightPixels - aParams.height);
                             future = executorService.schedule(new Runnable() {
                                 @Override
                                 public void run() {
@@ -649,7 +641,10 @@ public class MainFunction {
                 }
             });
             viewClickPosition.setOnTouchListener(new View.OnTouchListener() {
-                int x = 0, y = 0, width = cParams.width / 2, height = cParams.height / 2;
+                int x = 0;
+                int y = 0;
+                final int width = cParams.width / 2;
+                final int height = cParams.height / 2;
 
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
