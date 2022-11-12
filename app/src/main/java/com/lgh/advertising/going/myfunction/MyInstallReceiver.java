@@ -49,7 +49,7 @@ public class MyInstallReceiver extends BroadcastReceiver {
                             List<ResolveInfo> homeLaunchList = packageManager.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL);
                             for (ResolveInfo e : homeLaunchList) {
                                 if (packageName.equals(e.activityInfo.packageName)) {
-                                    appDescribe.on_off = false;
+                                    appDescribe.onOff = false;
                                 }
                             }
                             AutoFinder autoFinder = new AutoFinder();

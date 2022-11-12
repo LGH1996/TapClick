@@ -44,12 +44,14 @@ import com.lgh.advertising.going.mybean.Widget;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -57,6 +59,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * adb shell pm grant com.lgh.advertising.going android.permission.WRITE_SECURE_SETTINGS
@@ -105,6 +108,7 @@ public class MainFunction {
             executorService = Executors.newSingleThreadScheduledExecutor();
             serviceInfo = service.getServiceInfo();
             dataDao = MyApplication.dataDao;
+            appDescribeMap = new HashMap<>();
             screenOffReceiver = new MyScreenOffReceiver();
             service.registerReceiver(screenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
             installReceiver = new MyInstallReceiver();
@@ -133,6 +137,9 @@ public class MainFunction {
         try {
             switch (event.getEventType()) {
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
+                    if (!event.isFullScreen()) {
+                        break;
+                    }
                     AccessibilityNodeInfo root = service.getRootInActiveWindow();
                     CharSequence temPackage = event.getPackageName();
                     CharSequence temClass = event.getClassName();
@@ -142,7 +149,7 @@ public class MainFunction {
                         appDescribe = appDescribeMap.get(packageName);
                         if (appDescribe != null) {
                             currentPackage = packageName;
-                            if (appDescribe.on_off) {
+                            if (appDescribe.onOff) {
                                 futureCoordinate.cancel(false);
                                 futureWidget.cancel(false);
                                 futureAutoFinder.cancel(false);
@@ -175,21 +182,17 @@ public class MainFunction {
                                     }, appDescribe.widgetRetrieveTime, TimeUnit.MILLISECONDS);
                                 }
 
-                                if (onOffAutoFinder) {
-                                    serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                    service.setServiceInfo(serviceInfo);
-                                    if (!appDescribe.autoFinderRetrieveAllTime) {
-                                        futureAutoFinder = executorService.schedule(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                onOffAutoFinder = false;
-                                                if (!onOffWidget) {
-                                                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                                    service.setServiceInfo(serviceInfo);
-                                                }
+                                if (onOffAutoFinder && !appDescribe.autoFinderRetrieveAllTime) {
+                                    futureAutoFinder = executorService.schedule(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            onOffAutoFinder = false;
+                                            if (!onOffWidget) {
+                                                serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                                service.setServiceInfo(serviceInfo);
                                             }
-                                        }, appDescribe.autoFinderRetrieveTime, TimeUnit.MILLISECONDS);
-                                    }
+                                        }
+                                    }, appDescribe.autoFinderRetrieveTime, TimeUnit.MILLISECONDS);
                                 }
 
                             } else {
@@ -227,16 +230,25 @@ public class MainFunction {
                                         }, coordinate.clickDelay, coordinate.clickInterval, TimeUnit.MILLISECONDS);
                                     }
                                 }
+
+                                if (onOffAutoFinder) {
+                                    serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                    service.setServiceInfo(serviceInfo);
+                                }
+
                                 if (onOffWidget) {
                                     widgetSet = appDescribe.widgetSetMap.get(activityName);
                                     alreadyClickSet = new HashSet<>();
                                     if (widgetSet != null) {
                                         serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                                         service.setServiceInfo(serviceInfo);
-                                    } else if (!onOffAutoFinder) {
-                                        serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                        service.setServiceInfo(serviceInfo);
                                     }
+                                }
+
+                                if ((!onOffAutoFinder && !onOffWidget)
+                                        || ((widgetSet == null || widgetSet.isEmpty()) && appDescribe.autoFinder.keywordList.isEmpty())) {
+                                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                    service.setServiceInfo(serviceInfo);
                                 }
                             }
                         }
@@ -270,7 +282,8 @@ public class MainFunction {
     public void onConfigurationChanged(Configuration newConfig) {
         try {
             if (addDataBinding != null && viewClickPosition != null && widgetSelectBinding != null) {
-                DisplayMetrics metrics = service.getResources().getDisplayMetrics();
+                DisplayMetrics metrics = new DisplayMetrics();
+                windowManager.getDefaultDisplay().getRealMetrics(metrics);
                 aParams.x = (metrics.widthPixels - aParams.width) / 2;
                 aParams.y = metrics.heightPixels - aParams.height;
                 bParams.width = metrics.widthPixels;
@@ -342,7 +355,7 @@ public class MainFunction {
                     }, autoFinder.clickDelay, TimeUnit.MILLISECONDS);
                     if (++autoRetrieveNumber >= autoFinder.retrieveNumber) {
                         onOffAutoFinder = false;
-                        if (!onOffWidget) {
+                        if (!onOffWidget || widgetSet == null || widgetSet.isEmpty()) {
                             serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                             service.setServiceInfo(serviceInfo);
                         }
@@ -490,42 +503,58 @@ public class MainFunction {
      */
     private void getRunningData() {
         try {
-            appDescribeMap = new HashMap<>();
-            Set<String> packageInstall = new HashSet<>();
-            Set<String> packageOff = new HashSet<>();
-            Set<String> packageRemove = new HashSet<>();
-            List<ResolveInfo> resolveInfoList = packageManager.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL);
-            for (ResolveInfo e : resolveInfoList) {
-                packageOff.add(e.activityInfo.packageName);
-            }
-            List<InputMethodInfo> inputMethodInfoList = (service.getSystemService(InputMethodManager.class)).getInputMethodList();
-            for (InputMethodInfo e : inputMethodInfoList) {
-                packageRemove.add(e.getPackageName());
-            }
-            packageOff.add(service.getPackageName());
-            packageRemove.add("com.android.systemui");
-            resolveInfoList.addAll(packageManager.queryIntentActivities(new Intent(Intent.ACTION_VIEW).setDataAndType(Uri.fromFile(new File("install.apk")), "application/vnd.android.package-archive"), PackageManager.MATCH_ALL));
-            resolveInfoList.addAll(packageManager.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER), PackageManager.MATCH_ALL));
+            Set<String> pkgNormalSet = new HashSet<>();
+            Set<String> pkgOffSet = new HashSet<>();
+            Set<String> pkgNeedRemovedSet = new HashSet<>();
+            //所有存在activity的应用
+            Set<String> pkgHasActivitySet = packageManager
+                    .getInstalledPackages(PackageManager.GET_ACTIVITIES)
+                    .stream()
+                    .filter(e -> e.activities != null)
+                    .map(e -> e.packageName)
+                    .collect(Collectors.toSet());
+            pkgNormalSet.addAll(pkgHasActivitySet);
+            //桌面和本应用需要默认关闭
+            Set<String> pkgHasHomeSet = packageManager
+                    .queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL)
+                    .stream()
+                    .map(e -> e.activityInfo.packageName)
+                    .collect(Collectors.toSet());
+            pkgOffSet.addAll(pkgHasHomeSet);
+            pkgOffSet.add(service.getPackageName());
+            //输入法、systemUI相关的应用是需要移除的，不做检测
+            Set<String> pkgInputMethodSet = service
+                    .getSystemService(InputMethodManager.class)
+                    .getInputMethodList()
+                    .stream()
+                    .map(InputMethodInfo::getPackageName)
+                    .collect(Collectors.toSet());
+            pkgNeedRemovedSet.addAll(pkgInputMethodSet);
+            pkgNeedRemovedSet.add("com.android.systemui");
+
             List<AppDescribe> appDescribeList = new ArrayList<>();
             List<AutoFinder> autoFinderList = new ArrayList<>();
-            for (ResolveInfo e : resolveInfoList) {
-                String packageName = e.activityInfo.packageName;
-                if (!packageRemove.contains(packageName)) {
-                    packageInstall.add(packageName);
-                    AppDescribe appDescribe = new AppDescribe();
-                    appDescribe.appName = packageManager.getApplicationLabel(e.activityInfo.applicationInfo).toString();
-                    appDescribe.appPackage = packageName;
-                    if ((e.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM || packageOff.contains(packageName)) {
-                        appDescribe.on_off = false;
-                    }
-                    appDescribeList.add(appDescribe);
-                    AutoFinder autoFinder = new AutoFinder();
-                    autoFinder.appPackage = packageName;
-                    autoFinder.keywordList = Collections.singletonList("跳过");
-                    autoFinderList.add(autoFinder);
+            for (String e : pkgNormalSet) {
+                if (pkgNeedRemovedSet.contains(e)) {
+                    continue;
                 }
+                ApplicationInfo info = packageManager.getApplicationInfo(e, PackageManager.GET_META_DATA);
+                AppDescribe appDescribe = new AppDescribe();
+                appDescribe.appName = packageManager.getApplicationLabel(info).toString();
+                appDescribe.appPackage = info.packageName;
+                if ((info.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM || pkgOffSet.contains(info.packageName)) {
+                    appDescribe.onOff = false;
+                    appDescribe.autoFinderOnOFF = false;
+                    appDescribe.coordinateOnOff = false;
+                    appDescribe.widgetOnOff = false;
+                }
+                appDescribeList.add(appDescribe);
+                AutoFinder autoFinder = new AutoFinder();
+                autoFinder.appPackage = info.packageName;
+                autoFinder.keywordList = Collections.singletonList("跳过");
+                autoFinderList.add(autoFinder);
             }
-            dataDao.deleteAppDescribeByNotIn(packageInstall);
+            dataDao.deleteAppDescribeByNotIn(pkgNormalSet);
             dataDao.insertAppDescribe(appDescribeList);
             dataDao.insertAutoFinder(autoFinderList);
             for (AppDescribe e : dataDao.getAllAppDescribes()) {
@@ -556,7 +585,8 @@ public class MainFunction {
             viewClickPosition = new ImageView(service);
             viewClickPosition.setImageResource(R.drawable.p);
 
-            DisplayMetrics metrics = service.getResources().getDisplayMetrics();
+            DisplayMetrics metrics = new DisplayMetrics();
+            windowManager.getDefaultDisplay().getRealMetrics(metrics);
             int width = Math.min(metrics.heightPixels, metrics.widthPixels);
             int height = Math.max(metrics.heightPixels, metrics.widthPixels);
 
@@ -577,7 +607,7 @@ public class MainFunction {
             bParams.gravity = Gravity.START | Gravity.TOP;
             bParams.width = metrics.widthPixels;
             bParams.height = metrics.heightPixels;
-            bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+            bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
             bParams.alpha = 0f;
 
             cParams = new WindowManager.LayoutParams();
@@ -591,7 +621,7 @@ public class MainFunction {
             cParams.alpha = 0f;
 
             addDataBinding.getRoot().setOnTouchListener(new View.OnTouchListener() {
-                int startX = 0, startY = 0, x = 0, y = 0;
+                int startRowX = 0, startRowY = 0, startLpX = 0, startLpY = 0;
                 ScheduledFuture<?> future = executorService.schedule(new Runnable() {
                     @Override
                     public void run() {
@@ -602,17 +632,14 @@ public class MainFunction {
                 public boolean onTouch(View v, MotionEvent event) {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
-                            DisplayMetrics metrics = service.getResources().getDisplayMetrics();
-                            startX = x = Math.round(event.getRawX());
-                            startY = y = Math.round(event.getRawY());
-                            aParams.x = Math.max(aParams.x, 0);
-                            aParams.x = Math.min(aParams.x, metrics.widthPixels - aParams.width);
-                            aParams.y = Math.max(aParams.y, 0);
-                            aParams.y = Math.min(aParams.y, metrics.heightPixels - aParams.height);
+                            startRowX = Math.round(event.getRawX());
+                            startRowY = Math.round(event.getRawY());
+                            startLpX = aParams.x;
+                            startLpY = aParams.y;
                             future = executorService.schedule(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (Math.abs(startX - x) < 5 && Math.abs(startY - y) < 5) {
+                                    if (Math.abs(aParams.x - startLpX) < 5 && Math.abs(aParams.y - startLpY) < 5) {
                                         Matcher matcher = Pattern.compile("(\\w|\\.)+").matcher(addDataBinding.pacName.getText().toString());
                                         if (matcher.find()) {
                                             MyApplication.appDescribe = appDescribeMap.get(matcher.group());
@@ -627,13 +654,18 @@ public class MainFunction {
                             }, 800, TimeUnit.MILLISECONDS);
                             break;
                         case MotionEvent.ACTION_MOVE:
-                            aParams.x = Math.round(aParams.x + (event.getRawX() - x));
-                            aParams.y = Math.round(aParams.y + (event.getRawY() - y));
-                            x = Math.round(event.getRawX());
-                            y = Math.round(event.getRawY());
+                            aParams.x = startLpX + (Math.round(event.getRawX()) - startRowX);
+                            aParams.y = startLpY + (Math.round(event.getRawY()) - startRowY);
                             windowManager.updateViewLayout(addDataBinding.getRoot(), aParams);
                             break;
                         case MotionEvent.ACTION_UP:
+                            DisplayMetrics metrics = new DisplayMetrics();
+                            windowManager.getDefaultDisplay().getRealMetrics(metrics);
+                            aParams.x = Math.max(aParams.x, 0);
+                            aParams.x = Math.min(aParams.x, metrics.widthPixels - aParams.width);
+                            aParams.y = Math.max(aParams.y, 0);
+                            aParams.y = Math.min(aParams.y, metrics.heightPixels - aParams.height);
+                            windowManager.updateViewLayout(addDataBinding.getRoot(), aParams);
                             future.cancel(false);
                             break;
                     }
@@ -641,8 +673,7 @@ public class MainFunction {
                 }
             });
             viewClickPosition.setOnTouchListener(new View.OnTouchListener() {
-                int x = 0;
-                int y = 0;
+                int startRowX = 0, startRowY = 0, startLpX = 0, startLpY = 0;
                 final int width = cParams.width / 2;
                 final int height = cParams.height / 2;
 
@@ -653,14 +684,14 @@ public class MainFunction {
                             addDataBinding.saveAim.setEnabled(true);
                             cParams.alpha = 0.9f;
                             windowManager.updateViewLayout(viewClickPosition, cParams);
-                            x = Math.round(event.getRawX());
-                            y = Math.round(event.getRawY());
+                            startRowX = Math.round(event.getRawX());
+                            startRowY = Math.round(event.getRawY());
+                            startLpX = cParams.x;
+                            startLpY = cParams.y;
                             break;
                         case MotionEvent.ACTION_MOVE:
-                            cParams.x = Math.round(cParams.x + (event.getRawX() - x));
-                            cParams.y = Math.round(cParams.y + (event.getRawY() - y));
-                            x = Math.round(event.getRawX());
-                            y = Math.round(event.getRawY());
+                            cParams.x = startLpX + (Math.round(event.getRawX()) - startRowX);
+                            cParams.y = startLpY + (Math.round(event.getRawY()) - startRowY);
                             windowManager.updateViewLayout(viewClickPosition, cParams);
                             coordinateSelect.appPackage = currentPackage;
                             coordinateSelect.appActivity = currentActivity;

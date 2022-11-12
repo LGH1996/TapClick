@@ -95,49 +95,6 @@
                 android:src="@drawable/forward" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/alertWindow_on_off"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@drawable/item_click"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
-
-            <ImageView
-                android:id="@+id/alert_window_on_off_img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/alert_window_forward"
-                android:layout_toEndOf="@id/alert_window_on_off_img"
-                android:gravity="center_vertical|start"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:singleLine="true"
-                android:text="应用悬浮窗权限"
-                android:textColor="@color/textColor"
-                android:textSize="20sp" />
-
-            <ImageView
-                android:id="@+id/alert_window_forward"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:alpha="0.5"
-                android:clickable="false"
-                android:focusable="false"
-                android:src="@drawable/forward" />
-        </RelativeLayout>
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -4,6 +4,7 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(indices = @Index(value = "appPackage", unique = true))
@@ -21,6 +22,6 @@ public class AutoFinder {
         this.clickOnly = false;
         this.clickDelay = 0;
         this.retrieveNumber = 1;
-        this.keywordList = null;
+        this.keywordList = new ArrayList<>();
     }
 }

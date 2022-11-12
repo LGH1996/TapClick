@@ -82,7 +82,7 @@ public class ListDataActivity extends BaseActivity {
                 appDescribeAndIconFilterList.clear();
                 if (constraint.equals("@开启")) {
                     for (AppDescribeAndIcon e : appDescribeAndIconList) {
-                        if (e.appDescribe.on_off) {
+                        if (e.appDescribe.onOff) {
                             appDescribeAndIconFilterList.add(e);
                         }
                     }
@@ -90,7 +90,7 @@ public class ListDataActivity extends BaseActivity {
                 }
                 if (constraint.equals("@关闭")) {
                     for (AppDescribeAndIcon e : appDescribeAndIconList) {
-                        if (!e.appDescribe.on_off) {
+                        if (!e.appDescribe.onOff) {
                             appDescribeAndIconFilterList.add(e);
                         }
                     }
@@ -171,7 +171,7 @@ public class ListDataActivity extends BaseActivity {
                 }
                 final AppDescribeAndIcon tem = appDescribeAndIconFilterList.get(position);
                 listItemBinding.name.setText(tem.appDescribe.appName);
-                listItemBinding.onOff.setText(tem.appDescribe.on_off ? "开启" : "关闭");
+                listItemBinding.onOff.setText(tem.appDescribe.onOff ? "开启" : "关闭");
                 listItemBinding.img.setImageDrawable(tem.icon);
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override

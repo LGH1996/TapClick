@@ -128,27 +128,6 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        mainBinding.statusImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) != PackageManager.PERMISSION_GRANTED || isAccessibilityServiceRunning()) {
-                    return;
-                }
-                Settings.Secure.putString(getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, getPackageName() + File.separator + MyAccessibilityService.class.getName());
-                AlertDialog waitDialog = new AlertDialog.Builder(MainActivity.this).setView(new ProgressBar(context)).setCancelable(false).create();
-                Window window = waitDialog.getWindow();
-                window.setBackgroundDrawableResource(R.color.transparent);
-                waitDialog.show();
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshAccessibilityServiceStatus();
-                        waitDialog.dismiss();
-                    }
-                }, 2000);
-            }
-        });
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH", Locale.getDefault());
         String forUpdate = dateFormat.format(new Date());
         if (!forUpdate.equals(myAppConfig.forUpdate)) {
@@ -279,7 +258,8 @@ public class MainActivity extends BaseActivity {
                     window.setBackgroundDrawableResource(R.drawable.add_data_background);
                     alertDialog.show();
                     WindowManager.LayoutParams lp = window.getAttributes();
-                    DisplayMetrics metrics = getResources().getDisplayMetrics();
+                    DisplayMetrics metrics = new DisplayMetrics();
+                    getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
                     lp.width = metrics.widthPixels / 5 * 4;
                     lp.height = metrics.heightPixels / 5 * 3;
                     window.setAttributes(lp);

@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -57,9 +58,10 @@ public class EditDataActivity extends BaseActivity {
         appDescribe = MyApplication.appDescribe;
 
         dataDao = MyApplication.dataDao;
-        metrics = getResources().getDisplayMetrics();
         dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
         dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.getDefault());
+        metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
 
         LayoutTransition transition = new LayoutTransition();
         transition.enableTransitionType(LayoutTransition.CHANGING);
@@ -70,7 +72,7 @@ public class EditDataActivity extends BaseActivity {
         editDataBinding.widgetLayout.setLayoutTransition(transition);
 
         class QuestionClickListener implements View.OnClickListener {
-            private int strId;
+            private final int strId;
 
             private QuestionClickListener(int strId) {
                 this.strId = strId;
@@ -92,6 +94,14 @@ public class EditDataActivity extends BaseActivity {
         editDataBinding.widgetQuestion.setOnClickListener(new QuestionClickListener(R.string.widgetQuestion));
 
         baseSettingBinding = ViewBaseSettingBinding.inflate(inflater);
+        baseSettingBinding.onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                baseSettingBinding.autoFinderSwitch.setChecked(isChecked);
+                baseSettingBinding.coordinateSwitch.setChecked(isChecked);
+                baseSettingBinding.widgetSwitch.setChecked(isChecked);
+            }
+        });
         baseSettingBinding.baseSettingDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +119,7 @@ public class EditDataActivity extends BaseActivity {
                     baseSettingBinding.baseSettingModify.setText("内容不能为空");
                     return;
                 }
-                appDescribe.on_off = baseSettingBinding.onOffSwitch.isChecked();
+                appDescribe.onOff = baseSettingBinding.onOffSwitch.isChecked();
                 appDescribe.autoFinderOnOFF = baseSettingBinding.autoFinderSwitch.isChecked();
                 appDescribe.autoFinderRetrieveTime = Integer.parseInt(autoFinderTime);
                 appDescribe.autoFinderRetrieveAllTime = baseSettingBinding.autoFinderRetrieveAllTime.isChecked();
@@ -177,7 +187,7 @@ public class EditDataActivity extends BaseActivity {
         super.onStart();
 
         baseSettingBinding.onOffName.setText(appDescribe.appName);
-        baseSettingBinding.onOffSwitch.setChecked(appDescribe.on_off);
+        baseSettingBinding.onOffSwitch.setChecked(appDescribe.onOff);
 
         baseSettingBinding.autoFinderSwitch.setChecked(appDescribe.autoFinderOnOFF);
         baseSettingBinding.autoFinderSustainTime.setText(String.valueOf(appDescribe.autoFinderRetrieveTime));
@@ -191,7 +201,7 @@ public class EditDataActivity extends BaseActivity {
         baseSettingBinding.widgetSustainTime.setText(String.valueOf(appDescribe.widgetRetrieveTime));
         baseSettingBinding.widgetRetrieveAllTime.setChecked(appDescribe.widgetRetrieveAllTime);
 
-        autoFinderBinding.retrieveKeyword.setText(appDescribe.autoFinder.keywordList == null || appDescribe.autoFinder.keywordList.isEmpty() ? "" : new Gson().toJson(appDescribe.autoFinder.keywordList));
+        autoFinderBinding.retrieveKeyword.setText(appDescribe.autoFinder.keywordList.isEmpty() ? "" : new Gson().toJson(appDescribe.autoFinder.keywordList));
         autoFinderBinding.retrieveNumber.setText(String.valueOf(appDescribe.autoFinder.retrieveNumber));
         autoFinderBinding.clickDelay.setText(String.valueOf(appDescribe.autoFinder.clickDelay));
         autoFinderBinding.clickOnly.setChecked(appDescribe.autoFinder.clickOnly);
