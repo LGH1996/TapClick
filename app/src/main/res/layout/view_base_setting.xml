@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/coordinate_on_off_layout"
+            app:layout_constraintBottom_toTopOf="@+id/widget_on_off_layout"
             app:layout_constraintEnd_toStartOf="@+id/auto_finder_time_layout"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent">
@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/coordinate_time_layout"
+            app:layout_constraintBottom_toTopOf="@+id/widget_time_layout"
             app:layout_constraintEnd_toStartOf="@+id/auto_finder_sustain_layout"
             app:layout_constraintStart_toEndOf="@+id/auto_finder_on_off_layout">
 
@@ -143,7 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/coordinate_sustain_layout"
+            app:layout_constraintBottom_toTopOf="@+id/widget_sustain_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/auto_finder_time_layout">
 
@@ -169,105 +169,12 @@
 
 
         <LinearLayout
-            android:id="@+id/coordinate_on_off_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/widget_on_off_layout"
-            app:layout_constraintEnd_toStartOf="@+id/coordinate_time_layout"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="坐标检索:"
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-
-            <Switch
-                android:id="@+id/coordinate_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:thumb="@drawable/switch_custom_thumb_selector"
-                android:track="@drawable/switch_custom_track_selector" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/coordinate_time_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/widget_time_layout"
-            app:layout_constraintEnd_toStartOf="@+id/coordinate_sustain_layout"
-            app:layout_constraintStart_toEndOf="@+id/coordinate_on_off_layout">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
-                android:text="持续毫秒:"
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-
-            <EditText
-                android:id="@+id/coordinate_sustainTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:background="@null"
-                android:ems="3"
-                android:gravity="center_vertical"
-                android:inputType="number"
-                android:maxLength="6"
-                android:singleLine="true"
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/coordinate_sustain_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/widget_sustain_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/coordinate_time_layout">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
-                android:text="保持:"
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-
-            <CheckBox
-                android:id="@+id/coordinate_retrieveAllTime"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/check_select"
-                android:button="@null"
-                android:gravity="center" />
-        </LinearLayout>
-
-
-        <LinearLayout
             android:id="@+id/widget_on_off_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/coordinate_on_off_layout"
             app:layout_constraintEnd_toStartOf="@+id/widget_time_layout"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent">
@@ -295,7 +202,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/coordinate_time_layout"
             app:layout_constraintEnd_toStartOf="@+id/widget_sustain_layout"
             app:layout_constraintStart_toEndOf="@+id/widget_on_off_layout">
 
@@ -329,7 +236,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/coordinate_sustain_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/widget_time_layout">
 
@@ -344,6 +251,99 @@
 
             <CheckBox
                 android:id="@+id/widget_retrieveAllTime"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/check_select"
+                android:button="@null"
+                android:gravity="center" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/coordinate_on_off_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/coordinate_time_layout"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="坐标检索:"
+                android:textColor="@color/textColor"
+                android:textSize="12sp" />
+
+            <Switch
+                android:id="@+id/coordinate_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:thumb="@drawable/switch_custom_thumb_selector"
+                android:track="@drawable/switch_custom_track_selector" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/coordinate_time_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/coordinate_sustain_layout"
+            app:layout_constraintStart_toEndOf="@+id/coordinate_on_off_layout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:text="持续毫秒:"
+                android:textColor="@color/textColor"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/coordinate_sustainTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:background="@null"
+                android:ems="3"
+                android:gravity="center_vertical"
+                android:inputType="number"
+                android:maxLength="6"
+                android:singleLine="true"
+                android:textColor="@color/textColor"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/coordinate_sustain_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/coordinate_time_layout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:text="保持:"
+                android:textColor="@color/textColor"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/coordinate_retrieveAllTime"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center_vertical"

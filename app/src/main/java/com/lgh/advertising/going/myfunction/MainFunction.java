@@ -4,6 +4,8 @@ import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.accessibilityservice.GestureDescription;
 import android.annotation.SuppressLint;
+import android.app.RemoteAction;
+import android.app.appsearch.StorageInfo;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
@@ -14,8 +16,12 @@ import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.net.eap.EapSessionConfig;
+import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,12 +30,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.inputmethod.CorrectionInfo;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ViewAddDataBinding;
@@ -43,6 +51,7 @@ import com.lgh.advertising.going.myclass.MyApplication;
 import com.lgh.advertising.going.mybean.Widget;
 
 import java.io.File;
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -81,7 +90,9 @@ public class MainFunction {
     private String currentPackage;
     private String currentActivity;
     private boolean onOffCoordinate, onOffWidget, onOffAutoFinder;
+    private boolean onOffCoordinateSub, onOffWidgetSub;
     private int autoRetrieveNumber;
+    private boolean widgetAllNoRepeat;
     private AccessibilityServiceInfo serviceInfo;
     private ScheduledFuture<?> futureCoordinate, futureWidget, futureAutoFinder;
     private ScheduledExecutorService executorService;
@@ -89,11 +100,17 @@ public class MainFunction {
     private Set<Widget> widgetSet;
     private MyInstallReceiver installReceiver;
     private HashSet<Widget> alreadyClickSet;
+    private Map<String, Coordinate> coordinateMap;
+    private List<String> keywordList;
+    private Map<String, Set<Widget>> widgetSetMap;
+    private Coordinate coordinate;
 
     private WindowManager.LayoutParams aParams, bParams, cParams;
     private ViewAddDataBinding addDataBinding;
     private ViewWidgetSelectBinding widgetSelectBinding;
     private ImageView viewClickPosition;
+
+    private Handler handler = new Handler();
 
     public MainFunction(AccessibilityService service) {
         this.service = service;
@@ -129,7 +146,8 @@ public class MainFunction {
                 }
             }, 0, TimeUnit.MILLISECONDS);
         } catch (Throwable throwable) {
-//            throwable.printStackTrace();
+            toastErr(throwable);
+            throwable.printStackTrace();
         }
     }
 
@@ -137,145 +155,155 @@ public class MainFunction {
         try {
             switch (event.getEventType()) {
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                    if (!event.isFullScreen()) {
-                        break;
-                    }
                     AccessibilityNodeInfo root = service.getRootInActiveWindow();
-                    CharSequence temPackage = event.getPackageName();
-                    CharSequence temClass = event.getClassName();
-                    String packageName = root != null ? root.getPackageName().toString() : temPackage != null ? temPackage.toString() : null;
-                    String activityName = temClass != null ? temClass.toString() : null;
+                    String packageName = root != null ? root.getPackageName().toString() : null;
+                    String activityName = event.getClassName().toString();
                     if (packageName != null && !packageName.equals(currentPackage)) {
+                        currentPackage = packageName;
                         appDescribe = appDescribeMap.get(packageName);
-                        if (appDescribe != null) {
-                            currentPackage = packageName;
-                            if (appDescribe.onOff) {
-                                futureCoordinate.cancel(false);
-                                futureWidget.cancel(false);
-                                futureAutoFinder.cancel(false);
-                                serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                        futureAutoFinder.cancel(false);
+                        futureWidget.cancel(false);
+                        futureCoordinate.cancel(false);
+                        serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                        service.setServiceInfo(serviceInfo);
+                        onOffAutoFinder = false;
+                        onOffWidget = false;
+                        onOffCoordinate = false;
+                        onOffWidgetSub = false;
+                        onOffCoordinateSub = false;
+                        keywordList = null;
+                        widgetSetMap = null;
+                        coordinateMap = null;
+                        autoRetrieveNumber = 0;
+                        if (appDescribe != null && appDescribe.onOff) {
+                            keywordList = appDescribe.autoFinder.keywordList;
+                            widgetSetMap = appDescribe.widgetSetMap;
+                            coordinateMap = appDescribe.coordinateMap;
+                            onOffAutoFinder = appDescribe.autoFinderOnOFF && !keywordList.isEmpty();
+                            onOffWidget = appDescribe.widgetOnOff && !widgetSetMap.isEmpty();
+                            onOffCoordinate = appDescribe.coordinateOnOff && !coordinateMap.isEmpty();
+
+                            if (onOffAutoFinder) {
+                                serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                                 service.setServiceInfo(serviceInfo);
-                                onOffCoordinate = appDescribe.coordinateOnOff;
-                                onOffWidget = appDescribe.widgetOnOff;
-                                onOffAutoFinder = appDescribe.autoFinderOnOFF;
-                                autoRetrieveNumber = 0;
+                            }
 
-                                if (onOffCoordinate && !appDescribe.coordinateRetrieveAllTime) {
-                                    futureCoordinate = executorService.schedule(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            onOffCoordinate = false;
+                            if (onOffAutoFinder && !appDescribe.autoFinderRetrieveAllTime) {
+                                futureAutoFinder = executorService.schedule(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        onOffAutoFinder = false;
+                                        if (!onOffWidgetSub) {
+                                            serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                            service.setServiceInfo(serviceInfo);
                                         }
-                                    }, appDescribe.coordinateRetrieveTime, TimeUnit.MILLISECONDS);
-                                }
+                                    }
+                                }, appDescribe.autoFinderRetrieveTime, TimeUnit.MILLISECONDS);
+                            }
 
-                                if (onOffWidget && !appDescribe.widgetRetrieveAllTime) {
-                                    futureWidget = executorService.schedule(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            onOffWidget = false;
-                                            if (!onOffAutoFinder) {
-                                                serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                                service.setServiceInfo(serviceInfo);
-                                            }
+                            if (onOffWidget && !appDescribe.widgetRetrieveAllTime) {
+                                futureWidget = executorService.schedule(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        onOffWidget = false;
+                                        onOffWidgetSub = false;
+                                        if (!onOffAutoFinder) {
+                                            serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                            service.setServiceInfo(serviceInfo);
                                         }
-                                    }, appDescribe.widgetRetrieveTime, TimeUnit.MILLISECONDS);
-                                }
+                                    }
+                                }, appDescribe.widgetRetrieveTime, TimeUnit.MILLISECONDS);
+                            }
 
-                                if (onOffAutoFinder && !appDescribe.autoFinderRetrieveAllTime) {
-                                    futureAutoFinder = executorService.schedule(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            onOffAutoFinder = false;
-                                            if (!onOffWidget) {
-                                                serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                                service.setServiceInfo(serviceInfo);
-                                            }
-                                        }
-                                    }, appDescribe.autoFinderRetrieveTime, TimeUnit.MILLISECONDS);
-                                }
-
-                            } else {
-                                if (onOffCoordinate || onOffWidget || onOffAutoFinder) {
-                                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                    service.setServiceInfo(serviceInfo);
-                                    onOffCoordinate = false;
-                                    onOffWidget = false;
-                                    onOffAutoFinder = false;
-                                    futureCoordinate.cancel(false);
-                                    futureWidget.cancel(false);
-                                    futureAutoFinder.cancel(false);
-                                }
+                            if (onOffCoordinate && !appDescribe.coordinateRetrieveAllTime) {
+                                futureCoordinate = executorService.schedule(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        onOffCoordinate = false;
+                                        onOffCoordinateSub = false;
+                                    }
+                                }, appDescribe.coordinateRetrieveTime, TimeUnit.MILLISECONDS);
                             }
                         }
                     }
-                    if (activityName != null) {
-                        if (!activityName.startsWith("android.widget.") && !activityName.startsWith("android.view.") && !activityName.equals("android.inputmethodservice.SoftInputWindow")) {
-                            currentActivity = activityName;
-                            if (appDescribe != null) {
-                                if (onOffCoordinate) {
-                                    final Coordinate coordinate = appDescribe.coordinateMap.get(activityName);
-                                    if (coordinate != null) {
-                                        executorService.scheduleAtFixedRate(new Runnable() {
-                                            int num = 0;
+                    if (!activityName.equals(currentActivity)
+                            && !activityName.startsWith("android.widget.")
+                            && !activityName.startsWith("android.view.")
+                            && !activityName.equals("android.inputmethodservice.SoftInputWindow")) {
+                        currentActivity = activityName;
+                        alreadyClickSet = new HashSet<>();
+                        onOffWidgetSub = false;
+                        onOffCoordinateSub = false;
+                        widgetAllNoRepeat = true;
+                        widgetSet = null;
+                        coordinate = null;
+                        if (!onOffAutoFinder) {
+                            serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                            service.setServiceInfo(serviceInfo);
+                        }
+                        if (appDescribe != null) {
+                            coordinate = coordinateMap != null ? coordinateMap.get(activityName) : null;
+                            widgetSet = widgetSetMap != null ? widgetSetMap.get(activityName) : null;
+                            onOffCoordinateSub = onOffCoordinate && coordinate != null;
+                            onOffWidgetSub = onOffWidget && widgetSet != null;
 
-                                            @Override
-                                            public void run() {
-                                                if (++num <= coordinate.clickNumber && currentActivity.equals(coordinate.appActivity)) {
-                                                    click(coordinate.xPosition, coordinate.yPosition, 0, 20);
-                                                } else {
-                                                    throw new RuntimeException();
-                                                }
-                                            }
-                                        }, coordinate.clickDelay, coordinate.clickInterval, TimeUnit.MILLISECONDS);
+                            if (widgetSet != null && !widgetSet.isEmpty()) {
+                                for (Widget e : widgetSet) {
+                                    if (!e.noRepeat) {
+                                        widgetAllNoRepeat = false;
+                                        break;
                                     }
                                 }
+                            }
 
-                                if (onOffAutoFinder) {
-                                    serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                    service.setServiceInfo(serviceInfo);
-                                }
+                            if (onOffWidgetSub) {
+                                serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                service.setServiceInfo(serviceInfo);
+                            }
 
-                                if (onOffWidget) {
-                                    widgetSet = appDescribe.widgetSetMap.get(activityName);
-                                    alreadyClickSet = new HashSet<>();
-                                    if (widgetSet != null) {
-                                        serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                        service.setServiceInfo(serviceInfo);
+                            if (onOffCoordinateSub) {
+                                executorService.scheduleAtFixedRate(new Runnable() {
+                                    int num = 0;
+
+                                    @Override
+                                    public void run() {
+                                        if (onOffCoordinateSub
+                                                && coordinate != null
+                                                && ++num <= coordinate.clickNumber
+                                                && currentActivity.equals(coordinate.appActivity)) {
+                                            click(coordinate.xPosition, coordinate.yPosition, 0, 20);
+                                        } else {
+                                            throw new RuntimeException();
+                                        }
                                     }
-                                }
-
-                                if ((!onOffAutoFinder && !onOffWidget)
-                                        || ((widgetSet == null || widgetSet.isEmpty()) && appDescribe.autoFinder.keywordList.isEmpty())) {
-                                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                    service.setServiceInfo(serviceInfo);
-                                }
+                                }, coordinate.clickDelay, coordinate.clickInterval, TimeUnit.MILLISECONDS);
                             }
                         }
                     }
-                    if (packageName != null && packageName.equals(currentPackage)) {
-                        if (onOffWidget && appDescribe != null && widgetSet != null) {
-                            findButtonByWidget(root, widgetSet);
-                        }
-                        if (onOffAutoFinder && appDescribe != null) {
-                            findButtonByText(root, appDescribe.autoFinder);
-                        }
+                    if (onOffAutoFinder && appDescribe != null && root != null) {
+                        findButtonByText(root, appDescribe.autoFinder);
                     }
+                    if (onOffWidgetSub && widgetSet != null && root != null) {
+                        findButtonByWidget(root, widgetSet);
+                    }
+                    Log.i("LinGH_Window", root + "");
                     break;
                 case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
                     if (event.getPackageName().equals(currentPackage)) {
                         AccessibilityNodeInfo source = event.getSource();
-                        if (onOffWidget && appDescribe != null && widgetSet != null) {
-                            findButtonByWidget(source, widgetSet);
-                        }
-                        if (onOffAutoFinder && appDescribe != null) {
+                        if (onOffAutoFinder && appDescribe != null && source != null) {
                             findButtonByText(source, appDescribe.autoFinder);
                         }
+                        if (onOffWidgetSub && widgetSet != null && source != null) {
+                            findButtonByWidget(source, widgetSet);
+                        }
+                        Log.i("LinGH_Content", source + "");
                     }
                     break;
             }
         } catch (Throwable throwable) {
-//            throwable.printStackTrace();
+            toastErr(throwable);
+            throwable.printStackTrace();
         }
     }
 
@@ -302,7 +330,8 @@ public class MainFunction {
                 windowManager.updateViewLayout(widgetSelectBinding.frame, bParams);
             }
         } catch (Throwable e) {
-//            e.printStackTrace();
+            toastErr(e);
+            e.printStackTrace();
         }
 
     }
@@ -312,7 +341,8 @@ public class MainFunction {
             service.unregisterReceiver(screenOffReceiver);
             service.unregisterReceiver(installReceiver);
         } catch (Throwable e) {
-//            e.printStackTrace();
+            toastErr(e);
+            e.printStackTrace();
         }
         return true;
     }
@@ -323,7 +353,6 @@ public class MainFunction {
      */
     private void findButtonByText(AccessibilityNodeInfo nodeInfo, final AutoFinder autoFinder) {
         try {
-            if (nodeInfo == null) return;
             for (int n = 0; n < autoFinder.keywordList.size(); n++) {
                 final List<AccessibilityNodeInfo> list = nodeInfo.findAccessibilityNodeInfosByText(autoFinder.keywordList.get(n));
                 if (!list.isEmpty()) {
@@ -355,7 +384,7 @@ public class MainFunction {
                     }, autoFinder.clickDelay, TimeUnit.MILLISECONDS);
                     if (++autoRetrieveNumber >= autoFinder.retrieveNumber) {
                         onOffAutoFinder = false;
-                        if (!onOffWidget || widgetSet == null || widgetSet.isEmpty()) {
+                        if (!onOffWidgetSub) {
                             serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                             service.setServiceInfo(serviceInfo);
                         }
@@ -364,7 +393,8 @@ public class MainFunction {
                 }
             }
         } catch (Throwable e) {
-//            e.printStackTrace();
+            toastErr(e);
+            e.printStackTrace();
         }
     }
 
@@ -373,7 +403,7 @@ public class MainFunction {
      * Widget
      * 定义的控件
      */
-    private void findButtonByWidget(AccessibilityNodeInfo root, Set<Widget> set) {
+    private void findButtonByWidget(AccessibilityNodeInfo root, Set<Widget> widgetSet) {
         try {
             int a = 0;
             int b = 1;
@@ -388,7 +418,7 @@ public class MainFunction {
                     CharSequence cId = node.getViewIdResourceName();
                     CharSequence cDescribe = node.getContentDescription();
                     CharSequence cText = node.getText();
-                    for (final Widget e : set) {
+                    for (final Widget e : widgetSet) {
                         boolean isFind = false;
                         if (temRect.equals(e.widgetRect)) {
                             isFind = true;
@@ -400,7 +430,8 @@ public class MainFunction {
                             isFind = true;
                         }
                         if (isFind) {
-                            if (!(e.noRepeat && alreadyClickSet.contains(e))) {
+                            if (!e.noRepeat || !alreadyClickSet.contains(e)) {
+                                alreadyClickSet.add(e);
                                 executorService.schedule(new Runnable() {
                                     @Override
                                     public void run() {
@@ -417,7 +448,10 @@ public class MainFunction {
                                         }
                                     }
                                 }, e.clickDelay, TimeUnit.MILLISECONDS);
-                                alreadyClickSet.add(e);
+                                if (!onOffAutoFinder && widgetAllNoRepeat && alreadyClickSet.size() >= widgetSet.size()) {
+                                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                    service.setServiceInfo(serviceInfo);
+                                }
                             }
                             break;
                         }
@@ -434,7 +468,8 @@ public class MainFunction {
                 }
             }
         } catch (Throwable e) {
-//            e.printStackTrace();
+            toastErr(e);
+            e.printStackTrace();
         }
     }
 
@@ -459,7 +494,8 @@ public class MainFunction {
                 findAllNode(tem, list);
             }
         } catch (Throwable e) {
-//            e.printStackTrace();
+            toastErr(e);
+            e.printStackTrace();
         }
     }
 
@@ -562,7 +598,8 @@ public class MainFunction {
                 appDescribeMap.put(e.appPackage, e);
             }
         } catch (Throwable e) {
-//            e.printStackTrace();
+            toastErr(e);
+            e.printStackTrace();
         }
     }
 
@@ -594,7 +631,7 @@ public class MainFunction {
             aParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
             aParams.format = PixelFormat.TRANSPARENT;
             aParams.gravity = Gravity.START | Gravity.TOP;
-            aParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+            aParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
             aParams.width = width;
             aParams.height = height / 5;
             aParams.x = (metrics.widthPixels - aParams.width) / 2;
@@ -607,7 +644,7 @@ public class MainFunction {
             bParams.gravity = Gravity.START | Gravity.TOP;
             bParams.width = metrics.widthPixels;
             bParams.height = metrics.heightPixels;
-            bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
+            bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
             bParams.alpha = 0f;
 
             cParams = new WindowManager.LayoutParams();
@@ -699,7 +736,7 @@ public class MainFunction {
                             coordinateSelect.yPosition = cParams.y + height;
                             addDataBinding.pacName.setText(coordinateSelect.appPackage);
                             addDataBinding.actName.setText(coordinateSelect.appActivity);
-                            addDataBinding.xy.setText("X轴：" + coordinateSelect.xPosition + "    " + "Y轴：" + coordinateSelect.yPosition + "    " + "(其他参数默认)");
+                            addDataBinding.xy.setText("X轴：" + String.format("%-4d", coordinateSelect.xPosition) + "    " + "Y轴：" + String.format("%-4d", coordinateSelect.yPosition));
                             break;
                         case MotionEvent.ACTION_UP:
                             cParams.alpha = 0.5f;
@@ -856,7 +893,17 @@ public class MainFunction {
             windowManager.addView(addDataBinding.getRoot(), aParams);
             windowManager.addView(viewClickPosition, cParams);
         } catch (Throwable e) {
-//            e.printStackTrace();
+            toastErr(e);
+            e.printStackTrace();
         }
+    }
+
+    private void toastErr(Throwable throwable) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(service, throwable.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
