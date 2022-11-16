@@ -237,10 +237,12 @@ public class MainFunction {
                         widgetAllNoRepeat = true;
                         widgetSet = null;
                         coordinate = null;
+
                         if (!onOffAutoFinder) {
                             serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                             service.setServiceInfo(serviceInfo);
                         }
+
                         if (appDescribe != null) {
                             coordinate = coordinateMap != null ? coordinateMap.get(activityName) : null;
                             widgetSet = widgetSetMap != null ? widgetSetMap.get(activityName) : null;
@@ -263,15 +265,13 @@ public class MainFunction {
 
                             if (onOffCoordinateSub) {
                                 executorService.scheduleAtFixedRate(new Runnable() {
-                                    int num = 0;
+                                    private final Coordinate coordinateSub = coordinate;
+                                    private int num = 0;
 
                                     @Override
                                     public void run() {
-                                        if (onOffCoordinateSub
-                                                && coordinate != null
-                                                && ++num <= coordinate.clickNumber
-                                                && currentActivity.equals(coordinate.appActivity)) {
-                                            click(coordinate.xPosition, coordinate.yPosition, 0, 20);
+                                        if (++num <= coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity)) {
+                                            click(coordinateSub.xPosition, coordinateSub.yPosition, 0, 20);
                                         } else {
                                             throw new RuntimeException();
                                         }
