@@ -181,10 +181,10 @@ public class MainActivity extends BaseActivity {
 
     private void refreshAccessibilityServiceStatus() {
         if (isAccessibilityServiceRunning()) {
-            mainBinding.statusImg.setImageResource(R.drawable.ok);
+            mainBinding.statusImg.setImageResource(R.drawable.ic_ok);
             mainBinding.statusTip.setText("无障碍服务已开启");
         } else {
-            mainBinding.statusImg.setImageResource(R.drawable.error);
+            mainBinding.statusImg.setImageResource(R.drawable.ic_error);
             mainBinding.statusTip.setText(checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED ? "点击图标开启无障碍服务" : "无障碍服务未开启");
         }
     }

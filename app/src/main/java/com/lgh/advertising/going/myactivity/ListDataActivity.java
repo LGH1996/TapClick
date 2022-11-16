@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Toast;
 
@@ -173,6 +174,16 @@ public class ListDataActivity extends BaseActivity {
                 listItemBinding.name.setText(tem.appDescribe.appName);
                 listItemBinding.onOff.setText(tem.appDescribe.onOff ? "开启" : "关闭");
                 listItemBinding.img.setImageDrawable(tem.icon);
+                listItemBinding.scOnOff.setChecked(tem.appDescribe.onOff);
+                listItemBinding.scOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        tem.appDescribe.onOff = isChecked;
+                        tem.appDescribe.autoFinderOnOFF = isChecked;
+                        tem.appDescribe.widgetOnOff = isChecked;
+                        tem.appDescribe.coordinateOnOff = isChecked;
+                    }
+                });
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

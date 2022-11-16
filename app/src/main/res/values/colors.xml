@@ -4,4 +4,6 @@
     <color name="textColor">#ff000000</color>
     <color name="transparent">#00000000</color>
     <color name="background">#ffffffff</color>
+    <color name="widgetMain">#ff30a0e0</color>
+    <color name="statusErr">#E45757</color>
 </resources>

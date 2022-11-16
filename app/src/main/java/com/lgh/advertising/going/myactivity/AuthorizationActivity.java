@@ -66,14 +66,14 @@ public class AuthorizationActivity extends BaseActivity {
             @Override
             public void run() {
                 if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
-                    authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.error);
+                    authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ic_error);
                 } else {
-                    authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ok);
+                    authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ic_ok);
                 }
                 if (getSystemService(PowerManager.class).isIgnoringBatteryOptimizations(getPackageName())) {
-                    authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.ok);
+                    authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.ic_ok);
                 } else {
-                    authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.error);
+                    authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.ic_error);
                 }
                 handler.postDelayed(this, 500);
             }

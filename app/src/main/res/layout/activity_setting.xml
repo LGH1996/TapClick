@@ -39,6 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_button"
                     android:gravity="center"
                     android:padding="1dp"
                     android:text="打开" />
@@ -64,6 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_button"
                     android:gravity="center"
                     android:padding="1dp"
                     android:text="开始" />
@@ -89,6 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_button"
                     android:gravity="center"
                     android:padding="1dp"
                     android:text="分享" />
@@ -114,6 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_button"
                     android:gravity="center"
                     android:padding="1dp"
                     android:text="前往" />
@@ -139,6 +143,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_button"
                     android:gravity="center"
                     android:padding="1dp"
                     android:text="查看" />
