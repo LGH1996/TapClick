@@ -11,10 +11,10 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 
-import com.lgh.advertising.going.myfunction.MyAccessibilityService;
-import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivityAuthorizationBinding;
+import com.lgh.advertising.going.myfunction.MyAccessibilityService;
+import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
 
 public class AuthorizationActivity extends BaseActivity {
 

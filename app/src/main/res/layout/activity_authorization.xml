@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -13,7 +14,7 @@
             android:id="@+id/accessibility_on_off"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:background="@drawable/item_click"
+            android:background="@drawable/item_bg_ripple"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="10dp"
@@ -56,7 +57,7 @@
             android:id="@+id/batteryIgnore_on_off"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:background="@drawable/item_click"
+            android:background="@drawable/item_bg_ripple"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="10dp"

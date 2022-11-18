@@ -2,9 +2,6 @@ package com.lgh.advertising.going.myactivity;
 
 import android.animation.LayoutTransition;
 import android.app.AlertDialog;
-import android.content.ComponentCallbacks;
-import android.content.Context;
-import android.content.pm.FeatureGroupInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -14,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -28,9 +24,9 @@ import com.lgh.advertising.going.databinding.ViewQuestionBinding;
 import com.lgh.advertising.going.databinding.ViewWidgetBinding;
 import com.lgh.advertising.going.mybean.AppDescribe;
 import com.lgh.advertising.going.mybean.Coordinate;
+import com.lgh.advertising.going.mybean.Widget;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
-import com.lgh.advertising.going.mybean.Widget;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +38,6 @@ import java.util.Set;
 
 public class EditDataActivity extends BaseActivity {
 
-    private Context context;
     private AppDescribe appDescribe;
     private LayoutInflater inflater;
     private DataDao dataDao;
@@ -58,7 +53,6 @@ public class EditDataActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         editDataBinding = ActivityEditDataBinding.inflate(inflater = getLayoutInflater());
         setContentView(editDataBinding.getRoot());
-        context = getApplicationContext();
         appDescribe = MyApplication.appDescribe;
 
         dataDao = MyApplication.dataDao;
@@ -195,9 +189,7 @@ public class EditDataActivity extends BaseActivity {
         baseSettingBinding.autoFinderRetrieveAllTime.setOnCheckedChangeListener(allTimeCheckedChangeListener);
         baseSettingBinding.widgetRetrieveAllTime.setOnCheckedChangeListener(allTimeCheckedChangeListener);
         baseSettingBinding.coordinateRetrieveAllTime.setOnCheckedChangeListener(allTimeCheckedChangeListener);
-
         editDataBinding.baseSettingLayout.addView(baseSettingBinding.getRoot());
-
 
         if (autoFinderBinding != null) {
             editDataBinding.autoFinderLayout.removeView(autoFinderBinding.getRoot());
@@ -270,7 +262,6 @@ public class EditDataActivity extends BaseActivity {
                 autoFinderSaveRun.run();
             }
         });
-
         editDataBinding.autoFinderLayout.addView(autoFinderBinding.getRoot());
 
         final List<Coordinate> coordinateList = new ArrayList<>(appDescribe.coordinateMap.values());
@@ -358,14 +349,12 @@ public class EditDataActivity extends BaseActivity {
                 }
             };
 
-            coordinateBinding.coordinateActivity.addTextChangedListener(coordinateTextWatcher);
             coordinateBinding.coordinateXPosition.addTextChangedListener(coordinateTextWatcher);
             coordinateBinding.coordinateYPosition.addTextChangedListener(coordinateTextWatcher);
             coordinateBinding.coordinateClickDelay.addTextChangedListener(coordinateTextWatcher);
             coordinateBinding.coordinateClickInterval.addTextChangedListener(coordinateTextWatcher);
             coordinateBinding.coordinateClickNumber.addTextChangedListener(coordinateTextWatcher);
             coordinateBinding.coordinateComment.addTextChangedListener(coordinateTextWatcher);
-            coordinateBinding.coordinateCreateTime.addTextChangedListener(coordinateTextWatcher);
 
             coordinateBinding.coordinateDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -380,7 +369,6 @@ public class EditDataActivity extends BaseActivity {
             });
             editDataBinding.coordinateLayout.addView(coordinateBinding.getRoot());
         }
-
 
         List<Set<Widget>> widgetSetList = new ArrayList<>(appDescribe.widgetSetMap.values());
         if (widgetSetList.isEmpty()) {
@@ -454,15 +442,12 @@ public class EditDataActivity extends BaseActivity {
                         widgetSaveRun.run();
                     }
                 };
-                widgetBinding.widgetActivity.addTextChangedListener(widgetTextWatcher);
-                widgetBinding.widgetClickable.addTextChangedListener(widgetTextWatcher);
-                widgetBinding.widgetRect.addTextChangedListener(widgetTextWatcher);
+
                 widgetBinding.widgetId.addTextChangedListener(widgetTextWatcher);
                 widgetBinding.widgetDescribe.addTextChangedListener(widgetTextWatcher);
                 widgetBinding.widgetText.addTextChangedListener(widgetTextWatcher);
                 widgetBinding.widgetClickDelay.addTextChangedListener(widgetTextWatcher);
                 widgetBinding.widgetComment.addTextChangedListener(widgetTextWatcher);
-                widgetBinding.widgetCreateTime.addTextChangedListener(widgetTextWatcher);
 
                 CompoundButton.OnCheckedChangeListener widgetCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
                     @Override

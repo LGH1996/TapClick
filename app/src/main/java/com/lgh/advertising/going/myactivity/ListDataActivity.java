@@ -17,24 +17,22 @@ import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Toast;
 
-import com.lgh.advertising.going.myfunction.MyAccessibilityService;
-import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.databinding.ActivityListDataBinding;
 import com.lgh.advertising.going.databinding.ViewListItemBinding;
 import com.lgh.advertising.going.databinding.ViewSearchBinding;
 import com.lgh.advertising.going.mybean.AppDescribe;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
+import com.lgh.advertising.going.myfunction.MyAccessibilityService;
+import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;

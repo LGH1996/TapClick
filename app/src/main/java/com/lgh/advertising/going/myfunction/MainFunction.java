@@ -4,24 +4,15 @@ import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.accessibilityservice.GestureDescription;
 import android.annotation.SuppressLint;
-import android.app.RemoteAction;
-import android.app.appsearch.StorageInfo;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
-import android.net.Uri;
-import android.net.eap.EapSessionConfig;
-import android.net.wifi.WifiManager;
-import android.os.Build;
-import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,14 +21,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.view.inputmethod.CorrectionInfo;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ViewAddDataBinding;
@@ -46,21 +35,17 @@ import com.lgh.advertising.going.myactivity.EditDataActivity;
 import com.lgh.advertising.going.mybean.AppDescribe;
 import com.lgh.advertising.going.mybean.AutoFinder;
 import com.lgh.advertising.going.mybean.Coordinate;
+import com.lgh.advertising.going.mybean.Widget;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
-import com.lgh.advertising.going.mybean.Widget;
 
-import java.io.File;
-import java.security.spec.ECField;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -81,12 +66,12 @@ import java.util.stream.Collectors;
 
 public class MainFunction {
 
+    private final AccessibilityService service;
     private WindowManager windowManager;
     private PackageManager packageManager;
     private DataDao dataDao;
     private Map<String, AppDescribe> appDescribeMap;
     private AppDescribe appDescribe;
-    private final AccessibilityService service;
     private String currentPackage;
     private String currentActivity;
     private boolean onOffCoordinate, onOffWidget, onOffAutoFinder;
@@ -109,8 +94,6 @@ public class MainFunction {
     private ViewAddDataBinding addDataBinding;
     private ViewWidgetSelectBinding widgetSelectBinding;
     private ImageView viewClickPosition;
-
-    private Handler handler = new Handler();
 
     public MainFunction(AccessibilityService service) {
         this.service = service;
@@ -146,7 +129,6 @@ public class MainFunction {
                 }
             }, 0, TimeUnit.MILLISECONDS);
         } catch (Throwable throwable) {
-            toastErr(throwable);
             throwable.printStackTrace();
         }
     }
@@ -157,7 +139,7 @@ public class MainFunction {
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
                     AccessibilityNodeInfo root = service.getRootInActiveWindow();
                     String packageName = root != null ? root.getPackageName().toString() : null;
-                    String activityName = event.getClassName().toString();
+                    String activityName = event.getClassName() != null ? event.getClassName().toString() : null;
                     if (packageName != null && !packageName.equals(currentPackage)) {
                         currentPackage = packageName;
                         appDescribe = appDescribeMap.get(packageName);
@@ -226,7 +208,8 @@ public class MainFunction {
                             }
                         }
                     }
-                    if (!activityName.equals(currentActivity)
+                    if (activityName != null
+                            && !activityName.equals(currentActivity)
                             && !activityName.startsWith("android.widget.")
                             && !activityName.startsWith("android.view.")
                             && !activityName.equals("android.inputmethodservice.SoftInputWindow")) {
@@ -286,7 +269,6 @@ public class MainFunction {
                     if (onOffWidgetSub && widgetSet != null && root != null) {
                         findButtonByWidget(root, widgetSet);
                     }
-                    Log.i("LinGH_Window", root + "");
                     break;
                 case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
                     if (event.getPackageName().equals(currentPackage)) {
@@ -297,12 +279,10 @@ public class MainFunction {
                         if (onOffWidgetSub && widgetSet != null && source != null) {
                             findButtonByWidget(source, widgetSet);
                         }
-                        Log.i("LinGH_Content", source + "");
                     }
                     break;
             }
         } catch (Throwable throwable) {
-            toastErr(throwable);
             throwable.printStackTrace();
         }
     }
@@ -330,7 +310,6 @@ public class MainFunction {
                 windowManager.updateViewLayout(widgetSelectBinding.frame, bParams);
             }
         } catch (Throwable e) {
-            toastErr(e);
             e.printStackTrace();
         }
 
@@ -341,7 +320,6 @@ public class MainFunction {
             service.unregisterReceiver(screenOffReceiver);
             service.unregisterReceiver(installReceiver);
         } catch (Throwable e) {
-            toastErr(e);
             e.printStackTrace();
         }
         return true;
@@ -393,7 +371,6 @@ public class MainFunction {
                 }
             }
         } catch (Throwable e) {
-            toastErr(e);
             e.printStackTrace();
         }
     }
@@ -468,7 +445,6 @@ public class MainFunction {
                 }
             }
         } catch (Throwable e) {
-            toastErr(e);
             e.printStackTrace();
         }
     }
@@ -494,7 +470,6 @@ public class MainFunction {
                 findAllNode(tem, list);
             }
         } catch (Throwable e) {
-            toastErr(e);
             e.printStackTrace();
         }
     }
@@ -598,7 +573,6 @@ public class MainFunction {
                 appDescribeMap.put(e.appPackage, e);
             }
         } catch (Throwable e) {
-            toastErr(e);
             e.printStackTrace();
         }
     }
@@ -710,9 +684,9 @@ public class MainFunction {
                 }
             });
             viewClickPosition.setOnTouchListener(new View.OnTouchListener() {
-                int startRowX = 0, startRowY = 0, startLpX = 0, startLpY = 0;
                 final int width = cParams.width / 2;
                 final int height = cParams.height / 2;
+                int startRowX = 0, startRowY = 0, startLpX = 0, startLpY = 0;
 
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -893,17 +867,7 @@ public class MainFunction {
             windowManager.addView(addDataBinding.getRoot(), aParams);
             windowManager.addView(viewClickPosition, cParams);
         } catch (Throwable e) {
-            toastErr(e);
             e.printStackTrace();
         }
-    }
-
-    private void toastErr(Throwable throwable) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(service, throwable.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

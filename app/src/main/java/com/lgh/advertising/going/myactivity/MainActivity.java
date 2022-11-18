@@ -7,9 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -19,20 +16,18 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ProgressBar;
 
-import com.lgh.advertising.going.databinding.ViewPrivacyAgreementBinding;
-import com.lgh.advertising.going.myfunction.MyAccessibilityService;
-import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivityMainBinding;
 import com.lgh.advertising.going.databinding.ViewMainItemBinding;
-import com.lgh.advertising.going.myclass.DataDao;
+import com.lgh.advertising.going.databinding.ViewPrivacyAgreementBinding;
 import com.lgh.advertising.going.mybean.LatestMessage;
 import com.lgh.advertising.going.mybean.MyAppConfig;
+import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
+import com.lgh.advertising.going.myfunction.MyAccessibilityService;
+import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -261,7 +256,7 @@ public class MainActivity extends BaseActivity {
                     DisplayMetrics metrics = new DisplayMetrics();
                     getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
                     lp.width = metrics.widthPixels / 5 * 4;
-                    lp.height = metrics.heightPixels / 5 * 3;
+                    lp.height = metrics.heightPixels / 2;
                     window.setAttributes(lp);
                 } catch (Throwable e) {
 //                    e.printStackTrace();

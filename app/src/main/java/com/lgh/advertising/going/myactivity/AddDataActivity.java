@@ -6,9 +6,9 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 
+import com.lgh.advertising.going.databinding.ActivityAddDataBinding;
 import com.lgh.advertising.going.myfunction.MyAccessibilityService;
 import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
-import com.lgh.advertising.going.databinding.ActivityAddDataBinding;
 
 public class AddDataActivity extends BaseActivity {
 

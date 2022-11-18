@@ -15,9 +15,9 @@ import android.widget.Toast;
 
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivitySettingBinding;
-import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.mybean.LatestMessage;
 import com.lgh.advertising.going.mybean.MyAppConfig;
+import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
 
 import java.util.regex.Matcher;
@@ -26,7 +26,6 @@ import java.util.regex.Pattern;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
-
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
