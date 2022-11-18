@@ -21,64 +21,64 @@ public class MyInstallReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
-        try {
-            String action = intent.getAction();
-            if (action != null) {
-                String dataString = intent.getDataString();
-                String packageName = dataString != null ? dataString.substring(8) : null;
-                if (packageName != null) {
-                    DataDao dataDao = MyApplication.dataDao;
-                    PackageManager packageManager = context.getPackageManager();
-                    InputMethodManager inputMethodManager = context.getSystemService(InputMethodManager.class);
+        String action = intent.getAction();
+        if (action != null) {
+            String dataString = intent.getDataString();
+            String packageName = dataString != null ? dataString.substring(8) : null;
+            if (packageName != null) {
+                DataDao dataDao = MyApplication.dataDao;
+                PackageManager packageManager = context.getPackageManager();
+                InputMethodManager inputMethodManager = context.getSystemService(InputMethodManager.class);
 
-                    if (action.equals(Intent.ACTION_PACKAGE_ADDED)) {
-                        List<InputMethodInfo> inputMethodInfoList = inputMethodManager.getInputMethodList();
-                        for (InputMethodInfo e : inputMethodInfoList) {
-                            if (packageName.equals(e.getPackageName())) {
-                                return;
-                            }
-                        }
-                        AppDescribe appDescribe = dataDao.getAppDescribeByPackage(packageName);
-                        if (appDescribe == null) {
-                            appDescribe = new AppDescribe();
-                            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-                            appDescribe.appName = packageManager.getApplicationLabel(applicationInfo).toString();
-                            appDescribe.appPackage = packageName;
-                            List<ResolveInfo> homeLaunchList = packageManager.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL);
-                            for (ResolveInfo e : homeLaunchList) {
-                                if (packageName.equals(e.activityInfo.packageName)) {
-                                    appDescribe.onOff = false;
-                                }
-                            }
-                            AutoFinder autoFinder = new AutoFinder();
-                            autoFinder.appPackage = packageName;
-                            autoFinder.keywordList = Collections.singletonList("跳过");
-                            dataDao.insertAppDescribe(appDescribe);
-                            dataDao.insertAutoFinder(autoFinder);
-                            appDescribe.getOtherFieldsFromDatabase(dataDao);
-                            if (MyAccessibilityService.mainFunction != null) {
-                                MyAccessibilityService.mainFunction.getAppDescribeMap().put(appDescribe.appPackage, appDescribe);
-                            }
-                            if (MyAccessibilityServiceNoGesture.mainFunction != null) {
-                                MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap().put(appDescribe.appPackage, appDescribe);
-                            }
+                if (action.equals(Intent.ACTION_PACKAGE_ADDED)) {
+                    List<InputMethodInfo> inputMethodInfoList = inputMethodManager.getInputMethodList();
+                    for (InputMethodInfo e : inputMethodInfoList) {
+                        if (packageName.equals(e.getPackageName())) {
+                            return;
                         }
                     }
-                    if (action.equals(Intent.ACTION_PACKAGE_FULLY_REMOVED)) {
-                        dataDao.deleteAppDescribeByPackage(packageName);
+                    AppDescribe appDescribe = dataDao.getAppDescribeByPackage(packageName);
+                    if (appDescribe == null) {
+                        appDescribe = new AppDescribe();
+                        try {
+                            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+                            appDescribe.appName = packageManager.getApplicationLabel(applicationInfo).toString();
+                        } catch (PackageManager.NameNotFoundException e) {
+                            appDescribe.appName = "unknown";
+                            e.printStackTrace();
+                        }
+                        appDescribe.appPackage = packageName;
+                        List<ResolveInfo> homeLaunchList = packageManager.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL);
+                        for (ResolveInfo e : homeLaunchList) {
+                            if (packageName.equals(e.activityInfo.packageName)) {
+                                appDescribe.onOff = false;
+                                break;
+                            }
+                        }
+                        AutoFinder autoFinder = new AutoFinder();
+                        autoFinder.appPackage = packageName;
+                        autoFinder.keywordList = Collections.singletonList("跳过");
+                        dataDao.insertAppDescribe(appDescribe);
+                        dataDao.insertAutoFinder(autoFinder);
+                        appDescribe.getOtherFieldsFromDatabase(dataDao);
                         if (MyAccessibilityService.mainFunction != null) {
-                            MyAccessibilityService.mainFunction.getAppDescribeMap().remove(packageName);
+                            MyAccessibilityService.mainFunction.getAppDescribeMap().put(appDescribe.appPackage, appDescribe);
                         }
                         if (MyAccessibilityServiceNoGesture.mainFunction != null) {
-                            MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap().remove(packageName);
+                            MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap().put(appDescribe.appPackage, appDescribe);
                         }
                     }
                 }
+                if (action.equals(Intent.ACTION_PACKAGE_FULLY_REMOVED)) {
+                    dataDao.deleteAppDescribeByPackage(packageName);
+                    if (MyAccessibilityService.mainFunction != null) {
+                        MyAccessibilityService.mainFunction.getAppDescribeMap().remove(packageName);
+                    }
+                    if (MyAccessibilityServiceNoGesture.mainFunction != null) {
+                        MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap().remove(packageName);
+                    }
+                }
             }
-        } catch (Throwable throwable) {
-//            throwable.printStackTrace();
         }
     }
 }

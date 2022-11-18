@@ -88,7 +88,7 @@ public class SettingActivity extends BaseActivity {
                                     Toast.makeText(context, "当前已是最新版本", Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        } catch (Throwable e) {
+                        } catch (PackageManager.NameNotFoundException e) {
 //                            e.printStackTrace();
                             Toast.makeText(context, "解析版本号时出现错误", Toast.LENGTH_SHORT).show();
                         }

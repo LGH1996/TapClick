@@ -206,7 +206,7 @@ public class MainActivity extends BaseActivity {
                             startActivity(intent);
                         }
                     }
-                } catch (Throwable e) {
+                } catch (PackageManager.NameNotFoundException e) {
 //                        e.printStackTrace();
                 }
             }
@@ -231,36 +231,32 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onNext(@NonNull String str) {
-                try {
-                    ViewPrivacyAgreementBinding privacyAgreementBinding = ViewPrivacyAgreementBinding.inflate(getLayoutInflater());
-                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setCancelable(false).setView(privacyAgreementBinding.getRoot()).create();
-                    privacyAgreementBinding.content.setText(str);
-                    privacyAgreementBinding.sure.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            sharedPreferences.edit().putBoolean("isFirstStart", false).apply();
-                            alertDialog.dismiss();
-                        }
-                    });
-                    privacyAgreementBinding.cancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alertDialog.dismiss();
-                            finishAndRemoveTask();
-                        }
-                    });
-                    Window window = alertDialog.getWindow();
-                    window.setBackgroundDrawableResource(R.drawable.add_data_background);
-                    alertDialog.show();
-                    WindowManager.LayoutParams lp = window.getAttributes();
-                    DisplayMetrics metrics = new DisplayMetrics();
-                    getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
-                    lp.width = metrics.widthPixels / 5 * 4;
-                    lp.height = metrics.heightPixels / 2;
-                    window.setAttributes(lp);
-                } catch (Throwable e) {
-//                    e.printStackTrace();
-                }
+                ViewPrivacyAgreementBinding privacyAgreementBinding = ViewPrivacyAgreementBinding.inflate(getLayoutInflater());
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setCancelable(false).setView(privacyAgreementBinding.getRoot()).create();
+                privacyAgreementBinding.content.setText(str);
+                privacyAgreementBinding.sure.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sharedPreferences.edit().putBoolean("isFirstStart", false).apply();
+                        alertDialog.dismiss();
+                    }
+                });
+                privacyAgreementBinding.cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                        finishAndRemoveTask();
+                    }
+                });
+                Window window = alertDialog.getWindow();
+                window.setBackgroundDrawableResource(R.drawable.add_data_background);
+                alertDialog.show();
+                WindowManager.LayoutParams lp = window.getAttributes();
+                DisplayMetrics metrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+                lp.width = metrics.widthPixels / 5 * 4;
+                lp.height = metrics.heightPixels / 2;
+                window.setAttributes(lp);
             }
 
             @Override
