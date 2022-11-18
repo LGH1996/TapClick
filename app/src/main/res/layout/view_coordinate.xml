@@ -11,8 +11,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -35,35 +34,10 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
-                android:text="创建时间:"
-                android:textColor="@color/text_color"
-                android:textSize="12sp" />
-
-            <EditText
-                android:id="@+id/coordinate_createTime"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:enabled="false"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:textColor="@color/text_color"
-                android:textSize="12sp" />
-        </LinearLayout>
-
         <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp">
+            android:layout_marginTop="5dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -228,7 +202,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -245,6 +220,31 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="请输入该坐标的备注内容"
+                android:singleLine="true"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:text="创建时间:"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/coordinate_createTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:enabled="false"
+                android:gravity="center_vertical"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -272,18 +272,9 @@
                 android:id="@+id/coordinate_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_toStartOf="@+id/coordinate_sure"
-                android:text="删除"
-                android:textColor="@drawable/text_click_color"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/coordinate_sure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="确认"
+                android:layout_marginEnd="10dp"
+                android:text="删除"
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
         </RelativeLayout>

@@ -33,10 +33,10 @@
             android:theme="@android:style/Theme.NoDisplay" />
         <activity
             android:name=".myactivity.ListDataActivity"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".myactivity.EditDataActivity"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".myactivity.MainActivity"
             android:exported="true">

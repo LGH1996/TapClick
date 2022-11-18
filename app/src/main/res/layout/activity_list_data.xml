@@ -20,7 +20,8 @@
             android:divider="@null"
             android:fadingEdge="vertical"
             android:fadingEdgeLength="15dp"
-            android:requiresFadingEdge="vertical" />
+            android:requiresFadingEdge="vertical"
+            android:scrollbars="none" />
 
         <ProgressBar
             android:id="@+id/progress"
