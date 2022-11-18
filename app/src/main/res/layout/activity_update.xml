@@ -21,7 +21,7 @@
             android:id="@+id/deviLineTop"
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/divideLine"
+            android:background="@color/divide_line"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
@@ -39,7 +39,7 @@
             android:id="@+id/deviLineMid"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/divideLine"
+            android:background="@color/divide_line"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/sure"
             app:layout_constraintStart_toEndOf="@+id/cancel"

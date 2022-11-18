@@ -30,7 +30,7 @@
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:singleLine="true"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="25sp" />
 
         <ImageView

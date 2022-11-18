@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="包名："
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:hint="显示当前应用的包名"
             android:singleLine="true"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="活动："
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp" />
 
         <TextView
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:hint="显示当前页面的活动"
             android:singleLine="true"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="控件："
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp" />
 
         <TextView
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:hint="显示控件信息，长按快速打开规则管理页面"
             android:singleLine="true"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -114,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="坐标："
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp" />
 
         <TextView
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:hint="显示坐标信息，长按快速打开规则管理页面"
             android:singleLine="true"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp" />
 
     </LinearLayout>
@@ -141,10 +141,10 @@
             android:id="@+id/quit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/ic_button"
+            android:background="@drawable/button_selector"
             android:padding="0dp"
             android:text="退出"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/switch_wid"
@@ -155,10 +155,10 @@
             android:id="@+id/switch_wid"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/ic_button"
+            android:background="@drawable/button_selector"
             android:padding="0dp"
             android:text="显示布局"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/save_wid"
@@ -168,11 +168,11 @@
             android:id="@+id/save_wid"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/ic_button"
+            android:background="@drawable/button_selector"
             android:enabled="false"
             android:padding="0dp"
             android:text="添加控件"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/switch_aim"
@@ -183,10 +183,10 @@
             android:id="@+id/switch_aim"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/ic_button"
+            android:background="@drawable/button_selector"
             android:padding="0dp"
             android:text="显示准心"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/save_aim"
@@ -196,11 +196,11 @@
             android:id="@+id/save_aim"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/ic_button"
+            android:background="@drawable/button_selector"
             android:enabled="false"
             android:padding="0dp"
             android:text="添加坐标"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

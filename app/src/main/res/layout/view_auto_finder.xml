@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="检索字词:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -29,7 +29,7 @@
                 android:background="@null"
                 android:hint="无"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="检索次数:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -56,7 +56,7 @@
                 android:inputType="number"
                 android:maxLength="4"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="延迟点击(ms):"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -83,7 +83,7 @@
                 android:inputType="number"
                 android:maxLength="4"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="仅进行模拟点击:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <CheckBox
@@ -125,7 +125,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_toStartOf="@+id/auto_finder_delete"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <TextView
@@ -152,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="10dp"
-            android:src="@color/divideLine" />
+            android:src="@color/divide_line" />
     </LinearLayout>
 </RelativeLayout>
 

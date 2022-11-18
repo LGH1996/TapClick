@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="应用开关:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <Switch
@@ -57,7 +57,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:text="应用名称:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -69,7 +69,7 @@
                 android:enabled="false"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="字词检索:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <Switch
@@ -118,7 +118,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:text="持续毫秒:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -133,7 +133,7 @@
                 android:inputType="number"
                 android:maxLength="6"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -153,7 +153,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:text="保持:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <CheckBox
@@ -184,7 +184,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="控件检索:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <Switch
@@ -212,7 +212,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:text="持续毫秒:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -226,7 +226,7 @@
                 android:inputType="number"
                 android:maxLength="6"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -246,7 +246,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:text="保持:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <CheckBox
@@ -277,7 +277,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="坐标检索:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <Switch
@@ -305,7 +305,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:text="持续毫秒:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -319,7 +319,7 @@
                 android:inputType="number"
                 android:maxLength="6"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -339,7 +339,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:text="保持:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <CheckBox
@@ -370,7 +370,7 @@
             android:layout_marginEnd="20dp"
             android:layout_toStartOf="@+id/base_setting_delete"
             android:singleLine="true"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp" />
 
         <TextView
@@ -396,5 +396,5 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:src="@color/divideLine" />
+        android:src="@color/divide_line" />
 </LinearLayout>

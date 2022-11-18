@@ -31,7 +31,7 @@
                     android:layout_marginEnd="5dp"
                     android:gravity="center_vertical"
                     android:text="应用信息页面："
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
                 <Button
@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/ic_button"
+                    android:background="@drawable/button_selector"
                     android:gravity="center"
                     android:padding="1dp"
                     android:text="打开" />
@@ -57,7 +57,7 @@
                     android:layout_marginEnd="5dp"
                     android:gravity="center_vertical"
                     android:text="检查应用更新："
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
                 <Button
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/ic_button"
+                    android:background="@drawable/button_selector"
                     android:gravity="center"
                     android:padding="1dp"
                     android:text="开始" />
@@ -83,7 +83,7 @@
                     android:layout_marginEnd="5dp"
                     android:gravity="center_vertical"
                     android:text="分享去除水印："
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
                 <Button
@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/ic_button"
+                    android:background="@drawable/button_selector"
                     android:gravity="center"
                     android:padding="1dp"
                     android:text="分享" />
@@ -100,7 +100,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -109,7 +110,7 @@
                     android:layout_marginEnd="5dp"
                     android:gravity="center_vertical"
                     android:text="欢迎五星好评："
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
                 <Button
@@ -117,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/ic_button"
+                    android:background="@drawable/button_selector"
                     android:gravity="center"
                     android:padding="1dp"
                     android:text="前往" />
@@ -135,7 +136,7 @@
                     android:layout_marginEnd="5dp"
                     android:gravity="center_vertical"
                     android:text="相关使用说明："
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
                 <Button
@@ -143,7 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/ic_button"
+                    android:background="@drawable/button_selector"
                     android:gravity="center"
                     android:padding="1dp"
                     android:text="查看" />
@@ -159,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:text="是否在最近任务列表中自动隐藏主页："
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
                 <CheckBox
@@ -182,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:text="作者联系方式："
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
                 <ImageView
@@ -214,7 +215,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:text="请作者喝杯茶："
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
                 <ImageView

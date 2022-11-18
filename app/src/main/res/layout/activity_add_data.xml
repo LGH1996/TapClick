@@ -31,7 +31,7 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:text="点击下方的＂开始＂按键，将会出现一个用于创建规则的悬浮窗口，你可以通过该悬浮窗口添加某些页面的控件或者坐标，这样在该控件或坐标再次出现时就会自动触发程序的点击功能，所以你可以灵活运用该功能来跳过开屏广告或者关闭某些弹窗或者完成一些其他的自动点击操作。"
-                    android:textColor="@color/textColor" />
+                    android:textColor="@color/text_color" />
 
                 <me.codeboy.android.aligntextview.AlignTextView
                     android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:text="如果你添加了某个页面的控件或者坐标，则在该页面出现时程序就会自动检索该页面的内容，这也许会在一定的程度上造成卡顿，所以为了不影响体验，请合理添加控件或坐标。"
-                    android:textColor="@color/textColor" />
+                    android:textColor="@color/text_color" />
 
                 <me.codeboy.android.aligntextview.AlignTextView
                     android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:text="添加控件：点击＂显示布局＂按键，在布局分析框出现后选择相应的控件，然后点击＂添加控件＂按键即可。"
-                    android:textColor="@color/textColor" />
+                    android:textColor="@color/text_color" />
 
                 <me.codeboy.android.aligntextview.AlignTextView
                     android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:text="添加坐标：点击＂显示准心＂按键，将准心对准相应的控件中心，然后点击＂添加坐标＂按键即可。"
-                    android:textColor="@color/textColor" />
+                    android:textColor="@color/text_color" />
 
                 <me.codeboy.android.aligntextview.AlignTextView
                     android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:text="重要提示：长按出现的悬浮窗口，可以快速打开当前应用的规则管理页面。"
-                    android:textColor="@color/textColor" />
+                    android:textColor="@color/text_color" />
 
                 <me.codeboy.android.aligntextview.AlignTextView
                     android:layout_width="match_parent"
@@ -81,7 +81,7 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:text="额外说明：为了避免某些误判情况的发生，所以特意忽略了对输入法应用的检测，因此它们不会出现在规则管理的列表中，也无法为它们创建规则。"
-                    android:textColor="@color/textColor" />
+                    android:textColor="@color/text_color" />
             </LinearLayout>
         </ScrollView>
 
@@ -93,7 +93,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/ic_button"
+            android:background="@drawable/button_selector"
             android:text="开始" />
     </RelativeLayout>
 

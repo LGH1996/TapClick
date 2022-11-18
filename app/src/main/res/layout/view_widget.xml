@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="活动名:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <TextView
@@ -30,7 +30,7 @@
                 android:ellipsize="end"
                 android:enabled="false"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="创建时间:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -54,7 +54,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="Clickable:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -78,7 +78,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="Bonus:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -102,7 +102,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="Id:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -126,7 +126,7 @@
                 android:background="@null"
                 android:hint="该属性不存在"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -140,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="Describe:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -150,7 +150,7 @@
                 android:background="@null"
                 android:hint="该属性不存在"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -164,7 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="Text:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -174,7 +174,7 @@
                 android:background="@null"
                 android:hint="该属性不存在"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="延迟点击(ms):"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -200,7 +200,7 @@
                 android:inputType="number"
                 android:maxLength="4"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -214,7 +214,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="不允许重复点击:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <CheckBox
@@ -237,7 +237,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="仅进行模拟点击:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <CheckBox
@@ -260,7 +260,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="备注:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -270,7 +270,7 @@
                 android:background="@null"
                 android:hint="请输入该控件的备注内容"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -290,7 +290,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_toStartOf="@+id/widget_delete"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <TextView
@@ -317,6 +317,6 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="10dp"
-            android:src="@color/divideLine" />
+            android:src="@color/divide_line" />
     </LinearLayout>
 </RelativeLayout>

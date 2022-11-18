@@ -2,6 +2,7 @@ package com.lgh.advertising.going.myactivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.Filter;
@@ -26,11 +28,13 @@ import com.lgh.advertising.going.myclass.MyApplication;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -77,6 +81,15 @@ public class ListDataActivity extends BaseActivity {
         }
 
         ViewSearchBinding searchBinding = ViewSearchBinding.inflate(inflater);
+        List<String> searchKeyword = new ArrayList<>();
+        searchKeyword.add("@开启");
+        searchKeyword.add("@关闭");
+        searchKeyword.add("@已创建规则");
+        searchKeyword.add("@未创建规则");
+        searchKeyword.add("@系统应用");
+        searchKeyword.add("@非系统应用");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, searchKeyword);
+        searchBinding.searchBox.setAdapter(adapter);
         final Filter filter = new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
@@ -113,9 +126,34 @@ public class ListDataActivity extends BaseActivity {
                     }
                     return null;
                 }
+                if (constraint.equals("@系统应用")) {
+                    for (AppDescribeAndIcon e : appDescribeAndIconList) {
+                        try {
+                            if ((packageManager.getApplicationInfo(e.appDescribe.appPackage, PackageManager.GET_META_DATA).flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM) {
+                                appDescribeAndIconFilterList.add(e);
+                            }
+                        } catch (PackageManager.NameNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    return null;
+                }
+                if (constraint.equals("@非系统应用")) {
+                    for (AppDescribeAndIcon e : appDescribeAndIconList) {
+                        try {
+                            if ((packageManager.getApplicationInfo(e.appDescribe.appPackage, PackageManager.GET_META_DATA).flags & ApplicationInfo.FLAG_SYSTEM) != ApplicationInfo.FLAG_SYSTEM) {
+                                appDescribeAndIconFilterList.add(e);
+                            }
+                        } catch (PackageManager.NameNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    return null;
+                }
 
                 for (AppDescribeAndIcon e : appDescribeAndIconList) {
-                    if (e.appDescribe.appName.toLowerCase().contains(constraint.toString().toLowerCase())) {
+                    String str = constraint.toString().toLowerCase();
+                    if (e.appDescribe.appName.toLowerCase().contains(str) || e.appDescribe.appPackage.contains(str)) {
                         appDescribeAndIconFilterList.add(e);
                     }
                 }
@@ -142,7 +180,6 @@ public class ListDataActivity extends BaseActivity {
             }
         });
         listDataBinding.listView.addHeaderView(searchBinding.getRoot());
-
 
         baseAdapter = new BaseAdapter() {
             @Override
@@ -172,6 +209,7 @@ public class ListDataActivity extends BaseActivity {
                 }
                 final AppDescribeAndIcon tem = appDescribeAndIconFilterList.get(position);
                 listItemBinding.name.setText(tem.appDescribe.appName);
+                listItemBinding.pkg.setText(tem.appDescribe.appPackage);
                 listItemBinding.onOff.setText(tem.appDescribe.onOff ? "开启" : "关闭");
                 listItemBinding.img.setImageDrawable(tem.icon);
                 listItemBinding.scOnOff.setChecked(tem.appDescribe.onOff);

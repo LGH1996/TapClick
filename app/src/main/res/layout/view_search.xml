@@ -4,20 +4,22 @@
     android:layout_height="wrap_content"
     android:background="@color/background">
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/searchBox"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="30dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="0dp"
         android:background="@drawable/search_box"
+        android:completionThreshold="1"
+        android:dropDownVerticalOffset="15dp"
         android:gravity="center_vertical"
-        android:hint="搜索 应用名称 @开启 ＠关闭 ＠已创建规则 ＠未创建规则 ..."
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
+        android:hint="输入@按条件进行筛选..."
+        android:paddingHorizontal="8dp"
+        android:popupBackground="@drawable/search_popup_bg"
         android:singleLine="true"
         android:textCursorDrawable="@drawable/edit_cursor"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 </LinearLayout>

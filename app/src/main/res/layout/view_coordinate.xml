@@ -19,7 +19,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="5dp"
                 android:text="活动名:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <TextView
@@ -31,7 +31,7 @@
                 android:enabled="false"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -45,7 +45,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="5dp"
                 android:text="创建时间:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -56,7 +56,7 @@
                 android:enabled="false"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -81,7 +81,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
                     android:text="X轴坐标:"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="12sp" />
 
                 <EditText
@@ -94,7 +94,7 @@
                     android:inputType="number"
                     android:maxLength="4"
                     android:singleLine="true"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -114,7 +114,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
                     android:text="Y轴坐标:"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="12sp" />
 
                 <EditText
@@ -127,7 +127,7 @@
                     android:inputType="number"
                     android:maxLength="4"
                     android:singleLine="true"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -146,7 +146,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
                     android:text="延迟点击(ms):"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="12sp" />
 
                 <EditText
@@ -159,7 +159,7 @@
                     android:inputType="number"
                     android:maxLength="4"
                     android:singleLine="true"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -177,7 +177,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
                     android:text="点击间隔(ms):"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="12sp" />
 
                 <EditText
@@ -190,7 +190,7 @@
                     android:inputType="number"
                     android:maxLength="4"
                     android:singleLine="true"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -208,7 +208,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
                     android:text="点击次数:"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="12sp" />
 
                 <EditText
@@ -221,7 +221,7 @@
                     android:inputType="number"
                     android:maxLength="4"
                     android:singleLine="true"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/text_color"
                     android:textSize="12sp" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -235,7 +235,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="5dp"
                 android:text="备注:"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <EditText
@@ -246,7 +246,7 @@
                 android:gravity="center_vertical"
                 android:hint="请输入该坐标的备注内容"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -265,7 +265,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_toStartOf="@+id/coordinate_delete"
                 android:singleLine="true"
-                android:textColor="@color/textColor"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <TextView
@@ -292,6 +292,6 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="10dp"
-            android:src="@color/divideLine" />
+            android:src="@color/divide_line" />
     </LinearLayout>
 </RelativeLayout>

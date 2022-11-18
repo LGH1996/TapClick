@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:lineSpacingMultiplier="1.5"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="12sp" />
     </ScrollView>
 </LinearLayout>

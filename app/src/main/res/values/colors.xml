@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="divideLine">#25000000</color>
-    <color name="textColor">#ff000000</color>
+    <color name="divide_line">#ffe4e4e4</color>
+    <color name="text_color">#ff000000</color>
     <color name="transparent">#00000000</color>
     <color name="background">#ffffffff</color>
-    <color name="widgetMain">#ff30a0e0</color>
-    <color name="statusErr">#E45757</color>
+    <color name="main_color">#ff30a0e0</color>
+    <color name="state_err">#ffe45757</color>
+    <color name="checkbox_disable">#30000000</color>
+    <color name="switch_disable">#20000000</color>
 </resources>
