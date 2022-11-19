@@ -2,10 +2,12 @@ package com.lgh.advertising.going.myactivity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
@@ -75,6 +77,7 @@ public class MainActivity extends BaseActivity {
         source.add(new Resource("创建规则", R.drawable.add_data));
         source.add(new Resource("规则管理", R.drawable.edit_data));
         source.add(new Resource("应用设置", R.drawable.setting));
+        source.add(new Resource("使用说明", R.drawable.instructions));
         BaseAdapter baseAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
@@ -105,19 +108,34 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0:
+                    case 0: {
                         startActivity(new Intent(context, AuthorizationActivity.class));
                         break;
-                    case 1:
+                    }
+                    case 1: {
                         startActivity(new Intent(context, AddDataActivity.class));
                         break;
-                    case 2:
+                    }
+                    case 2: {
                         MainActivity.this.startActivity(new Intent(context, ListDataActivity.class));
                         break;
-                    case 3:
+                    }
+                    case 3: {
                         Intent intent = new Intent(context, SettingActivity.class);
-                        startActivityForResult(intent, 0x00);
+                        startActivityForResult(intent, 0x01);
                         break;
+                    }
+                    case 4: {
+                        int a = 7 /0;
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://gitee.com/lingh1996/ADGO/blob/master/README.md"));
+                        if (getPackageManager().resolveActivity(intent, PackageManager.MATCH_ALL) != null) {
+                            startActivity(intent);
+                        } else {
+                            startActivity(new Intent(context, MoreMessageActivity.class));
+                        }
+                        break;
+                    }
                 }
                 startActivity = true;
             }
@@ -169,7 +187,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0x00) {
+        if (requestCode == 0x01) {
             myAppConfig = dataDao.getMyAppConfig();
         }
     }

@@ -133,7 +133,7 @@ public class SettingActivity extends BaseActivity {
                             Intent shareIntent = new Intent(Intent.ACTION_SEND);
                             shareIntent.setType("text/plain");
                             shareIntent.putExtra(Intent.EXTRA_TEXT, s);
-                            startActivityForResult(Intent.createChooser(shareIntent, "请选择分享方式"), 0x00);
+                            startActivityForResult(Intent.createChooser(shareIntent, "请选择分享方式"), 0x01);
                         } else {
                             Toast.makeText(context, "暂时不支持分享", Toast.LENGTH_SHORT).show();
                         }
@@ -206,7 +206,7 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0x00) {
+        if (requestCode == 0x01) {
             if (!MyApplication.myAppConfig.isVip) {
                 MyApplication.myAppConfig.isVip = true;
                 dataDao.updateMyAppConfig(MyApplication.myAppConfig);

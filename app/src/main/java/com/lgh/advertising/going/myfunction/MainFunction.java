@@ -486,6 +486,7 @@ public class MainFunction {
     private void getRunningData() {
         Set<String> pkgNormalSet = new HashSet<>();
         Set<String> pkgOffSet = new HashSet<>();
+        Set<String> pkgOnSet = new HashSet<>();
         Set<String> pkgNeedRemovedSet = new HashSet<>();
         //所有存在activity的应用
         Set<String> pkgHasActivitySet = packageManager
@@ -503,6 +504,8 @@ public class MainFunction {
                 .collect(Collectors.toSet());
         pkgOffSet.addAll(pkgHasHomeSet);
         pkgOffSet.add(service.getPackageName());
+        //MIUI系统自带的广告服务app，需要开启
+        pkgOnSet.add("com.miui.systemAdSolution");
         //输入法、systemUI相关的应用是需要移除的，不做检测
         Set<String> pkgInputMethodSet = service
                 .getSystemService(InputMethodManager.class)
@@ -529,6 +532,12 @@ public class MainFunction {
                     appDescribe.autoFinderOnOFF = false;
                     appDescribe.coordinateOnOff = false;
                     appDescribe.widgetOnOff = false;
+                }
+                if (pkgOnSet.contains(info.packageName)) {
+                    appDescribe.onOff = true;
+                    appDescribe.autoFinderOnOFF = true;
+                    appDescribe.coordinateOnOff = true;
+                    appDescribe.widgetOnOff = true;
                 }
                 appDescribeList.add(appDescribe);
                 AutoFinder autoFinder = new AutoFinder();

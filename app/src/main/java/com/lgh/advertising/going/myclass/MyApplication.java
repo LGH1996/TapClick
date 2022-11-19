@@ -63,5 +63,7 @@ public class MyApplication extends Application {
             Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.github.com/").addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJava3CallAdapterFactory.create()).build();
             myHttpRequest = retrofit.create(MyHttpRequest.class);
         }
+
+        MyUncaughtExceptionHandler.getInstance(this).run();
     }
 }
