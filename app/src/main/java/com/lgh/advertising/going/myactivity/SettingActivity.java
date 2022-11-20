@@ -83,20 +83,22 @@ public class SettingActivity extends BaseActivity {
                                     Intent intent = new Intent(context, UpdateActivity.class);
                                     intent.putExtra("updateMessage", latestMessage.body);
                                     intent.putExtra("updateUrl", latestMessage.assets.get(0).browser_download_url);
-                                    startActivity(intent);
+                                    if (getPackageManager().resolveActivity(intent, PackageManager.MATCH_ALL) != null) {
+                                        startActivity(intent);
+                                    }
                                 } else {
                                     Toast.makeText(context, "当前已是最新版本", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         } catch (PackageManager.NameNotFoundException e) {
-//                            e.printStackTrace();
                             Toast.makeText(context, "解析版本号时出现错误", Toast.LENGTH_SHORT).show();
+                            // e.printStackTrace();
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-//                        e.printStackTrace();
+                        // e.printStackTrace();
                         Toast.makeText(context, "查询新版本时出现错误", Toast.LENGTH_SHORT).show();
                         waitDialog.dismiss();
                     }

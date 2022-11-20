@@ -10,7 +10,8 @@
         android:layout_height="match_parent"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="15dp"
-        android:requiresFadingEdge="vertical">
+        android:requiresFadingEdge="vertical"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"

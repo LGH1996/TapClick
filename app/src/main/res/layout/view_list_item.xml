@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/sc_on_off"
+                android:layout_toStartOf="@id/on_off"
                 android:layout_toEndOf="@id/img"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
@@ -61,30 +61,15 @@
             </LinearLayout>
 
             <Switch
-                android:id="@+id/sc_on_off"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:layout_toStartOf="@+id/on_off"
-                android:gravity="center_vertical"
-                android:thumb="@drawable/switch_custom_thumb_selector"
-                android:track="@drawable/switch_custom_track_selector" />
-
-            <TextView
                 android:id="@+id/on_off"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/img_forward"
-                android:alpha="0.5"
-                android:gravity="center_vertical|end"
-                android:paddingStart="5dp"
-                android:paddingEnd="15dp"
-                android:singleLine="true"
-                android:textColor="@color/text_color"
-                android:textSize="15sp"
-                android:visibility="gone" />
+                android:layout_marginEnd="25dp"
+                android:gravity="center_vertical"
+                android:thumb="@drawable/switch_custom_thumb_selector"
+                android:track="@drawable/switch_custom_track_selector" />
 
             <ImageView
                 android:id="@+id/img_forward"

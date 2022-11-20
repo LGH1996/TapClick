@@ -45,7 +45,7 @@ public class MyInstallReceiver extends BroadcastReceiver {
                             appDescribe.appName = packageManager.getApplicationLabel(applicationInfo).toString();
                         } catch (PackageManager.NameNotFoundException e) {
                             appDescribe.appName = "unknown";
-                            e.printStackTrace();
+                            // e.printStackTrace();
                         }
                         appDescribe.appPackage = packageName;
                         List<ResolveInfo> homeLaunchList = packageManager.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL);

@@ -74,21 +74,26 @@ public class MainFunction {
     private AppDescribe appDescribe;
     private String currentPackage;
     private String currentActivity;
-    private boolean onOffCoordinate, onOffWidget, onOffAutoFinder;
+    private boolean onOffAutoFinder;
+    private boolean onOffWidget;
+    private boolean onOffCoordinate;
     private boolean onOffCoordinateSub, onOffWidgetSub;
     private int autoRetrieveNumber;
     private boolean widgetAllNoRepeat;
     private AccessibilityServiceInfo serviceInfo;
-    private ScheduledFuture<?> futureCoordinate, futureWidget, futureAutoFinder;
+    private ScheduledFuture<?> futureAutoFinder;
+    private ScheduledFuture<?> futureWidget;
+    private ScheduledFuture<?> futureCoordinate;
     private ScheduledExecutorService executorService;
     private MyScreenOffReceiver screenOffReceiver;
     private Set<Widget> widgetSet;
     private MyInstallReceiver installReceiver;
-    private HashSet<Widget> alreadyClickSet;
+    private Set<Widget> alreadyClickSet;
     private Map<String, Coordinate> coordinateMap;
     private List<String> keywordList;
     private Map<String, Set<Widget>> widgetSetMap;
     private Coordinate coordinate;
+    private ScheduledFuture<?> futureCoordinateClick;
 
     private WindowManager.LayoutParams aParams, bParams, cParams;
     private ViewAddDataBinding addDataBinding;
@@ -122,7 +127,7 @@ public class MainFunction {
                 getRunningData();
             }
         });
-        futureCoordinate = futureWidget = futureAutoFinder = executorService.schedule(new Runnable() {
+        futureCoordinate = futureWidget = futureAutoFinder = futureCoordinateClick = executorService.schedule(new Runnable() {
             @Override
             public void run() {
             }
@@ -242,13 +247,14 @@ public class MainFunction {
                         }
 
                         if (onOffCoordinateSub) {
-                            executorService.scheduleAtFixedRate(new Runnable() {
+                            futureCoordinateClick.cancel(false);
+                            futureCoordinateClick = executorService.scheduleAtFixedRate(new Runnable() {
                                 private final Coordinate coordinateSub = coordinate;
                                 private int num = 0;
 
                                 @Override
                                 public void run() {
-                                    if (++num <= coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity)) {
+                                    if (onOffCoordinateSub && ++num <= coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity)) {
                                         click(coordinateSub.xPosition, coordinateSub.yPosition, 0, 20);
                                     } else {
                                         throw new RuntimeException();
@@ -349,7 +355,6 @@ public class MainFunction {
                         service.setServiceInfo(serviceInfo);
                     }
                 }
-                return;
             }
         }
     }
@@ -373,7 +378,7 @@ public class MainFunction {
                 CharSequence cId = node.getViewIdResourceName();
                 CharSequence cDescribe = node.getContentDescription();
                 CharSequence cText = node.getText();
-                for (final Widget e : widgetSet) {
+                for (Widget e : widgetSet) {
                     boolean isFind = false;
                     if (temRect.equals(e.widgetRect)) {
                         isFind = true;
@@ -403,9 +408,13 @@ public class MainFunction {
                                     }
                                 }
                             }, e.clickDelay, TimeUnit.MILLISECONDS);
-                            if (!onOffAutoFinder && widgetAllNoRepeat && alreadyClickSet.size() >= widgetSet.size()) {
-                                serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                service.setServiceInfo(serviceInfo);
+                            if (widgetAllNoRepeat && alreadyClickSet.size() >= widgetSet.size()) {
+                                onOffWidget = false;
+                                onOffWidgetSub = false;
+                                if (!onOffAutoFinder) {
+                                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                    service.setServiceInfo(serviceInfo);
+                                }
                             }
                         }
                         break;
@@ -545,7 +554,7 @@ public class MainFunction {
                 autoFinder.keywordList = Collections.singletonList("跳过");
                 autoFinderList.add(autoFinder);
             } catch (PackageManager.NameNotFoundException exception) {
-                exception.printStackTrace();
+                // exception.printStackTrace();
             }
         }
         dataDao.deleteAppDescribeByNotIn(pkgNormalSet);

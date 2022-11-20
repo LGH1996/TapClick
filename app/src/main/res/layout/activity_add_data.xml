@@ -17,7 +17,8 @@
             android:layout_alignParentTop="true"
             android:fadingEdge="vertical"
             android:fadingEdgeLength="15dp"
-            android:requiresFadingEdge="vertical">
+            android:requiresFadingEdge="vertical"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -91,8 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/button_selector"
             android:text="开始" />

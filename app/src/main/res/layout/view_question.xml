@@ -8,7 +8,8 @@
         android:layout_height="wrap_content"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="15dp"
-        android:requiresFadingEdge="vertical">
+        android:requiresFadingEdge="vertical"
+        android:scrollbars="none">
 
         <TextView
             android:id="@+id/question_answer"

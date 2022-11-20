@@ -17,6 +17,9 @@
         android:roundIcon="@drawable/app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".myactivity.ExceptionReportActivity"
+            android:exported="false" />
 
         <activity android:name=".myactivity.SettingActivity" />
         <activity android:name=".myactivity.AuthorizationActivity" />
@@ -31,9 +34,7 @@
         <activity
             android:name=".myactivity.ShortCutActivity"
             android:theme="@android:style/Theme.NoDisplay" />
-        <activity
-            android:name=".myactivity.ListDataActivity"
-            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".myactivity.ListDataActivity" />
         <activity
             android:name=".myactivity.EditDataActivity"
             android:windowSoftInputMode="adjustResize" />
@@ -42,6 +43,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 

@@ -2,12 +2,10 @@ package com.lgh.advertising.going.myactivity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
@@ -52,9 +50,9 @@ public class MainActivity extends BaseActivity {
     private MyAppConfig myAppConfig;
     private DataDao dataDao;
     private LayoutInflater inflater;
-    private boolean startActivity;
     private ActivityMainBinding mainBinding;
     private SharedPreferences sharedPreferences;
+    public static boolean startActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,14 +124,7 @@ public class MainActivity extends BaseActivity {
                         break;
                     }
                     case 4: {
-                        int a = 7 /0;
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse("https://gitee.com/lingh1996/ADGO/blob/master/README.md"));
-                        if (getPackageManager().resolveActivity(intent, PackageManager.MATCH_ALL) != null) {
-                            startActivity(intent);
-                        } else {
-                            startActivity(new Intent(context, MoreMessageActivity.class));
-                        }
+                        startActivity(new Intent(context, MoreMessageActivity.class));
                         break;
                     }
                 }
@@ -221,17 +212,19 @@ public class MainActivity extends BaseActivity {
                             Intent intent = new Intent(context, UpdateActivity.class);
                             intent.putExtra("updateMessage", latestMessage.body);
                             intent.putExtra("updateUrl", latestMessage.assets.get(0).browser_download_url);
-                            startActivity(intent);
+                            if (getPackageManager().resolveActivity(intent, PackageManager.MATCH_ALL) != null) {
+                                startActivity(intent);
+                            }
                         }
                     }
                 } catch (PackageManager.NameNotFoundException e) {
-//                        e.printStackTrace();
+                    // e.printStackTrace();
                 }
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-//                    e.printStackTrace();
+                // e.printStackTrace();
             }
 
             @Override
@@ -279,7 +272,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onError(@NonNull Throwable e) {
-//                    e.printStackTrace();
+                // e.printStackTrace();
             }
 
             @Override

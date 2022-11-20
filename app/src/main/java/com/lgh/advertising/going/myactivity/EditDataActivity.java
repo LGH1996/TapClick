@@ -300,7 +300,7 @@ public class EditDataActivity extends BaseActivity {
                     String sNumber = coordinateBinding.coordinateClickNumber.getText().toString();
                     String sComment = coordinateBinding.coordinateComment.getText().toString().trim();
                     coordinateBinding.coordinateModify.setTextColor(0xffff0000);
-                    if (sX.isEmpty() || sY.isEmpty() || sInterval.isEmpty() || sNumber.isEmpty()) {
+                    if (sX.isEmpty() || sY.isEmpty() || sDelay.isEmpty() || sInterval.isEmpty() || sNumber.isEmpty()) {
                         coordinateBinding.coordinateModify.setText("内容不能为空");
                         return;
                     } else if (Integer.parseInt(sX) > metrics.widthPixels) {

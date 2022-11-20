@@ -131,7 +131,7 @@ public class ListDataActivity extends BaseActivity {
                                 appDescribeAndIconFilterList.add(e);
                             }
                         } catch (PackageManager.NameNotFoundException ex) {
-                            ex.printStackTrace();
+                            // ex.printStackTrace();
                         }
                     }
                     return null;
@@ -143,7 +143,7 @@ public class ListDataActivity extends BaseActivity {
                                 appDescribeAndIconFilterList.add(e);
                             }
                         } catch (PackageManager.NameNotFoundException ex) {
-                            ex.printStackTrace();
+                            // ex.printStackTrace();
                         }
                     }
                     return null;
@@ -197,21 +197,19 @@ public class ListDataActivity extends BaseActivity {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                ViewListItemBinding listItemBinding;
                 if (convertView == null) {
-                    listItemBinding = ViewListItemBinding.inflate(inflater);
+                    ViewListItemBinding listItemBinding = ViewListItemBinding.inflate(inflater);
                     convertView = listItemBinding.getRoot();
                     convertView.setTag(listItemBinding);
-                } else {
-                    listItemBinding = (ViewListItemBinding) convertView.getTag();
                 }
+                ViewListItemBinding listItemBinding = (ViewListItemBinding) convertView.getTag();
                 final AppDescribeAndIcon tem = appDescribeAndIconFilterList.get(position);
                 listItemBinding.name.setText(tem.appDescribe.appName);
                 listItemBinding.pkg.setText(tem.appDescribe.appPackage);
-                listItemBinding.onOff.setText(tem.appDescribe.onOff ? "开启" : "关闭");
                 listItemBinding.img.setImageDrawable(tem.icon);
-                listItemBinding.scOnOff.setChecked(tem.appDescribe.onOff);
-                listItemBinding.scOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                listItemBinding.onOff.setOnCheckedChangeListener(null);
+                listItemBinding.onOff.setChecked(tem.appDescribe.onOff);
+                listItemBinding.onOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         tem.appDescribe.onOff = isChecked;
@@ -255,9 +253,9 @@ public class ListDataActivity extends BaseActivity {
                         AppDescribe e = iterator.next();
                         Drawable icon = packageManager.getApplicationIcon(e.appPackage);
                         appDescribeAndIconList.add(new AppDescribeAndIcon(e, icon));
-                    } catch (PackageManager.NameNotFoundException nameNotFoundException) {
+                    } catch (PackageManager.NameNotFoundException e) {
                         iterator.remove();
-//                        nameNotFoundException.printStackTrace();
+                        // e.printStackTrace();
                     }
                 }
                 appDescribeAndIconFilterList.addAll(appDescribeAndIconList);
