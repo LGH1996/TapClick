@@ -82,10 +82,6 @@
         </service>
 
         <receiver
-            android:name=".myfunction.MyScreenOffReceiver"
-            android:enabled="true"
-            android:exported="true" />
-        <receiver
             android:name=".myfunction.MyInstallReceiver"
             android:enabled="true"
             android:exported="true" />

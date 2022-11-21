@@ -85,7 +85,6 @@ public class MainFunction {
     private ScheduledFuture<?> futureWidget;
     private ScheduledFuture<?> futureCoordinate;
     private ScheduledExecutorService executorService;
-    private MyScreenOffReceiver screenOffReceiver;
     private Set<Widget> widgetSet;
     private MyInstallReceiver installReceiver;
     private Set<Widget> alreadyClickSet;
@@ -113,8 +112,6 @@ public class MainFunction {
         serviceInfo = service.getServiceInfo();
         dataDao = MyApplication.dataDao;
         appDescribeMap = new HashMap<>();
-        screenOffReceiver = new MyScreenOffReceiver();
-        service.registerReceiver(screenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
         installReceiver = new MyInstallReceiver();
         IntentFilter filterInstall = new IntentFilter();
         filterInstall.addAction(Intent.ACTION_PACKAGE_ADDED);
@@ -309,7 +306,6 @@ public class MainFunction {
     }
 
     public boolean onUnbind(Intent intent) {
-        service.unregisterReceiver(screenOffReceiver);
         service.unregisterReceiver(installReceiver);
         return true;
     }
@@ -466,14 +462,6 @@ public class MainFunction {
     }
 
     /**
-     * 接收到锁屏事件时调用
-     */
-    public void onScreenOff() {
-        currentPackage = "ScreenOff Package";
-        currentActivity = "ScreenOff Activity";
-    }
-
-    /**
      * android 7.0 以上
      * 避免无障碍服务冲突
      */
@@ -524,13 +512,14 @@ public class MainFunction {
                 .collect(Collectors.toSet());
         pkgNeedRemovedSet.addAll(pkgInputMethodSet);
         pkgNeedRemovedSet.add("com.android.systemui");
+        pkgNeedRemovedSet.add("miui.systemui.plugin");
+        pkgNeedRemovedSet.add("com.miui.contentextension");
+        pkgNeedRemovedSet.add("com.miui.voiceassist");
+        pkgNormalSet.removeAll(pkgNeedRemovedSet);
 
         List<AppDescribe> appDescribeList = new ArrayList<>();
         List<AutoFinder> autoFinderList = new ArrayList<>();
         for (String e : pkgNormalSet) {
-            if (pkgNeedRemovedSet.contains(e)) {
-                continue;
-            }
             try {
                 ApplicationInfo info = packageManager.getApplicationInfo(e, PackageManager.GET_META_DATA);
                 AppDescribe appDescribe = new AppDescribe();
@@ -638,7 +627,7 @@ public class MainFunction {
                         future = executorService.schedule(new Runnable() {
                             @Override
                             public void run() {
-                                if (Math.abs(aParams.x - startLpX) < 5 && Math.abs(aParams.y - startLpY) < 5) {
+                                if (Math.abs(aParams.x - startLpX) < 10 && Math.abs(aParams.y - startLpY) < 10) {
                                     Matcher matcher = Pattern.compile("(\\w|\\.)+").matcher(addDataBinding.pacName.getText().toString());
                                     if (matcher.find()) {
                                         MyApplication.appDescribe = appDescribeMap.get(matcher.group());
@@ -680,7 +669,7 @@ public class MainFunction {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        addDataBinding.saveAim.setEnabled(true);
+                        addDataBinding.saveAim.setEnabled(appDescribeMap.containsKey(currentPackage));
                         cParams.alpha = 0.9f;
                         windowManager.updateViewLayout(viewClickPosition, cParams);
                         startRowX = Math.round(event.getRawX());
@@ -760,7 +749,7 @@ public class MainFunction {
                                     widgetSelect.widgetDescribe = cDesc == null ? "" : cDesc.toString();
                                     CharSequence cText = e.getText();
                                     widgetSelect.widgetText = cText == null ? "" : cText.toString();
-                                    addDataBinding.saveWid.setEnabled(true);
+                                    addDataBinding.saveWid.setEnabled(appDescribeMap.containsKey(currentPackage));
                                     addDataBinding.pacName.setText(widgetSelect.appPackage);
                                     addDataBinding.actName.setText(widgetSelect.appActivity);
                                     addDataBinding.widget.setText("click:" + (e.isClickable() ? "true" : "false") + " " + "bonus:" + temRect.toShortString() + " " + "id:" + (cId == null ? "null" : cId.toString().substring(cId.toString().indexOf("id/") + 3)) + " " + "desc:" + (cDesc == null ? "null" : cDesc.toString()) + " " + "text:" + (cText == null ? "null" : cText.toString()));
@@ -812,29 +801,29 @@ public class MainFunction {
         addDataBinding.saveWid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Widget temWidget = new Widget(widgetSelect);
-                temWidget.createTime = System.currentTimeMillis();
-                dataDao.insertWidget(temWidget);
-                AppDescribe temAppDescribe = appDescribeMap.get(temWidget.appPackage);
+                AppDescribe temAppDescribe = appDescribeMap.get(widgetSelect.appPackage);
                 if (temAppDescribe != null) {
+                    Widget temWidget = new Widget(widgetSelect);
+                    temWidget.createTime = System.currentTimeMillis();
+                    dataDao.insertWidget(temWidget);
+                    addDataBinding.saveWid.setEnabled(false);
+                    addDataBinding.pacName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
                     temAppDescribe.getWidgetSetMapFromDatabase(dataDao);
                 }
-                addDataBinding.saveWid.setEnabled(false);
-                addDataBinding.pacName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
             }
         });
         addDataBinding.saveAim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Coordinate temCoordinate = new Coordinate(coordinateSelect);
-                temCoordinate.createTime = System.currentTimeMillis();
-                dataDao.insertCoordinate(temCoordinate);
-                AppDescribe temAppDescribe = appDescribeMap.get(temCoordinate.appPackage);
+                AppDescribe temAppDescribe = appDescribeMap.get(coordinateSelect.appPackage);
                 if (temAppDescribe != null) {
+                    Coordinate temCoordinate = new Coordinate(coordinateSelect);
+                    temCoordinate.createTime = System.currentTimeMillis();
+                    dataDao.insertCoordinate(temCoordinate);
+                    addDataBinding.saveAim.setEnabled(false);
+                    addDataBinding.pacName.setText(coordinateSelect.appPackage + " (以下坐标数据已保存)");
                     temAppDescribe.getCoordinateMapFromDatabase(dataDao);
                 }
-                addDataBinding.saveAim.setEnabled(false);
-                addDataBinding.pacName.setText(coordinateSelect.appPackage + " (以下坐标数据已保存)");
             }
         });
         addDataBinding.quit.setOnClickListener(new View.OnClickListener() {
