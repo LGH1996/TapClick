@@ -21,8 +21,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.view.inputmethod.InputMethodInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -73,11 +71,13 @@ public class MainFunction {
     private Map<String, AppDescribe> appDescribeMap;
     private AppDescribe appDescribe;
     private String currentPackage;
+    private String currentPackageSub;
     private String currentActivity;
     private boolean onOffAutoFinder;
     private boolean onOffWidget;
+    private boolean onOffWidgetSub;
     private boolean onOffCoordinate;
-    private boolean onOffCoordinateSub, onOffWidgetSub;
+    private boolean onOffCoordinateSub;
     private int autoRetrieveNumber;
     private boolean widgetAllNoRepeat;
     private AccessibilityServiceInfo serviceInfo;
@@ -108,6 +108,7 @@ public class MainFunction {
         packageManager = service.getPackageManager();
         currentPackage = "Initialize CurrentPackage";
         currentActivity = "Initialize CurrentActivity";
+        currentPackageSub = currentPackage;
         executorService = Executors.newSingleThreadScheduledExecutor();
         serviceInfo = service.getServiceInfo();
         dataDao = MyApplication.dataDao;
@@ -137,9 +138,22 @@ public class MainFunction {
                 AccessibilityNodeInfo root = service.getRootInActiveWindow();
                 String packageName = root != null ? root.getPackageName().toString() : null;
                 String activityName = event.getClassName() != null ? event.getClassName().toString() : null;
-                if (packageName != null && !packageName.equals(currentPackage)) {
+
+                if (packageName == null) {
+                    break;
+                }
+                if (!packageName.equals(currentPackage)) {
                     currentPackage = packageName;
                     appDescribe = appDescribeMap.get(packageName);
+                }
+                if (appDescribe == null) {
+                    break;
+                }
+                if (!event.isFullScreen() && !appDescribe.onOff) {
+                    break;
+                }
+                if (!packageName.equals(currentPackageSub)) {
+                    currentPackageSub = packageName;
                     futureAutoFinder.cancel(false);
                     futureWidget.cancel(false);
                     futureCoordinate.cancel(false);
@@ -205,11 +219,16 @@ public class MainFunction {
                         }
                     }
                 }
-                if (activityName != null
-                        && !activityName.equals(currentActivity)
-                        && !activityName.startsWith("android.widget.")
-                        && !activityName.startsWith("android.view.")
-                        && !activityName.equals("android.inputmethodservice.SoftInputWindow")) {
+
+                if (activityName == null) {
+                    break;
+                }
+                if (activityName.startsWith("android.widget.")
+                        || activityName.startsWith("android.view.")
+                        || activityName.equals("android.inputmethodservice.SoftInputWindow")) {
+                    break;
+                }
+                if (!activityName.equals(currentActivity)) {
                     currentActivity = activityName;
                     alreadyClickSet = new HashSet<>();
                     onOffWidgetSub = false;
@@ -261,15 +280,15 @@ public class MainFunction {
                         }
                     }
                 }
-                if (onOffAutoFinder && appDescribe != null && root != null) {
+                if (onOffAutoFinder && appDescribe != null) {
                     findButtonByText(root, appDescribe.autoFinder);
                 }
-                if (onOffWidgetSub && widgetSet != null && root != null) {
+                if (onOffWidgetSub && widgetSet != null) {
                     findButtonByWidget(root, widgetSet);
                 }
                 break;
             case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
-                if (event.getPackageName().equals(currentPackage)) {
+                if (event.getPackageName().equals(currentPackageSub)) {
                     AccessibilityNodeInfo source = event.getSource();
                     if (onOffAutoFinder && appDescribe != null && source != null) {
                         findButtonByText(source, appDescribe.autoFinder);
@@ -484,12 +503,10 @@ public class MainFunction {
         Set<String> pkgNormalSet = new HashSet<>();
         Set<String> pkgOffSet = new HashSet<>();
         Set<String> pkgOnSet = new HashSet<>();
-        Set<String> pkgNeedRemovedSet = new HashSet<>();
-        //所有存在activity的应用
+        //所有已安装的应用
         Set<String> pkgHasActivitySet = packageManager
-                .getInstalledPackages(PackageManager.GET_ACTIVITIES)
+                .getInstalledApplications(PackageManager.GET_META_DATA)
                 .stream()
-                .filter(e -> e.activities != null)
                 .map(e -> e.packageName)
                 .collect(Collectors.toSet());
         pkgNormalSet.addAll(pkgHasActivitySet);
@@ -503,19 +520,6 @@ public class MainFunction {
         pkgOffSet.add(service.getPackageName());
         //MIUI系统自带的广告服务app，需要开启
         pkgOnSet.add("com.miui.systemAdSolution");
-        //输入法、systemUI相关的应用是需要移除的，不做检测
-        Set<String> pkgInputMethodSet = service
-                .getSystemService(InputMethodManager.class)
-                .getInputMethodList()
-                .stream()
-                .map(InputMethodInfo::getPackageName)
-                .collect(Collectors.toSet());
-        pkgNeedRemovedSet.addAll(pkgInputMethodSet);
-        pkgNeedRemovedSet.add("com.android.systemui");
-        pkgNeedRemovedSet.add("miui.systemui.plugin");
-        pkgNeedRemovedSet.add("com.miui.contentextension");
-        pkgNeedRemovedSet.add("com.miui.voiceassist");
-        pkgNormalSet.removeAll(pkgNeedRemovedSet);
 
         List<AppDescribe> appDescribeList = new ArrayList<>();
         List<AutoFinder> autoFinderList = new ArrayList<>();
