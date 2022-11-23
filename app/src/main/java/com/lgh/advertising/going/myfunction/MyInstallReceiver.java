@@ -31,12 +31,6 @@ public class MyInstallReceiver extends BroadcastReceiver {
                 InputMethodManager inputMethodManager = context.getSystemService(InputMethodManager.class);
 
                 if (action.equals(Intent.ACTION_PACKAGE_ADDED)) {
-                    List<InputMethodInfo> inputMethodInfoList = inputMethodManager.getInputMethodList();
-                    for (InputMethodInfo e : inputMethodInfoList) {
-                        if (packageName.equals(e.getPackageName())) {
-                            return;
-                        }
-                    }
                     AppDescribe appDescribe = dataDao.getAppDescribeByPackage(packageName);
                     if (appDescribe == null) {
                         appDescribe = new AppDescribe();
@@ -52,6 +46,19 @@ public class MyInstallReceiver extends BroadcastReceiver {
                         for (ResolveInfo e : homeLaunchList) {
                             if (packageName.equals(e.activityInfo.packageName)) {
                                 appDescribe.onOff = false;
+                                appDescribe.autoFinderOnOFF = false;
+                                appDescribe.widgetOnOff = false;
+                                appDescribe.coordinateOnOff = false;
+                                break;
+                            }
+                        }
+                        List<InputMethodInfo> inputMethodInfoList = inputMethodManager.getInputMethodList();
+                        for (InputMethodInfo e : inputMethodInfoList) {
+                            if (packageName.equals(e.getPackageName())) {
+                                appDescribe.onOff = false;
+                                appDescribe.autoFinderOnOFF = false;
+                                appDescribe.widgetOnOff = false;
+                                appDescribe.coordinateOnOff = false;
                                 break;
                             }
                         }

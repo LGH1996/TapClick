@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <me.codeboy.android.aligntextview.AlignTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="25dp"
+        android:lineSpacingMultiplier="1.4"
+        android:text="该应用可能为以下类型的应用：系统应用、输入法应用、桌面应用，这类应用开启后可能会频繁触发控件的检索，引起没必要的卡顿，请谨慎选择是否要为其创建规则。"
+        android:textColor="@color/text_color" />
+</LinearLayout>

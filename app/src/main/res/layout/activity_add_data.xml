@@ -95,7 +95,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/button_selector"
-            android:text="开始" />
+            android:text="创建规则" />
     </RelativeLayout>
 
     <include layout="@layout/view_no_vip" />

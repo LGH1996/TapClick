@@ -2,6 +2,9 @@ package com.lgh.advertising.going.myactivity;
 
 import android.animation.LayoutTransition;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -10,7 +13,9 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
-import android.widget.CompoundButton;
+import android.view.inputmethod.InputMethodInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Switch;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -20,6 +25,7 @@ import com.lgh.advertising.going.databinding.ActivityEditDataBinding;
 import com.lgh.advertising.going.databinding.ViewAutoFinderBinding;
 import com.lgh.advertising.going.databinding.ViewBaseSettingBinding;
 import com.lgh.advertising.going.databinding.ViewCoordinateBinding;
+import com.lgh.advertising.going.databinding.ViewOnOffWarningBinding;
 import com.lgh.advertising.going.databinding.ViewQuestionBinding;
 import com.lgh.advertising.going.databinding.ViewWidgetBinding;
 import com.lgh.advertising.going.mybean.AppDescribe;
@@ -32,9 +38,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class EditDataActivity extends BaseActivity {
 
@@ -47,6 +55,7 @@ public class EditDataActivity extends BaseActivity {
     private ActivityEditDataBinding editDataBinding;
     private ViewBaseSettingBinding baseSettingBinding;
     private ViewAutoFinderBinding autoFinderBinding;
+    private Set<String> pkgSuggestNotOnList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +69,25 @@ public class EditDataActivity extends BaseActivity {
         dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.getDefault());
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+
+        Set<String> pkgSysSet = getPackageManager().
+                getInstalledPackages(PackageManager.MATCH_SYSTEM_ONLY)
+                .stream().map(e -> e.packageName)
+                .collect(Collectors.toSet());
+        Set<String> pkgInputMethodSet = getSystemService(InputMethodManager.class)
+                .getInputMethodList()
+                .stream()
+                .map(InputMethodInfo::getPackageName)
+                .collect(Collectors.toSet());
+        Set<String> pkgHasHomeSet = getPackageManager()
+                .queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL)
+                .stream()
+                .map(e -> e.activityInfo.packageName)
+                .collect(Collectors.toSet());
+        pkgSuggestNotOnList = new HashSet<>();
+        pkgSuggestNotOnList.addAll(pkgSysSet);
+        pkgSuggestNotOnList.addAll(pkgInputMethodSet);
+        pkgSuggestNotOnList.addAll(pkgHasHomeSet);
 
         LayoutTransition transition = new LayoutTransition();
         transition.enableTransitionType(LayoutTransition.CHANGING);
@@ -141,24 +169,49 @@ public class EditDataActivity extends BaseActivity {
                 baseSettingBinding.baseSettingModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
             }
         };
-        baseSettingBinding.onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        baseSettingBinding.onOffSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                baseSettingBinding.autoFinderSwitch.setChecked(isChecked);
-                baseSettingBinding.widgetSwitch.setChecked(isChecked);
-                baseSettingBinding.coordinateSwitch.setChecked(isChecked);
-                baseSettingSaveRun.run();
+            public void onClick(View v) {
+                boolean isChecked = ((Switch) v).isChecked();
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        baseSettingBinding.onOffSwitch.setChecked(isChecked);
+                        baseSettingBinding.autoFinderSwitch.setChecked(isChecked);
+                        baseSettingBinding.widgetSwitch.setChecked(isChecked);
+                        baseSettingBinding.coordinateSwitch.setChecked(isChecked);
+                        baseSettingSaveRun.run();
+                    }
+                };
+                if (isChecked && pkgSuggestNotOnList.contains(appDescribe.appPackage)) {
+                    baseSettingBinding.onOffSwitch.setChecked(false);
+                    View view = ViewOnOffWarningBinding.inflate(getLayoutInflater()).getRoot();
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditDataActivity.this);
+                    alertDialogBuilder.setView(view);
+                    alertDialogBuilder.setNegativeButton("取消", null);
+                    alertDialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            runnable.run();
+                        }
+                    });
+                    AlertDialog dialog = alertDialogBuilder.create();
+                    dialog.show();
+                } else {
+                    runnable.run();
+                }
+
             }
         });
-        CompoundButton.OnCheckedChangeListener onOffCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        View.OnClickListener onOffClickListener = new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onClick(View v) {
                 baseSettingSaveRun.run();
             }
         };
-        baseSettingBinding.autoFinderSwitch.setOnCheckedChangeListener(onOffCheckedChangeListener);
-        baseSettingBinding.widgetSwitch.setOnCheckedChangeListener(onOffCheckedChangeListener);
-        baseSettingBinding.coordinateSwitch.setOnCheckedChangeListener(onOffCheckedChangeListener);
+        baseSettingBinding.autoFinderSwitch.setOnClickListener(onOffClickListener);
+        baseSettingBinding.widgetSwitch.setOnClickListener(onOffClickListener);
+        baseSettingBinding.coordinateSwitch.setOnClickListener(onOffClickListener);
 
         TextWatcher sustainTimeTextWatcher = new TextWatcher() {
             @Override
@@ -180,15 +233,15 @@ public class EditDataActivity extends BaseActivity {
         baseSettingBinding.widgetSustainTime.addTextChangedListener(sustainTimeTextWatcher);
         baseSettingBinding.coordinateSustainTime.addTextChangedListener(sustainTimeTextWatcher);
 
-        CompoundButton.OnCheckedChangeListener allTimeCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        View.OnClickListener allTimeClickListener = new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onClick(View v) {
                 baseSettingSaveRun.run();
             }
         };
-        baseSettingBinding.autoFinderRetrieveAllTime.setOnCheckedChangeListener(allTimeCheckedChangeListener);
-        baseSettingBinding.widgetRetrieveAllTime.setOnCheckedChangeListener(allTimeCheckedChangeListener);
-        baseSettingBinding.coordinateRetrieveAllTime.setOnCheckedChangeListener(allTimeCheckedChangeListener);
+        baseSettingBinding.autoFinderRetrieveAllTime.setOnClickListener(allTimeClickListener);
+        baseSettingBinding.widgetRetrieveAllTime.setOnClickListener(allTimeClickListener);
+        baseSettingBinding.coordinateRetrieveAllTime.setOnClickListener(allTimeClickListener);
         editDataBinding.baseSettingLayout.addView(baseSettingBinding.getRoot());
 
         if (autoFinderBinding != null) {
@@ -256,9 +309,9 @@ public class EditDataActivity extends BaseActivity {
         autoFinderBinding.retrieveNumber.addTextChangedListener(autoFinderTextWatcher);
         autoFinderBinding.clickDelay.addTextChangedListener(autoFinderTextWatcher);
 
-        autoFinderBinding.clickOnly.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        autoFinderBinding.clickOnly.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onClick(View v) {
                 autoFinderSaveRun.run();
             }
         });
@@ -449,14 +502,14 @@ public class EditDataActivity extends BaseActivity {
                 widgetBinding.widgetClickDelay.addTextChangedListener(widgetTextWatcher);
                 widgetBinding.widgetComment.addTextChangedListener(widgetTextWatcher);
 
-                CompoundButton.OnCheckedChangeListener widgetCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+                View.OnClickListener widgetClickListener = new View.OnClickListener() {
                     @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    public void onClick(View v) {
                         widgetSaveRun.run();
                     }
                 };
-                widgetBinding.widgetNoRepeat.setOnCheckedChangeListener(widgetCheckedChangeListener);
-                widgetBinding.widgetClickOnly.setOnCheckedChangeListener(widgetCheckedChangeListener);
+                widgetBinding.widgetNoRepeat.setOnClickListener(widgetClickListener);
+                widgetBinding.widgetClickOnly.setOnClickListener(widgetClickListener);
 
                 widgetBinding.widgetDelete.setOnClickListener(new View.OnClickListener() {
                     @Override

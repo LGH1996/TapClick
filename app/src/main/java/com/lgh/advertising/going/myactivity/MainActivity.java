@@ -217,7 +217,7 @@ public class MainActivity extends BaseActivity {
                             }
                         }
                     }
-                } catch (PackageManager.NameNotFoundException e) {
+                } catch (PackageManager.NameNotFoundException | RuntimeException e) {
                     // e.printStackTrace();
                 }
             }

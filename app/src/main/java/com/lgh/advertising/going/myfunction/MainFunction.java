@@ -4,6 +4,8 @@ import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.accessibilityservice.GestureDescription;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
@@ -21,6 +23,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.inputmethod.InputMethodInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -28,6 +32,7 @@ import android.widget.TextView;
 
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ViewAddDataBinding;
+import com.lgh.advertising.going.databinding.ViewAddWarningBinding;
 import com.lgh.advertising.going.databinding.ViewWidgetSelectBinding;
 import com.lgh.advertising.going.myactivity.EditDataActivity;
 import com.lgh.advertising.going.mybean.AppDescribe;
@@ -98,6 +103,8 @@ public class MainFunction {
     private ViewAddDataBinding addDataBinding;
     private ViewWidgetSelectBinding widgetSelectBinding;
     private ImageView viewClickPosition;
+
+    private Set<String> pkgSuggestNotOnList;
 
     public MainFunction(AccessibilityService service) {
         this.service = service;
@@ -505,19 +512,25 @@ public class MainFunction {
         Set<String> pkgOnSet = new HashSet<>();
         //所有已安装的应用
         Set<String> pkgHasActivitySet = packageManager
-                .getInstalledApplications(PackageManager.GET_META_DATA)
+                .getInstalledPackages(PackageManager.GET_META_DATA)
                 .stream()
                 .map(e -> e.packageName)
                 .collect(Collectors.toSet());
         pkgNormalSet.addAll(pkgHasActivitySet);
-        //桌面和本应用需要默认关闭
+        //输入法、桌面需要默认关闭
+        Set<String> pkgInputMethodSet = service
+                .getSystemService(InputMethodManager.class)
+                .getInputMethodList()
+                .stream()
+                .map(InputMethodInfo::getPackageName)
+                .collect(Collectors.toSet());
         Set<String> pkgHasHomeSet = packageManager
                 .queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL)
                 .stream()
                 .map(e -> e.activityInfo.packageName)
                 .collect(Collectors.toSet());
+        pkgOffSet.addAll(pkgInputMethodSet);
         pkgOffSet.addAll(pkgHasHomeSet);
-        pkgOffSet.add(service.getPackageName());
         //MIUI系统自带的广告服务app，需要开启
         pkgOnSet.add("com.miui.systemAdSolution");
 
@@ -564,6 +577,26 @@ public class MainFunction {
      */
     @SuppressLint("ClickableViewAccessibility")
     public void showAddDataFloat() {
+        if (pkgSuggestNotOnList == null) {
+            Set<String> pkgSysSet = packageManager.
+                    getInstalledPackages(PackageManager.MATCH_SYSTEM_ONLY)
+                    .stream().map(e -> e.packageName)
+                    .collect(Collectors.toSet());
+            Set<String> pkgInputMethodSet = service.getSystemService(InputMethodManager.class)
+                    .getInputMethodList()
+                    .stream()
+                    .map(InputMethodInfo::getPackageName)
+                    .collect(Collectors.toSet());
+            Set<String> pkgHasHomeSet = packageManager
+                    .queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL)
+                    .stream()
+                    .map(e -> e.activityInfo.packageName)
+                    .collect(Collectors.toSet());
+            pkgSuggestNotOnList = new HashSet<>();
+            pkgSuggestNotOnList.addAll(pkgSysSet);
+            pkgSuggestNotOnList.addAll(pkgInputMethodSet);
+            pkgSuggestNotOnList.addAll(pkgHasHomeSet);
+        }
         if (viewClickPosition != null || addDataBinding != null || widgetSelectBinding != null) {
             return;
         }
@@ -805,28 +838,90 @@ public class MainFunction {
         addDataBinding.saveWid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppDescribe temAppDescribe = appDescribeMap.get(widgetSelect.appPackage);
-                if (temAppDescribe != null) {
-                    Widget temWidget = new Widget(widgetSelect);
-                    temWidget.createTime = System.currentTimeMillis();
-                    dataDao.insertWidget(temWidget);
-                    addDataBinding.saveWid.setEnabled(false);
-                    addDataBinding.pacName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
-                    temAppDescribe.getWidgetSetMapFromDatabase(dataDao);
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        AppDescribe temAppDescribe = appDescribeMap.get(widgetSelect.appPackage);
+                        if (temAppDescribe != null) {
+                            Widget temWidget = new Widget(widgetSelect);
+                            temWidget.createTime = System.currentTimeMillis();
+                            dataDao.insertWidget(temWidget);
+                            addDataBinding.saveWid.setEnabled(false);
+                            addDataBinding.pacName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
+                            temAppDescribe.getWidgetSetMapFromDatabase(dataDao);
+                        }
+                    }
+                };
+                if (pkgSuggestNotOnList.contains(widgetSelect.appPackage)) {
+                    String prePackage = currentPackage;
+                    String preActivity = currentActivity;
+                    View view = ViewAddWarningBinding.inflate(inflater).getRoot();
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(service);
+                    alertDialogBuilder.setView(view);
+                    alertDialogBuilder.setNegativeButton("取消", null);
+                    alertDialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            runnable.run();
+                        }
+                    });
+                    alertDialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            currentPackage = prePackage;
+                            currentActivity = preActivity;
+                        }
+                    });
+                    AlertDialog dialog = alertDialogBuilder.create();
+                    dialog.getWindow().getAttributes().type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
+                    dialog.show();
+                } else {
+                    runnable.run();
                 }
             }
         });
         addDataBinding.saveAim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppDescribe temAppDescribe = appDescribeMap.get(coordinateSelect.appPackage);
-                if (temAppDescribe != null) {
-                    Coordinate temCoordinate = new Coordinate(coordinateSelect);
-                    temCoordinate.createTime = System.currentTimeMillis();
-                    dataDao.insertCoordinate(temCoordinate);
-                    addDataBinding.saveAim.setEnabled(false);
-                    addDataBinding.pacName.setText(coordinateSelect.appPackage + " (以下坐标数据已保存)");
-                    temAppDescribe.getCoordinateMapFromDatabase(dataDao);
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        AppDescribe temAppDescribe = appDescribeMap.get(coordinateSelect.appPackage);
+                        if (temAppDescribe != null) {
+                            Coordinate temCoordinate = new Coordinate(coordinateSelect);
+                            temCoordinate.createTime = System.currentTimeMillis();
+                            dataDao.insertCoordinate(temCoordinate);
+                            addDataBinding.saveAim.setEnabled(false);
+                            addDataBinding.pacName.setText(coordinateSelect.appPackage + " (以下坐标数据已保存)");
+                            temAppDescribe.getCoordinateMapFromDatabase(dataDao);
+                        }
+                    }
+                };
+                if (pkgSuggestNotOnList.contains(coordinateSelect.appPackage)) {
+                    String prePackage = currentPackage;
+                    String preActivity = currentActivity;
+                    View view = ViewAddWarningBinding.inflate(inflater).getRoot();
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(service);
+                    alertDialogBuilder.setView(view);
+                    alertDialogBuilder.setNegativeButton("取消", null);
+                    alertDialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            runnable.run();
+                        }
+                    });
+                    alertDialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            currentPackage = prePackage;
+                            currentActivity = preActivity;
+                        }
+                    });
+                    AlertDialog dialog = alertDialogBuilder.create();
+                    dialog.getWindow().getAttributes().type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
+                    dialog.show();
+                } else {
+                    runnable.run();
                 }
             }
         });

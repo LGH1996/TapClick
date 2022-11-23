@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.view.Window;
-import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -58,7 +57,6 @@ public class SettingActivity extends BaseActivity {
         settingBinding.settingUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-
                 Observable<LatestMessage> observable = MyApplication.myHttpRequest.getLatestMessage();
                 observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<LatestMessage>() {
                     AlertDialog waitDialog;
@@ -90,7 +88,7 @@ public class SettingActivity extends BaseActivity {
                                     Toast.makeText(context, "当前已是最新版本", Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        } catch (PackageManager.NameNotFoundException e) {
+                        } catch (PackageManager.NameNotFoundException | RuntimeException e) {
                             Toast.makeText(context, "解析版本号时出现错误", Toast.LENGTH_SHORT).show();
                             // e.printStackTrace();
                         }
@@ -114,7 +112,6 @@ public class SettingActivity extends BaseActivity {
         settingBinding.settingShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Observable<String> observable = MyApplication.myHttpRequest.getShareContent();
                 observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
                     private AlertDialog waitDialog;
@@ -174,10 +171,10 @@ public class SettingActivity extends BaseActivity {
             }
         });
 
-        settingBinding.settingAutoHideOnTaskList.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        settingBinding.settingAutoHideOnTaskList.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                myAppConfig.autoHideOnTaskList = isChecked;
+            public void onClick(View v) {
+                myAppConfig.autoHideOnTaskList = settingBinding.settingAutoHideOnTaskList.isChecked();
                 dataDao.updateMyAppConfig(myAppConfig);
             }
         });
