@@ -517,7 +517,7 @@ public class MainFunction {
                 .map(e -> e.packageName)
                 .collect(Collectors.toSet());
         pkgNormalSet.addAll(pkgHasActivitySet);
-        //输入法、桌面需要默认关闭
+        //输入法、桌面、本应用需要默认关闭
         Set<String> pkgInputMethodSet = service
                 .getSystemService(InputMethodManager.class)
                 .getInputMethodList()
@@ -531,6 +531,7 @@ public class MainFunction {
                 .collect(Collectors.toSet());
         pkgOffSet.addAll(pkgInputMethodSet);
         pkgOffSet.addAll(pkgHasHomeSet);
+        pkgOffSet.add(service.getPackageName());
         //MIUI系统自带的广告服务app，需要开启
         pkgOnSet.add("com.miui.systemAdSolution");
 
