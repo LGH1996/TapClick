@@ -41,11 +41,11 @@ public class AppDescribe {
         this.appName = "";
         this.appPackage = "";
         this.onOff = true;
-        this.autoFinderRetrieveTime = 5000;
+        this.autoFinderRetrieveTime = 10000;
         this.autoFinderRetrieveAllTime = false;
-        this.coordinateRetrieveTime = 10000;
+        this.coordinateRetrieveTime = 20000;
         this.coordinateRetrieveAllTime = false;
-        this.widgetRetrieveTime = 10000;
+        this.widgetRetrieveTime = 20000;
         this.widgetRetrieveAllTime = false;
         this.autoFinderOnOFF = true;
         this.coordinateOnOff = true;
