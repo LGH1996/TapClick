@@ -5,6 +5,8 @@ import android.accessibilityservice.AccessibilityServiceInfo;
 import android.accessibilityservice.GestureDescription;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -105,9 +107,11 @@ public class MainFunction {
     private ImageView viewClickPosition;
 
     private Set<String> pkgSuggestNotOnList;
+    private final String isScreenOffPre;
 
     public MainFunction(AccessibilityService service) {
         this.service = service;
+        isScreenOffPre = "isScreenOffPre";
     }
 
     protected void onServiceConnected() {
@@ -126,6 +130,14 @@ public class MainFunction {
         filterInstall.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
         filterInstall.addDataScheme("package");
         service.registerReceiver(installReceiver, filterInstall);
+        IntentFilter filterScreenOff = new IntentFilter();
+        filterScreenOff.addAction(Intent.ACTION_SCREEN_OFF);
+        service.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                currentPackageSub = isScreenOffPre;
+            }
+        }, filterScreenOff);
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -156,7 +168,9 @@ public class MainFunction {
                 if (appDescribe == null) {
                     break;
                 }
-                if (!event.isFullScreen() && !appDescribe.onOff) {
+                if (!event.isFullScreen()
+                        && !appDescribe.onOff
+                        && !currentPackageSub.equals(isScreenOffPre)) {
                     break;
                 }
                 if (!packageName.equals(currentPackageSub)) {

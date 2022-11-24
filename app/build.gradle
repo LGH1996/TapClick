@@ -46,5 +46,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.0.0'
     implementation 'me.codeboy.android:align-text-view:2.3.2'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
+    // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
 }
