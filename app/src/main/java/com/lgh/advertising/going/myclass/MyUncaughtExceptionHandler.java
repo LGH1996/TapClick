@@ -11,6 +11,7 @@ import android.os.Looper;
 
 import androidx.annotation.NonNull;
 
+import com.lgh.advertising.going.BuildConfig;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.myactivity.ExceptionReportActivity;
 
@@ -21,15 +22,15 @@ public class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandl
     private static MyUncaughtExceptionHandler instance;
     private final Context mContext;
 
+    public MyUncaughtExceptionHandler(Context context) {
+        mContext = context;
+    }
+
     public static MyUncaughtExceptionHandler getInstance(Context context) {
         if (instance == null) {
             instance = new MyUncaughtExceptionHandler(context);
         }
         return instance;
-    }
-
-    public MyUncaughtExceptionHandler(Context context) {
-        mContext = context;
     }
 
     public void run() {
@@ -60,9 +61,13 @@ public class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandl
         throwable.printStackTrace(printWriter);
         NotificationManager notificationManager = mContext.getSystemService(NotificationManager.class);
         Intent intent = new Intent(mContext, ExceptionReportActivity.class);
-        intent.putExtra(Intent.EXTRA_TEXT, Build.FINGERPRINT + "\n" + stringWriter);
+        String message = Build.FINGERPRINT + "\n"
+                + "BuildTime: " + BuildConfig.BUILD_TIME + "\n"
+                + "VersionCode: " + BuildConfig.VERSION_CODE + "\n"
+                + stringWriter;
+        intent.putExtra(Intent.EXTRA_TEXT, message);
         Notification.Builder builder = new Notification.Builder(mContext)
-                .setContentIntent(PendingIntent.getActivity(mContext, 0x01, intent, PendingIntent.FLAG_IMMUTABLE))
+                .setContentIntent(PendingIntent.getActivity(mContext, 0x01, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT))
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.app)
                 .setContentTitle(mContext.getText(R.string.app_name) + "发生异常")

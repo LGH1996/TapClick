@@ -1,6 +1,5 @@
 package com.lgh.advertising.going.myactivity;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +15,9 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
+import androidx.core.util.Consumer;
+
+import com.lgh.advertising.going.BuildConfig;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivityMainBinding;
 import com.lgh.advertising.going.databinding.ViewMainItemBinding;
@@ -25,8 +26,7 @@ import com.lgh.advertising.going.mybean.LatestMessage;
 import com.lgh.advertising.going.mybean.MyAppConfig;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
-import com.lgh.advertising.going.myfunction.MyAccessibilityService;
-import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
+import com.lgh.advertising.going.myfunction.MyUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,7 +52,6 @@ public class MainActivity extends BaseActivity {
     private LayoutInflater inflater;
     private ActivityMainBinding mainBinding;
     private SharedPreferences sharedPreferences;
-    public static boolean startActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +127,6 @@ public class MainActivity extends BaseActivity {
                         break;
                     }
                 }
-                startActivity = true;
             }
         });
 
@@ -152,27 +150,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (myAppConfig.autoHideOnTaskList) {
-                finishAndRemoveTask();
-            }
-        }
-        return super.onKeyUp(keyCode, event);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (!startActivity && myAppConfig.autoHideOnTaskList) {
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (myAppConfig.autoHideOnTaskList) {
             finishAndRemoveTask();
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        startActivity = false;
     }
 
     @Override
@@ -184,13 +166,18 @@ public class MainActivity extends BaseActivity {
     }
 
     private void refreshAccessibilityServiceStatus() {
-        if (isAccessibilityServiceRunning()) {
-            mainBinding.statusImg.setImageResource(R.drawable.ic_ok);
-            mainBinding.statusTip.setText("无障碍服务已开启");
-        } else {
-            mainBinding.statusImg.setImageResource(R.drawable.ic_error);
-            mainBinding.statusTip.setText(checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED ? "点击图标开启无障碍服务" : "无障碍服务未开启");
-        }
+        MyUtils.getInstance().checkServiceState(context, new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) {
+                if (aBoolean) {
+                    mainBinding.statusImg.setImageResource(R.drawable.ic_ok);
+                    mainBinding.statusTip.setText("无障碍服务已开启");
+                } else {
+                    mainBinding.statusImg.setImageResource(R.drawable.ic_error);
+                    mainBinding.statusTip.setText("无障碍服务未开启");
+                }
+            }
+        });
     }
 
     private void showUpdateInfo() {
@@ -203,12 +190,11 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onNext(@NonNull LatestMessage latestMessage) {
                 try {
-                    int versionCode = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionCode;
                     String appName = latestMessage.assets.get(0).name;
                     Matcher matcher = Pattern.compile("\\d+").matcher(appName);
                     if (matcher.find()) {
                         int newVersion = Integer.parseInt(matcher.group());
-                        if (newVersion > versionCode) {
+                        if (newVersion > BuildConfig.VERSION_CODE) {
                             Intent intent = new Intent(context, UpdateActivity.class);
                             intent.putExtra("updateMessage", latestMessage.body);
                             intent.putExtra("updateUrl", latestMessage.assets.get(0).browser_download_url);
@@ -217,7 +203,7 @@ public class MainActivity extends BaseActivity {
                             }
                         }
                     }
-                } catch (PackageManager.NameNotFoundException | RuntimeException e) {
+                } catch (RuntimeException e) {
                     // e.printStackTrace();
                 }
             }
@@ -279,10 +265,6 @@ public class MainActivity extends BaseActivity {
             public void onComplete() {
             }
         });
-    }
-
-    private boolean isAccessibilityServiceRunning() {
-        return MyAccessibilityService.mainFunction != null || MyAccessibilityServiceNoGesture.mainFunction != null;
     }
 
     static class Resource {

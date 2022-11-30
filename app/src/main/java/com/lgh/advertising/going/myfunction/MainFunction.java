@@ -12,10 +12,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -71,9 +73,14 @@ import java.util.stream.Collectors;
 
 public class MainFunction {
 
+    private static final String ACTION_SHOW_ADD_DATA_WINDOW = "action.lingh.show.add.data.window";
+    private static final String ACTION_REQUEST_UPDATE_DATA = "action.lingh.request.update.data";
+    private static final String ACTION_CHECK_SERVICE_STATE = "action.lingh.check.service.state";
+    private static final String isScreenOffPre = "isScreenOffPre";
     private final AccessibilityService service;
     private WindowManager windowManager;
     private PackageManager packageManager;
+    private InputMethodManager inputMethodManager;
     private DataDao dataDao;
     private Map<String, AppDescribe> appDescribeMap;
     private AppDescribe appDescribe;
@@ -93,30 +100,28 @@ public class MainFunction {
     private ScheduledFuture<?> futureCoordinate;
     private ScheduledExecutorService executorService;
     private Set<Widget> widgetSet;
-    private MyInstallReceiver installReceiver;
+    private MyBroadcastReceiver myBroadcastReceiver;
+    private MyPackageReceiver myPackageReceiver;
     private Set<Widget> alreadyClickSet;
     private Map<String, Coordinate> coordinateMap;
     private List<String> keywordList;
     private Map<String, Set<Widget>> widgetSetMap;
     private Coordinate coordinate;
     private ScheduledFuture<?> futureCoordinateClick;
-
     private WindowManager.LayoutParams aParams, bParams, cParams;
     private ViewAddDataBinding addDataBinding;
     private ViewWidgetSelectBinding widgetSelectBinding;
     private ImageView viewClickPosition;
-
     private Set<String> pkgSuggestNotOnList;
-    private final String isScreenOffPre;
 
     public MainFunction(AccessibilityService service) {
         this.service = service;
-        isScreenOffPre = "isScreenOffPre";
     }
 
     protected void onServiceConnected() {
         windowManager = service.getSystemService(WindowManager.class);
         packageManager = service.getPackageManager();
+        inputMethodManager = service.getSystemService(InputMethodManager.class);
         currentPackage = "Initialize CurrentPackage";
         currentActivity = "Initialize CurrentActivity";
         currentPackageSub = currentPackage;
@@ -124,20 +129,19 @@ public class MainFunction {
         serviceInfo = service.getServiceInfo();
         dataDao = MyApplication.dataDao;
         appDescribeMap = new HashMap<>();
-        installReceiver = new MyInstallReceiver();
-        IntentFilter filterInstall = new IntentFilter();
-        filterInstall.addAction(Intent.ACTION_PACKAGE_ADDED);
-        filterInstall.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
-        filterInstall.addDataScheme("package");
-        service.registerReceiver(installReceiver, filterInstall);
-        IntentFilter filterScreenOff = new IntentFilter();
-        filterScreenOff.addAction(Intent.ACTION_SCREEN_OFF);
-        service.registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                currentPackageSub = isScreenOffPre;
-            }
-        }, filterScreenOff);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        intentFilter.addAction(ACTION_SHOW_ADD_DATA_WINDOW);
+        intentFilter.addAction(ACTION_CHECK_SERVICE_STATE);
+        intentFilter.addAction(ACTION_REQUEST_UPDATE_DATA);
+        myBroadcastReceiver = new MyBroadcastReceiver();
+        service.registerReceiver(myBroadcastReceiver, intentFilter);
+        IntentFilter filterPackage = new IntentFilter();
+        filterPackage.addAction(Intent.ACTION_PACKAGE_ADDED);
+        filterPackage.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
+        filterPackage.addDataScheme("package");
+        myPackageReceiver = new MyPackageReceiver();
+        service.registerReceiver(myPackageReceiver, filterPackage);
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -346,7 +350,8 @@ public class MainFunction {
     }
 
     public boolean onUnbind(Intent intent) {
-        service.unregisterReceiver(installReceiver);
+        service.unregisterReceiver(myBroadcastReceiver);
+        service.unregisterReceiver(myPackageReceiver);
         return true;
     }
 
@@ -510,13 +515,6 @@ public class MainFunction {
     }
 
     /**
-     * 把数据暴露给其他Activity
-     */
-    public Map<String, AppDescribe> getAppDescribeMap() {
-        return appDescribeMap;
-    }
-
-    /**
      * 开启无障碍服务时调用
      * 获取运行时需要的数据
      */
@@ -532,8 +530,7 @@ public class MainFunction {
                 .collect(Collectors.toSet());
         pkgNormalSet.addAll(pkgHasActivitySet);
         //输入法、桌面、本应用需要默认关闭
-        Set<String> pkgInputMethodSet = service
-                .getSystemService(InputMethodManager.class)
+        Set<String> pkgInputMethodSet = inputMethodManager
                 .getInputMethodList()
                 .stream()
                 .map(InputMethodInfo::getPackageName)
@@ -591,13 +588,13 @@ public class MainFunction {
      * 创建规则时调用
      */
     @SuppressLint("ClickableViewAccessibility")
-    public void showAddDataFloat() {
+    public void showAddDataWindow() {
         if (pkgSuggestNotOnList == null) {
-            Set<String> pkgSysSet = packageManager.
-                    getInstalledPackages(PackageManager.MATCH_SYSTEM_ONLY)
+            Set<String> pkgSysSet = packageManager
+                    .getInstalledPackages(PackageManager.MATCH_SYSTEM_ONLY)
                     .stream().map(e -> e.packageName)
                     .collect(Collectors.toSet());
-            Set<String> pkgInputMethodSet = service.getSystemService(InputMethodManager.class)
+            Set<String> pkgInputMethodSet = inputMethodManager
                     .getInputMethodList()
                     .stream()
                     .map(InputMethodInfo::getPackageName)
@@ -682,10 +679,10 @@ public class MainFunction {
                                 if (Math.abs(aParams.x - startLpX) < 10 && Math.abs(aParams.y - startLpY) < 10) {
                                     Matcher matcher = Pattern.compile("(\\w|\\.)+").matcher(addDataBinding.pacName.getText().toString());
                                     if (matcher.find()) {
-                                        MyApplication.appDescribe = appDescribeMap.get(matcher.group());
-                                        if (MyApplication.appDescribe != null) {
+                                        if (appDescribeMap.containsKey(matcher.group())) {
                                             Intent intent = new Intent(service, EditDataActivity.class);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            intent.putExtra("packageName", matcher.group());
                                             service.startActivity(intent);
                                         }
                                     }
@@ -946,6 +943,7 @@ public class MainFunction {
                 windowManager.removeViewImmediate(widgetSelectBinding.getRoot());
                 windowManager.removeViewImmediate(addDataBinding.getRoot());
                 windowManager.removeViewImmediate(viewClickPosition);
+                pkgSuggestNotOnList = null;
                 widgetSelectBinding = null;
                 addDataBinding = null;
                 viewClickPosition = null;
@@ -957,5 +955,122 @@ public class MainFunction {
         windowManager.addView(widgetSelectBinding.getRoot(), bParams);
         windowManager.addView(addDataBinding.getRoot(), aParams);
         windowManager.addView(viewClickPosition, cParams);
+    }
+
+    public class MyBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (TextUtils.equals(intent.getAction(), Intent.ACTION_SCREEN_OFF)) {
+                currentPackageSub = isScreenOffPre;
+            }
+            if (TextUtils.equals(intent.getAction(), ACTION_SHOW_ADD_DATA_WINDOW)) {
+                showAddDataWindow();
+            }
+            if (TextUtils.equals(intent.getAction(), ACTION_CHECK_SERVICE_STATE)) {
+                setResultCode(1);
+            }
+            if (TextUtils.equals(intent.getAction(), ACTION_REQUEST_UPDATE_DATA)) {
+                String updateScope = intent.getStringExtra("updateScope");
+                String packageName = intent.getStringExtra("packageName");
+                if (!TextUtils.isEmpty(updateScope) && !TextUtils.isEmpty(packageName)) {
+                    if (TextUtils.equals(updateScope, "updateAppDescribe")) {
+                        AppDescribe appDescribe = appDescribeMap.get(packageName);
+                        if (appDescribe != null) {
+                            AppDescribe appDescribeNew = dataDao.getAppDescribeByPackage(packageName);
+                            if (appDescribeNew != null) {
+                                appDescribeNew.autoFinder = appDescribe.autoFinder;
+                                appDescribeNew.widgetSetMap = appDescribe.widgetSetMap;
+                                appDescribeNew.coordinateMap = appDescribe.coordinateMap;
+                                appDescribeMap.put(packageName, appDescribeNew);
+                            }
+                        }
+                    }
+                    if (TextUtils.equals(updateScope, "updateAutoFinder")) {
+                        AppDescribe appDescribe = appDescribeMap.get(packageName);
+                        if (appDescribe != null) {
+                            appDescribe.getAutoFinderFromDatabase(dataDao);
+                        }
+                    }
+                    if (TextUtils.equals(updateScope, "updateWidget")) {
+                        AppDescribe appDescribe = appDescribeMap.get(packageName);
+                        if (appDescribe != null) {
+                            appDescribe.getWidgetSetMapFromDatabase(dataDao);
+                        }
+                    }
+                    if (TextUtils.equals(updateScope, "updateCoordinate")) {
+                        AppDescribe appDescribe = appDescribeMap.get(packageName);
+                        if (appDescribe != null) {
+                            appDescribe.getCoordinateMapFromDatabase(MyApplication.dataDao);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public class MyPackageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (TextUtils.equals(intent.getAction(), Intent.ACTION_PACKAGE_ADDED)) {
+                String dataString = intent.getDataString();
+                String packageName = dataString != null ? dataString.substring(8) : null;
+                if (!TextUtils.isEmpty(packageName)) {
+                    executorService.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            AppDescribe appDescribe = dataDao.getAppDescribeByPackage(packageName);
+                            if (appDescribe == null) {
+                                appDescribe = new AppDescribe();
+                                try {
+                                    ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+                                    appDescribe.appName = packageManager.getApplicationLabel(applicationInfo).toString();
+                                } catch (PackageManager.NameNotFoundException e) {
+                                    appDescribe.appName = "unknown";
+                                    // e.printStackTrace();
+                                }
+                                appDescribe.appPackage = packageName;
+                                List<ResolveInfo> homeLaunchList = packageManager.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL);
+                                for (ResolveInfo e : homeLaunchList) {
+                                    if (packageName.equals(e.activityInfo.packageName)) {
+                                        appDescribe.onOff = false;
+                                        appDescribe.autoFinderOnOFF = false;
+                                        appDescribe.widgetOnOff = false;
+                                        appDescribe.coordinateOnOff = false;
+                                        break;
+                                    }
+                                }
+                                List<InputMethodInfo> inputMethodInfoList = inputMethodManager.getInputMethodList();
+                                for (InputMethodInfo e : inputMethodInfoList) {
+                                    if (packageName.equals(e.getPackageName())) {
+                                        appDescribe.onOff = false;
+                                        appDescribe.autoFinderOnOFF = false;
+                                        appDescribe.widgetOnOff = false;
+                                        appDescribe.coordinateOnOff = false;
+                                        break;
+                                    }
+                                }
+                                AutoFinder autoFinder = new AutoFinder();
+                                autoFinder.appPackage = packageName;
+                                autoFinder.keywordList = Collections.singletonList("跳过");
+                                dataDao.insertAppDescribe(appDescribe);
+                                dataDao.insertAutoFinder(autoFinder);
+                                appDescribe.getOtherFieldsFromDatabase(dataDao);
+                                appDescribeMap.put(appDescribe.appPackage, appDescribe);
+                            }
+                        }
+                    }, 2000, TimeUnit.MILLISECONDS);
+                }
+            }
+            if (TextUtils.equals(intent.getAction(), Intent.ACTION_PACKAGE_FULLY_REMOVED)) {
+                String dataString = intent.getDataString();
+                String packageName = dataString != null ? dataString.substring(8) : null;
+                if (!TextUtils.isEmpty(packageName)) {
+                    dataDao.deleteAppDescribeByPackage(packageName);
+                    appDescribeMap.remove(packageName);
+                }
+            }
+        }
     }
 }

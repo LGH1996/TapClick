@@ -6,8 +6,8 @@ android {
         applicationId "com.lgh.advertising.going"
         minSdkVersion 24
         targetSdkVersion 32
-        versionCode 38
-        versionName "3.8"
+        versionCode 39
+        versionName "3.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
@@ -16,6 +16,10 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BUILD_TIME", "\"" + new Date().toString() + "\"")
+        }
+        debug {
+            buildConfigField("String", "BUILD_TIME", "\"" + new Date().toString() + "\"")
         }
     }
     buildFeatures {

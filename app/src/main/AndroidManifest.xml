@@ -17,33 +17,12 @@
         android:roundIcon="@drawable/app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".myactivity.ExceptionReportActivity"
-            android:exported="false" />
 
-        <activity android:name=".myactivity.SettingActivity" />
-        <activity android:name=".myactivity.AuthorizationActivity" />
-        <activity android:name=".myactivity.AddDataActivity" />
-        <activity
-            android:name=".myactivity.UpdateActivity"
-            android:process=":UpdateActivity"
-            android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar" />
-        <activity
-            android:name=".myactivity.MoreMessageActivity"
-            android:process=":MoreMessageActivity" />
-        <activity
-            android:name=".myactivity.ShortCutActivity"
-            android:theme="@android:style/Theme.NoDisplay" />
-        <activity android:name=".myactivity.ListDataActivity" />
-        <activity
-            android:name=".myactivity.EditDataActivity"
-            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".myactivity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -52,12 +31,38 @@
                 android:resource="@xml/shortcuts" />
         </activity>
 
+        <activity
+            android:name=".myactivity.ExceptionReportActivity"
+            android:exported="false" />
+
+        <activity android:name=".myactivity.SettingActivity" />
+
+        <activity android:name=".myactivity.AuthorizationActivity" />
+
+        <activity android:name=".myactivity.AddDataActivity" />
+
+        <activity
+            android:name=".myactivity.UpdateActivity"
+            android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar" />
+        <activity android:name=".myactivity.MoreMessageActivity" />
+
+        <activity
+            android:name=".myactivity.ShortCutActivity"
+            android:theme="@android:style/Theme.NoDisplay" />
+
+        <activity android:name=".myactivity.ListDataActivity" />
+
+        <activity
+            android:name=".myactivity.EditDataActivity"
+            android:windowSoftInputMode="adjustResize" />
+
         <service
             android:name=".myfunction.MyAccessibilityService"
             android:enabled="true"
             android:exported="true"
             android:label="@string/accessibilityName"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:process=":AccessibilityService">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
@@ -66,12 +71,14 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/configure" />
         </service>
+
         <service
             android:name=".myfunction.MyAccessibilityServiceNoGesture"
             android:enabled="true"
             android:exported="true"
             android:label="@string/accessibilityNameNoGesture"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:process=":AccessibilityService">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
@@ -81,10 +88,11 @@
                 android:resource="@xml/configurenogesture" />
         </service>
 
-        <receiver
-            android:name=".myfunction.MyInstallReceiver"
+        <!--<provider
+            android:name=".myfunction.MyContentProvider"
+            android:authorities="${applicationId}"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false"
+            android:process=":AccessibilityService" />-->
     </application>
-
 </manifest>

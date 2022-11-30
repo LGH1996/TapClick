@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ import com.lgh.advertising.going.mybean.Coordinate;
 import com.lgh.advertising.going.mybean.Widget;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
+import com.lgh.advertising.going.myfunction.MyUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,7 +48,7 @@ import java.util.stream.Collectors;
 
 public class EditDataActivity extends BaseActivity {
 
-    private AppDescribe appDescribe;
+    public static AppDescribe appDescribe;
     private LayoutInflater inflater;
     private DataDao dataDao;
     private DisplayMetrics metrics;
@@ -62,7 +64,6 @@ public class EditDataActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         editDataBinding = ActivityEditDataBinding.inflate(inflater = getLayoutInflater());
         setContentView(editDataBinding.getRoot());
-        appDescribe = MyApplication.appDescribe;
 
         dataDao = MyApplication.dataDao;
         dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
@@ -123,6 +124,13 @@ public class EditDataActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        String extraStr = getIntent().getStringExtra("packageName");
+        if (!TextUtils.isEmpty(extraStr)) {
+            appDescribe = dataDao.getAppDescribeByPackage(extraStr);
+            if (appDescribe != null) {
+                appDescribe.getOtherFieldsFromDatabase(dataDao);
+            }
+        }
 
         if (baseSettingBinding != null) {
             editDataBinding.baseSettingLayout.removeView(baseSettingBinding.getRoot());
@@ -529,5 +537,15 @@ public class EditDataActivity extends BaseActivity {
                 editDataBinding.widgetLayout.addView(widgetBinding.getRoot());
             }
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MyUtils myUtils = MyUtils.getInstance();
+        myUtils.requestUpdateAppDescribe(getApplicationContext(), appDescribe.appPackage);
+        myUtils.requestUpdateAutoFinder(getApplicationContext(), appDescribe.appPackage);
+        myUtils.requestUpdateCoordinate(getApplicationContext(), appDescribe.appPackage);
+        myUtils.requestUpdateWidget(getApplicationContext(), appDescribe.appPackage);
     }
 }

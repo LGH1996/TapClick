@@ -44,10 +44,4 @@ public class UpdateActivity extends BaseActivity {
             }
         });
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        System.exit(0);
-    }
 }

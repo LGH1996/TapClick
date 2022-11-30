@@ -57,4 +57,20 @@ public class Coordinate {
     public int hashCode() {
         return Objects.hash(this.appPackage, this.appActivity);
     }
+
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "id=" + id +
+                ", createTime=" + createTime +
+                ", appPackage='" + appPackage + '\'' +
+                ", appActivity='" + appActivity + '\'' +
+                ", xPosition=" + xPosition +
+                ", yPosition=" + yPosition +
+                ", clickDelay=" + clickDelay +
+                ", clickInterval=" + clickInterval +
+                ", clickNumber=" + clickNumber +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }

@@ -7,7 +7,6 @@ import androidx.room.Room;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.lgh.advertising.going.mybean.AppDescribe;
 import com.lgh.advertising.going.mybean.MyAppConfig;
 
 import retrofit2.Retrofit;
@@ -19,7 +18,6 @@ public class MyApplication extends Application {
 
     public static DataDao dataDao;
     public static MyAppConfig myAppConfig;
-    public static AppDescribe appDescribe;
     public static MyHttpRequest myHttpRequest;
 
     @Override

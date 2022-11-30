@@ -24,4 +24,16 @@ public class AutoFinder {
         this.retrieveNumber = 1;
         this.keywordList = new ArrayList<>();
     }
+
+    @Override
+    public String toString() {
+        return "AutoFinder{" +
+                "id=" + id +
+                ", appPackage='" + appPackage + '\'' +
+                ", clickOnly=" + clickOnly +
+                ", clickDelay=" + clickDelay +
+                ", retrieveNumber=" + retrieveNumber +
+                ", keywordList=" + keywordList +
+                '}';
+    }
 }

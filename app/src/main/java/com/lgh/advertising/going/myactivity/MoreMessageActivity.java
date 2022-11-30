@@ -43,12 +43,6 @@ public class MoreMessageActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        System.exit(0);
-    }
-
-    @Override
     public void onBackPressed() {
         if (binding.webViewMore.canGoBack()) {
             binding.webViewMore.goBack();

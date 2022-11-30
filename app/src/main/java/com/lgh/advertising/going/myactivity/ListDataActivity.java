@@ -21,6 +21,8 @@ import android.widget.Filter;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import androidx.core.util.Consumer;
+
 import com.lgh.advertising.going.databinding.ActivityListDataBinding;
 import com.lgh.advertising.going.databinding.ViewListItemBinding;
 import com.lgh.advertising.going.databinding.ViewOnOffWarningBinding;
@@ -28,8 +30,7 @@ import com.lgh.advertising.going.databinding.ViewSearchBinding;
 import com.lgh.advertising.going.mybean.AppDescribe;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
-import com.lgh.advertising.going.myfunction.MyAccessibilityService;
-import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
+import com.lgh.advertising.going.myfunction.MyUtils;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -57,7 +57,6 @@ public class ListDataActivity extends BaseActivity {
     private DataDao dataDao;
     private PackageManager packageManager;
     private LayoutInflater inflater;
-    private Map<String, AppDescribe> appDescribeMap;
     private List<AppDescribe> appDescribeList;
     private List<AppDescribeAndIcon> appDescribeAndIconList;
     private List<AppDescribeAndIcon> appDescribeAndIconFilterList;
@@ -77,16 +76,14 @@ public class ListDataActivity extends BaseActivity {
         appDescribeAndIconFilterList = new ArrayList<>();
         pkgSuggestNotOnList = new HashSet<>();
 
-        if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
-            Toast.makeText(context, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
-        } else {
-            if (MyAccessibilityService.mainFunction != null) {
-                appDescribeMap = MyAccessibilityService.mainFunction.getAppDescribeMap();
+        MyUtils.getInstance().checkServiceState(context, new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) {
+                if (!aBoolean) {
+                    Toast.makeText(context, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
+                }
             }
-            if (MyAccessibilityServiceNoGesture.mainFunction != null) {
-                appDescribeMap = MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap();
-            }
-        }
+        });
 
         Set<String> pkgSysSet = packageManager.
                 getInstalledPackages(PackageManager.MATCH_SYSTEM_ONLY)
@@ -257,6 +254,7 @@ public class ListDataActivity extends BaseActivity {
                                 tem.appDescribe.widgetOnOff = isChecked;
                                 tem.appDescribe.coordinateOnOff = isChecked;
                                 dataDao.updateAppDescribe(tem.appDescribe);
+                                MyUtils.getInstance().requestUpdateAppDescribe(context, tem.appDescribe.appPackage);
                             }
                         };
                         if (isChecked && pkgSuggestNotOnList.contains(tem.appDescribe.appPackage)) {
@@ -282,7 +280,7 @@ public class ListDataActivity extends BaseActivity {
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MyApplication.appDescribe = tem.appDescribe;
+                        EditDataActivity.appDescribe = tem.appDescribe;
                         startActivity(new Intent(context, EditDataActivity.class));
                     }
                 });
@@ -294,13 +292,9 @@ public class ListDataActivity extends BaseActivity {
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(@NonNull ObservableEmitter<Boolean> emitter) throws Throwable {
-                if (appDescribeMap != null) {
-                    appDescribeList = new ArrayList<>(appDescribeMap.values());
-                } else {
-                    appDescribeList = dataDao.getAllAppDescribes();
-                    for (AppDescribe e : appDescribeList) {
-                        e.getOtherFieldsFromDatabase(dataDao);
-                    }
+                appDescribeList = dataDao.getAllAppDescribes();
+                for (AppDescribe e : appDescribeList) {
+                    e.getOtherFieldsFromDatabase(dataDao);
                 }
                 appDescribeList.sort(new Comparator<AppDescribe>() {
                     @Override
@@ -353,21 +347,6 @@ public class ListDataActivity extends BaseActivity {
     protected void onRestart() {
         super.onRestart();
         baseAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (MyAccessibilityService.mainFunction != null) {
-            for (AppDescribe e : MyAccessibilityService.mainFunction.getAppDescribeMap().values()) {
-                e.getOtherFieldsFromDatabase(dataDao);
-            }
-        }
-        if (MyAccessibilityServiceNoGesture.mainFunction != null) {
-            for (AppDescribe e : MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap().values()) {
-                e.getOtherFieldsFromDatabase(dataDao);
-            }
-        }
     }
 
     static class AppDescribeAndIcon {

@@ -13,12 +13,18 @@ import com.lgh.advertising.going.databinding.ActivityExceptionReportBinding;
 
 public class ExceptionReportActivity extends BaseActivity {
 
+    private ActivityExceptionReportBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.startActivity = true;
-        ActivityExceptionReportBinding binding = ActivityExceptionReportBinding.inflate(getLayoutInflater());
+        binding = ActivityExceptionReportBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         String exceptionStr = getIntent().getStringExtra(Intent.EXTRA_TEXT);
         binding.exception.setText(exceptionStr);
         binding.send.setOnClickListener(new View.OnClickListener() {

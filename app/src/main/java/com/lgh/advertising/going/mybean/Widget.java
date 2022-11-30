@@ -69,4 +69,23 @@ public class Widget {
     public int hashCode() {
         return Objects.hash(this.appPackage, this.appActivity, this.widgetRect);
     }
+
+    @Override
+    public String toString() {
+        return "Widget{" +
+                "id=" + id +
+                ", createTime=" + createTime +
+                ", appPackage='" + appPackage + '\'' +
+                ", appActivity='" + appActivity + '\'' +
+                ", clickDelay=" + clickDelay +
+                ", noRepeat=" + noRepeat +
+                ", clickOnly=" + clickOnly +
+                ", widgetClickable=" + widgetClickable +
+                ", widgetRect=" + widgetRect +
+                ", widgetId='" + widgetId + '\'' +
+                ", widgetDescribe='" + widgetDescribe + '\'' +
+                ", widgetText='" + widgetText + '\'' +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }

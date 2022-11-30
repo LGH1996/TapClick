@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.lgh.advertising.going.BuildConfig;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivitySettingBinding;
 import com.lgh.advertising.going.mybean.LatestMessage;
@@ -72,12 +73,11 @@ public class SettingActivity extends BaseActivity {
                     @Override
                     public void onNext(@NonNull LatestMessage latestMessage) {
                         try {
-                            int versionCode = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionCode;
                             String appName = latestMessage.assets.get(0).name;
                             Matcher matcher = Pattern.compile("\\d+").matcher(appName);
                             if (matcher.find()) {
                                 int newVersion = Integer.parseInt(matcher.group());
-                                if (newVersion > versionCode) {
+                                if (newVersion > BuildConfig.VERSION_CODE) {
                                     Intent intent = new Intent(context, UpdateActivity.class);
                                     intent.putExtra("updateMessage", latestMessage.body);
                                     intent.putExtra("updateUrl", latestMessage.assets.get(0).browser_download_url);
@@ -88,7 +88,7 @@ public class SettingActivity extends BaseActivity {
                                     Toast.makeText(context, "当前已是最新版本", Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        } catch (PackageManager.NameNotFoundException | RuntimeException e) {
+                        } catch (RuntimeException e) {
                             Toast.makeText(context, "解析版本号时出现错误", Toast.LENGTH_SHORT).show();
                             // e.printStackTrace();
                         }
@@ -161,13 +161,6 @@ public class SettingActivity extends BaseActivity {
                 } else {
                     Toast.makeText(context, "请到应用市场评分", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        settingBinding.settingMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context, MoreMessageActivity.class));
             }
         });
 

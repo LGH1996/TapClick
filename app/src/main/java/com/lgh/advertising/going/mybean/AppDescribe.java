@@ -87,4 +87,26 @@ public class AppDescribe {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "AppDescribe{" +
+                "id=" + id +
+                ", appName='" + appName + '\'' +
+                ", appPackage='" + appPackage + '\'' +
+                ", onOff=" + onOff +
+                ", autoFinderRetrieveTime=" + autoFinderRetrieveTime +
+                ", autoFinderRetrieveAllTime=" + autoFinderRetrieveAllTime +
+                ", coordinateRetrieveTime=" + coordinateRetrieveTime +
+                ", coordinateRetrieveAllTime=" + coordinateRetrieveAllTime +
+                ", widgetRetrieveTime=" + widgetRetrieveTime +
+                ", widgetRetrieveAllTime=" + widgetRetrieveAllTime +
+                ", autoFinderOnOFF=" + autoFinderOnOFF +
+                ", coordinateOnOff=" + coordinateOnOff +
+                ", widgetOnOff=" + widgetOnOff +
+                ", autoFinder=" + autoFinder +
+                ", coordinateMap=" + coordinateMap +
+                ", widgetSetMap=" + widgetSetMap +
+                '}';
+    }
 }

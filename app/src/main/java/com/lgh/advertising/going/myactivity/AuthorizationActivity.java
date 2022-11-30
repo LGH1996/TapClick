@@ -11,10 +11,11 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.core.util.Consumer;
+
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivityAuthorizationBinding;
-import com.lgh.advertising.going.myfunction.MyAccessibilityService;
-import com.lgh.advertising.going.myfunction.MyAccessibilityServiceNoGesture;
+import com.lgh.advertising.going.myfunction.MyUtils;
 
 public class AuthorizationActivity extends BaseActivity {
 
@@ -65,11 +66,16 @@ public class AuthorizationActivity extends BaseActivity {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (MyAccessibilityService.mainFunction == null && MyAccessibilityServiceNoGesture.mainFunction == null) {
-                    authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ic_error);
-                } else {
-                    authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ic_ok);
-                }
+                MyUtils.getInstance().checkServiceState(context, new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) {
+                        if (aBoolean) {
+                            authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ic_ok);
+                        } else {
+                            authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ic_error);
+                        }
+                    }
+                });
                 if (getSystemService(PowerManager.class).isIgnoringBatteryOptimizations(getPackageName())) {
                     authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.ic_ok);
                 } else {
@@ -78,5 +84,11 @@ public class AuthorizationActivity extends BaseActivity {
                 handler.postDelayed(this, 500);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
     }
 }
