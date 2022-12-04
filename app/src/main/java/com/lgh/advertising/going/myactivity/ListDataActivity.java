@@ -21,8 +21,6 @@ import android.widget.Filter;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import androidx.core.util.Consumer;
-
 import com.lgh.advertising.going.databinding.ActivityListDataBinding;
 import com.lgh.advertising.going.databinding.ViewListItemBinding;
 import com.lgh.advertising.going.databinding.ViewOnOffWarningBinding;
@@ -63,6 +61,7 @@ public class ListDataActivity extends BaseActivity {
     private BaseAdapter baseAdapter;
     private ActivityListDataBinding listDataBinding;
     private Set<String> pkgSuggestNotOnList;
+    private MyUtils myUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,15 +74,11 @@ public class ListDataActivity extends BaseActivity {
         appDescribeAndIconList = new ArrayList<>();
         appDescribeAndIconFilterList = new ArrayList<>();
         pkgSuggestNotOnList = new HashSet<>();
+        myUtils = MyApplication.myUtils;
 
-        MyUtils.getInstance().checkServiceState(context, new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) {
-                if (!aBoolean) {
-                    Toast.makeText(context, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        if (!myUtils.isServiceRunning()) {
+            Toast.makeText(context, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
+        }
 
         Set<String> pkgSysSet = packageManager.
                 getInstalledPackages(PackageManager.MATCH_SYSTEM_ONLY)
@@ -254,7 +249,7 @@ public class ListDataActivity extends BaseActivity {
                                 tem.appDescribe.widgetOnOff = isChecked;
                                 tem.appDescribe.coordinateOnOff = isChecked;
                                 dataDao.updateAppDescribe(tem.appDescribe);
-                                MyUtils.getInstance().requestUpdateAppDescribe(context, tem.appDescribe.appPackage);
+                                myUtils.requestUpdateAppDescribe(tem.appDescribe.appPackage);
                             }
                         };
                         if (isChecked && pkgSuggestNotOnList.contains(tem.appDescribe.appPackage)) {

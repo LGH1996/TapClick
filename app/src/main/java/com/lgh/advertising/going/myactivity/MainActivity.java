@@ -15,8 +15,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
-import androidx.core.util.Consumer;
-
 import com.lgh.advertising.going.BuildConfig;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivityMainBinding;
@@ -52,6 +50,7 @@ public class MainActivity extends BaseActivity {
     private LayoutInflater inflater;
     private ActivityMainBinding mainBinding;
     private SharedPreferences sharedPreferences;
+    private MyUtils myUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +61,7 @@ public class MainActivity extends BaseActivity {
         dataDao = MyApplication.dataDao;
         myAppConfig = MyApplication.myAppConfig;
         sharedPreferences = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+        myUtils = MyApplication.myUtils;
 
         if (myAppConfig == null) {
             myAppConfig = new MyAppConfig();
@@ -166,18 +166,13 @@ public class MainActivity extends BaseActivity {
     }
 
     private void refreshAccessibilityServiceStatus() {
-        MyUtils.getInstance().checkServiceState(context, new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) {
-                if (aBoolean) {
-                    mainBinding.statusImg.setImageResource(R.drawable.ic_ok);
-                    mainBinding.statusTip.setText("无障碍服务已开启");
-                } else {
-                    mainBinding.statusImg.setImageResource(R.drawable.ic_error);
-                    mainBinding.statusTip.setText("无障碍服务未开启");
-                }
-            }
-        });
+        if (myUtils.isServiceRunning()) {
+            mainBinding.statusImg.setImageResource(R.drawable.ic_ok);
+            mainBinding.statusTip.setText("无障碍服务已开启");
+        } else {
+            mainBinding.statusImg.setImageResource(R.drawable.ic_error);
+            mainBinding.statusTip.setText("无障碍服务未开启");
+        }
     }
 
     private void showUpdateInfo() {

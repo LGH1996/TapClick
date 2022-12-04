@@ -11,18 +11,18 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.core.util.Consumer;
-
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivityAuthorizationBinding;
+import com.lgh.advertising.going.myclass.MyApplication;
 import com.lgh.advertising.going.myfunction.MyUtils;
 
 public class AuthorizationActivity extends BaseActivity {
 
+    private ActivityAuthorizationBinding authorizationBinding;
     private Context context;
+    private MyUtils myUtils;
     private Handler handler;
     private PackageManager packageManager;
-    private ActivityAuthorizationBinding authorizationBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,7 @@ public class AuthorizationActivity extends BaseActivity {
         authorizationBinding = ActivityAuthorizationBinding.inflate(getLayoutInflater());
         setContentView(authorizationBinding.getRoot());
         context = getApplicationContext();
+        myUtils = MyApplication.myUtils;
         handler = new Handler();
         packageManager = getPackageManager();
 
@@ -66,16 +67,11 @@ public class AuthorizationActivity extends BaseActivity {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                MyUtils.getInstance().checkServiceState(context, new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) {
-                        if (aBoolean) {
-                            authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ic_ok);
-                        } else {
-                            authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ic_error);
-                        }
-                    }
-                });
+                if (myUtils.isServiceRunning()) {
+                    authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ic_ok);
+                } else {
+                    authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ic_error);
+                }
                 if (getSystemService(PowerManager.class).isIgnoringBatteryOptimizations(getPackageName())) {
                     authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.ic_ok);
                 } else {

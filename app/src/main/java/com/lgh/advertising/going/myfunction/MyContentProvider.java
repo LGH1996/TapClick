@@ -8,12 +8,18 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.lgh.advertising.going.mybean.AppDescribe;
+import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
 
 import java.util.Map;
 
 public class MyContentProvider extends ContentProvider {
-    public static Map<String, AppDescribe> appDescribeMap;
+
+    private final DataDao dataDao;
+
+    public MyContentProvider() {
+        dataDao = MyApplication.dataDao;
+    }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
@@ -45,47 +51,50 @@ public class MyContentProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        if (appDescribeMap == null) {
+        String updateScope = values.getAsString("updateScope");
+        String packageName = values.getAsString("packageName");
+        if (TextUtils.isEmpty(updateScope) || TextUtils.isEmpty(packageName)) {
             return 0;
         }
-        String action = values.getAsString("action");
-        String packageName = values.getAsString("packageName");
-        if (!TextUtils.isEmpty(action) && !TextUtils.isEmpty(packageName)) {
-            if (action.equals("updateAppDescribe")) {
-                AppDescribe appDescribe = appDescribeMap.get(packageName);
-                if (appDescribe != null) {
-                    AppDescribe appDescribeNew = MyApplication.dataDao.getAppDescribeByPackage(packageName);
-                    if (appDescribeNew != null) {
-                        appDescribeNew.autoFinder = appDescribe.autoFinder;
-                        appDescribeNew.widgetSetMap = appDescribe.widgetSetMap;
-                        appDescribeNew.coordinateMap = appDescribe.coordinateMap;
-                        appDescribeMap.put(packageName, appDescribeNew);
-                        return 1;
-                    }
-                }
-            }
-            if (action.equals("updateAutoFinder")) {
-                AppDescribe appDescribe = appDescribeMap.get(packageName);
-                if (appDescribe != null) {
-                    appDescribe.getAutoFinderFromDatabase(MyApplication.dataDao);
-                    return 1;
-                }
-            }
-            if (action.equals("updateWidget")) {
-                AppDescribe appDescribe = appDescribeMap.get(packageName);
-                if (appDescribe != null) {
-                    appDescribe.getWidgetSetMapFromDatabase(MyApplication.dataDao);
-                    return 1;
-                }
-            }
-            if (action.equals("updateCoordinate")) {
-                AppDescribe appDescribe = appDescribeMap.get(packageName);
-                if (appDescribe != null) {
-                    appDescribe.getCoordinateMapFromDatabase(MyApplication.dataDao);
-                    return 1;
+        if (MyAccessibilityService.mainFunction != null) {
+            updateData(MyAccessibilityService.mainFunction.getAppDescribeMap(), updateScope, packageName);
+        }
+        if (MyAccessibilityServiceNoGesture.mainFunction != null) {
+            updateData(MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap(), updateScope, packageName);
+        }
+        return 1;
+    }
+
+    private void updateData(Map<String, AppDescribe> appDescribeMap, String updateScope, String packageName) {
+        if (TextUtils.equals(updateScope, "updateAppDescribe")) {
+            AppDescribe appDescribe = appDescribeMap.get(packageName);
+            if (appDescribe != null) {
+                AppDescribe appDescribeNew = dataDao.getAppDescribeByPackage(packageName);
+                if (appDescribeNew != null) {
+                    appDescribeNew.autoFinder = appDescribe.autoFinder;
+                    appDescribeNew.widgetSetMap = appDescribe.widgetSetMap;
+                    appDescribeNew.coordinateMap = appDescribe.coordinateMap;
+                    appDescribeMap.put(packageName, appDescribeNew);
                 }
             }
         }
-        return 0;
+        if (TextUtils.equals(updateScope, "updateAutoFinder")) {
+            AppDescribe appDescribe = appDescribeMap.get(packageName);
+            if (appDescribe != null) {
+                appDescribe.getAutoFinderFromDatabase(dataDao);
+            }
+        }
+        if (TextUtils.equals(updateScope, "updateWidget")) {
+            AppDescribe appDescribe = appDescribeMap.get(packageName);
+            if (appDescribe != null) {
+                appDescribe.getWidgetSetMapFromDatabase(dataDao);
+            }
+        }
+        if (TextUtils.equals(updateScope, "updateCoordinate")) {
+            AppDescribe appDescribe = appDescribeMap.get(packageName);
+            if (appDescribe != null) {
+                appDescribe.getCoordinateMapFromDatabase(dataDao);
+            }
+        }
     }
 }

@@ -5,6 +5,9 @@ import android.accessibilityservice.AccessibilityServiceInfo;
 import android.accessibilityservice.GestureDescription;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +20,8 @@ import android.content.res.Configuration;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.os.Build;
+import android.os.Debug;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -73,10 +78,6 @@ import java.util.stream.Collectors;
 
 public class MainFunction {
 
-    private static final String ACTION_SHOW_ADD_DATA_WINDOW = "action.lingh.show.add.data.window";
-    private static final String ACTION_REQUEST_UPDATE_DATA = "action.lingh.request.update.data";
-    private static final String ACTION_CHECK_SERVICE_STATE = "action.lingh.check.service.state";
-    private static final String isScreenOffPre = "isScreenOffPre";
     private final AccessibilityService service;
     private WindowManager windowManager;
     private PackageManager packageManager;
@@ -114,6 +115,9 @@ public class MainFunction {
     private ImageView viewClickPosition;
     private Set<String> pkgSuggestNotOnList;
 
+    private static final String ACTION_SHOW_ADD_DATA_WINDOW = "action.lingh.show.add.data.window";
+    private static final String isScreenOffPre = "isScreenOffPre";
+
     public MainFunction(AccessibilityService service) {
         this.service = service;
     }
@@ -132,8 +136,6 @@ public class MainFunction {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         intentFilter.addAction(ACTION_SHOW_ADD_DATA_WINDOW);
-        intentFilter.addAction(ACTION_CHECK_SERVICE_STATE);
-        intentFilter.addAction(ACTION_REQUEST_UPDATE_DATA);
         myBroadcastReceiver = new MyBroadcastReceiver();
         service.registerReceiver(myBroadcastReceiver, intentFilter);
         IntentFilter filterPackage = new IntentFilter();
@@ -153,6 +155,25 @@ public class MainFunction {
             public void run() {
             }
         }, 0, TimeUnit.MILLISECONDS);
+
+        /*executorService.schedule(new Runnable() {
+            @Override
+            public void run() {
+                NotificationManager notificationManager = service.getSystemService(NotificationManager.class);
+                Notification.Builder builder = new Notification.Builder(service)
+                        .setAutoCancel(true)
+                        .setSmallIcon(R.drawable.app)
+                        .setContentTitle(service.getText(R.string.app_name))
+                        .setContentText("占用内存" + Debug.getPss() + "kb");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    builder.setChannelId(service.getPackageName());
+                    NotificationChannel channel = new NotificationChannel(service.getPackageName(), service.getString(R.string.app_name), NotificationManager.IMPORTANCE_HIGH);
+                    notificationManager.createNotificationChannel(channel);
+                }
+                notificationManager.notify(service.getPackageName(), 0x01, builder.build());
+                executorService.schedule(this, 5000, TimeUnit.MILLISECONDS);
+            }
+        }, 0, TimeUnit.MILLISECONDS);*/
     }
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
@@ -353,6 +374,14 @@ public class MainFunction {
         service.unregisterReceiver(myBroadcastReceiver);
         service.unregisterReceiver(myPackageReceiver);
         return true;
+    }
+
+    /**
+     * 将数据暴露给其他组件
+     * 方便修改
+     */
+    public Map<String, AppDescribe> getAppDescribeMap() {
+        return appDescribeMap;
     }
 
     /**
@@ -966,45 +995,6 @@ public class MainFunction {
             }
             if (TextUtils.equals(intent.getAction(), ACTION_SHOW_ADD_DATA_WINDOW)) {
                 showAddDataWindow();
-            }
-            if (TextUtils.equals(intent.getAction(), ACTION_CHECK_SERVICE_STATE)) {
-                setResultCode(1);
-            }
-            if (TextUtils.equals(intent.getAction(), ACTION_REQUEST_UPDATE_DATA)) {
-                String updateScope = intent.getStringExtra("updateScope");
-                String packageName = intent.getStringExtra("packageName");
-                if (!TextUtils.isEmpty(updateScope) && !TextUtils.isEmpty(packageName)) {
-                    if (TextUtils.equals(updateScope, "updateAppDescribe")) {
-                        AppDescribe appDescribe = appDescribeMap.get(packageName);
-                        if (appDescribe != null) {
-                            AppDescribe appDescribeNew = dataDao.getAppDescribeByPackage(packageName);
-                            if (appDescribeNew != null) {
-                                appDescribeNew.autoFinder = appDescribe.autoFinder;
-                                appDescribeNew.widgetSetMap = appDescribe.widgetSetMap;
-                                appDescribeNew.coordinateMap = appDescribe.coordinateMap;
-                                appDescribeMap.put(packageName, appDescribeNew);
-                            }
-                        }
-                    }
-                    if (TextUtils.equals(updateScope, "updateAutoFinder")) {
-                        AppDescribe appDescribe = appDescribeMap.get(packageName);
-                        if (appDescribe != null) {
-                            appDescribe.getAutoFinderFromDatabase(dataDao);
-                        }
-                    }
-                    if (TextUtils.equals(updateScope, "updateWidget")) {
-                        AppDescribe appDescribe = appDescribeMap.get(packageName);
-                        if (appDescribe != null) {
-                            appDescribe.getWidgetSetMapFromDatabase(dataDao);
-                        }
-                    }
-                    if (TextUtils.equals(updateScope, "updateCoordinate")) {
-                        AppDescribe appDescribe = appDescribeMap.get(packageName);
-                        if (appDescribe != null) {
-                            appDescribe.getCoordinateMapFromDatabase(MyApplication.dataDao);
-                        }
-                    }
-                }
             }
         }
     }

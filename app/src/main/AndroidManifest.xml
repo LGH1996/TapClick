@@ -88,11 +88,11 @@
                 android:resource="@xml/configurenogesture" />
         </service>
 
-        <!--<provider
+        <provider
             android:name=".myfunction.MyContentProvider"
             android:authorities="${applicationId}"
             android:enabled="true"
             android:exported="false"
-            android:process=":AccessibilityService" />-->
+            android:process=":AccessibilityService" />
     </application>
 </manifest>

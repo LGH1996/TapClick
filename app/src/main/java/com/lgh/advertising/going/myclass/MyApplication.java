@@ -1,6 +1,7 @@
 package com.lgh.advertising.going.myclass;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.room.Room;
@@ -8,6 +9,7 @@ import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.lgh.advertising.going.mybean.MyAppConfig;
+import com.lgh.advertising.going.myfunction.MyUtils;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
@@ -19,10 +21,11 @@ public class MyApplication extends Application {
     public static DataDao dataDao;
     public static MyAppConfig myAppConfig;
     public static MyHttpRequest myHttpRequest;
+    public static MyUtils myUtils;
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
 
         if (dataDao == null) {
             Migration migration_1_2 = new Migration(1, 2) {
@@ -50,7 +53,7 @@ public class MyApplication extends Application {
                     database.execSQL("ALTER TABLE 'AppDescribe' RENAME 'on_off' to 'onOff'");
                 }
             };
-            dataDao = Room.databaseBuilder(getApplicationContext(), MyDatabase.class, "applicationData.db").addMigrations(migration_1_2, migration_2_3, migration_3_4, migration_4_5).allowMainThreadQueries().build().dataDao();
+            dataDao = Room.databaseBuilder(base, MyDatabase.class, "applicationData.db").addMigrations(migration_1_2, migration_2_3, migration_3_4, migration_4_5).allowMainThreadQueries().build().dataDao();
         }
 
         if (myAppConfig == null) {
@@ -62,6 +65,14 @@ public class MyApplication extends Application {
             myHttpRequest = retrofit.create(MyHttpRequest.class);
         }
 
+        if (myUtils == null) {
+            myUtils = MyUtils.getInstance(base);
+        }
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
         MyUncaughtExceptionHandler.getInstance(this).run();
     }
 }

@@ -58,14 +58,17 @@ public class EditDataActivity extends BaseActivity {
     private ViewBaseSettingBinding baseSettingBinding;
     private ViewAutoFinderBinding autoFinderBinding;
     private Set<String> pkgSuggestNotOnList;
+    private MyUtils myUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        editDataBinding = ActivityEditDataBinding.inflate(inflater = getLayoutInflater());
+        inflater = getLayoutInflater();
+        editDataBinding = ActivityEditDataBinding.inflate(inflater);
         setContentView(editDataBinding.getRoot());
 
         dataDao = MyApplication.dataDao;
+        myUtils = MyApplication.myUtils;
         dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
         dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.getDefault());
         metrics = new DisplayMetrics();
@@ -542,10 +545,9 @@ public class EditDataActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        MyUtils myUtils = MyUtils.getInstance();
-        myUtils.requestUpdateAppDescribe(getApplicationContext(), appDescribe.appPackage);
-        myUtils.requestUpdateAutoFinder(getApplicationContext(), appDescribe.appPackage);
-        myUtils.requestUpdateCoordinate(getApplicationContext(), appDescribe.appPackage);
-        myUtils.requestUpdateWidget(getApplicationContext(), appDescribe.appPackage);
+        myUtils.requestUpdateAppDescribe(appDescribe.appPackage);
+        myUtils.requestUpdateAutoFinder(appDescribe.appPackage);
+        myUtils.requestUpdateCoordinate(appDescribe.appPackage);
+        myUtils.requestUpdateWidget(appDescribe.appPackage);
     }
 }
