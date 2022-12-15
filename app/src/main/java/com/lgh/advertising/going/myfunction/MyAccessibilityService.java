@@ -1,18 +1,25 @@
 package com.lgh.advertising.going.myfunction;
 
 import android.accessibilityservice.AccessibilityService;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.view.accessibility.AccessibilityEvent;
 
 public class MyAccessibilityService extends AccessibilityService {
 
+    @SuppressLint("StaticFieldLeak")
     public static MainFunction mainFunction;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mainFunction = new MainFunction(this);
+    }
 
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
-        mainFunction = new MainFunction(this);
         mainFunction.onServiceConnected();
         if (MyAccessibilityServiceNoGesture.mainFunction != null) {
             MyAccessibilityServiceNoGesture.mainFunction.closeService();
@@ -33,8 +40,13 @@ public class MyAccessibilityService extends AccessibilityService {
     @Override
     public boolean onUnbind(Intent intent) {
         mainFunction.onUnbind(intent);
-        mainFunction = null;
         return super.onUnbind(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mainFunction = null;
     }
 
     @Override
