@@ -94,5 +94,20 @@
             android:enabled="true"
             android:exported="false"
             android:process=":AccessibilityService" />
+
+        <receiver
+            android:name=".myfunction.MyDeviceAdminReceiver"
+            android:description="@string/app_name"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_DEVICE_ADMIN"
+            android:process=":AccessibilityService">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/configure_device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
