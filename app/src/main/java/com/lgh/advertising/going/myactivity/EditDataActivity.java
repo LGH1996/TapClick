@@ -129,9 +129,10 @@ public class EditDataActivity extends BaseActivity {
         super.onStart();
         String extraStr = getIntent().getStringExtra("packageName");
         if (!TextUtils.isEmpty(extraStr)) {
-            appDescribe = dataDao.getAppDescribeByPackage(extraStr);
-            if (appDescribe != null) {
-                appDescribe.getOtherFieldsFromDatabase(dataDao);
+            AppDescribe appDescribeTemp = dataDao.getAppDescribeByPackage(extraStr);
+            if (appDescribeTemp != null) {
+                appDescribeTemp.getOtherFieldsFromDatabase(dataDao);
+                appDescribe = appDescribeTemp;
             }
         }
 
