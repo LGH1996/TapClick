@@ -5,25 +5,34 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <ScrollView
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="5dp"
-        android:fadingEdge="vertical"
+        android:fadingEdge="horizontal"
         android:fadingEdgeLength="15dp"
-        android:requiresFadingEdge="vertical"
+        android:requiresFadingEdge="horizontal"
         android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@+id/send"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/exception"
-            android:layout_width="match_parent"
+        <ScrollView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="10dp"
-            android:textSize="5sp" />
-    </ScrollView>
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="15dp"
+            android:requiresFadingEdge="vertical"
+            android:scrollbars="none">
+
+            <TextView
+                android:id="@+id/exception"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="10dp"
+                android:textSize="12sp" />
+        </ScrollView>
+    </HorizontalScrollView>
 
     <Button
         android:id="@+id/send"
