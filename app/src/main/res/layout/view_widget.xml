@@ -287,9 +287,19 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginEnd="20dp"
-                android:layout_toStartOf="@+id/widget_delete"
+                android:layout_toStartOf="@+id/widget_share"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/widget_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@+id/widget_delete"
+                android:text="分享"
+                android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
 
             <TextView

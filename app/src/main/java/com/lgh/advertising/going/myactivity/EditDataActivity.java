@@ -4,7 +4,9 @@ import android.animation.LayoutTransition;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -19,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Switch;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lgh.advertising.going.R;
@@ -30,8 +33,11 @@ import com.lgh.advertising.going.databinding.ViewOnOffWarningBinding;
 import com.lgh.advertising.going.databinding.ViewQuestionBinding;
 import com.lgh.advertising.going.databinding.ViewWidgetBinding;
 import com.lgh.advertising.going.mybean.AppDescribe;
+import com.lgh.advertising.going.mybean.BasicContent;
 import com.lgh.advertising.going.mybean.Coordinate;
+import com.lgh.advertising.going.mybean.CoordinateShare;
 import com.lgh.advertising.going.mybean.Widget;
+import com.lgh.advertising.going.mybean.WidgetShare;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
 import com.lgh.advertising.going.myfunction.MyUtils;
@@ -421,6 +427,32 @@ public class EditDataActivity extends BaseActivity {
             coordinateBinding.coordinateClickNumber.addTextChangedListener(coordinateTextWatcher);
             coordinateBinding.coordinateComment.addTextChangedListener(coordinateTextWatcher);
 
+            coordinateBinding.coordinateShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CoordinateShare coordinateShare = new CoordinateShare();
+                    coordinateShare.coordinate = e;
+                    coordinateShare.basicContent = new BasicContent();
+                    coordinateShare.basicContent.fingerPrint = Build.FINGERPRINT;
+                    coordinateShare.basicContent.displayMetrics = new DisplayMetrics();
+                    getWindowManager().getDefaultDisplay().getRealMetrics(coordinateShare.basicContent.displayMetrics);
+                    coordinateShare.basicContent.packageName = e.appPackage;
+                    try {
+                        PackageInfo packageInfo = getPackageManager().getPackageInfo(e.appPackage, PackageManager.GET_META_DATA);
+                        coordinateShare.basicContent.versionCode = packageInfo.versionCode;
+                        coordinateShare.basicContent.versionName = packageInfo.versionName;
+                    } catch (PackageManager.NameNotFoundException ex) {
+                        ex.printStackTrace();
+                    }
+                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    String str = '"' + CoordinateShare.class.getSimpleName() + '"' + ": " + gson.toJson(coordinateShare);
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, str);
+                    startActivityForResult(Intent.createChooser(shareIntent, "请选择分享方式"), 0x01);
+                }
+            });
+
             coordinateBinding.coordinateDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -522,6 +554,32 @@ public class EditDataActivity extends BaseActivity {
                 };
                 widgetBinding.widgetNoRepeat.setOnClickListener(widgetClickListener);
                 widgetBinding.widgetClickOnly.setOnClickListener(widgetClickListener);
+
+                widgetBinding.widgetShare.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        WidgetShare widgetShare = new WidgetShare();
+                        widgetShare.widget = e;
+                        widgetShare.basicContent = new BasicContent();
+                        widgetShare.basicContent.fingerPrint = Build.FINGERPRINT;
+                        widgetShare.basicContent.displayMetrics = new DisplayMetrics();
+                        getWindowManager().getDefaultDisplay().getRealMetrics(widgetShare.basicContent.displayMetrics);
+                        widgetShare.basicContent.packageName = e.appPackage;
+                        try {
+                            PackageInfo packageInfo = getPackageManager().getPackageInfo(e.appPackage, PackageManager.GET_META_DATA);
+                            widgetShare.basicContent.versionCode = packageInfo.versionCode;
+                            widgetShare.basicContent.versionName = packageInfo.versionName;
+                        } catch (PackageManager.NameNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                        String str = '"' + WidgetShare.class.getSimpleName() + '"' + ": " + gson.toJson(widgetShare);
+                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                        shareIntent.setType("text/plain");
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, str);
+                        startActivityForResult(Intent.createChooser(shareIntent, "请选择分享方式"), 0x01);
+                    }
+                });
 
                 widgetBinding.widgetDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
