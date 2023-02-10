@@ -334,14 +334,18 @@ public class MainFunction {
                 }
                 break;
             case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
-                if (event.getPackageName().equals(currentPackageSub)) {
-                    AccessibilityNodeInfo source = event.getSource();
-                    if (onOffAutoFinder && appDescribe != null && source != null) {
-                        findButtonByText(source, appDescribe.autoFinder);
-                    }
-                    if (onOffWidgetSub && widgetSet != null && source != null) {
-                        findButtonByWidget(source, widgetSet);
-                    }
+                if (!TextUtils.equals(event.getPackageName(), currentPackageSub)) {
+                    break;
+                }
+                AccessibilityNodeInfo source = event.getSource();
+                if (source == null) {
+                    break;
+                }
+                if (onOffAutoFinder && appDescribe != null) {
+                    findButtonByText(source, appDescribe.autoFinder);
+                }
+                if (onOffWidgetSub && widgetSet != null) {
+                    findButtonByWidget(source, widgetSet);
                 }
                 break;
         }
