@@ -556,12 +556,12 @@ public class MainFunction {
         Set<String> pkgOffSet = new HashSet<>();
         Set<String> pkgOnSet = new HashSet<>();
         //所有已安装的应用
-        Set<String> pkgHasActivitySet = packageManager
+        Set<String> pkgInstalledSet = packageManager
                 .getInstalledPackages(PackageManager.GET_META_DATA)
                 .stream()
                 .map(e -> e.packageName)
                 .collect(Collectors.toSet());
-        pkgNormalSet.addAll(pkgHasActivitySet);
+        pkgNormalSet.addAll(pkgInstalledSet);
         //输入法、桌面、本应用需要默认关闭
         Set<String> pkgInputMethodSet = inputMethodManager
                 .getInputMethodList()
@@ -608,12 +608,12 @@ public class MainFunction {
                 // exception.printStackTrace();
             }
         }
-        dataDao.deleteAppDescribeByNotIn(pkgNormalSet);
         dataDao.insertAppDescribe(appDescribeList);
         dataDao.insertAutoFinder(autoFinderList);
-        for (AppDescribe e : dataDao.getAllAppDescribes()) {
-            e.getOtherFieldsFromDatabase(dataDao);
-            appDescribeMap.put(e.appPackage, e);
+        for (String e : pkgNormalSet) {
+            AppDescribe appDescribeTmp = dataDao.getAppDescribeByPackage(e);
+            appDescribeTmp.getOtherFieldsFromDatabase(dataDao);
+            appDescribeMap.put(e, appDescribeTmp);
         }
     }
 
@@ -1061,7 +1061,6 @@ public class MainFunction {
                 String dataString = intent.getDataString();
                 String packageName = dataString != null ? dataString.substring(8) : null;
                 if (!TextUtils.isEmpty(packageName)) {
-                    dataDao.deleteAppDescribeByPackage(packageName);
                     appDescribeMap.remove(packageName);
                 }
             }

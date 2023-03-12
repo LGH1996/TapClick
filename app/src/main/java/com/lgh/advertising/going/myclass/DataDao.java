@@ -14,7 +14,6 @@ import com.lgh.advertising.going.mybean.MyAppConfig;
 import com.lgh.advertising.going.mybean.Widget;
 
 import java.util.List;
-import java.util.Set;
 
 @Dao
 public interface DataDao {
@@ -57,12 +56,6 @@ public interface DataDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertMyAppConfig(MyAppConfig myAppConfig);
-
-    @Query("DELETE FROM AppDescribe WHERE appPackage NOT IN (:appPackages)")
-    void deleteAppDescribeByNotIn(Set<String> appPackages);
-
-    @Query("DELETE FROM AppDescribe WHERE appPackage = :appPackage")
-    void deleteAppDescribeByPackage(String appPackage);
 
     @Delete
     void deleteCoordinate(Coordinate... coordinates);
