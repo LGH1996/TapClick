@@ -834,7 +834,12 @@ public class MainFunction {
                                     addDataBinding.saveWid.setEnabled(appDescribeMap.containsKey(currentPackage));
                                     addDataBinding.pacName.setText(widgetSelect.appPackage);
                                     addDataBinding.actName.setText(widgetSelect.appActivity);
-                                    addDataBinding.widget.setText("click:" + (e.isClickable() ? "true" : "false") + " " + "bonus:" + temRect.toShortString() + " " + "id:" + (cId == null ? "null" : cId.toString().substring(cId.toString().indexOf("id/") + 3)) + " " + "desc:" + (cDesc == null ? "null" : cDesc.toString()) + " " + "text:" + (cText == null ? "null" : cText.toString()));
+                                    String click = e.isClickable() ? "true" : "false";
+                                    String bonus = temRect.toShortString();
+                                    String id = cId == null || !cId.toString().contains(":id/") ? "" : cId.toString().substring(cId.toString().indexOf(":id/") + 4);
+                                    String desc = cDesc == null ? "" : cDesc.toString();
+                                    String text = cText == null ? "" : cText.toString();
+                                    addDataBinding.widget.setText("click:" + click + " " + "bonus:" + bonus + (id.isEmpty() ? "" : " " + "id:" + id) + (desc.isEmpty() ? "" : " " + "desc:" + desc) + (text.isEmpty() ? "" : " " + "text:" + text));
                                     v.setBackgroundResource(R.drawable.node_focus);
                                 } else {
                                     v.setBackgroundResource(R.drawable.node);
