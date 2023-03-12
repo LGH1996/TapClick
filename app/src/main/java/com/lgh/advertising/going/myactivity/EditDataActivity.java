@@ -2,10 +2,13 @@ package com.lgh.advertising.going.myactivity;
 
 import android.animation.LayoutTransition;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,16 +22,21 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Switch;
+import android.widget.Toast;
+
+import androidx.core.content.FileProvider;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.lgh.advertising.going.BuildConfig;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivityEditDataBinding;
 import com.lgh.advertising.going.databinding.ViewAutoFinderBinding;
 import com.lgh.advertising.going.databinding.ViewBaseSettingBinding;
 import com.lgh.advertising.going.databinding.ViewCoordinateBinding;
+import com.lgh.advertising.going.databinding.ViewEditFileNameBinding;
 import com.lgh.advertising.going.databinding.ViewOnOffWarningBinding;
 import com.lgh.advertising.going.databinding.ViewQuestionBinding;
 import com.lgh.advertising.going.databinding.ViewWidgetBinding;
@@ -42,6 +50,11 @@ import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
 import com.lgh.advertising.going.myfunction.MyUtils;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -55,6 +68,7 @@ import java.util.stream.Collectors;
 public class EditDataActivity extends BaseActivity {
 
     public static AppDescribe appDescribe;
+    private Context context;
     private LayoutInflater inflater;
     private DataDao dataDao;
     private DisplayMetrics metrics;
@@ -75,6 +89,7 @@ public class EditDataActivity extends BaseActivity {
 
         dataDao = MyApplication.dataDao;
         myUtils = MyApplication.myUtils;
+        context = getApplicationContext();
         dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
         dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.getDefault());
         metrics = new DisplayMetrics();
@@ -445,11 +460,8 @@ public class EditDataActivity extends BaseActivity {
                         ex.printStackTrace();
                     }
                     Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                    String str = '"' + CoordinateShare.class.getSimpleName() + '"' + ": " + gson.toJson(coordinateShare);
-                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("text/plain");
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, str);
-                    startActivityForResult(Intent.createChooser(shareIntent, "请选择分享方式"), 0x01);
+                    String strRule = '"' + CoordinateShare.class.getSimpleName() + '"' + ": " + gson.toJson(coordinateShare);
+                    showEditShareFileNameDialog(strRule);
                 }
             });
 
@@ -573,11 +585,8 @@ public class EditDataActivity extends BaseActivity {
                             ex.printStackTrace();
                         }
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                        String str = '"' + WidgetShare.class.getSimpleName() + '"' + ": " + gson.toJson(widgetShare);
-                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                        shareIntent.setType("text/plain");
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, str);
-                        startActivityForResult(Intent.createChooser(shareIntent, "请选择分享方式"), 0x01);
+                        String strRule = '"' + WidgetShare.class.getSimpleName() + '"' + ": " + gson.toJson(widgetShare);
+                        showEditShareFileNameDialog(strRule);
                     }
                 });
 
@@ -608,5 +617,36 @@ public class EditDataActivity extends BaseActivity {
         myUtils.requestUpdateAutoFinder(appDescribe.appPackage);
         myUtils.requestUpdateCoordinate(appDescribe.appPackage);
         myUtils.requestUpdateWidget(appDescribe.appPackage);
+    }
+
+    private void showEditShareFileNameDialog(String strRule) {
+        ViewEditFileNameBinding binding = ViewEditFileNameBinding.inflate(inflater);
+        binding.fileName.setHint(String.valueOf(Math.abs(strRule.hashCode())));
+        new AlertDialog.Builder(EditDataActivity.this)
+                .setView(binding.getRoot())
+                .setCancelable(false)
+                .setTitle("编辑文件名称")
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            FileUtils.cleanDirectory(getCacheDir());
+                            String fileName = binding.fileName.getText().toString();
+                            File file = new File(getCacheDir(), (fileName.isEmpty() ? "" : fileName + "-") + binding.fileName.getHint() + ".txt");
+                            FileUtils.writeStringToFile(file, strRule, StandardCharsets.UTF_8);
+                            Intent intent = new Intent(Intent.ACTION_SEND);
+                            Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file);
+                            intent.setDataAndType(uri, getContentResolver().getType(uri));
+                            intent.putExtra(Intent.EXTRA_TEXT, strRule);
+                            intent.putExtra(Intent.EXTRA_STREAM, uri);
+                            intent.setClipData(new ClipData(ClipData.newUri(getContentResolver(), "rule", uri)));
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            startActivity(Intent.createChooser(intent, "分享"));
+                        } catch (IOException ex) {
+                            Toast.makeText(context, "生成分享文件时发生错误", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).create().show();
     }
 }
