@@ -3,6 +3,7 @@ package com.lgh.advertising.going.myfunction;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -70,5 +71,43 @@ public class MyUtils {
         contentValues.put("packageName", packageName);
         int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
         return re > 0;
+    }
+
+    public boolean requestUpdateKeepAliveByNotification(boolean enable) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("updateScope", "keepAliveByNotification");
+        contentValues.put("value", enable);
+        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+        return re > 0;
+    }
+
+    public boolean requestUpdateKeepAliveByFloatingWindow(boolean enable) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("updateScope", "keepAliveByFloatingWindow");
+        contentValues.put("value", enable);
+        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+        return re > 0;
+    }
+
+    public boolean getKeepAliveByNotification() {
+        SharedPreferences preferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
+        return preferences.getBoolean("keepAliveByNotification", false);
+    }
+
+    public boolean setKeepAliveByNotification(boolean enable) {
+        SharedPreferences preferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
+        preferences.edit().putBoolean("keepAliveByNotification", enable).apply();
+        return true;
+    }
+
+    public boolean getKeepAliveByFloatingWindow() {
+        SharedPreferences preferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
+        return preferences.getBoolean("keepAliveByFloatingWindow", false);
+    }
+
+    public boolean setKeepAliveByFloatingWindow(boolean enable) {
+        SharedPreferences preferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
+        preferences.edit().putBoolean("keepAliveByFloatingWindow", enable).apply();
+        return true;
     }
 }

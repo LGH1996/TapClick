@@ -58,6 +58,10 @@ public class MyApplication extends Application {
 
         if (myAppConfig == null) {
             myAppConfig = dataDao.getMyAppConfig();
+            if (myAppConfig == null) {
+                myAppConfig = new MyAppConfig();
+                dataDao.insertMyAppConfig(myAppConfig);
+            }
         }
 
         if (myHttpRequest == null) {

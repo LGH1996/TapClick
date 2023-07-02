@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,7 +22,6 @@ import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Build;
-import android.os.Debug;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -44,6 +44,7 @@ import com.lgh.advertising.going.databinding.ViewAddDataBinding;
 import com.lgh.advertising.going.databinding.ViewAddWarningBinding;
 import com.lgh.advertising.going.databinding.ViewWidgetSelectBinding;
 import com.lgh.advertising.going.myactivity.EditDataActivity;
+import com.lgh.advertising.going.myactivity.MainActivity;
 import com.lgh.advertising.going.mybean.AppDescribe;
 import com.lgh.advertising.going.mybean.AutoFinder;
 import com.lgh.advertising.going.mybean.Coordinate;
@@ -114,7 +115,7 @@ public class MainFunction {
     private ViewWidgetSelectBinding widgetSelectBinding;
     private ImageView viewClickPosition;
     private Set<String> pkgSuggestNotOnList;
-
+    private View ignoreView;
     private static final String ACTION_SHOW_ADD_DATA_WINDOW = "action.lingh.show.add.data.window";
     private static final String isScreenOffPre = "isScreenOffPre";
 
@@ -144,6 +145,8 @@ public class MainFunction {
         filterPackage.addDataScheme("package");
         myPackageReceiver = new MyPackageReceiver();
         service.registerReceiver(myPackageReceiver, filterPackage);
+        keepAliveByNotification(MyUtils.getInstance(service).getKeepAliveByNotification());
+        keepAliveByFloatingWindow(MyUtils.getInstance(service).getKeepAliveByFloatingWindow());
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -995,8 +998,48 @@ public class MainFunction {
         windowManager.addView(viewClickPosition, cParams);
     }
 
-    public class MyBroadcastReceiver extends BroadcastReceiver {
+    public void keepAliveByNotification(boolean enable) {
+        if (enable) {
+            NotificationManager notificationManager = service.getSystemService(NotificationManager.class);
+            Intent intent = new Intent(service, MainActivity.class);
+            Notification.Builder builder = new Notification.Builder(service);
+            builder.setOngoing(true);
+            builder.setAutoCancel(false);
+            builder.setSmallIcon(R.drawable.app);
+            builder.setContentTitle(service.getText(R.string.app_name));
+            builder.setContentIntent(PendingIntent.getActivity(service, 0x01, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                builder.setChannelId(service.getPackageName());
+                NotificationChannel channel = new NotificationChannel(service.getPackageName(), service.getString(R.string.app_name), NotificationManager.IMPORTANCE_HIGH);
+                notificationManager.createNotificationChannel(channel);
+            }
+            service.startForeground(0x01, builder.build());
+        } else {
+            service.stopForeground(true);
+        }
+    }
 
+    public void keepAliveByFloatingWindow(boolean enable) {
+        if (enable) {
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+            lp.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
+            lp.gravity = Gravity.START | Gravity.TOP;
+            lp.format = PixelFormat.TRANSPARENT;
+            lp.alpha = 0;
+            lp.width = 0;
+            lp.height = 0;
+            lp.x = 0;
+            lp.y = 0;
+            ignoreView = new View(service);
+            windowManager.addView(ignoreView, lp);
+        } else if (ignoreView != null) {
+            windowManager.removeView(ignoreView);
+            ignoreView = null;
+        }
+    }
+
+    public class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (TextUtils.equals(intent.getAction(), Intent.ACTION_SCREEN_OFF)) {

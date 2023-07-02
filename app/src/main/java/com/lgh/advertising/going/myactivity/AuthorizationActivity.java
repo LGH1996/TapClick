@@ -48,7 +48,7 @@ public class AuthorizationActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
-                    case R.id.accessibility_on_off:
+                    case R.id.accessibility_on_off: {
                         Intent intentAccessibility = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
                         if (intentAccessibility.resolveActivity(packageManager) != null) {
                             startActivity(intentAccessibility);
@@ -56,7 +56,8 @@ public class AuthorizationActivity extends BaseActivity {
                             Toast.makeText(context, "授权窗口打开失败，请手动打开", Toast.LENGTH_SHORT).show();
                         }
                         break;
-                    case R.id.device_admin_on_off:
+                    }
+                    case R.id.device_admin_on_off: {
                         ComponentName compMyDeviceAdmin = new ComponentName(context, MyDeviceAdminReceiver.class);
                         if (devicePolicyManager.isAdminActive(compMyDeviceAdmin)) {
                             Toast.makeText(context, "设备管理器权限已开启", Toast.LENGTH_SHORT).show();
@@ -70,7 +71,8 @@ public class AuthorizationActivity extends BaseActivity {
                             }
                         }
                         break;
-                    case R.id.batteryIgnore_on_off:
+                    }
+                    case R.id.batteryIgnore_on_off: {
                         if (powerManager.isIgnoringBatteryOptimizations(getPackageName())) {
                             Toast.makeText(context, "忽略电池优化权限已开启", Toast.LENGTH_SHORT).show();
                         } else {
@@ -82,12 +84,31 @@ public class AuthorizationActivity extends BaseActivity {
                             }
                         }
                         break;
+                    }
+                    case R.id.notification_on_off: {
+                        boolean keepAliveByNotification = !myUtils.getKeepAliveByNotification();
+                        myUtils.setKeepAliveByNotification(keepAliveByNotification);
+                        myUtils.requestUpdateKeepAliveByNotification(keepAliveByNotification);
+                        authorizationBinding.notificationOnOffImg.setImageResource(keepAliveByNotification ? R.drawable.ic_ok : R.drawable.ic_error);
+                        Toast.makeText(context, keepAliveByNotification ? "已开启" : "已关闭", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case R.id.floating_window_on_off: {
+                        boolean keepAliveByFloatingWindow = !myUtils.getKeepAliveByFloatingWindow();
+                        myUtils.setKeepAliveByFloatingWindow(keepAliveByFloatingWindow);
+                        myUtils.requestUpdateKeepAliveByFloatingWindow(keepAliveByFloatingWindow);
+                        authorizationBinding.floatingWindowOnOffImg.setImageResource(keepAliveByFloatingWindow ? R.drawable.ic_ok : R.drawable.ic_error);
+                        Toast.makeText(context, keepAliveByFloatingWindow ? "已开启" : "已关闭", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
                 }
             }
         };
         authorizationBinding.accessibilityOnOff.setOnClickListener(onOffClickListener);
         authorizationBinding.deviceAdminOnOff.setOnClickListener(onOffClickListener);
         authorizationBinding.batteryIgnoreOnOff.setOnClickListener(onOffClickListener);
+        authorizationBinding.notificationOnOff.setOnClickListener(onOffClickListener);
+        authorizationBinding.floatingWindowOnOff.setOnClickListener(onOffClickListener);
     }
 
     @Override
@@ -110,6 +131,16 @@ public class AuthorizationActivity extends BaseActivity {
                     authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.ic_ok);
                 } else {
                     authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.ic_error);
+                }
+                if (myUtils.getKeepAliveByNotification()) {
+                    authorizationBinding.notificationOnOffImg.setImageResource(R.drawable.ic_ok);
+                } else {
+                    authorizationBinding.notificationOnOffImg.setImageResource(R.drawable.ic_error);
+                }
+                if (myUtils.getKeepAliveByFloatingWindow()) {
+                    authorizationBinding.floatingWindowOnOffImg.setImageResource(R.drawable.ic_ok);
+                } else {
+                    authorizationBinding.floatingWindowOnOffImg.setImageResource(R.drawable.ic_error);
                 }
                 handler.postDelayed(this, 500);
             }

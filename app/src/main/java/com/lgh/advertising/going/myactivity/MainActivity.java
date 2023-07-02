@@ -77,12 +77,6 @@ public class MainActivity extends BaseActivity {
         sharedPreferences = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
         myUtils = MyApplication.myUtils;
 
-        if (myAppConfig == null) {
-            myAppConfig = new MyAppConfig();
-            MyApplication.myAppConfig = myAppConfig;
-            dataDao.insertMyAppConfig(myAppConfig);
-        }
-
         final List<Resource> source = new ArrayList<>();
         source.add(new Resource("授权管理", R.drawable.authorization));
         source.add(new Resource("创建规则", R.drawable.add_data));

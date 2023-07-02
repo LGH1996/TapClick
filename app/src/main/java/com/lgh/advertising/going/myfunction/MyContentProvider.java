@@ -5,6 +5,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 
 import com.lgh.advertising.going.mybean.AppDescribe;
@@ -12,6 +14,7 @@ import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class MyContentProvider extends ContentProvider {
 
@@ -51,21 +54,23 @@ public class MyContentProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        String updateScope = values.getAsString("updateScope");
-        String packageName = values.getAsString("packageName");
-        if (TextUtils.isEmpty(updateScope) || TextUtils.isEmpty(packageName)) {
-            return 0;
-        }
         if (MyAccessibilityService.mainFunction != null) {
-            updateData(MyAccessibilityService.mainFunction.getAppDescribeMap(), updateScope, packageName);
+            updateData(MyAccessibilityService.mainFunction.getAppDescribeMap(), values);
+            updateKeepAlive(MyAccessibilityService.mainFunction, values);
         }
         if (MyAccessibilityServiceNoGesture.mainFunction != null) {
-            updateData(MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap(), updateScope, packageName);
+            updateData(MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap(), values);
+            updateKeepAlive(MyAccessibilityServiceNoGesture.mainFunction, values);
         }
         return 1;
     }
 
-    private void updateData(Map<String, AppDescribe> appDescribeMap, String updateScope, String packageName) {
+    private void updateData(Map<String, AppDescribe> appDescribeMap, ContentValues values) {
+        String updateScope = values.getAsString("updateScope");
+        String packageName = values.getAsString("packageName");
+        if (TextUtils.isEmpty(updateScope) || TextUtils.isEmpty(packageName)) {
+            return;
+        }
         if (TextUtils.equals(updateScope, "updateAppDescribe")) {
             AppDescribe appDescribe = appDescribeMap.get(packageName);
             if (appDescribe != null) {
@@ -95,6 +100,25 @@ public class MyContentProvider extends ContentProvider {
             if (appDescribe != null) {
                 appDescribe.getCoordinateMapFromDatabase(dataDao);
             }
+        }
+    }
+
+    private void updateKeepAlive(MainFunction mainFunction, ContentValues values) {
+        String updateScope = values.getAsString("updateScope");
+        Boolean value = values.getAsBoolean("value");
+        if (TextUtils.isEmpty(updateScope) || Objects.isNull(value)) {
+            return;
+        }
+        if (TextUtils.equals(updateScope, "keepAliveByNotification")) {
+            mainFunction.keepAliveByNotification(value);
+        }
+        if (TextUtils.equals(updateScope, "keepAliveByFloatingWindow")) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    mainFunction.keepAliveByFloatingWindow(value);
+                }
+            });
         }
     }
 }
