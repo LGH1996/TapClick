@@ -121,12 +121,12 @@ public class MainFunction {
 
     public MainFunction(AccessibilityService service) {
         this.service = service;
+        inputMethodManager = service.getSystemService(InputMethodManager.class);
+        windowManager = service.getSystemService(WindowManager.class);
     }
 
     protected void onServiceConnected() {
-        windowManager = service.getSystemService(WindowManager.class);
         packageManager = service.getPackageManager();
-        inputMethodManager = service.getSystemService(InputMethodManager.class);
         currentPackage = "Initialize CurrentPackage";
         currentActivity = "Initialize CurrentActivity";
         currentPackageSub = currentPackage;
