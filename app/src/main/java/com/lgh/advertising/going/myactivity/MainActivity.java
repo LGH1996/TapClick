@@ -55,7 +55,6 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-
 public class MainActivity extends BaseActivity {
 
     private Context context;
@@ -65,6 +64,7 @@ public class MainActivity extends BaseActivity {
     private ActivityMainBinding mainBinding;
     private SharedPreferences sharedPreferences;
     private MyUtils myUtils;
+    private boolean autoHideOnTaskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +112,7 @@ public class MainActivity extends BaseActivity {
         mainBinding.mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                autoHideOnTaskList = false;
                 switch (position) {
                     case 0: {
                         startActivity(new Intent(context, AuthorizationActivity.class));
@@ -157,12 +158,13 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         refreshAccessibilityServiceStatus();
+        autoHideOnTaskList = true;
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (myAppConfig.autoHideOnTaskList) {
+    protected void onStop() {
+        super.onStop();
+        if (myAppConfig.autoHideOnTaskList && autoHideOnTaskList) {
             finishAndRemoveTask();
         }
     }
