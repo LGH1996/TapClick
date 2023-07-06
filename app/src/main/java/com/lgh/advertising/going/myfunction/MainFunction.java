@@ -22,6 +22,9 @@ import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.PowerManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -38,12 +41,14 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ViewAddDataBinding;
 import com.lgh.advertising.going.databinding.ViewAddWarningBinding;
 import com.lgh.advertising.going.databinding.ViewWidgetSelectBinding;
 import com.lgh.advertising.going.myactivity.EditDataActivity;
+import com.lgh.advertising.going.myactivity.LauncherActivity;
 import com.lgh.advertising.going.myactivity.MainActivity;
 import com.lgh.advertising.going.mybean.AppDescribe;
 import com.lgh.advertising.going.mybean.AutoFinder;
@@ -53,12 +58,16 @@ import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -67,6 +76,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  * adb shell pm grant com.lgh.advertising.going android.permission.WRITE_SECURE_SETTINGS
@@ -116,8 +134,12 @@ public class MainFunction {
     private ImageView viewClickPosition;
     private Set<String> pkgSuggestNotOnList;
     private View ignoreView;
+
+    private Handler handler;
     private static final String ACTION_SHOW_ADD_DATA_WINDOW = "action.lingh.show.add.data.window";
     private static final String isScreenOffPre = "isScreenOffPre";
+
+    private boolean handleXrxs = false;
 
     public MainFunction(AccessibilityService service) {
         this.service = service;
@@ -177,6 +199,142 @@ public class MainFunction {
                 executorService.schedule(this, 5000, TimeUnit.MILLISECONDS);
             }
         }, 0, TimeUnit.MILLISECONDS);*/
+
+
+        final String xrxsApp = "com.client.xrxs.com.xrxsapp";
+        final PowerManager mPowerManager = service.getSystemService(PowerManager.class);
+        handler = new Handler(Looper.getMainLooper());
+
+        Runnable runPerformBack = new Runnable() {
+            @Override
+            public void run() {
+                service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+                handler.postDelayed(this, 500);
+            }
+        };
+
+        Runnable runStartIntent = new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = packageManager.getLaunchIntentForPackage(xrxsApp);
+                service.startActivity(intent);
+            }
+        };
+
+
+        handler.postDelayed(new Runnable() {
+
+            private int flag = 0;
+            private int count = 0;
+
+            @Override
+            public void run() {
+                Random random = new Random();
+                int time = Integer.parseInt((3 + random.nextInt(3)) + "" + random.nextInt(10)) - 8;
+                Calendar calendar = Calendar.getInstance();
+                if (calendar.get(Calendar.HOUR_OF_DAY) == 2 && calendar.get(Calendar.MINUTE) == 39) {
+                    flag = 1;
+                }
+                if (flag == 0) {
+                    handler.postDelayed(this, 5000);
+                    return;
+                }
+                if (!mPowerManager.isInteractive()) {
+                    PowerManager.WakeLock mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "lingh:tag");
+                    mWakeLock.acquire(10 * 60 * 1000L);
+                    mWakeLock.release();
+                    handler.postDelayed(this, 5000);
+                    return;
+                }
+//                if (TextUtils.equals(currentPackage, xrxsApp) && count == 0) {
+//                    service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+//                    Runnable main = this;
+//                    handler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+//                            count = 1;
+//                            handler.postDelayed(main, 5000);
+//                        }
+//                    }, 500);
+//                    return;
+//                }
+                if (!TextUtils.equals(currentPackage, xrxsApp)) {
+                    Intent intent = new Intent(service, LauncherActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    service.startActivity(intent);
+                    handler.postDelayed(this, 5000);
+                    return;
+                }
+//                if (!service.getRootInActiveWindow().findAccessibilityNodeInfosByText("").isEmpty()) {
+//                    try {
+//                        flag = 0;
+//                        count = 0;
+//                        //sendEmail();
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+                handler.postDelayed(this, 5000);
+
+            }
+        }, 10 * 1000);
+    }
+
+    private void sendEmail() throws Exception {
+        Properties props = new Properties();
+        props.setProperty("mail.transport.protocol", "smtp");
+        props.setProperty("mail.smtp.host", "smtp.qq.com");
+        props.setProperty("mail.smtp.auth", "true");
+        props.setProperty("mail.smtp.port", "465");
+        props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+        props.setProperty("mail.smtp.ssl.enable", "true");
+        Session session = Session.getDefaultInstance(props);
+
+        MimeMessage message = createMimeMessage(session, "2281442260@qq.com", "2893282695@qq.com");
+        Transport transport = session.getTransport();
+        transport.connect("2281442260@qq.com", "fbivwflrapkidjdf");
+        transport.sendMessage(message, message.getAllRecipients());
+        Toast.makeText(service, "邮件发送成功", Toast.LENGTH_SHORT).show();
+    }
+
+    private static MimeMessage createMimeMessage(Session session, String sendMail, String receiveMail) throws Exception {
+        // 1.创建一封邮件
+        MimeMessage message = new MimeMessage(session);
+        // 2.From:发件人（昵称有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改昵称）
+        message.setFrom(new InternetAddress(sendMail));
+        // 3.To:收件人（可以增加多个收件人、抄送、密送）
+        message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(receiveMail));
+        // 4.Subject: 邮件主题（标题有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改标题）
+        message.setSubject("打卡", "UTF-8");
+        // 5.Content: 邮件正文（可以使用html标签）（内容有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改发送内容）
+        message.setContent("成功", "text/html;charset=UTF-8");
+        // 6.设置发件时间
+        message.setSentDate(new Date());
+
+        MimeBodyPart mimeBodyPart = new MimeBodyPart();
+        mimeBodyPart.setDataHandler(new DataHandler(new FileDataSource("D:\\MyAndroidStudioProject\\ADGO2\\ADGO\\app\\src\\main\\res\\drawable\\support_me.png")));
+        mimeBodyPart.setContentID("me.png");
+
+        MimeBodyPart text = new MimeBodyPart();
+        text.setContent("<br/><img src='cid:me.png'/><br/>", "text/html;charset=UTF-8");
+
+        MimeMultipart mimeMultipart = new MimeMultipart();
+        mimeMultipart.addBodyPart(mimeBodyPart);
+        mimeMultipart.addBodyPart(text);
+        mimeMultipart.setSubType("related");
+
+        MimeBodyPart mimeBodyPart1 = new MimeBodyPart();
+        mimeBodyPart1.setContent(mimeMultipart);
+
+        MimeMultipart mimeMultipart1 = new MimeMultipart();
+        mimeMultipart1.addBodyPart(mimeBodyPart1);
+        mimeMultipart1.setSubType("mixed");
+
+        message.setContent(mimeMultipart1);
+        // 7.保存设置
+        message.saveChanges();
+        return message;
     }
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
@@ -189,6 +347,7 @@ public class MainFunction {
                 if (packageName == null) {
                     break;
                 }
+
                 if (!packageName.equals(currentPackage)) {
                     currentPackage = packageName;
                     appDescribe = appDescribeMap.get(packageName);
