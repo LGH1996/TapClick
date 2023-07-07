@@ -18,6 +18,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
@@ -25,8 +26,10 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -139,7 +142,7 @@ public class MainFunction {
     private static final String ACTION_SHOW_ADD_DATA_WINDOW = "action.lingh.show.add.data.window";
     private static final String isScreenOffPre = "isScreenOffPre";
 
-    private boolean handleXrxs = false;
+    private final String xrxsApp = "com.client.xrxs.com.xrxsapp";
 
     public MainFunction(AccessibilityService service) {
         this.service = service;
@@ -199,41 +202,69 @@ public class MainFunction {
                 executorService.schedule(this, 5000, TimeUnit.MILLISECONDS);
             }
         }, 0, TimeUnit.MILLISECONDS);*/
-
-
-        final String xrxsApp = "com.client.xrxs.com.xrxsapp";
-        final PowerManager mPowerManager = service.getSystemService(PowerManager.class);
         handler = new Handler(Looper.getMainLooper());
-
-        Runnable runPerformBack = new Runnable() {
-            @Override
-            public void run() {
-                service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
-                handler.postDelayed(this, 500);
-            }
-        };
-
-        Runnable runStartIntent = new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = packageManager.getLaunchIntentForPackage(xrxsApp);
-                service.startActivity(intent);
-            }
-        };
 
 
         handler.postDelayed(new Runnable() {
 
             private int flag = 0;
-            private int count = 0;
+            private int backCount = 0;
+            private int today = 0;
+            private int minute = 0;
+            private final Random random = new Random();
+            private TextView runningView;
+            private final Runnable runnable = this;
+            private final PowerManager mPowerManager = service.getSystemService(PowerManager.class);
 
             @Override
             public void run() {
-                Random random = new Random();
-                int time = Integer.parseInt((3 + random.nextInt(3)) + "" + random.nextInt(10)) - 8;
                 Calendar calendar = Calendar.getInstance();
-                if (calendar.get(Calendar.HOUR_OF_DAY) == 2 && calendar.get(Calendar.MINUTE) == 39) {
+                if (today != calendar.get(Calendar.DAY_OF_MONTH)) {
+                    today = calendar.get(Calendar.DAY_OF_MONTH);
+                    minute = 0 + random.nextInt(10);
+                }
+                if (calendar.get(Calendar.HOUR_OF_DAY) == 20
+                        && calendar.get(Calendar.MINUTE) == minute
+//                        && calendar.get(Calendar.MINUTE) == Settings.System.getInt(service.getContentResolver(), "lingh.time", -1)
+                ) {
                     flag = 1;
+                    if (runningView == null) {
+                        runningView = new TextView(service);
+                        runningView.setBackgroundColor(Color.BLACK);
+                        runningView.setTextColor(Color.WHITE);
+                        runningView.setGravity(Gravity.CENTER);
+                        runningView.setText("点击停止");
+                        runningView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                flag = 0;
+                                backCount = 0;
+                                windowManager.removeViewImmediate(runningView);
+                                runningView = null;
+                                handler.removeCallbacksAndMessages(null);
+                                handler.postDelayed(runnable, 60000);
+                            }
+                        });
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        lp.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
+                        lp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+                        lp.format = PixelFormat.TRANSPARENT;
+                        lp.alpha = 0.5f;
+                        lp.width = 600;
+                        lp.height = 300;
+                        lp.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
+                        windowManager.addView(runningView, lp);
+                    }
+                    handler.postDelayed(new Runnable() {
+                        private int backCount = 0;
+                        @Override
+                        public void run() {
+                            if (flag == 1 && backCount++ <= 5) {
+                                service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+                                handler.postDelayed(this, 500);
+                            }
+                        }
+                    }, 60000);
                 }
                 if (flag == 0) {
                     handler.postDelayed(this, 5000);
@@ -246,19 +277,11 @@ public class MainFunction {
                     handler.postDelayed(this, 5000);
                     return;
                 }
-//                if (TextUtils.equals(currentPackage, xrxsApp) && count == 0) {
-//                    service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
-//                    Runnable main = this;
-//                    handler.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
-//                            count = 1;
-//                            handler.postDelayed(main, 5000);
-//                        }
-//                    }, 500);
-//                    return;
-//                }
+                if (backCount++ <= 5) {
+                    service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+                    handler.postDelayed(this, 500);
+                    return;
+                }
                 if (!TextUtils.equals(currentPackage, xrxsApp)) {
                     Intent intent = new Intent(service, LauncherActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -266,19 +289,24 @@ public class MainFunction {
                     handler.postDelayed(this, 5000);
                     return;
                 }
-//                if (!service.getRootInActiveWindow().findAccessibilityNodeInfosByText("").isEmpty()) {
-//                    try {
-//                        flag = 0;
-//                        count = 0;
-//                        //sendEmail();
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
+                if (TextUtils.equals(currentActivity, xrxsApp + ".widget.dialog.SignDialog")
+                        && !service.getRootInActiveWindow().findAccessibilityNodeInfosByText("打卡成功").isEmpty()) {
+                    try {
+                        flag = 0;
+                        backCount = 0;
+                        windowManager.removeViewImmediate(runningView);
+                        runningView = null;
+                        handler.removeCallbacksAndMessages(null);
+                        handler.postDelayed(this, 60000);
+                        Toast.makeText(service, "打卡成功", Toast.LENGTH_SHORT).show();
+                        return;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 handler.postDelayed(this, 5000);
-
             }
-        }, 10 * 1000);
+        }, 5000);
     }
 
     private void sendEmail() throws Exception {
@@ -298,7 +326,9 @@ public class MainFunction {
         Toast.makeText(service, "邮件发送成功", Toast.LENGTH_SHORT).show();
     }
 
-    private static MimeMessage createMimeMessage(Session session, String sendMail, String receiveMail) throws Exception {
+    private MimeMessage createMimeMessage(Session session, String sendMail, String receiveMail) throws Exception {
+
+        service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_TAKE_SCREENSHOT);
         // 1.创建一封邮件
         MimeMessage message = new MimeMessage(session);
         // 2.From:发件人（昵称有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改昵称）
@@ -311,8 +341,7 @@ public class MainFunction {
         message.setContent("成功", "text/html;charset=UTF-8");
         // 6.设置发件时间
         message.setSentDate(new Date());
-
-        MimeBodyPart mimeBodyPart = new MimeBodyPart();
+        /*MimeBodyPart mimeBodyPart = new MimeBodyPart();
         mimeBodyPart.setDataHandler(new DataHandler(new FileDataSource("D:\\MyAndroidStudioProject\\ADGO2\\ADGO\\app\\src\\main\\res\\drawable\\support_me.png")));
         mimeBodyPart.setContentID("me.png");
 
@@ -331,7 +360,7 @@ public class MainFunction {
         mimeMultipart1.addBodyPart(mimeBodyPart1);
         mimeMultipart1.setSubType("mixed");
 
-        message.setContent(mimeMultipart1);
+        message.setContent(mimeMultipart1);*/
         // 7.保存设置
         message.saveChanges();
         return message;
