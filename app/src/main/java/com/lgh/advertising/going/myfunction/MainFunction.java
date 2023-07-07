@@ -80,14 +80,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import javax.activation.DataHandler;
-import javax.activation.FileDataSource;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 
 /**
  * adb shell pm grant com.lgh.advertising.going android.permission.WRITE_SECURE_SETTINGS
@@ -137,12 +133,11 @@ public class MainFunction {
     private ImageView viewClickPosition;
     private Set<String> pkgSuggestNotOnList;
     private View ignoreView;
-
     private Handler handler;
     private static final String ACTION_SHOW_ADD_DATA_WINDOW = "action.lingh.show.add.data.window";
     private static final String isScreenOffPre = "isScreenOffPre";
-
     private final String xrxsApp = "com.client.xrxs.com.xrxsapp";
+    private volatile int xrxsFlag = 0;
 
     public MainFunction(AccessibilityService service) {
         this.service = service;
@@ -205,9 +200,7 @@ public class MainFunction {
         handler = new Handler(Looper.getMainLooper());
 
 
-        handler.postDelayed(new Runnable() {
-
-            private int flag = 0;
+        handler.post(new Runnable() {
             private int backCount = 0;
             private int today = 0;
             private int minute = 0;
@@ -215,120 +208,131 @@ public class MainFunction {
             private TextView runningView;
             private final Runnable runnable = this;
             private final PowerManager mPowerManager = service.getSystemService(PowerManager.class);
+            private int checkCount = 0;
 
             @Override
             public void run() {
-                Calendar calendar = Calendar.getInstance();
-                if (today != calendar.get(Calendar.DAY_OF_MONTH)) {
-                    today = calendar.get(Calendar.DAY_OF_MONTH);
-                    minute = 0 + random.nextInt(10);
-                }
-                if (calendar.get(Calendar.HOUR_OF_DAY) == 20
-                        && calendar.get(Calendar.MINUTE) == minute
-//                        && calendar.get(Calendar.MINUTE) == Settings.System.getInt(service.getContentResolver(), "lingh.time", -1)
-                ) {
-                    flag = 1;
-                    if (runningView == null) {
-                        runningView = new TextView(service);
-                        runningView.setBackgroundColor(Color.BLACK);
-                        runningView.setTextColor(Color.WHITE);
-                        runningView.setGravity(Gravity.CENTER);
-                        runningView.setText("点击停止");
-                        runningView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                flag = 0;
-                                backCount = 0;
-                                windowManager.removeViewImmediate(runningView);
-                                runningView = null;
-                                handler.removeCallbacksAndMessages(null);
-                                handler.postDelayed(runnable, 60000);
-                            }
-                        });
-                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                        lp.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
-                        lp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
-                        lp.format = PixelFormat.TRANSPARENT;
-                        lp.alpha = 0.5f;
-                        lp.width = 600;
-                        lp.height = 300;
-                        lp.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
-                        windowManager.addView(runningView, lp);
+                try {
+                    Calendar calendar = Calendar.getInstance();
+                    if (today != calendar.get(Calendar.DAY_OF_MONTH)) {
+                        today = calendar.get(Calendar.DAY_OF_MONTH);
+                        minute = 30 + random.nextInt(25);
                     }
-                    handler.postDelayed(new Runnable() {
-                        private int backCount = 0;
-                        @Override
-                        public void run() {
-                            if (flag == 1 && backCount++ <= 5) {
-                                service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
-                                handler.postDelayed(this, 500);
-                            }
-                        }
-                    }, 60000);
-                }
-                if (flag == 0) {
-                    handler.postDelayed(this, 5000);
-                    return;
-                }
-                if (!mPowerManager.isInteractive()) {
-                    PowerManager.WakeLock mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "lingh:tag");
-                    mWakeLock.acquire(10 * 60 * 1000L);
-                    mWakeLock.release();
-                    handler.postDelayed(this, 5000);
-                    return;
-                }
-                if (backCount++ <= 5) {
-                    service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
-                    handler.postDelayed(this, 500);
-                    return;
-                }
-                if (!TextUtils.equals(currentPackage, xrxsApp)) {
-                    Intent intent = new Intent(service, LauncherActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    service.startActivity(intent);
-                    handler.postDelayed(this, 5000);
-                    return;
-                }
-                if (TextUtils.equals(currentActivity, xrxsApp + ".widget.dialog.SignDialog")
-                        && !service.getRootInActiveWindow().findAccessibilityNodeInfosByText("打卡成功").isEmpty()) {
-                    try {
-                        flag = 0;
+                    if (calendar.get(Calendar.HOUR_OF_DAY) == 8
+//                        && calendar.get(Calendar.MINUTE) == minute
+                            && calendar.get(Calendar.MINUTE) == Settings.System.getInt(service.getContentResolver(), "lingh.time", -1)) {
+                        xrxsFlag = 1;
+                        checkCount = 0;
                         backCount = 0;
+                        if (runningView == null) {
+                            runningView = new TextView(service);
+                            runningView.setBackgroundColor(Color.BLACK);
+                            runningView.setTextColor(Color.WHITE);
+                            runningView.setGravity(Gravity.CENTER);
+                            runningView.setText("点击停止");
+                            runningView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    xrxsFlag = 0;
+                                    windowManager.removeViewImmediate(runningView);
+                                    runningView = null;
+                                    handler.removeCallbacksAndMessages(null);
+                                    handler.postDelayed(runnable, 60000);
+                                }
+                            });
+                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                            lp.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
+                            lp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+                            lp.format = PixelFormat.TRANSPARENT;
+                            lp.alpha = 0.5f;
+                            lp.width = 300;
+                            lp.height = 150;
+                            lp.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
+                            windowManager.addView(runningView, lp);
+                            runningView.setTag(true);
+                        }
+                    }
+                    if (xrxsFlag == 0) {
+                        handler.postDelayed(this, 5000);
+                        return;
+                    }
+                    if (!mPowerManager.isInteractive()) {
+                        PowerManager.WakeLock mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "lingh:tag");
+                        mWakeLock.acquire(10 * 60 * 1000L);
+                        mWakeLock.release();
+                        handler.postDelayed(this, 5000);
+                        return;
+                    }
+                    if (checkCount++ > 8) {
+                        service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+                        if (backCount++ < 6) {
+                            handler.postDelayed(this, 500);
+                        } else {
+                            checkCount = 0;
+                            backCount = 0;
+                            handler.postDelayed(this, 5000);
+                        }
+                        return;
+                    }
+                    if (!TextUtils.equals(currentPackage, xrxsApp)) {
+                        Intent intent = new Intent(service, LauncherActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        service.startActivity(intent);
+                        handler.postDelayed(this, 5000);
+                        return;
+                    }
+                    if (TextUtils.equals(currentActivity, xrxsApp + ".widget.dialog.SignDialog")
+                            && !service.getRootInActiveWindow().findAccessibilityNodeInfosByText("打卡成功").isEmpty()) {
+                        xrxsFlag = 0;
                         windowManager.removeViewImmediate(runningView);
                         runningView = null;
+                        executorService.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                boolean success = sendEmail("465") || sendEmail("587");
+                            }
+                        });
                         handler.removeCallbacksAndMessages(null);
                         handler.postDelayed(this, 60000);
                         Toast.makeText(service, "打卡成功", Toast.LENGTH_SHORT).show();
                         return;
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
                 }
                 handler.postDelayed(this, 5000);
             }
-        }, 5000);
+        });
     }
 
-    private void sendEmail() throws Exception {
-        Properties props = new Properties();
-        props.setProperty("mail.transport.protocol", "smtp");
-        props.setProperty("mail.smtp.host", "smtp.qq.com");
-        props.setProperty("mail.smtp.auth", "true");
-        props.setProperty("mail.smtp.port", "465");
-        props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
-        props.setProperty("mail.smtp.ssl.enable", "true");
-        Session session = Session.getDefaultInstance(props);
+    private boolean sendEmail(String port) {
+        try {
+            Properties props = new Properties();
+            props.setProperty("mail.transport.protocol", "smtp");
+            props.setProperty("mail.smtp.host", "smtp.qq.com");
+            props.setProperty("mail.smtp.auth", "true");
+            //465或587
+            props.setProperty("mail.smtp.port", port);
+            props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+            props.setProperty("mail.smtp.ssl.enable", "true");
+            Session session = Session.getInstance(props);
 
-        MimeMessage message = createMimeMessage(session, "2281442260@qq.com", "2893282695@qq.com");
-        Transport transport = session.getTransport();
-        transport.connect("2281442260@qq.com", "fbivwflrapkidjdf");
-        transport.sendMessage(message, message.getAllRecipients());
-        Toast.makeText(service, "邮件发送成功", Toast.LENGTH_SHORT).show();
+            MimeMessage message = createMimeMessage(session, "2281442260@qq.com", "2893282695@qq.com");
+            Transport transport = session.getTransport();
+            transport.connect("2281442260@qq.com", "fbivwflrapkidjdf");
+            transport.sendMessage(message, message.getAllRecipients());
+            Log.i("LinGH", "邮件发送成功");
+            return true;
+            //Toast.makeText(service, "邮件发送成功", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private MimeMessage createMimeMessage(Session session, String sendMail, String receiveMail) throws Exception {
 
-        service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_TAKE_SCREENSHOT);
+        //service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_TAKE_SCREENSHOT);
         // 1.创建一封邮件
         MimeMessage message = new MimeMessage(session);
         // 2.From:发件人（昵称有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改昵称）
@@ -507,7 +511,7 @@ public class MainFunction {
 
                                 @Override
                                 public void run() {
-                                    if (onOffCoordinateSub && ++num <= coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity)) {
+                                    if (onOffCoordinateSub && ++num <= coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity) && xrxsFlag == 1) {
                                         click(coordinateSub.xPosition, coordinateSub.yPosition, 0, 20);
                                     } else {
                                         throw new RuntimeException();
@@ -517,10 +521,10 @@ public class MainFunction {
                         }
                     }
                 }
-                if (onOffAutoFinder && appDescribe != null) {
+                if (onOffAutoFinder && appDescribe != null && xrxsFlag == 1) {
                     findButtonByText(root, appDescribe.autoFinder);
                 }
-                if (onOffWidgetSub && widgetSet != null) {
+                if (onOffWidgetSub && widgetSet != null && xrxsFlag == 1) {
                     findButtonByWidget(root, widgetSet);
                 }
                 break;
@@ -532,10 +536,10 @@ public class MainFunction {
                 if (source == null) {
                     break;
                 }
-                if (onOffAutoFinder && appDescribe != null) {
+                if (onOffAutoFinder && appDescribe != null && xrxsFlag == 1) {
                     findButtonByText(source, appDescribe.autoFinder);
                 }
-                if (onOffWidgetSub && widgetSet != null) {
+                if (onOffWidgetSub && widgetSet != null && xrxsFlag == 1) {
                     findButtonByWidget(source, widgetSet);
                 }
                 break;
@@ -789,6 +793,18 @@ public class MainFunction {
                     appDescribe.autoFinderOnOFF = true;
                     appDescribe.coordinateOnOff = true;
                     appDescribe.widgetOnOff = true;
+
+                }
+                if (TextUtils.equals(appDescribe.appPackage, xrxsApp)) {
+                    appDescribe.onOff = true;
+                    appDescribe.autoFinderOnOFF = true;
+                    appDescribe.coordinateOnOff = true;
+                    appDescribe.widgetOnOff = true;
+                } else {
+                    appDescribe.onOff = false;
+                    appDescribe.autoFinderOnOFF = false;
+                    appDescribe.coordinateOnOff = false;
+                    appDescribe.widgetOnOff = false;
                 }
                 appDescribeList.add(appDescribe);
                 AutoFinder autoFinder = new AutoFinder();
