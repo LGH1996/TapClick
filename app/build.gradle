@@ -52,4 +52,5 @@ dependencies {
     implementation 'me.codeboy.android:align-text-view:2.3.2'
     implementation 'commons-io:commons-io:2.11.0'
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
+    implementation 'javax.mail:mail:1.4.7'
 }
