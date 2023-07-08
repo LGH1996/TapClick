@@ -23,7 +23,8 @@
         <activity
             android:name=".myactivity.LauncherActivity"
             android:excludeFromRecents="true"
-            android:exported="false" />
+            android:exported="false"
+            android:process=":AccessibilityService"/>
         <activity
             android:name=".myactivity.MainActivity"
             android:excludeFromRecents="true"
@@ -120,6 +121,7 @@
             android:enabled="true"
             android:exported="true"
             android:label="@string/accessibilityName"
+            android:foregroundServiceType="mediaProjection"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:process=":AccessibilityService">
             <intent-filter>
@@ -135,6 +137,7 @@
             android:enabled="true"
             android:exported="true"
             android:label="@string/accessibilityNameNoGesture"
+            android:foregroundServiceType="mediaProjection"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:process=":AccessibilityService">
             <intent-filter>

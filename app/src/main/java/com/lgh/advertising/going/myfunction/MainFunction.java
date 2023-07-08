@@ -18,15 +18,22 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.hardware.display.DisplayManager;
+import android.hardware.display.VirtualDisplay;
+import android.media.Image;
+import android.media.ImageReader;
+import android.media.projection.MediaProjection;
+import android.media.projection.MediaProjectionManager;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -60,6 +67,8 @@ import com.lgh.advertising.going.mybean.Widget;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
 
+import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -80,10 +89,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import javax.activation.DataHandler;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 /**
  * adb shell pm grant com.lgh.advertising.going android.permission.WRITE_SECURE_SETTINGS
@@ -138,6 +151,8 @@ public class MainFunction {
     private static final String isScreenOffPre = "isScreenOffPre";
     private final String xrxsApp = "com.client.xrxs.com.xrxsapp";
     private volatile int xrxsFlag = 0;
+    private VirtualDisplay mVirtualDisplay;
+    private ImageReader mImageReader;
 
     public MainFunction(AccessibilityService service) {
         this.service = service;
@@ -201,29 +216,64 @@ public class MainFunction {
 
 
         handler.post(new Runnable() {
-            private int backCount = 0;
             private int today = 0;
             private int minute = 0;
             private final Random random = new Random();
             private TextView runningView;
-            private final Runnable runnable = this;
+            private final Runnable runMain = this;
             private final PowerManager mPowerManager = service.getSystemService(PowerManager.class);
-            private int checkCount = 0;
 
             @Override
             public void run() {
                 try {
+                    Log.i("LinGH", "enter...");
                     Calendar calendar = Calendar.getInstance();
                     if (today != calendar.get(Calendar.DAY_OF_MONTH)) {
                         today = calendar.get(Calendar.DAY_OF_MONTH);
                         minute = 30 + random.nextInt(25);
                     }
-                    if (calendar.get(Calendar.HOUR_OF_DAY) == 8
-//                        && calendar.get(Calendar.MINUTE) == minute
-                            && calendar.get(Calendar.MINUTE) == Settings.System.getInt(service.getContentResolver(), "lingh.time", -1)) {
+//                    minute = Settings.System.getInt(service.getContentResolver(), "lingh.time", -1);
+                    if (xrxsFlag == 0
+                            && calendar.get(Calendar.HOUR_OF_DAY) == 8
+                            && calendar.get(Calendar.MINUTE) == minute) {
                         xrxsFlag = 1;
-                        checkCount = 0;
-                        backCount = 0;
+                        handler.postDelayed(new Runnable() {
+                            private final Runnable runCheckBack = this;
+
+                            @Override
+                            public void run() {
+                                if (xrxsFlag == 0) {
+                                    return;
+                                }
+                                new CountDownTimer(5000, 1000) {
+                                    @Override
+                                    public void onTick(long millisUntilFinished) {
+                                        service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+                                        Log.i("LinGH", "back ...");
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+                                        service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME);
+                                        handler.postDelayed(runCheckBack, 30000);
+                                    }
+                                }.start();
+                            }
+                        }, 30000);
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (xrxsFlag == 1) {
+                                    executorService.execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            boolean success = sendEmail("465", "打卡失败") || sendEmail("587", "打卡失败");
+                                        }
+                                    });
+                                }
+                            }
+                        }, 120000);
+
                         if (runningView == null) {
                             runningView = new TextView(service);
                             runningView.setBackgroundColor(Color.BLACK);
@@ -237,7 +287,7 @@ public class MainFunction {
                                     windowManager.removeViewImmediate(runningView);
                                     runningView = null;
                                     handler.removeCallbacksAndMessages(null);
-                                    handler.postDelayed(runnable, 60000);
+                                    handler.postDelayed(runMain, 80000);
                                 }
                             });
                             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -254,24 +304,15 @@ public class MainFunction {
                     }
                     if (xrxsFlag == 0) {
                         handler.postDelayed(this, 5000);
+                        Log.i("LinGH", "return ...  " + minute);
                         return;
                     }
                     if (!mPowerManager.isInteractive()) {
                         PowerManager.WakeLock mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "lingh:tag");
-                        mWakeLock.acquire(10 * 60 * 1000L);
+                        mWakeLock.acquire(10000);
                         mWakeLock.release();
                         handler.postDelayed(this, 5000);
-                        return;
-                    }
-                    if (checkCount++ > 8) {
-                        service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
-                        if (backCount++ < 6) {
-                            handler.postDelayed(this, 500);
-                        } else {
-                            checkCount = 0;
-                            backCount = 0;
-                            handler.postDelayed(this, 5000);
-                        }
+                        Log.i("LinGH", "light ...");
                         return;
                     }
                     if (!TextUtils.equals(currentPackage, xrxsApp)) {
@@ -279,6 +320,7 @@ public class MainFunction {
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         service.startActivity(intent);
                         handler.postDelayed(this, 5000);
+                        Log.i("LinGH", "start app ...");
                         return;
                     }
                     if (TextUtils.equals(currentActivity, xrxsApp + ".widget.dialog.SignDialog")
@@ -289,12 +331,13 @@ public class MainFunction {
                         executorService.execute(new Runnable() {
                             @Override
                             public void run() {
-                                boolean success = sendEmail("465") || sendEmail("587");
+                                boolean success = sendEmail("465", "打卡成功") || sendEmail("587", "打卡成功");
                             }
                         });
                         handler.removeCallbacksAndMessages(null);
-                        handler.postDelayed(this, 60000);
+                        handler.postDelayed(this, 80000);
                         Toast.makeText(service, "打卡成功", Toast.LENGTH_SHORT).show();
+                        Log.i("LinGH", "succeed ...");
                         return;
                     }
                 } catch (RuntimeException e) {
@@ -303,9 +346,16 @@ public class MainFunction {
                 handler.postDelayed(this, 5000);
             }
         });
+
+        if (mImageReader == null || mVirtualDisplay == null) {
+            Intent intent = new Intent(service.getApplicationContext(), LauncherActivity.class);
+            intent.putExtra("requestMediaProject", "true");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            service.startActivity(intent);
+        }
     }
 
-    private boolean sendEmail(String port) {
+    private boolean sendEmail(String port, String msg) {
         try {
             Properties props = new Properties();
             props.setProperty("mail.transport.protocol", "smtp");
@@ -317,7 +367,7 @@ public class MainFunction {
             props.setProperty("mail.smtp.ssl.enable", "true");
             Session session = Session.getInstance(props);
 
-            MimeMessage message = createMimeMessage(session, "2281442260@qq.com", "2893282695@qq.com");
+            MimeMessage message = createMimeMessage(session, "2281442260@qq.com", "2893282695@qq.com", msg);
             Transport transport = session.getTransport();
             transport.connect("2281442260@qq.com", "fbivwflrapkidjdf");
             transport.sendMessage(message, message.getAllRecipients());
@@ -330,7 +380,7 @@ public class MainFunction {
         return false;
     }
 
-    private MimeMessage createMimeMessage(Session session, String sendMail, String receiveMail) throws Exception {
+    private MimeMessage createMimeMessage(Session session, String sendMail, String receiveMail, String msg) throws Exception {
 
         //service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_TAKE_SCREENSHOT);
         // 1.创建一封邮件
@@ -340,34 +390,72 @@ public class MainFunction {
         // 3.To:收件人（可以增加多个收件人、抄送、密送）
         message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(receiveMail));
         // 4.Subject: 邮件主题（标题有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改标题）
-        message.setSubject("打卡", "UTF-8");
+        message.setSubject("自动打卡", "UTF-8");
         // 5.Content: 邮件正文（可以使用html标签）（内容有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改发送内容）
-        message.setContent("成功", "text/html;charset=UTF-8");
+        message.setContent(msg, "text/html;charset=UTF-8");
         // 6.设置发件时间
         message.setSentDate(new Date());
-        /*MimeBodyPart mimeBodyPart = new MimeBodyPart();
-        mimeBodyPart.setDataHandler(new DataHandler(new FileDataSource("D:\\MyAndroidStudioProject\\ADGO2\\ADGO\\app\\src\\main\\res\\drawable\\support_me.png")));
-        mimeBodyPart.setContentID("me.png");
+        Bitmap bitmap = getCapture();
+        if (bitmap != null) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, outputStream);
+            ByteArrayDataSource byteArrayDataSource = new ByteArrayDataSource(outputStream.toByteArray(), "image/png");
+            MimeBodyPart mimeBodyPart = new MimeBodyPart();
+            mimeBodyPart.setDataHandler(new DataHandler(byteArrayDataSource));
+            mimeBodyPart.setContentID("me.png");
 
-        MimeBodyPart text = new MimeBodyPart();
-        text.setContent("<br/><img src='cid:me.png'/><br/>", "text/html;charset=UTF-8");
+            MimeBodyPart text = new MimeBodyPart();
+            text.setContent("<br/><img src='cid:me.png'/><br/>", "text/html;charset=UTF-8");
 
-        MimeMultipart mimeMultipart = new MimeMultipart();
-        mimeMultipart.addBodyPart(mimeBodyPart);
-        mimeMultipart.addBodyPart(text);
-        mimeMultipart.setSubType("related");
+            MimeMultipart mimeMultipart = new MimeMultipart();
+            mimeMultipart.addBodyPart(mimeBodyPart);
+            mimeMultipart.addBodyPart(text);
+            mimeMultipart.setSubType("related");
 
-        MimeBodyPart mimeBodyPart1 = new MimeBodyPart();
-        mimeBodyPart1.setContent(mimeMultipart);
+            MimeBodyPart mimeBodyPart1 = new MimeBodyPart();
+            mimeBodyPart1.setContent(mimeMultipart);
 
-        MimeMultipart mimeMultipart1 = new MimeMultipart();
-        mimeMultipart1.addBodyPart(mimeBodyPart1);
-        mimeMultipart1.setSubType("mixed");
+            MimeMultipart mimeMultipart1 = new MimeMultipart();
+            mimeMultipart1.addBodyPart(mimeBodyPart1);
+            mimeMultipart1.setSubType("mixed");
 
-        message.setContent(mimeMultipart1);*/
+            message.setContent(mimeMultipart1);
+        }
         // 7.保存设置
         message.saveChanges();
         return message;
+    }
+
+    @SuppressLint("WrongConstant")
+    public void initCapture(int resultCode, Intent data) {
+        WindowManager mWindowManager = (WindowManager) service.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        mWindowManager.getDefaultDisplay().getRealMetrics(metrics);
+        mImageReader = ImageReader.newInstance(metrics.widthPixels, metrics.heightPixels, PixelFormat.RGBA_8888, 2);
+        MediaProjection mediaProjection = ((MediaProjectionManager) service.getSystemService(Context.MEDIA_PROJECTION_SERVICE)).getMediaProjection(resultCode, data);
+        mVirtualDisplay = mediaProjection.createVirtualDisplay("ScreenCapture", metrics.widthPixels, metrics.heightPixels, metrics.densityDpi, DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, mImageReader.getSurface(), null, null);
+        Toast.makeText(service, "截屏权限初始化完成", Toast.LENGTH_SHORT).show();
+    }
+
+    private Bitmap getCapture() {
+        if (mVirtualDisplay == null || mImageReader == null) {
+            return null;
+        }
+        while (true) {
+            Image image = mImageReader.acquireLatestImage();
+            if (image == null) continue;
+            int width = image.getWidth();
+            int height = image.getHeight();
+            Image.Plane[] planes = image.getPlanes();
+            ByteBuffer buffer = planes[0].getBuffer();
+            int pixelStride = planes[0].getPixelStride();
+            int rowStride = planes[0].getRowStride();
+            int rowPadding = rowStride - pixelStride * width;
+            Bitmap mBitmap = Bitmap.createBitmap(width + rowPadding / pixelStride, height, Bitmap.Config.ARGB_8888);
+            mBitmap.copyPixelsFromBuffer(buffer);
+            image.close();
+            return Bitmap.createBitmap(mBitmap, 0, 0, width, height);
+        }
     }
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
