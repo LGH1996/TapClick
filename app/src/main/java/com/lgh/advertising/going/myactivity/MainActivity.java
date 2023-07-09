@@ -155,6 +155,12 @@ public class MainActivity extends BaseActivity {
         }
 
         handleImportRule(getIntent());
+
+//        getWindow().getDecorView().setKeepScreenOn(true);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+//        layoutParams.screenBrightness = 0;
+//        getWindow().setAttributes(layoutParams);
     }
 
     @Override
@@ -168,7 +174,7 @@ public class MainActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         if (myAppConfig.autoHideOnTaskList && autoHideOnTaskList) {
-            finishAndRemoveTask();
+            //finishAndRemoveTask();
         }
     }
 

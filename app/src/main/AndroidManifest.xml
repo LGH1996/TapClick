@@ -22,12 +22,10 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".myactivity.LauncherActivity"
-            android:excludeFromRecents="true"
             android:exported="false"
             android:process=":AccessibilityService"/>
         <activity
             android:name=".myactivity.MainActivity"
-            android:excludeFromRecents="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,34 +55,20 @@
         </activity>
         <activity
             android:name=".myactivity.ExceptionReportActivity"
-            android:excludeFromRecents="true"
             android:exported="false" />
-        <activity
-            android:name=".myactivity.SettingActivity"
-            android:excludeFromRecents="true" />
-        <activity
-            android:name=".myactivity.AuthorizationActivity"
-            android:excludeFromRecents="true" />
-        <activity
-            android:name=".myactivity.AddDataActivity"
-            android:excludeFromRecents="true" />
+        <activity android:name=".myactivity.SettingActivity" />
+        <activity android:name=".myactivity.AuthorizationActivity" />
+        <activity android:name=".myactivity.AddDataActivity" />
         <activity
             android:name=".myactivity.UpdateActivity"
-            android:excludeFromRecents="true"
             android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar" />
-        <activity
-            android:name=".myactivity.MoreMessageActivity"
-            android:excludeFromRecents="true" />
+        <activity android:name=".myactivity.MoreMessageActivity" />
         <activity
             android:name=".myactivity.ShortCutActivity"
-            android:excludeFromRecents="true"
             android:theme="@android:style/Theme.NoDisplay" />
-        <activity
-            android:name=".myactivity.ListDataActivity"
-            android:excludeFromRecents="true" />
+        <activity android:name=".myactivity.ListDataActivity" />
         <activity
             android:name=".myactivity.EditDataActivity"
-            android:excludeFromRecents="true"
             android:windowSoftInputMode="adjustResize" />
 
         <service

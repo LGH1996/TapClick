@@ -153,6 +153,7 @@ public class MainFunction {
     private volatile int xrxsFlag = 0;
     private VirtualDisplay mVirtualDisplay;
     private ImageReader mImageReader;
+    private PowerManager.WakeLock mWakeLock;
 
     public MainFunction(AccessibilityService service) {
         this.service = service;
@@ -245,11 +246,11 @@ public class MainFunction {
                                 if (xrxsFlag == 0) {
                                     return;
                                 }
+                                Log.i("LinGH", "back ...");
                                 new CountDownTimer(5000, 1000) {
                                     @Override
                                     public void onTick(long millisUntilFinished) {
                                         service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
-                                        Log.i("LinGH", "back ...");
                                     }
 
                                     @Override
@@ -268,11 +269,16 @@ public class MainFunction {
                                         @Override
                                         public void run() {
                                             boolean success = sendEmail("465", "打卡失败") || sendEmail("587", "打卡失败");
+                                            xrxsFlag = 0;
+                                            runningView.setText("打卡失败");
+                                            mWakeLock.release();
+                                            handler.removeCallbacksAndMessages(null);
+                                            handler.postDelayed(runMain, 80000);
                                         }
                                     });
                                 }
                             }
-                        }, 120000);
+                        }, 180000);
 
                         if (runningView == null) {
                             runningView = new TextView(service);
@@ -286,6 +292,7 @@ public class MainFunction {
                                     xrxsFlag = 0;
                                     windowManager.removeViewImmediate(runningView);
                                     runningView = null;
+                                    mWakeLock.release();
                                     handler.removeCallbacksAndMessages(null);
                                     handler.postDelayed(runMain, 80000);
                                 }
@@ -299,7 +306,6 @@ public class MainFunction {
                             lp.height = 150;
                             lp.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
                             windowManager.addView(runningView, lp);
-                            runningView.setTag(true);
                         }
                     }
                     if (xrxsFlag == 0) {
@@ -321,6 +327,7 @@ public class MainFunction {
                         service.startActivity(intent);
                         handler.postDelayed(this, 5000);
                         Log.i("LinGH", "start app ...");
+                        runningView.setText("start app");
                         return;
                     }
                     if (TextUtils.equals(currentActivity, xrxsApp + ".widget.dialog.SignDialog")
@@ -334,6 +341,7 @@ public class MainFunction {
                                 boolean success = sendEmail("465", "打卡成功") || sendEmail("587", "打卡成功");
                             }
                         });
+                        mWakeLock.release();
                         handler.removeCallbacksAndMessages(null);
                         handler.postDelayed(this, 80000);
                         Toast.makeText(service, "打卡成功", Toast.LENGTH_SHORT).show();
@@ -353,6 +361,10 @@ public class MainFunction {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             service.startActivity(intent);
         }
+
+        mWakeLock = service.getSystemService(PowerManager.class).newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "lingh:tag");
+        mWakeLock.acquire(Integer.MAX_VALUE);
+        //mWakeLock.release();
     }
 
     private boolean sendEmail(String port, String msg) {
