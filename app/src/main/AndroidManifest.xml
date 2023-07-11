@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lgh.advertising.going">
 
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -155,6 +156,13 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name="org.eclipse.paho.android.service.MqttService"
+            android:process=":AccessibilityService" />
+        <service
+            android:name=".myfunction.MqttServer"
+            android:process=":AccessibilityService" />
     </application>
 
 </manifest>

@@ -39,6 +39,7 @@ import com.lgh.advertising.going.mybean.MyAppConfig;
 import com.lgh.advertising.going.mybean.WidgetShare;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
+import com.lgh.advertising.going.myfunction.MqttServer;
 import com.lgh.advertising.going.myfunction.MyUtils;
 
 import java.io.FileNotFoundException;
@@ -135,7 +136,10 @@ public class MainActivity extends BaseActivity {
                         break;
                     }
                     case 4: {
-                        startActivity(new Intent(context, MoreMessageActivity.class));
+                        Intent intent = new Intent(MainActivity.this, MqttServer.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startService(intent);
+                        //startActivity(new Intent(context, MoreMessageActivity.class));
                         break;
                     }
                 }
