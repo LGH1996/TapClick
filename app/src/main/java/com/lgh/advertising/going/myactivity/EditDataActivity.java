@@ -156,7 +156,9 @@ public class EditDataActivity extends BaseActivity {
                 appDescribe = appDescribeTemp;
             }
         }
-
+        if (appDescribe == null) {
+            finishAndRemoveTask();
+        }
         if (baseSettingBinding != null) {
             editDataBinding.baseSettingLayout.removeView(baseSettingBinding.getRoot());
         }
