@@ -6466,8 +6466,7 @@ io.reactivex.rxjava3.internal.operators.single.SingleFlatMapNotification
 io.reactivex.rxjava3.internal.operators.observable.ObservableWindowBoundarySelector$WindowBoundaryMainObserver$WindowEndObserverIntercept
 io.reactivex.rxjava3.internal.jdk8.ParallelMapTryOptional$ParallelMapTrySubscriber
 androidx.loader.R
-com.lgh.advertising.going.databinding.ViewQuestionBinding:
-    public synthetic bridge android.view.View getRoot()
+com.lgh.advertising.going.databinding.ViewQuestionBinding
 androidx.activity.result.contract.ActivityResultContracts$StartIntentSenderForResult
 com.google.gson.Gson:
     public com.google.gson.GsonBuilder newBuilder()
@@ -20364,8 +20363,6 @@ okhttp3.ResponseBody:
 androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VectorDrawableCompatState
 com.google.android.material.snackbar.SnackbarContentLayout:
     public static void updateTopBottomPadding(android.view.View,int,int)
-com.lgh.advertising.going.myactivity.EditDataActivity$11:
-    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity this$0
 androidx.room.MultiInstanceInvalidationClient$1$1
 androidx.room.QueryInterceptorStatement
 androidx.appcompat.widget.ActionMenuView$OnMenuItemClickListener:
@@ -20432,8 +20429,6 @@ androidx.core.view.inputmethod.InputContentInfoCompat:
     public android.net.Uri getLinkUri()
     public java.lang.Object unwrap()
     public void requestPermission()
-com.lgh.advertising.going.myactivity.EditDataActivity$7:
-    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity this$0
 retrofit2.BuiltInConverters$ToStringConverter:
     public java.lang.String convert(java.lang.Object)
 com.google.android.material.circularreveal.CircularRevealWidget$CircularRevealEvaluator:
@@ -20636,6 +20631,8 @@ com.lgh.advertising.going.databinding.ActivityEditDataBinding:
     public final android.widget.ImageView autoFinderImg
     public final android.widget.ImageView baseSettingImg
     public final android.widget.ImageView coordinateImg
+    public final android.widget.TextView tvAutoFinder
+    public final android.widget.TextView tvBaseSetting
     public final android.widget.ImageView widgetImg
 androidx.appcompat.widget.AppCompatReceiveContentHelper$OnDropApi24Impl
 me.codeboy.android.aligntextview.AlignTextView:
@@ -20686,6 +20683,8 @@ com.google.gson.internal.bind.TypeAdapters$2:
 androidx.core.graphics.PathParser$ExtractFloatResult
 androidx.cardview.widget.CardViewApi17Impl$1
 com.google.android.material.canvas.CanvasCompat
+com.lgh.advertising.going.myactivity.EditDataActivity$6:
+    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity this$0
 okhttp3.internal.connection.RouteSelector$Selection:
     public okhttp3.Route next()
     public java.util.List getAll()
@@ -20756,6 +20755,8 @@ retrofit2.converter.scalars.ScalarResponseBodyConverters$BooleanResponseBodyConv
     public java.lang.Boolean convert(okhttp3.ResponseBody)
 okhttp3.internal.http2.Http2:
     public static java.lang.String formatFlags(byte,byte)
+com.lgh.advertising.going.myactivity.EditDataActivity$18:
+    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity this$0
 com.google.gson.internal.LinkedTreeMap$KeySet$1:
     public final synthetic com.google.gson.internal.LinkedTreeMap$KeySet this$1
 com.google.android.material.datepicker.MonthAdapter:
@@ -21282,6 +21283,9 @@ androidx.constraintlayout.widget.ConstraintHelper:
     public void updatePreLayout(androidx.constraintlayout.widget.ConstraintLayout)
     public boolean mUseViewMeasure
     public android.view.View[] mViews
+com.lgh.advertising.going.myactivity.EditDataActivity$10:
+    public int compare(com.lgh.advertising.going.mybean.Coordinate,com.lgh.advertising.going.mybean.Coordinate)
+    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity this$0
 androidx.appcompat.view.menu.ListMenuPresenter$MenuAdapter
 androidx.loader.app.LoaderManagerImpl$LoaderObserver
 androidx.core.graphics.TypefaceCompatBaseImpl:
@@ -22343,7 +22347,6 @@ com.google.gson.internal.LinkedTreeMap$Node:
     public com.google.gson.internal.LinkedTreeMap$Node last()
 retrofit2.adapter.rxjava3.CallExecuteObservable
 com.lgh.advertising.going.myactivity.EditDataActivity$9:
-    public int compare(com.lgh.advertising.going.mybean.Coordinate,com.lgh.advertising.going.mybean.Coordinate)
     public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity this$0
 androidx.appcompat.widget.AppCompatSpinner$DropdownPopup$2
 androidx.transition.TransitionUtils:
@@ -22537,8 +22540,6 @@ com.google.gson.reflect.TypeToken:
     public static com.google.gson.reflect.TypeToken get(java.lang.Class)
     public final java.lang.Class getRawType()
     public final java.lang.reflect.Type getType()
-com.lgh.advertising.going.myactivity.EditDataActivity$16:
-    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity this$0
 io.reactivex.rxjava3.core.ObservableOnSubscribe:
     public abstract void subscribe(io.reactivex.rxjava3.core.ObservableEmitter)
 androidx.appcompat.widget.ResourceManagerInternal$DrawableDelegate
@@ -22702,7 +22703,6 @@ com.google.android.material.shape.CornerTreatment:
 retrofit2.HttpServiceMethod$SuspendForBody:
     public final boolean isNullable
 io.reactivex.rxjava3.internal.functions.Functions$ErrorConsumer
-com.lgh.advertising.going.databinding.ViewQuestionBinding
 com.google.gson.Gson:
     public static com.google.gson.TypeAdapter longAdapter(com.google.gson.LongSerializationPolicy)
     public static com.google.gson.TypeAdapter atomicLongAdapter(com.google.gson.TypeAdapter)
@@ -23193,6 +23193,8 @@ androidx.recyclerview.widget.RecyclerView$ItemAnimator:
 androidx.room.RoomDatabase$JournalMode:
     public static boolean isLowRamDevice(android.app.ActivityManager)
     public androidx.room.RoomDatabase$JournalMode resolve(android.content.Context)
+com.lgh.advertising.going.myactivity.EditDataActivity$7$1:
+    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity$7 this$1
 io.reactivex.rxjava3.android.schedulers.HandlerScheduler$ScheduledRunnable:
     public volatile boolean disposed
 okhttp3.internal.http2.Http2Connection:
@@ -24068,8 +24070,6 @@ okhttp3.RealCall:
     public boolean isCanceled()
     public okhttp3.RealCall clone()
     public java.lang.String redactedUrl()
-com.lgh.advertising.going.myactivity.EditDataActivity$3:
-    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity this$0
 androidx.appcompat.app.AlertController$ButtonHandler
 me.codeboy.android.aligntextview.R$styleable:
     public static final int AlignTextView_align
@@ -24731,6 +24731,9 @@ io.reactivex.rxjava3.internal.schedulers.SchedulerPoolFactory$SystemPropertyAcce
 androidx.sqlite.db.framework.FrameworkSQLiteDatabase:
     public boolean isDelegate(android.database.sqlite.SQLiteDatabase)
     public static final java.lang.String[] CONFLICT_VALUES
+com.lgh.advertising.going.myactivity.EditDataActivity$15:
+    public int compare(com.lgh.advertising.going.mybean.Widget,com.lgh.advertising.going.mybean.Widget)
+    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity this$0
 com.lgh.advertising.going.databinding.ViewMainItemBinding
 retrofit2.ParameterHandler$QueryMap:
     public void apply(retrofit2.RequestBuilder,java.util.Map)
@@ -25076,15 +25079,14 @@ retrofit2.converter.scalars.ScalarResponseBodyConverters$ByteResponseBodyConvert
 com.lgh.advertising.going.myactivity.EditDataActivity:
     public static synthetic java.lang.String lambda$onCreate$1(android.content.pm.ResolveInfo)
     public static synthetic java.lang.String lambda$onCreate$0(android.content.pm.PackageInfo)
-    public static synthetic android.view.LayoutInflater access$000(com.lgh.advertising.going.myactivity.EditDataActivity)
+    public static synthetic com.lgh.advertising.going.databinding.ActivityEditDataBinding access$000(com.lgh.advertising.going.myactivity.EditDataActivity)
     public static synthetic com.lgh.advertising.going.databinding.ViewBaseSettingBinding access$100(com.lgh.advertising.going.myactivity.EditDataActivity)
     public static synthetic com.lgh.advertising.going.myclass.DataDao access$200(com.lgh.advertising.going.myactivity.EditDataActivity)
     public static synthetic java.text.SimpleDateFormat access$300(com.lgh.advertising.going.myactivity.EditDataActivity)
     public static synthetic java.util.Set access$400(com.lgh.advertising.going.myactivity.EditDataActivity)
     public static synthetic com.lgh.advertising.going.databinding.ViewAutoFinderBinding access$500(com.lgh.advertising.going.myactivity.EditDataActivity)
     public static synthetic android.util.DisplayMetrics access$600(com.lgh.advertising.going.myactivity.EditDataActivity)
-    public static synthetic com.lgh.advertising.going.databinding.ActivityEditDataBinding access$800(com.lgh.advertising.going.myactivity.EditDataActivity)
-    public static synthetic android.content.Context access$900(com.lgh.advertising.going.myactivity.EditDataActivity)
+    public static synthetic android.content.Context access$800(com.lgh.advertising.going.myactivity.EditDataActivity)
     public final void showEditShareFileNameDialog(java.lang.String)
 androidx.recyclerview.widget.StaggeredGridLayoutManager$LazySpanLookup$FullSpanItem$1:
     public androidx.recyclerview.widget.StaggeredGridLayoutManager$LazySpanLookup$FullSpanItem createFromParcel(android.os.Parcel)
@@ -25509,8 +25511,6 @@ androidx.appcompat.R$styleable:
     public static final int ViewStubCompat_android_id
     public static final int ViewStubCompat_android_layout
     public static final int ViewStubCompat_android_inflatedId
-com.lgh.advertising.going.myactivity.EditDataActivity$6$1:
-    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity$6 this$1
 com.google.gson.internal.bind.TypeAdapters$6:
     public java.lang.Number read(com.google.gson.stream.JsonReader)
     public void write(com.google.gson.stream.JsonWriter,java.lang.Number)
@@ -25944,6 +25944,8 @@ androidx.fragment.app.FragmentManager$StartEnterTransitionListener:
 com.google.android.material.R$string
 androidx.fragment.app.FragmentTransitionImpl$2:
     public final synthetic androidx.fragment.app.FragmentTransitionImpl this$0
+com.lgh.advertising.going.myactivity.EditDataActivity$3$2:
+    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity$3 this$1
 androidx.transition.ChangeBounds$8
 okhttp3.internal.http2.Http2Connection$Builder:
     public okhttp3.internal.http2.Http2Connection$Builder socket(java.net.Socket,java.lang.String,okio.BufferedSource,okio.BufferedSink)
@@ -26012,9 +26014,6 @@ com.lgh.advertising.going.myactivity.MainActivity$6:
 com.google.android.material.circularreveal.cardview.CircularRevealCardView:
     public final com.google.android.material.circularreveal.CircularRevealHelper helper
 androidx.loader.content.Loader
-com.lgh.advertising.going.myactivity.EditDataActivity$14:
-    public int compare(com.lgh.advertising.going.mybean.Widget,com.lgh.advertising.going.mybean.Widget)
-    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity this$0
 okhttp3.Interceptor$Chain:
     public abstract okhttp3.Request request()
     public abstract okhttp3.Response proceed(okhttp3.Request)
@@ -28172,8 +28171,8 @@ androidx.transition.ViewUtils$1:
 retrofit2.DefaultCallAdapterFactory$ExecutorCallbackCall$1:
     private synthetic void lambda$onFailure$1(retrofit2.Callback,java.lang.Throwable)
     private synthetic void lambda$onResponse$0(retrofit2.Callback,retrofit2.Response)
-    public synthetic void lambda$onFailure$1$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,java.lang.Throwable)
     public synthetic void lambda$onResponse$0$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,retrofit2.Response)
+    public synthetic void lambda$onFailure$1$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,java.lang.Throwable)
 androidx.appcompat.widget.AppCompatSpinner$DialogPopup
 androidx.lifecycle.runtime.R$id
 com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton$4:
@@ -28595,6 +28594,8 @@ androidx.recyclerview.widget.PagerSnapHelper:
     public final boolean isForwardFling(androidx.recyclerview.widget.RecyclerView$LayoutManager,int,int)
     public final boolean isReverseLayout(androidx.recyclerview.widget.RecyclerView$LayoutManager)
     public final androidx.recyclerview.widget.OrientationHelper getOrientationHelper(androidx.recyclerview.widget.RecyclerView$LayoutManager)
+com.lgh.advertising.going.myactivity.EditDataActivity$12:
+    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity this$0
 com.lgh.advertising.going.databinding.ViewNewRuleBinding:
     public static com.lgh.advertising.going.databinding.ViewNewRuleBinding inflate(android.view.LayoutInflater,android.view.ViewGroup,boolean)
     public static com.lgh.advertising.going.databinding.ViewNewRuleBinding bind(android.view.View)
@@ -28709,8 +28710,6 @@ androidx.appcompat.view.menu.BaseMenuPresenter:
     public void setId(int)
     public android.view.LayoutInflater mInflater
     public int mId
-com.lgh.advertising.going.myactivity.EditDataActivity$2$2:
-    public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity$2 this$1
 okhttp3.internal.platform.Platform:
     public static okhttp3.internal.platform.Platform get()
     public static boolean isConscryptPreferred()
@@ -28734,33 +28733,33 @@ androidx.sqlite.db.framework.FrameworkSQLiteDatabase$2:
 com.google.android.material.transformation.ExpandableBehavior:
     public static synthetic int access$000(com.google.android.material.transformation.ExpandableBehavior)
     public com.google.android.material.expandable.ExpandableWidget findExpandableWidget(androidx.coordinatorlayout.widget.CoordinatorLayout,android.view.View)
+androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
+androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
+androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
+androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
+androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
+androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
 okhttp3.-$$Lambda$Dns$9evC3uO-H_z08sS9O-4-hLhZ8es:
     public final java.util.List lookup(java.lang.String)
+androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
 androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
-androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
-androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
-androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
+androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
 androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
-androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
-androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
-androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
-androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
+androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
 androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
-androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
-okhttp3.-$$Lambda$EventListener$OXICzLQ3RHlsN3BZyIksLMm-GlQ:
-    public final okhttp3.EventListener create(okhttp3.Call)
+androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
 okhttp3.-$$Lambda$Authenticator$esJoevooYalsFzydukZpZJT5arU:
     public final okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)
-androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
-androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
-androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
-androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
-androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
 androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
-androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
+androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
+androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
+okhttp3.-$$Lambda$EventListener$OXICzLQ3RHlsN3BZyIksLMm-GlQ:
+    public final okhttp3.EventListener create(okhttp3.Call)
 androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
+androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
+androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
 com.android.tools.r8.GeneratedOutlineSupport:
     public static java.lang.String outline5(org.xmlpull.v1.XmlPullParser,java.lang.StringBuilder,java.lang.String)
