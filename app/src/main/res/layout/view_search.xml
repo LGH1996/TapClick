@@ -17,7 +17,7 @@
         android:dropDownVerticalOffset="15dp"
         android:gravity="center_vertical"
         android:hint="输入@进行条件筛选..."
-        android:paddingHorizontal="8dp"
+        android:paddingHorizontal="10dp"
         android:popupBackground="@drawable/search_popup_bg"
         android:singleLine="true"
         android:textCursorDrawable="@drawable/edit_cursor"

@@ -32,7 +32,7 @@
                     android:lineSpacingMultiplier="1.5"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:text="点击下方的＂创建规则＂按键，将会出现一个用于创建规则的悬浮窗，你可以通过该悬浮窗添加页面的控件或者坐标，这样在该控件或坐标再次出现时就会自动对其执行点击动作，所以你可以灵活运用该功能来跳过开屏广告或者关闭某些弹窗或者完成一些其他的自动点击操作。"
+                    android:text="点击下方的＂创建规则＂按键，将会出现一个用于创建规则的悬浮窗，你可以通过该悬浮窗添加页面的控件或坐标，这样在该控件或坐标再次出现时就会自动对其执行点击动作。"
                     android:textColor="@color/text_color" />
 
                 <me.codeboy.android.aligntextview.AlignTextView
@@ -62,7 +62,7 @@
                     android:lineSpacingMultiplier="1.5"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:text="添加坐标：点击＂显示准心＂按键，将准心对准相应的控件中心，然后点击＂添加坐标＂按键即可。"
+                    android:text="添加坐标：点击＂显示准星＂按键，拖动准星选择相应的坐标，然后点击＂添加坐标＂按键即可。"
                     android:textColor="@color/text_color" />
 
                 <me.codeboy.android.aligntextview.AlignTextView

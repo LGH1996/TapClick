@@ -1,6 +1,7 @@
 package com.lgh.advertising.going.myactivity;
 
 import android.animation.LayoutTransition;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
@@ -12,13 +13,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Switch;
@@ -31,14 +31,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lgh.advertising.going.BuildConfig;
-import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivityEditDataBinding;
 import com.lgh.advertising.going.databinding.ViewAutoFinderBinding;
 import com.lgh.advertising.going.databinding.ViewBaseSettingBinding;
 import com.lgh.advertising.going.databinding.ViewCoordinateBinding;
 import com.lgh.advertising.going.databinding.ViewEditFileNameBinding;
 import com.lgh.advertising.going.databinding.ViewOnOffWarningBinding;
-import com.lgh.advertising.going.databinding.ViewQuestionBinding;
 import com.lgh.advertising.going.databinding.ViewWidgetBinding;
 import com.lgh.advertising.going.mybean.AppDescribe;
 import com.lgh.advertising.going.mybean.BasicContent;
@@ -80,6 +78,7 @@ public class EditDataActivity extends BaseActivity {
     private Set<String> pkgSuggestNotOnList;
     private MyUtils myUtils;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,27 +121,17 @@ public class EditDataActivity extends BaseActivity {
         editDataBinding.coordinateLayout.setLayoutTransition(transition);
         editDataBinding.widgetLayout.setLayoutTransition(transition);
 
-        class QuestionClickListener implements View.OnClickListener {
-            private final int strId;
-
-            private QuestionClickListener(int strId) {
-                this.strId = strId;
-            }
-
+        editDataBinding.scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                ViewQuestionBinding questionBinding = ViewQuestionBinding.inflate(inflater);
-                questionBinding.questionAnswer.setText(Html.fromHtml(getString(strId), Html.FROM_HTML_MODE_COMPACT));
-                AlertDialog alertDialog = new AlertDialog.Builder(EditDataActivity.this).setView(questionBinding.getRoot()).setPositiveButton("确定", null).create();
-                Window window = alertDialog.getWindow();
-                window.setBackgroundDrawableResource(R.drawable.add_data_background);
-                alertDialog.show();
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    editDataBinding.getRoot().requestFocus();
+                    InputMethodManager inputMethodManager = getSystemService(InputMethodManager.class);
+                    inputMethodManager.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return false;
             }
-        }
-        editDataBinding.baseSettingQuestion.setOnClickListener(new QuestionClickListener(R.string.baseSettingQuestion));
-        editDataBinding.autoFinderQuestion.setOnClickListener(new QuestionClickListener(R.string.autoFinderQuestion));
-        editDataBinding.coordinateQuestion.setOnClickListener(new QuestionClickListener(R.string.coordinateQuestion));
-        editDataBinding.widgetQuestion.setOnClickListener(new QuestionClickListener(R.string.widgetQuestion));
+        });
     }
 
     @Override
@@ -184,9 +173,9 @@ public class EditDataActivity extends BaseActivity {
                 String autoFinderTime = baseSettingBinding.autoFinderSustainTime.getText().toString();
                 String coordinateTime = baseSettingBinding.coordinateSustainTime.getText().toString();
                 String widgetTime = baseSettingBinding.widgetSustainTime.getText().toString();
-                baseSettingBinding.baseSettingModify.setTextColor(0xffff0000);
+                editDataBinding.baseSettingModify.setTextColor(0xffff0000);
                 if (autoFinderTime.isEmpty() || coordinateTime.isEmpty() || widgetTime.isEmpty()) {
-                    baseSettingBinding.baseSettingModify.setText("内容不能为空");
+                    editDataBinding.baseSettingModify.setText("内容不能为空");
                     return;
                 }
                 appDescribe.onOff = baseSettingBinding.onOffSwitch.isChecked();
@@ -200,8 +189,8 @@ public class EditDataActivity extends BaseActivity {
                 appDescribe.widgetRetrieveTime = Integer.parseInt(widgetTime);
                 appDescribe.widgetRetrieveAllTime = baseSettingBinding.widgetRetrieveAllTime.isChecked();
                 dataDao.updateAppDescribe(appDescribe);
-                baseSettingBinding.baseSettingModify.setTextColor(0xff000000);
-                baseSettingBinding.baseSettingModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
+                editDataBinding.baseSettingModify.setTextColor(0xff000000);
+                editDataBinding.baseSettingModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
             }
         };
         baseSettingBinding.onOffSwitch.setOnClickListener(new View.OnClickListener() {
@@ -295,22 +284,22 @@ public class EditDataActivity extends BaseActivity {
                 String keywordList = autoFinderBinding.retrieveKeyword.getText().toString().trim();
                 String retrieveNumber = autoFinderBinding.retrieveNumber.getText().toString();
                 String clickDelay = autoFinderBinding.clickDelay.getText().toString();
-                autoFinderBinding.autoFinderModify.setTextColor(0xffff0000);
+                editDataBinding.autoFinderModify.setTextColor(0xffff0000);
                 try {
                     temKeyword = new Gson().fromJson(keywordList.isEmpty() || keywordList.equalsIgnoreCase("null") ? "[]" : keywordList, new TypeToken<List<String>>() {
                     }.getType());
                 } catch (JsonSyntaxException jse) {
-                    autoFinderBinding.autoFinderModify.setText("关键词格式填写错误");
+                    editDataBinding.autoFinderModify.setText("关键词格式填写错误");
                     return;
                 }
                 if (retrieveNumber.isEmpty() || clickDelay.isEmpty()) {
-                    autoFinderBinding.autoFinderModify.setText("内容不能为空");
+                    editDataBinding.autoFinderModify.setText("内容不能为空");
                     return;
                 } else if (Integer.parseInt(retrieveNumber) < 1 || Integer.parseInt(retrieveNumber) > 100) {
-                    autoFinderBinding.autoFinderModify.setText("检索次数应为１~100次之间");
+                    editDataBinding.autoFinderModify.setText("检索次数应为1~100次之间");
                     return;
                 } else if (Integer.parseInt(clickDelay) > 8000) {
-                    autoFinderBinding.autoFinderModify.setText("点击延迟应为0~8000(ms)之间");
+                    editDataBinding.autoFinderModify.setText("点击延迟应为0~8000(ms)之间");
                     return;
                 } else {
                     appDescribe.autoFinder.keywordList = temKeyword;
@@ -319,8 +308,8 @@ public class EditDataActivity extends BaseActivity {
                     appDescribe.autoFinder.clickOnly = autoFinderBinding.clickOnly.isChecked();
                 }
                 dataDao.updateAutoFinder(appDescribe.autoFinder);
-                autoFinderBinding.autoFinderModify.setTextColor(0xff000000);
-                autoFinderBinding.autoFinderModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
+                editDataBinding.autoFinderModify.setTextColor(0xff000000);
+                editDataBinding.autoFinderModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
             }
         };
 
@@ -470,12 +459,20 @@ public class EditDataActivity extends BaseActivity {
             coordinateBinding.coordinateDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dataDao.deleteCoordinate(e);
-                    appDescribe.coordinateMap.remove(e.appActivity);
-                    editDataBinding.coordinateLayout.removeView(coordinateBinding.getRoot());
-                    if (appDescribe.coordinateMap.isEmpty()) {
-                        editDataBinding.coordinateLayout.setVisibility(View.GONE);
-                    }
+                    new AlertDialog.Builder(EditDataActivity.this)
+                            .setTitle("确定删除？")
+                            .setNegativeButton("取消", null)
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dataDao.deleteCoordinate(e);
+                                    appDescribe.coordinateMap.remove(e.appActivity);
+                                    editDataBinding.coordinateLayout.removeView(coordinateBinding.getRoot());
+                                    if (appDescribe.coordinateMap.isEmpty()) {
+                                        editDataBinding.coordinateLayout.setVisibility(View.GONE);
+                                    }
+                                }
+                            }).create().show();
                 }
             });
             editDataBinding.coordinateLayout.addView(coordinateBinding.getRoot());
@@ -595,16 +592,24 @@ public class EditDataActivity extends BaseActivity {
                 widgetBinding.widgetDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dataDao.deleteWidget(e);
-                        widgetSet.remove(e);
-                        widgetList.remove(e);
-                        editDataBinding.widgetLayout.removeView(widgetBinding.getRoot());
-                        if (widgetSet.isEmpty()) {
-                            appDescribe.widgetSetMap.remove(e.appActivity);
-                        }
-                        if (appDescribe.widgetSetMap.isEmpty()) {
-                            editDataBinding.widgetLayout.setVisibility(View.GONE);
-                        }
+                        new AlertDialog.Builder(EditDataActivity.this)
+                                .setTitle("确定删除？")
+                                .setNegativeButton("取消", null)
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dataDao.deleteWidget(e);
+                                        widgetSet.remove(e);
+                                        widgetList.remove(e);
+                                        editDataBinding.widgetLayout.removeView(widgetBinding.getRoot());
+                                        if (widgetSet.isEmpty()) {
+                                            appDescribe.widgetSetMap.remove(e.appActivity);
+                                        }
+                                        if (appDescribe.widgetSetMap.isEmpty()) {
+                                            editDataBinding.widgetLayout.setVisibility(View.GONE);
+                                        }
+                                    }
+                                }).create().show();
                     }
                 });
                 editDataBinding.widgetLayout.addView(widgetBinding.getRoot());

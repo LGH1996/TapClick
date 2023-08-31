@@ -878,13 +878,13 @@ public class MainFunction {
                     windowManager.updateViewLayout(viewClickPosition, cParams);
                     addDataBinding.pacName.setText(coordinateSelect.appPackage);
                     addDataBinding.actName.setText(coordinateSelect.appActivity);
-                    button.setText("隐藏准心");
+                    button.setText("隐藏准星");
                 } else {
                     cParams.alpha = 0f;
                     cParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
                     windowManager.updateViewLayout(viewClickPosition, cParams);
                     addDataBinding.saveAim.setEnabled(false);
-                    button.setText("显示准心");
+                    button.setText("显示准星");
                 }
             }
         });

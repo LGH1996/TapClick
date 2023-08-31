@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="10dp">
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -269,6 +269,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:singleLine="true"
+                android:ellipsize="end"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -277,18 +278,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/widget_modify"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginEnd="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="25dp"
                 android:layout_toStartOf="@+id/widget_share"
                 android:singleLine="true"
+                android:ellipsize="end"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
@@ -296,9 +297,10 @@
                 android:id="@+id/widget_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="25dp"
                 android:layout_toStartOf="@+id/widget_delete"
                 android:text="分享"
+                android:paddingVertical="10dp"
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
 
@@ -307,16 +309,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="10dp"
                 android:text="删除"
+                android:paddingVertical="10dp"
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
         </RelativeLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginTop="10dp"
-            android:src="@color/divide_line" />
     </LinearLayout>
 </RelativeLayout>

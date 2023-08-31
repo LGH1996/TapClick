@@ -2,10 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     android:descendantFocusability="beforeDescendants"
     android:fitsSystemWindows="true"
     android:focusable="true"
+    android:background="#e9e9e9"
     android:focusableInTouchMode="true">
 
     <LinearLayout
@@ -13,11 +13,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fadingEdge="vertical"
-            android:fadingEdgeLength="15dp"
+            android:fadingEdgeLength="10dp"
             android:requiresFadingEdge="vertical"
             android:scrollbars="none">
 
@@ -31,10 +32,14 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_radius"
                     android:id="@+id/base_setting_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:animateLayoutChanges="true"
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="10dp"
                     android:orientation="vertical">
 
                     <RelativeLayout
@@ -52,29 +57,35 @@
                             android:src="@drawable/retrieve_setting" />
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:id="@+id/tv_base_setting"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_toStartOf="@+id/base_setting_question"
                             android:layout_toEndOf="@+id/base_setting_img"
                             android:gravity="center_vertical|start"
-                            android:paddingStart="10dp"
+                            android:layout_marginStart="10dp"
                             android:singleLine="true"
                             android:text="基础功能设置"
                             android:textColor="@color/text_color"
                             android:textSize="15sp" />
 
-                        <ImageButton
-                            android:id="@+id/base_setting_question"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_alignParentEnd="true"
+                        <TextView
+                            android:id="@+id/base_setting_modify"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@+id/tv_base_setting"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/question" />
+                            android:ellipsize="end"
+                            android:gravity="end"
+                            android:singleLine="true"
+                            android:textColor="@color/text_color"
+                            android:textSize="12sp" />
                     </RelativeLayout>
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="1px"
+                        android:layout_marginTop="10dp"
                         android:background="@color/divide_line" />
 
                 </LinearLayout>
@@ -84,8 +95,11 @@
                     android:id="@+id/auto_finder_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="20dp"
                     android:animateLayoutChanges="true"
+                    android:background="@drawable/bg_radius"
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="10dp"
                     android:orientation="vertical">
 
                     <RelativeLayout
@@ -103,27 +117,33 @@
                             android:src="@drawable/auto_finder" />
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:id="@+id/tv_auto_finder"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_toStartOf="@+id/auto_finder_question"
                             android:layout_toEndOf="@+id/auto_finder_img"
                             android:gravity="center_vertical|start"
-                            android:paddingStart="10dp"
+                            android:layout_marginStart="10dp"
                             android:singleLine="true"
                             android:text="字词检索管理"
                             android:textColor="@color/text_color"
                             android:textSize="15sp" />
 
-                        <ImageButton
-                            android:id="@+id/auto_finder_question"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_alignParentEnd="true"
+                        <TextView
+                            android:id="@+id/auto_finder_modify"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@+id/tv_auto_finder"
+                            android:ellipsize="end"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/question" />
+                            android:gravity="end"
+                            android:singleLine="true"
+                            android:textColor="@color/text_color"
+                            android:textSize="12sp" />
                     </RelativeLayout>
 
                     <ImageView
+                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:background="@color/divide_line" />
@@ -133,7 +153,11 @@
                     android:id="@+id/coordinate_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_radius"
+                    android:paddingHorizontal="18dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:animateLayoutChanges="true"
                     android:orientation="vertical">
 
@@ -152,38 +176,35 @@
                             android:src="@drawable/coordinate" />
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_toStartOf="@+id/coordinate_question"
                             android:layout_toEndOf="@+id/coordinate_img"
                             android:gravity="center_vertical|start"
-                            android:paddingStart="10dp"
+                            android:layout_marginStart="10dp"
                             android:singleLine="true"
                             android:text="坐标检索管理"
                             android:textColor="@color/text_color"
                             android:textSize="15sp" />
-
-                        <ImageButton
-                            android:id="@+id/coordinate_question"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:background="@drawable/question" />
                     </RelativeLayout>
 
                     <ImageView
+                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:background="@color/divide_line" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginTop="20dp"
                     android:id="@+id/widget_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginBottom="30dp"
                     android:animateLayoutChanges="true"
+                    android:background="@drawable/bg_radius"
+                    android:paddingHorizontal="18dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:orientation="vertical">
 
                     <RelativeLayout
@@ -201,33 +222,25 @@
                             android:src="@drawable/widget" />
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_toStartOf="@+id/widget_question"
                             android:layout_toEndOf="@+id/widget_img"
                             android:gravity="center_vertical|start"
-                            android:paddingStart="10dp"
+                            android:layout_marginStart="10dp"
                             android:singleLine="true"
                             android:text="控件检索管理"
                             android:textColor="@color/text_color"
                             android:textSize="15sp" />
-
-                        <ImageButton
-                            android:id="@+id/widget_question"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:background="@drawable/question" />
                     </RelativeLayout>
 
                     <ImageView
+                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:background="@color/divide_line" />
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 
