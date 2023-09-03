@@ -3685,7 +3685,7 @@ layout:activity_add_data:2131427356 => [color:background:2131034141, id:start:21
 layout:activity_authorization:2131427357 => [color:background:2131034141, drawable:item_bg_ripple:2131165308, id:accessibility_on_off_img:2131230770, id:accessibility_forward:2131230768, color:text_color:2131034322, drawable:forward:2131165297, id:device_admin_on_off_img:2131230903, id:device_admin_forward:2131230901, id:batteryIgnore_on_off_img:2131230822, id:batteryIgnore_forward:2131230820, id:notification_on_off_img:2131231064, id:notification_forward:2131231060, id:floating_window_on_off_img:2131230943, id:floating_window_forward:2131230941, string:authorizationQuestion:2131558432, layout:view_no_vip:2131427458]
 layout:activity_edit_data:2131427358 => [drawable:bg_radius:2131165276, drawable:retrieve_setting:2131165347, id:base_setting_img:2131230816, color:text_color:2131034322, id:tv_base_setting:2131231229, color:divide_line:2131034202, drawable:auto_finder:2131165273, id:auto_finder_img:2131230805, id:tv_auto_finder:2131231228, drawable:coordinate:2131165289, id:coordinate_img:2131230869, drawable:widget:2131165362, id:widget_img:2131231253, layout:view_no_vip:2131427458]
 layout:activity_exception_report:2131427359 => [id:send:2131231132, drawable:button_selector:2131165285]
-layout:activity_list_data:2131427360 => [color:background:2131034141, layout:view_no_vip:2131427458]
+layout:activity_list_data:2131427360 => [color:background:2131034141, drawable:search_box:2131165348, drawable:search_popup_bg:2131165349, drawable:edit_cursor:2131165295, id:searchBox:2131231118, layout:view_no_vip:2131427458]
 layout:activity_main:2131427361 => [color:background:2131034141, layout:view_no_vip:2131427458]
 layout:activity_more_message:2131427362 => [color:background:2131034141, layout:view_no_vip:2131427458]
 layout:activity_setting:2131427363 => [color:background:2131034141, color:text_color:2131034322, drawable:button_selector:2131165285, drawable:check_select:2131165286, drawable:weibo:2131165361, drawable:text_click_color:2131165358, id:support_txt:2131231174, drawable:support_me:2131165351, layout:view_no_vip:2131427458]
@@ -3769,15 +3769,14 @@ layout:view_add_warning:2131427450 => [color:text_color:2131034322]
 layout:view_auto_finder:2131427451 => [color:text_color:2131034322, drawable:check_select:2131165286]
 layout:view_base_setting:2131427452 => [id:auto_finder_on_off_layout:2131230808, color:text_color:2131034322, drawable:switch_custom_thumb_selector:2131165353, drawable:switch_custom_track_selector:2131165356, id:auto_finder_time_layout:2131230813, id:base_on_off_layout:2131230815, id:widget_on_off_layout:2131231257, id:widget_time_layout:2131231265, id:auto_finder_sustain_layout:2131230811, id:widget_sustain_layout:2131231262, drawable:check_select:2131165286, id:coordinate_on_off_layout:2131230872, id:coordinate_time_layout:2131230878, id:coordinate_sustain_layout:2131230876]
 layout:view_coordinate:2131427453 => [color:text_color:2131034322, id:coordinate_clickDelay_layout:2131230861, id:coordinate_clickInterval_layout:2131230863, id:coordinate_clickNumber_layout:2131230865, id:coordinate_share:2131230874, id:coordinate_delete:2131230868, drawable:text_click_color:2131165358]
-layout:view_list_item:2131427455 => [drawable:item_bg_ripple:2131165308, drawable:app:2131165271, id:img:2131230967, id:on_off:2131231067, string:app_name:2131558430, color:text_color:2131034322, drawable:switch_custom_thumb_selector:2131165353, drawable:switch_custom_track_selector:2131165356, drawable:forward:2131165297, color:divide_line:2131034202]
+layout:view_list_item:2131427455 => [drawable:item_bg_ripple:2131165308, drawable:app:2131165271, id:img:2131230967, id:on_off:2131231067, string:app_name:2131558430, color:text_color:2131034322, id:img_forward:2131230968, drawable:switch_custom_thumb_selector:2131165353, drawable:switch_custom_track_selector:2131165356, drawable:forward:2131165297, color:divide_line:2131034202]
 layout:view_main_item:2131427456 => [id:main_img:2131230991, id:img_forward:2131230968, color:text_color:2131034322, drawable:forward:2131165297]
 layout:view_new_rule:2131427457 => [string:new_rule:2131558504, id:button:2131230828, id:title:2131231213, color:divide_line:2131034202, drawable:item_bg_ripple:2131165308, id:deviLineMid:2131230899, id:deviLineTop:2131230900, id:sure:2131231175, id:cancel:2131230831]
 layout:view_no_vip:2131427458 => [drawable:no_vip_circle:2131165330]
 layout:view_on_off_warning:2131427459 => [color:text_color:2131034322]
 layout:view_privacy_agreement:2131427460 => [id:button:2131230828, id:title:2131231213, color:divide_line:2131034202, drawable:item_bg_ripple:2131165308, id:deviLineMid:2131230899, id:deviLineTop:2131230900, id:sure:2131231175, id:cancel:2131230831]
 layout:view_question:2131427461 => [color:text_color:2131034322]
-layout:view_search:2131427462 => [color:background:2131034141, drawable:search_box:2131165348, drawable:search_popup_bg:2131165349, drawable:edit_cursor:2131165295]
-layout:view_widget:2131427463 => [color:text_color:2131034322, drawable:check_select:2131165286, id:widget_share:2131231260, id:widget_delete:2131231250, drawable:text_click_color:2131165358]
+layout:view_widget:2131427462 => [color:text_color:2131034322, drawable:check_select:2131165286, id:widget_share:2131231260, id:widget_delete:2131231250, drawable:text_click_color:2131165358]
 style:ActivityAnimation:2131623936 => [animator:activity_open_in:2130837506, animator:activity_open_out:2130837507, animator:activity_close_in:2130837504, animator:activity_close_out:2130837505]
 style:AlertDialog_AppCompat:2131623937 => [style:Base_AlertDialog_AppCompat:2131623947]
 style:AlertDialog_AppCompat_Light:2131623938 => [style:Base_AlertDialog_AppCompat_Light:2131623948]
@@ -6016,9 +6015,8 @@ anim:fragment_fast_out_extra_slow_in:2130771996,
    layout:view_new_rule:2131427457,
    layout:view_on_off_warning:2131427459,
    layout:view_privacy_agreement:2131427460,
-   layout:view_search:2131427462,
-   layout:view_widget:2131427463,
-   layout:view_widget_select:2131427464,
+   layout:view_widget:2131427462,
+   layout:view_widget_select:2131427463,
    plurals:mtrl_badge_content_description:2131492864,
    string:abc_action_bar_up_description:2131558401,
    string:abc_menu_alt_shortcut_label:2131558408,
