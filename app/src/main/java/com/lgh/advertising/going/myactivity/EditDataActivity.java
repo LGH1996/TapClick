@@ -124,10 +124,8 @@ public class EditDataActivity extends BaseActivity {
         editDataBinding.scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (event.getAction() != MotionEvent.ACTION_MOVE) {
                     editDataBinding.getRoot().requestFocus();
-                    InputMethodManager inputMethodManager = getSystemService(InputMethodManager.class);
-                    inputMethodManager.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
                 return false;
             }

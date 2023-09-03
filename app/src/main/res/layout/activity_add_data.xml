@@ -94,6 +94,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="20dp"
+            android:textColor="@android:color/white"
             android:background="@drawable/button_selector"
             android:text="创建规则" />
     </RelativeLayout>

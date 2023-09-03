@@ -12,14 +12,36 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
+        <AutoCompleteTextView
+            android:id="@+id/searchBox"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/search_box"
+            android:completionThreshold="1"
+            android:dropDownVerticalOffset="15dp"
+            android:gravity="center_vertical"
+            android:hint="输入@进行条件筛选..."
+            android:paddingHorizontal="10dp"
+            android:popupBackground="@drawable/search_popup_bg"
+            android:singleLine="true"
+            android:textCursorDrawable="@drawable/edit_cursor"
+            android:textSize="14sp" />
+
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/searchBox"
             android:divider="@null"
             android:fadingEdge="vertical"
-            android:fadingEdgeLength="15dp"
+            android:fadingEdgeLength="10dp"
             android:requiresFadingEdge="vertical"
             android:scrollbars="none" />
 

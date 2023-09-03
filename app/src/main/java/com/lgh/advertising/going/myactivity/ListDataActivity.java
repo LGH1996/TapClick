@@ -1,5 +1,6 @@
 package com.lgh.advertising.going.myactivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodInfo;
@@ -24,7 +26,6 @@ import android.widget.Toast;
 import com.lgh.advertising.going.databinding.ActivityListDataBinding;
 import com.lgh.advertising.going.databinding.ViewListItemBinding;
 import com.lgh.advertising.going.databinding.ViewOnOffWarningBinding;
-import com.lgh.advertising.going.databinding.ViewSearchBinding;
 import com.lgh.advertising.going.mybean.AppDescribe;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
@@ -63,6 +64,7 @@ public class ListDataActivity extends BaseActivity {
     private Set<String> pkgSuggestNotOnList;
     private MyUtils myUtils;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +100,6 @@ public class ListDataActivity extends BaseActivity {
         pkgSuggestNotOnList.addAll(pkgInputMethodSet);
         pkgSuggestNotOnList.addAll(pkgHasHomeSet);
 
-        ViewSearchBinding searchBinding = ViewSearchBinding.inflate(inflater);
         List<String> searchKeyword = new ArrayList<>();
         searchKeyword.add("@开启");
         searchKeyword.add("@关闭");
@@ -108,7 +109,7 @@ public class ListDataActivity extends BaseActivity {
         searchKeyword.add("@非系统应用");
         searchKeyword.add("@非必要不开启应用");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, searchKeyword);
-        searchBinding.searchBox.setAdapter(adapter);
+        listDataBinding.searchBox.setAdapter(adapter);
         final Filter filter = new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
@@ -192,7 +193,7 @@ public class ListDataActivity extends BaseActivity {
                 baseAdapter.notifyDataSetChanged();
             }
         };
-        searchBinding.searchBox.addTextChangedListener(new TextWatcher() {
+        listDataBinding.searchBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -206,7 +207,6 @@ public class ListDataActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-        listDataBinding.listView.addHeaderView(searchBinding.getRoot());
 
         baseAdapter = new BaseAdapter() {
             @Override
@@ -284,6 +284,16 @@ public class ListDataActivity extends BaseActivity {
         };
         listDataBinding.listView.setAdapter(baseAdapter);
 
+        listDataBinding.listView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() != MotionEvent.ACTION_MOVE) {
+                    v.requestFocus();
+                }
+                return false;
+            }
+        });
+
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(@NonNull ObservableEmitter<Boolean> emitter) throws Throwable {
@@ -315,6 +325,7 @@ public class ListDataActivity extends BaseActivity {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
                 listDataBinding.listView.setVisibility(View.GONE);
+                listDataBinding.searchBox.setVisibility(View.GONE);
                 listDataBinding.progress.setVisibility(View.VISIBLE);
             }
 
@@ -325,15 +336,18 @@ public class ListDataActivity extends BaseActivity {
             @Override
             public void onError(@NonNull Throwable e) {
                 Toast.makeText(context, "出现错误", Toast.LENGTH_SHORT).show();
-                listDataBinding.progress.setVisibility(View.GONE);
                 listDataBinding.listView.setVisibility(View.VISIBLE);
+                listDataBinding.searchBox.setVisibility(View.VISIBLE);
+                listDataBinding.progress.setVisibility(View.GONE);
+
             }
 
             @Override
             public void onComplete() {
                 baseAdapter.notifyDataSetChanged();
-                listDataBinding.progress.setVisibility(View.GONE);
                 listDataBinding.listView.setVisibility(View.VISIBLE);
+                listDataBinding.searchBox.setVisibility(View.VISIBLE);
+                listDataBinding.progress.setVisibility(View.GONE);
             }
         });
     }
