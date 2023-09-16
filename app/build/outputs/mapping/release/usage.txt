@@ -285,6 +285,7 @@ androidx.core.graphics.TypefaceCompat:
 com.google.android.material.datepicker.DateSelector:
     public abstract void setSelection(java.lang.Object)
     public abstract int getDefaultTitleResId()
+org.apache.commons.codec.binary.Base64OutputStream
 androidx.viewbinding.BuildConfig
 io.reactivex.rxjava3.internal.operators.observable.ObservableCombineLatest$CombinerObserver
 androidx.appcompat.widget.MenuPopupWindow$MenuDropDownListView:
@@ -317,6 +318,7 @@ io.reactivex.rxjava3.subjects.AsyncSubject$AsyncDisposable
 io.reactivex.rxjava3.internal.operators.flowable.FlowableWindowBoundarySelector$WindowBoundaryMainSubscriber$WindowStartSubscriber
 androidx.appcompat.widget.PopupMenu$OnDismissListener
 com.google.android.material.navigation.NavigationBarItemView$1
+org.apache.commons.codec.language.package-info
 io.reactivex.rxjava3.internal.operators.flowable.FlowableAny
 io.reactivex.rxjava3.disposables.ReferenceDisposable:
     private static final long serialVersionUID
@@ -522,6 +524,7 @@ androidx.constraintlayout.widget.ConstraintSet$Layout:
     private static final int CONSTRAINT_REFERENCED_IDS
     private static final int BARRIER_ALLOWS_GONE_WIDGETS
     private static final int UNUSED
+org.apache.commons.codec.binary.BaseNCodec$Context
 androidx.core.view.accessibility.AccessibilityManagerCompat
 androidx.viewpager2.widget.ViewPager2$OffscreenPageLimit
 com.google.android.material.snackbar.SnackbarManager$SnackbarRecord:
@@ -652,6 +655,7 @@ io.reactivex.rxjava3.internal.operators.observable.ObservableAllSingle$AllObserv
 io.reactivex.rxjava3.internal.operators.flowable.FlowableSampleTimed$SampleTimedNoLast
 com.google.android.material.transition.platform.FadeModeEvaluators$3
 io.reactivex.rxjava3.internal.operators.observable.ObservableConcatMap$SourceObserver
+org.apache.commons.codec.language.ColognePhonetic$CologneBuffer
 androidx.fragment.R$style
 androidx.core.database.CursorWindowCompat
 io.reactivex.rxjava3.internal.operators.flowable.FlowableTimeoutTimed
@@ -677,6 +681,7 @@ org.reactivestreams.FlowAdapters
 androidx.core.net.DatagramSocketWrapper
 com.google.android.material.tabs.TabLayout$TabLayoutOnPageChangeListener
 io.reactivex.rxjava3.internal.operators.observable.ObservableElementAtMaybe$ElementAtObserver
+org.apache.commons.codec.digest.Blake3$Output
 io.reactivex.rxjava3.internal.operators.flowable.FlowableSequenceEqual$EqualCoordinator
 io.reactivex.rxjava3.internal.operators.flowable.FlowableSamplePublisher$SampleMainEmitLast
 com.google.android.material.datepicker.MaterialDatePicker:
@@ -1126,6 +1131,7 @@ androidx.recyclerview.widget.ItemTouchHelper$RecoverAnimation$1
 androidx.core.util.DebugUtils:
     private void <init>()
 androidx.core.app.NotificationCompat
+org.apache.commons.codec.language.bm.Rule
 io.reactivex.rxjava3.internal.operators.observable.ObservableInterval$IntervalObserver
 com.google.android.material.transition.TransitionUtils$1
 androidx.room.RoomTrackingLiveData$3
@@ -1326,6 +1332,7 @@ androidx.interpolator.R
 io.reactivex.rxjava3.internal.operators.flowable.FlowableHide
 io.reactivex.rxjava3.internal.operators.parallel.ParallelFilter$ParallelFilterSubscriber
 androidx.transition.Slide$5
+org.apache.commons.codec.binary.BaseNCodecOutputStream
 io.reactivex.rxjava3.internal.operators.completable.CompletableFromCallable
 androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VectorDrawableCompatState:
     int[] mCachedThemeAttrs
@@ -1498,6 +1505,7 @@ androidx.transition.Transition$ArrayListManager
 com.google.android.material.internal.NavigationMenuPresenter$NavigationMenuTextItem
 com.google.android.material.navigation.NavigationBarPresenter$SavedState$1
 io.reactivex.rxjava3.internal.operators.maybe.MaybeUnsubscribeOn$UnsubscribeOnMaybeObserver
+org.apache.commons.codec.package-info
 androidx.activity.R
 androidx.print.PrintHelper$PrintUriAdapter$1
 io.reactivex.rxjava3.internal.operators.maybe.MaybeTimer$TimerDisposable
@@ -1597,6 +1605,7 @@ androidx.appcompat.widget.ThemedSpinnerAdapter$Helper
 io.reactivex.rxjava3.internal.operators.observable.ObservableConcatMapScheduler$ConcatMapObserver$InnerObserver
 io.reactivex.rxjava3.core.SingleSource
 androidx.transition.Styleable$TransitionManager
+org.apache.commons.codec.net.QCodec
 io.reactivex.rxjava3.internal.operators.completable.CompletableFromUnsafeSource
 androidx.fragment.app.FragmentStateManager:
     androidx.fragment.app.Fragment$SavedState saveInstanceState()
@@ -1629,6 +1638,34 @@ io.reactivex.rxjava3.internal.operators.observable.ObservableSkipUntil
 io.reactivex.rxjava3.internal.operators.observable.ObservableSkipLastTimed
 androidx.fragment.R$attr
 io.reactivex.rxjava3.internal.operators.maybe.MaybeMergeArray
+org.apache.commons.codec.binary.Hex:
+    public static byte[] decodeHex(char[])
+    public static int decodeHex(char[],byte[],int)
+    public static byte[] decodeHex(java.lang.String)
+    public static char[] encodeHex(byte[],int,int,boolean)
+    public static void encodeHex(byte[],int,int,boolean,char[],int)
+    public static char[] encodeHex(java.nio.ByteBuffer)
+    public static char[] encodeHex(java.nio.ByteBuffer,boolean)
+    protected static char[] encodeHex(java.nio.ByteBuffer,char[])
+    public static java.lang.String encodeHexString(byte[],boolean)
+    public static java.lang.String encodeHexString(java.nio.ByteBuffer)
+    public static java.lang.String encodeHexString(java.nio.ByteBuffer,boolean)
+    private static byte[] toByteArray(java.nio.ByteBuffer)
+    protected static int toDigit(char,int)
+    public void <init>()
+    public void <init>(java.nio.charset.Charset)
+    public void <init>(java.lang.String)
+    public byte[] decode(byte[])
+    public byte[] decode(java.nio.ByteBuffer)
+    public java.lang.Object decode(java.lang.Object)
+    public byte[] encode(byte[])
+    public byte[] encode(java.nio.ByteBuffer)
+    public java.lang.Object encode(java.lang.Object)
+    public java.nio.charset.Charset getCharset()
+    public java.lang.String getCharsetName()
+    public java.lang.String toString()
+    private final java.nio.charset.Charset charset
+    public static final java.lang.String DEFAULT_CHARSET_NAME
 io.reactivex.rxjava3.internal.operators.single.SingleObserveOn$ObserveOnSingleObserver
 androidx.core.graphics.Insets:
     public static androidx.core.graphics.Insets add(androidx.core.graphics.Insets,androidx.core.graphics.Insets)
@@ -1769,6 +1806,7 @@ androidx.constraintlayout.solver.widgets.analyzer.ChainRun:
     void reset()
 io.reactivex.rxjava3.internal.operators.maybe.MaybeTimeInterval
 io.reactivex.rxjava3.internal.operators.maybe.MaybeSwitchIfEmpty$SwitchIfEmptyMaybeObserver$OtherMaybeObserver
+org.apache.commons.codec.language.bm.Languages$LanguageSet
 androidx.appcompat.app.ActionBarDrawerToggle
 io.reactivex.rxjava3.internal.operators.flowable.FlowableFlattenIterable$FlattenIterableSubscriber
 androidx.room.AutoCloser:
@@ -1801,6 +1839,7 @@ com.google.android.material.textfield.TextInputLayout$EndIconMode
 androidx.core.view.ViewCompat$ScrollAxis
 androidx.annotation.HalfFloat
 io.reactivex.rxjava3.internal.operators.maybe.MaybeFlatMapIterableFlowable$FlatMapIterableObserver
+org.apache.commons.codec.language.bm.ResourceConstants
 okio.Okio$3
 androidx.viewpager.widget.PagerTabStrip
 io.reactivex.rxjava3.internal.operators.observable.ObservablePublishSelector
@@ -1999,6 +2038,7 @@ com.google.android.material.transition.platform.TransitionUtils$CanvasOperation
 io.reactivex.rxjava3.internal.operators.completable.CompletableMerge$CompletableMergeSubscriber$MergeInnerObserver
 io.reactivex.rxjava3.internal.operators.single.SingleAmb
 androidx.dynamicanimation.animation.FlingAnimation
+org.apache.commons.codec.EncoderException
 androidx.constraintlayout.motion.widget.MotionScene$Transition$TransitionOnClick
 androidx.appcompat.widget.VectorEnabledTintResources:
     public static void setCompatVectorFromResourcesEnabled(boolean)
@@ -2027,6 +2067,7 @@ androidx.constraintlayout.solver.widgets.Barrier:
     private static final boolean USE_RELAX_GONE
 io.reactivex.rxjava3.internal.operators.flowable.FlowableWindowTimed$WindowExactBoundedSubscriber$WindowBoundaryRunnable
 io.reactivex.rxjava3.internal.operators.single.SingleDoAfterSuccess$DoAfterObserver
+org.apache.commons.codec.digest.Md5Crypt
 org.apache.commons.io.input.BoundedReader
 androidx.core.view.ViewCompat$CompatImplApi28
 io.reactivex.rxjava3.internal.operators.flowable.FlowableDoAfterNext$DoAfterSubscriber
@@ -2039,6 +2080,7 @@ androidx.arch.core.executor.ArchTaskExecutor:
     public static java.util.concurrent.Executor getMainThreadExecutor()
     public void setDelegate(androidx.arch.core.executor.TaskExecutor)
 io.reactivex.rxjava3.subjects.ReplaySubject$SizeAndTimeBoundReplayBuffer
+org.apache.commons.codec.digest.HmacAlgorithms
 androidx.annotation.InspectableProperty
 io.reactivex.rxjava3.internal.operators.observable.ObservableReplay$MulticastReplay
 io.reactivex.rxjava3.internal.operators.maybe.MaybeDoOnTerminate
@@ -2217,12 +2259,11 @@ androidx.constraintlayout.motion.widget.SplineSet$ProgressSet
 io.reactivex.rxjava3.internal.operators.flowable.FlowableSkipLastTimed$SkipLastTimedSubscriber
 io.reactivex.rxjava3.internal.operators.observable.ObservableInternalHelper$ObserverOnNext
 androidx.recyclerview.widget.RecyclerView$RecyclerViewDataObserver:
-    public void onItemRangeChanged(int,int,java.lang.Object)
     public void onItemRangeInserted(int,int)
     public void onItemRangeRemoved(int,int)
     public void onItemRangeMoved(int,int,int)
-    void triggerUpdateProcessor()
 org.apache.commons.io.output.AppendableOutputStream
+org.apache.commons.codec.digest.UnixCrypt
 io.reactivex.rxjava3.internal.schedulers.SchedulerMultiWorkerSupport$WorkerCallback
 com.google.android.material.badge.BadgeDrawable$BadgeGravity
 retrofit2.RequestFactory$Builder:
@@ -2367,6 +2408,7 @@ androidx.core.view.WindowInsetsAnimationCompat$BoundsCompat
 io.reactivex.rxjava3.internal.operators.flowable.FlowableZip
 io.reactivex.rxjava3.functions.Function4
 io.reactivex.rxjava3.internal.operators.observable.ObservableTimeInterval
+org.apache.commons.codec.binary.Base32InputStream
 androidx.recyclerview.widget.ItemTouchHelper$3
 com.google.android.material.timepicker.TimePickerPresenter
 androidx.appcompat.app.ActionBarDrawerToggle$1
@@ -2382,6 +2424,7 @@ com.google.android.material.internal.NavigationMenuPresenter
 okhttp3.Response$Builder:
     public okhttp3.Response$Builder removeHeader(java.lang.String)
 com.google.android.material.transition.platform.MaterialContainerTransform$ProgressThresholds
+org.apache.commons.codec.language.RefinedSoundex
 io.reactivex.rxjava3.internal.operators.observable.ObservableBuffer$BufferExactObserver
 io.reactivex.rxjava3.internal.operators.parallel.ParallelDoOnNextTry$1
 androidx.annotation.BoolRes
@@ -2468,6 +2511,7 @@ okio.BufferedSource:
 io.reactivex.rxjava3.internal.operators.flowable.FlowableConcatWithCompletable
 io.reactivex.rxjava3.internal.operators.observable.ObservableMergeWithCompletable
 org.apache.commons.io.output.NullAppendable
+org.apache.commons.codec.net.QuotedPrintableCodec
 androidx.core.app.AppLaunchChecker
 io.reactivex.rxjava3.internal.operators.observable.ObservableConcatWithSingle
 io.reactivex.rxjava3.internal.operators.mixed.FlowableConcatMapMaybe
@@ -2825,6 +2869,7 @@ androidx.constraintlayout.widget.ConstraintHelper:
     public void updatePostConstraints(androidx.constraintlayout.widget.ConstraintLayout)
     public void loadParameters(androidx.constraintlayout.widget.ConstraintSet$Constraint,androidx.constraintlayout.solver.widgets.HelperWidget,androidx.constraintlayout.widget.ConstraintLayout$LayoutParams,android.util.SparseArray)
 androidx.room.RawQuery
+org.apache.commons.codec.language.bm.Rule$PhonemeExpr
 androidx.loader.app.LoaderManagerImpl$LoaderObserver:
     void <init>(androidx.loader.content.Loader,androidx.loader.app.LoaderManager$LoaderCallbacks)
     public void onChanged(java.lang.Object)
@@ -2882,8 +2927,6 @@ io.reactivex.rxjava3.internal.operators.completable.CompletableMergeArray
 io.reactivex.rxjava3.internal.operators.parallel.ParallelFilter$BaseFilterSubscriber
 com.google.android.material.appbar.AppBarLayout$BaseBehavior$BaseDragCallback:
     public void <init>()
-com.lgh.advertising.going.databinding.ViewListItemBinding:
-    public synthetic bridge android.view.View getRoot()
 androidx.transition.FloatArrayEvaluator
 com.google.android.material.transition.platform.FadeThroughProvider$1
 com.google.android.material.floatingactionbutton.BaseMotionStrategy
@@ -3184,6 +3227,7 @@ io.reactivex.rxjava3.parallel.ParallelFlowable
 org.apache.commons.io.FileCleaningTracker$Reaper
 androidx.collection.CircularIntArray
 io.reactivex.rxjava3.internal.subscribers.DeferredScalarSubscriber
+org.apache.commons.codec.cli.Digest
 androidx.core.app.NotificationCompat$BubbleMetadata
 com.google.android.material.transition.platform.MaterialVisibility
 io.reactivex.rxjava3.internal.operators.flowable.FlowableFlatMap$MergeSubscriber
@@ -3440,6 +3484,7 @@ androidx.core.app.ActivityCompat$OnRequestPermissionsResultCallback
 androidx.viewpager.R
 com.google.android.material.transition.MaterialArcMotion
 io.reactivex.rxjava3.internal.operators.observable.ObservableFlattenIterable
+org.apache.commons.codec.language.bm.Lang$LangRule
 com.google.android.material.bottomnavigation.BottomNavigationMenuView
 androidx.constraintlayout.motion.widget.SplineSet$RotationSet
 androidx.fragment.app.Fragment$SavedState$1
@@ -3596,6 +3641,7 @@ androidx.core.os.TraceCompat:
     private void <init>()
     private static final java.lang.String TAG
 androidx.viewpager2.R$integer
+org.apache.commons.codec.language.Nysiis
 okhttp3.Cache$CacheResponseBody
 io.reactivex.rxjava3.internal.operators.flowable.FlowableLastSingle$LastSubscriber
 io.reactivex.rxjava3.observers.ResourceObserver
@@ -3682,6 +3728,7 @@ io.reactivex.rxjava3.internal.operators.observable.ObservableJust
 io.reactivex.rxjava3.internal.operators.single.SingleToFlowable
 androidx.coordinatorlayout.R$integer
 androidx.lifecycle.ViewModelProvider$AndroidViewModelFactory
+org.apache.commons.codec.language.bm.PhoneticEngine
 okhttp3.internal.http.RequestLine:
     private void <init>()
 io.reactivex.rxjava3.internal.operators.flowable.FlowableSamplePublisher$SampleMainNoLast
@@ -3790,6 +3837,7 @@ org.reactivestreams.FlowAdapters$FlowToReactiveSubscription
 io.reactivex.rxjava3.internal.jdk8.MaybeFlattenStreamAsObservable
 io.reactivex.rxjava3.subjects.Subject
 io.reactivex.rxjava3.internal.operators.observable.ObservableBufferBoundary
+org.apache.commons.codec.language.bm.PhoneticEngine$RulesApplication
 io.reactivex.rxjava3.internal.operators.observable.ObservableSwitchMap
 com.google.android.material.appbar.AppBarLayout$BaseBehavior:
     public void setDragCallback(com.google.android.material.appbar.AppBarLayout$BaseBehavior$BaseDragCallback)
@@ -3805,8 +3853,6 @@ androidx.appcompat.view.menu.MenuPresenter:
 androidx.drawerlayout.R$integer
 androidx.core.os.ProcessCompat$Api16Impl
 androidx.recyclerview.widget.RecyclerView$AdapterDataObserver:
-    public void onItemRangeChanged(int,int)
-    public void onItemRangeChanged(int,int,java.lang.Object)
     public void onItemRangeInserted(int,int)
     public void onItemRangeRemoved(int,int)
     public void onItemRangeMoved(int,int,int)
@@ -4383,6 +4429,7 @@ androidx.appcompat.widget.ActivityChooserView$3
 androidx.lifecycle.Transformations
 io.reactivex.rxjava3.internal.operators.completable.CompletableTimer
 io.reactivex.rxjava3.internal.operators.flowable.FlowableCollectSingle
+org.apache.commons.codec.Encoder
 androidx.customview.R$integer
 com.google.gson.internal.bind.TypeAdapters$31
 io.reactivex.rxjava3.internal.operators.single.SingleFlatMapCompletable
@@ -4488,6 +4535,7 @@ androidx.recyclerview.R$integer
 androidx.viewpager2.widget.ViewPager2$2
 io.reactivex.rxjava3.internal.operators.observable.ObservableZip$ZipObserver
 androidx.activity.result.contract.ActivityResultContracts$PickContact
+org.apache.commons.codec.language.DoubleMetaphone$DoubleMetaphoneResult
 org.apache.commons.io.comparator.NameFileComparator
 io.reactivex.rxjava3.internal.operators.flowable.FlowableOnBackpressureError$BackpressureErrorSubscriber
 androidx.core.view.WindowInsetsCompat$TypeImpl30
@@ -4503,6 +4551,7 @@ androidx.constraintlayout.widget.Barrier:
     public static final int BOTTOM
     public static final int START
     public static final int END
+org.apache.commons.codec.digest.MurmurHash3$IncrementalHash32x86
 com.google.android.material.snackbar.BaseTransientBottomBar$7$1
 com.google.android.material.transition.platform.SlideDistanceProvider$GravityFlag
 io.reactivex.rxjava3.internal.operators.parallel.ParallelCollect
@@ -4513,9 +4562,11 @@ androidx.lifecycle.Transformations$2$1
 androidx.constraintlayout.solver.state.Dimension$Type
 org.apache.commons.io.filefilter.WildcardFilter
 androidx.viewpager.widget.PagerTitleStrip$PageListener
+org.apache.commons.codec.DecoderException
 io.reactivex.rxjava3.internal.operators.flowable.FlowableTakeUntil$TakeUntilMainSubscriber
 androidx.appcompat.app.ActionBar$DisplayOptions
 io.reactivex.rxjava3.internal.operators.maybe.MaybeTakeUntilMaybe$TakeUntilMainMaybeObserver$TakeUntilOtherMaybeObserver
+org.apache.commons.codec.Charsets
 io.reactivex.rxjava3.internal.operators.observable.ObservableReduceMaybe$ReduceObserver
 io.reactivex.rxjava3.internal.util.MergerBiFunction
 okhttp3.internal.cache.DiskLruCache$Entry
@@ -4863,6 +4914,7 @@ androidx.appcompat.widget.SearchView:
     static final java.lang.String LOG_TAG
     private static final java.lang.String IME_OPTION_NO_MICROPHONE
 com.google.android.material.transition.MaterialContainerTransform$TransitionDrawable$2
+org.apache.commons.codec.language.bm.BeiderMorseEncoder
 io.reactivex.rxjava3.internal.operators.maybe.MaybeSwitchIfEmptySingle$SwitchIfEmptyMaybeObserver$OtherSingleObserver
 io.reactivex.rxjava3.internal.operators.observable.ObservableCache
 androidx.annotation.experimental.Experimental
@@ -4919,6 +4971,7 @@ io.reactivex.rxjava3.internal.operators.completable.CompletableTakeUntilCompleta
 io.reactivex.rxjava3.internal.operators.single.SingleCache
 com.google.android.material.bottomsheet.BottomSheetDialog$1
 androidx.dynamicanimation.animation.DynamicAnimation$MassState
+org.apache.commons.codec.net.BCodec
 io.reactivex.rxjava3.internal.operators.maybe.MaybeDetach$DetachMaybeObserver
 io.reactivex.rxjava3.subscribers.ResourceSubscriber
 io.reactivex.rxjava3.internal.operators.maybe.MaybeFlatMapIterableObservable$FlatMapIterableObserver
@@ -5029,6 +5082,7 @@ androidx.core.view.accessibility.AccessibilityRecordCompat:
     public boolean equals(java.lang.Object)
     private final android.view.accessibility.AccessibilityRecord mRecord
 io.reactivex.rxjava3.internal.jdk8.FlowableLastStageSubscriber
+org.apache.commons.codec.digest.Blake3$EngineState
 io.reactivex.rxjava3.internal.operators.completable.CompletableCache$InnerCompletableCache
 androidx.vectordrawable.graphics.drawable.AnimatorInflaterCompat:
     private static void dumpKeyframes(java.lang.Object[],java.lang.String)
@@ -5401,6 +5455,8 @@ io.reactivex.rxjava3.internal.operators.flowable.FlowableConcatMap$ConcatMapImme
 androidx.room.RoomOpenHelper:
     public void <init>(androidx.room.DatabaseConfiguration,androidx.room.RoomOpenHelper$Delegate,java.lang.String)
 org.apache.commons.io.output.ClosedOutputStream
+com.lgh.advertising.going.databinding.ActivityRegulationImportBinding:
+    public synthetic bridge android.view.View getRoot()
 androidx.appcompat.widget.AppCompatCheckedTextView:
     public void <init>(android.content.Context)
 androidx.activity.ComponentActivity$2$2
@@ -5834,6 +5890,9 @@ io.reactivex.rxjava3.core.MaybeTransformer
 io.reactivex.rxjava3.internal.operators.maybe.MaybeDoOnEvent$DoOnEventMaybeObserver
 io.reactivex.rxjava3.internal.operators.single.SingleToObservable
 com.google.android.material.internal.ParcelableSparseIntArray$1
+com.lgh.advertising.going.databinding.ViewItemImportBinding:
+    public static com.lgh.advertising.going.databinding.ViewItemImportBinding inflate(android.view.LayoutInflater)
+    public synthetic bridge android.view.View getRoot()
 androidx.core.content.res.ConfigurationHelper
 com.google.android.material.transition.platform.MaterialSharedAxis
 io.reactivex.rxjava3.internal.operators.flowable.FlowableDistinctUntilChanged
@@ -5872,6 +5931,7 @@ io.reactivex.rxjava3.internal.operators.flowable.FlowableUsing$UsingSubscriber
 androidx.core.app.FrameMetricsAggregator
 com.google.android.material.internal.NavigationMenuPresenter$SeparatorViewHolder
 io.reactivex.rxjava3.internal.operators.observable.ObservableFlatMap$InnerObserver
+org.apache.commons.codec.digest.XXHash32
 androidx.fragment.R$drawable
 androidx.core.graphics.PaintCompat
 androidx.core.view.WindowInsetsAnimationCompat$Impl30
@@ -6099,6 +6159,7 @@ io.reactivex.rxjava3.internal.operators.observable.ObservableDistinctUntilChange
 io.reactivex.rxjava3.internal.operators.observable.ObservableRetryBiPredicate$RetryBiObserver
 androidx.constraintlayout.widget.R
 io.reactivex.rxjava3.internal.functions.Functions$ToMapKeySelector
+org.apache.commons.codec.binary.CharSequenceUtils
 androidx.transition.PropertyValuesHolderUtils:
     private void <init>()
 androidx.core.graphics.BlendModeUtils
@@ -6514,6 +6575,7 @@ io.reactivex.rxjava3.internal.operators.flowable.FlowableObserveOn$ObserveOnCond
 io.reactivex.rxjava3.internal.operators.single.SingleFlatMapBiSelector$FlatMapBiMainObserver$InnerObserver
 io.reactivex.rxjava3.internal.schedulers.ExecutorScheduler$ExecutorWorker$BooleanRunnable
 io.reactivex.rxjava3.flowables.ConnectableFlowable
+org.apache.commons.codec.digest.Crypt
 com.google.gson.internal.$Gson$Types$ParameterizedTypeImpl:
     private static final long serialVersionUID
 io.reactivex.rxjava3.internal.functions.Functions$JustValue
@@ -6526,6 +6588,7 @@ retrofit2.HttpException:
     public int code()
     public java.lang.String message()
     public retrofit2.Response response()
+org.apache.commons.codec.digest.Blake3
 retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory:
     public static retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory createSynchronous()
     public static retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory createWithScheduler(io.reactivex.rxjava3.core.Scheduler)
@@ -7099,6 +7162,7 @@ androidx.room.RoomOpenHelper$Delegate:
 io.reactivex.rxjava3.internal.operators.maybe.MaybeDelaySubscriptionOtherPublisher$OtherSubscriber
 io.reactivex.rxjava3.internal.operators.flowable.FlowableThrottleFirstTimed$DebounceTimedSubscriber
 io.reactivex.rxjava3.internal.operators.maybe.MaybeDelayWithCompletable$OtherObserver
+org.apache.commons.codec.Decoder
 androidx.vectordrawable.graphics.drawable.AnimatorInflaterCompat$PathDataEvaluator:
     void <init>(androidx.core.graphics.PathParser$PathDataNode[])
 androidx.fragment.R$animator:
@@ -7489,6 +7553,7 @@ androidx.core.app.SharedElementCallback:
 androidx.core.graphics.drawable.IconCompat$IconType
 androidx.constraintlayout.solver.state.helpers.ChainReference
 io.reactivex.rxjava3.internal.operators.observable.ObservableTakeLastTimed
+org.apache.commons.codec.digest.MurmurHash3$IncrementalHash32
 android.support.v4.os.IResultReceiver
 io.reactivex.rxjava3.internal.operators.maybe.MaybeFromSingle
 io.reactivex.rxjava3.internal.operators.flowable.FlowableDoFinally
@@ -7815,6 +7880,7 @@ androidx.appcompat.app.ActionBar$TabListener
 com.google.android.material.internal.ParcelableSparseBooleanArray$1
 io.reactivex.rxjava3.internal.operators.flowable.FlowableSerialized
 com.google.android.material.snackbar.BaseTransientBottomBar$12
+org.apache.commons.codec.digest.Sha2Crypt
 io.reactivex.rxjava3.internal.operators.maybe.MaybeDematerialize$DematerializeObserver
 io.reactivex.rxjava3.internal.operators.flowable.FlowableFlatMapCompletableCompletable$FlatMapCompletableMainSubscriber$InnerObserver
 androidx.sqlite.db.SupportSQLiteQuery:
@@ -7832,6 +7898,7 @@ androidx.appcompat.widget.AbsActionBarView:
     public void dismissPopupMenus()
     private static final int FADE_DURATION
 io.reactivex.rxjava3.internal.operators.parallel.ParallelDoOnNextTry$ParallelDoOnNextSubscriber
+org.apache.commons.codec.language.Soundex
 androidx.drawerlayout.R$style
 io.reactivex.rxjava3.internal.operators.observable.ObservableTimeout$TimeoutConsumer
 androidx.core.app.NotificationCompat$StreamType
@@ -8334,6 +8401,7 @@ androidx.recyclerview.widget.MessageThreadUtil$MessageQueue
 androidx.core.content.pm.PackageInfoCompat$Api28Impl
 io.reactivex.rxjava3.internal.operators.observable.ObservableCount
 io.reactivex.rxjava3.internal.operators.observable.ObservableFromCompletable
+org.apache.commons.codec.digest.MurmurHash3
 io.reactivex.rxjava3.internal.jdk8.ParallelMapOptional$ParallelMapSubscriber
 com.google.android.material.bottomappbar.BottomAppBar$3
 org.apache.commons.io.output.NullPrintStream
@@ -8413,7 +8481,6 @@ com.google.android.material.slider.BaseSlider$SliderState
 io.reactivex.rxjava3.internal.operators.maybe.MaybeMergeArray$SimpleQueueWithConsumerIndex
 androidx.recyclerview.widget.AdapterHelper:
     varargs androidx.recyclerview.widget.AdapterHelper addUpdateOp(androidx.recyclerview.widget.AdapterHelper$UpdateOp[])
-    boolean onItemRangeChanged(int,int,java.lang.Object)
     boolean onItemRangeInserted(int,int)
     boolean onItemRangeRemoved(int,int)
     boolean onItemRangeMoved(int,int,int)
@@ -8492,6 +8559,7 @@ androidx.fragment.app.FragmentManager$LifecycleAwareResultListener
 io.reactivex.rxjava3.internal.operators.single.SingleTakeUntil$TakeUntilMainObserver
 io.reactivex.rxjava3.internal.operators.flowable.FlowableOnErrorNext$OnErrorNextSubscriber
 androidx.annotation.ChecksSdkIntAtLeast
+org.apache.commons.codec.digest.package-info
 io.reactivex.rxjava3.internal.operators.observable.BlockingObservableNext$NextObserver
 org.apache.commons.io.output.QueueOutputStream
 androidx.fragment.app.FragmentTabHost$TabInfo
@@ -8841,9 +8909,9 @@ io.reactivex.rxjava3.android.R
 io.reactivex.rxjava3.internal.operators.maybe.MaybeCallbackObserver
 androidx.constraintlayout.motion.widget.TransitionBuilder
 androidx.core.content.LocusIdCompat$Api29Impl
+org.apache.commons.codec.language.bm.Languages$1
 io.reactivex.rxjava3.internal.operators.observable.ObservableDoFinally
 androidx.recyclerview.widget.RecyclerView$Adapter:
-    public final void notifyItemChanged(int)
     public final void notifyItemChanged(int,java.lang.Object)
     public final void notifyItemRangeChanged(int,int)
     public final void notifyItemRangeChanged(int,int,java.lang.Object)
@@ -8857,6 +8925,7 @@ io.reactivex.rxjava3.internal.operators.maybe.MaybeTakeUntilPublisher
 org.apache.commons.io.file.PathUtils$RelativeSortedPaths
 io.reactivex.rxjava3.internal.operators.completable.CompletableResumeNext$ResumeNextObserver
 io.reactivex.rxjava3.internal.operators.observable.ObservableWindowSubscribeIntercept
+org.apache.commons.codec.CodecPolicy
 androidx.annotation.RequiresPermission
 androidx.fragment.app.Fragment:
     public void <init>(int)
@@ -9582,6 +9651,9 @@ io.reactivex.rxjava3.core.Observable:
 com.google.android.material.slider.BaseOnChangeListener
 io.reactivex.rxjava3.internal.schedulers.NonBlockingThread
 androidx.activity.R$styleable
+com.lgh.advertising.going.databinding.ViewItemAppBinding:
+    public static com.lgh.advertising.going.databinding.ViewItemAppBinding inflate(android.view.LayoutInflater)
+    public synthetic bridge android.view.View getRoot()
 com.google.android.material.snackbar.BaseTransientBottomBar$BaseCallback
 io.reactivex.rxjava3.internal.operators.flowable.FlowableWindow$WindowSkipSubscriber
 com.google.android.material.badge.BadgeDrawable
@@ -9637,6 +9709,7 @@ androidx.appcompat.view.menu.CascadingMenuPopup:
     static final int SUBMENU_TIMEOUT_MS
 com.google.android.material.datepicker.CompositeDateValidator$2
 io.reactivex.rxjava3.internal.operators.flowable.FlowableWindowBoundarySelector
+org.apache.commons.codec.binary.BaseNCodec
 com.google.android.material.transition.platform.TransitionUtils
 retrofit2.RequestBuilder:
     private static final java.lang.String PATH_SEGMENT_ALWAYS_ENCODE_SET
@@ -9895,6 +9968,7 @@ androidx.viewpager2.widget.ViewPager2$Orientation
 androidx.viewbinding.ViewBinding
 androidx.viewpager.R$color
 io.reactivex.rxjava3.internal.operators.flowable.FlowableFromRunnable
+org.apache.commons.codec.language.MatchRatingApproachEncoder
 io.reactivex.rxjava3.internal.operators.flowable.FlowableWindowTimed$WindowExactUnboundedSubscriber$WindowRunnable
 io.reactivex.rxjava3.internal.operators.observable.ObservableTake$TakeObserver
 androidx.recyclerview.widget.AsyncListUtil$2
@@ -9939,6 +10013,7 @@ androidx.activity.result.contract.ActivityResultContracts$TakeVideo
 io.reactivex.rxjava3.internal.operators.single.SingleDematerialize
 androidx.loader.content.ModernAsyncTask$AsyncTaskResult
 io.reactivex.rxjava3.internal.operators.observable.ObservableSequenceEqual
+org.apache.commons.codec.language.Metaphone
 io.reactivex.rxjava3.internal.operators.flowable.FlowableMergeWithCompletable
 io.reactivex.rxjava3.internal.operators.flowable.FlowableInternalHelper$SubscriberOnComplete
 retrofit2.Retrofit$Builder:
@@ -10036,6 +10111,7 @@ androidx.sqlite.db.framework.FrameworkSQLiteDatabase:
     public boolean enableWriteAheadLogging()
     public void disableWriteAheadLogging()
     public boolean isDatabaseIntegrityOk()
+org.apache.commons.codec.language.bm.Rule$RPattern
 io.reactivex.rxjava3.internal.jdk8.ParallelFlatMapStream
 org.apache.commons.io.input.SequenceReader
 com.lgh.advertising.going.databinding.ViewMainItemBinding:
@@ -10045,11 +10121,13 @@ androidx.transition.Slide$1
 androidx.legacy.coreutils.R$drawable
 io.reactivex.rxjava3.internal.operators.flowable.FlowableWithLatestFrom$WithLatestFromSubscriber
 com.google.android.material.progressindicator.LinearDrawingDelegate
+org.apache.commons.codec.binary.BinaryCodec
 androidx.annotation.DimenRes
 com.google.android.material.datepicker.MaterialTextInputPicker$1:
     public void onIncompleteSelectionChanged()
 androidx.fragment.R$layout
 androidx.core.app.NotificationCompat$MessagingStyle
+org.apache.commons.codec.language.bm.PhoneticEngine$1
 org.reactivestreams.Subscriber
 io.reactivex.rxjava3.internal.operators.parallel.ParallelFlatMap
 org.apache.commons.io.file.DirectoryStreamFilter
@@ -10982,6 +11060,7 @@ okhttp3.WebSocket
 androidx.appcompat.widget.ShareActionProvider$OnShareTargetSelectedListener
 androidx.activity.result.contract.ActivityResultContracts$OpenMultipleDocuments
 io.reactivex.rxjava3.internal.observers.ConsumerSingleObserver
+org.apache.commons.codec.language.Caverphone
 io.reactivex.rxjava3.internal.operators.completable.CompletableToSingle$ToSingle
 androidx.activity.result.contract.ActivityResultContracts$RequestPermission
 io.reactivex.rxjava3.internal.operators.flowable.FlowableMergeWithSingle$MergeWithObserver$OtherObserver
@@ -11005,6 +11084,7 @@ okhttp3.internal.tls.OkHostnameVerifier:
     private static final int ALT_DNS_NAME
     private static final int ALT_IPA_NAME
 io.reactivex.rxjava3.internal.operators.flowable.FlowableConcatMapEager$ConcatMapEagerDelayErrorSubscriber
+org.apache.commons.codec.digest.Blake3$1
 io.reactivex.rxjava3.internal.operators.maybe.MaybeUsing$UsingObserver
 com.google.android.material.datepicker.DateFormatTextWatcher$1
 okhttp3.internal.http2.Hpack$Reader:
@@ -11012,10 +11092,12 @@ okhttp3.internal.http2.Hpack$Reader:
 io.reactivex.rxjava3.internal.util.HashMapSupplier
 androidx.appcompat.widget.ActivityChooserModel$OnChooseActivityListener
 io.reactivex.rxjava3.internal.operators.maybe.MaybeContains$ContainsMaybeObserver
+org.apache.commons.codec.StringEncoder
 com.google.android.material.shape.ShapePath$PathCubicOperation
 com.google.android.material.navigationrail.NavigationRailView
 androidx.core.hardware.fingerprint.FingerprintManagerCompat$CryptoObject
 io.reactivex.rxjava3.schedulers.SchedulerRunnableIntrospection
+org.apache.commons.codec.digest.MurmurHash2
 io.reactivex.rxjava3.internal.operators.observable.ObservableGenerate
 io.reactivex.rxjava3.internal.operators.flowable.FlowableFromPublisher
 androidx.recyclerview.widget.AsyncListUtil
@@ -11118,6 +11200,7 @@ androidx.recyclerview.widget.RecyclerView$RecycledViewPool:
 com.google.android.material.transition.MaterialSharedAxis$Axis
 androidx.vectordrawable.animated.R$dimen
 io.reactivex.rxjava3.internal.operators.completable.CompletableSubscribeOn$SubscribeOnObserver
+org.apache.commons.codec.language.Caverphone1
 androidx.core.graphics.BlendModeColorFilterCompat
 io.reactivex.rxjava3.internal.operators.flowable.FlowableDoOnEach
 io.reactivex.rxjava3.internal.operators.flowable.FlowableCombineLatest$SingletonArrayFunc
@@ -11184,6 +11267,26 @@ io.reactivex.rxjava3.internal.operators.flowable.FlowableConcatMap
 io.reactivex.rxjava3.internal.operators.mixed.MaybeFlatMapObservable
 androidx.lifecycle.MethodCallsLogger:
     public boolean approveCall(java.lang.String,int)
+org.apache.commons.codec.binary.StringUtils:
+    public void <init>()
+    public static boolean equals(java.lang.CharSequence,java.lang.CharSequence)
+    private static java.nio.ByteBuffer getByteBuffer(java.lang.String,java.nio.charset.Charset)
+    public static java.nio.ByteBuffer getByteBufferUtf8(java.lang.String)
+    public static byte[] getBytesIso8859_1(java.lang.String)
+    public static byte[] getBytesUnchecked(java.lang.String,java.lang.String)
+    public static byte[] getBytesUsAscii(java.lang.String)
+    public static byte[] getBytesUtf16(java.lang.String)
+    public static byte[] getBytesUtf16Be(java.lang.String)
+    public static byte[] getBytesUtf16Le(java.lang.String)
+    private static java.lang.IllegalStateException newIllegalStateException(java.lang.String,java.io.UnsupportedEncodingException)
+    private static java.lang.String newString(byte[],java.nio.charset.Charset)
+    public static java.lang.String newString(byte[],java.lang.String)
+    public static java.lang.String newStringIso8859_1(byte[])
+    public static java.lang.String newStringUsAscii(byte[])
+    public static java.lang.String newStringUtf16(byte[])
+    public static java.lang.String newStringUtf16Be(byte[])
+    public static java.lang.String newStringUtf16Le(byte[])
+    public static java.lang.String newStringUtf8(byte[])
 androidx.appcompat.widget.PopupMenu$1
 io.reactivex.rxjava3.internal.observers.InnerQueuedObserverSupport
 org.apache.commons.io.filefilter.SuffixFileFilter
@@ -11252,7 +11355,9 @@ androidx.appcompat.view.menu.ActionMenuItem:
     private static final int HIDDEN
     private static final int ENABLED
 org.apache.commons.io.input.CloseShieldInputStream
+org.apache.commons.codec.binary.Base16OutputStream
 io.reactivex.rxjava3.internal.operators.maybe.MaybeTakeUntilMaybe$TakeUntilMainMaybeObserver
+org.apache.commons.codec.language.bm.package-info
 io.reactivex.rxjava3.internal.operators.flowable.FlowableTimer$TimerSubscriber
 androidx.appcompat.app.AppCompatDelegateImpl$PanelFeatureState$SavedState
 androidx.core.location.LocationManagerCompat$GpsStatusTransport
@@ -11649,9 +11754,11 @@ androidx.annotation.experimental.R
 okhttp3.internal.http.HttpMethod:
     private void <init>()
 androidx.core.view.WindowInsetsAnimationControllerCompat$Impl
+org.apache.commons.codec.language.SoundexUtils
 io.reactivex.rxjava3.internal.operators.observable.ObservableBufferBoundary$BufferBoundaryObserver$BufferOpenObserver
 androidx.recyclerview.widget.TileList
 androidx.dynamicanimation.R
+org.apache.commons.codec.language.ColognePhonetic
 androidx.core.widget.TintableCompoundButton:
     public abstract android.graphics.PorterDuff$Mode getSupportButtonTintMode()
 com.google.android.material.snackbar.SnackbarManager:
@@ -11710,6 +11817,7 @@ com.google.android.material.behavior.SwipeDismissBehavior:
     private static final float DEFAULT_ALPHA_START_DISTANCE
     private static final float DEFAULT_ALPHA_END_DISTANCE
 androidx.core.graphics.PathUtils
+org.apache.commons.codec.language.bm.PhoneticEngine$PhonemeBuilder
 com.google.android.material.timepicker.TimePickerTextInputKeyController
 io.reactivex.rxjava3.internal.operators.observable.ObservableBufferBoundary$BufferBoundaryObserver
 androidx.dynamicanimation.animation.AnimationHandler
@@ -11717,6 +11825,7 @@ io.reactivex.rxjava3.internal.operators.flowable.FlowableBufferBoundary$BufferBo
 androidx.core.view.WindowInsetsAnimationCompat$Callback$DispatchMode
 io.reactivex.rxjava3.internal.operators.parallel.ParallelJoin$JoinSubscriptionBase
 io.reactivex.rxjava3.internal.operators.single.SingleUsing
+org.apache.commons.codec.binary.Base32OutputStream
 androidx.appcompat.view.menu.MenuBuilder:
     private void dispatchSaveInstanceState(android.os.Bundle)
     private void dispatchRestoreInstanceState(android.os.Bundle)
@@ -11733,8 +11842,6 @@ androidx.appcompat.view.menu.MenuBuilder:
     private static final java.lang.String EXPANDED_ACTION_VIEW_ID
 androidx.transition.R$attr
 androidx.recyclerview.widget.RecyclerView$AdapterDataObservable:
-    public void notifyItemRangeChanged(int,int)
-    public void notifyItemRangeChanged(int,int,java.lang.Object)
     public void notifyItemRangeInserted(int,int)
     public void notifyItemRangeRemoved(int,int)
     public void notifyItemMoved(int,int)
@@ -12149,6 +12256,7 @@ androidx.activity.result.ActivityResultRegistry$LifecycleContainer:
 io.reactivex.rxjava3.internal.operators.observable.ObservableWindowBoundary
 okhttp3.TlsVersion:
     public java.lang.String javaName()
+org.apache.commons.codec.StringEncoderComparator
 androidx.appcompat.app.AppCompatDelegateImpl$Api17Impl:
     private void <init>()
 okhttp3.internal.http2.Http2Stream:
@@ -12174,6 +12282,8 @@ androidx.activity.R$style
 androidx.constraintlayout.motion.widget.MotionLayout
 io.reactivex.rxjava3.internal.operators.observable.ObservableThrottleLatest
 io.reactivex.rxjava3.internal.operators.maybe.MaybeDelay
+org.apache.commons.codec.digest.PureJavaCrc32
+org.apache.commons.codec.language.bm.Rule$Phoneme
 io.reactivex.rxjava3.core.FlowableSubscriber
 io.reactivex.rxjava3.internal.operators.flowable.FlowableZip$ZipSubscriber
 com.google.android.material.expandable.ExpandableTransformationWidget
@@ -12191,6 +12301,7 @@ com.google.android.material.transition.MaterialContainerTransform$1
 androidx.core.view.accessibility.AccessibilityManagerCompat$TouchExplorationStateChangeListenerWrapper
 io.reactivex.rxjava3.internal.operators.maybe.MaybeIgnoreElement$IgnoreMaybeObserver
 io.reactivex.rxjava3.internal.operators.mixed.CompletableAndThenObservable
+org.apache.commons.codec.BinaryEncoder
 androidx.core.content.res.ColorStateListInflaterCompat:
     private void <init>()
 io.reactivex.rxjava3.internal.operators.observable.ObservableMap
@@ -12232,6 +12343,7 @@ com.google.gson.JsonArray:
     public boolean getAsBoolean()
     public synthetic bridge com.google.gson.JsonElement deepCopy()
 io.reactivex.rxjava3.internal.operators.completable.CompletableFromSupplier
+org.apache.commons.codec.net.Utils
 androidx.constraintlayout.motion.utils.HyperSpline$Cubic
 androidx.transition.FragmentTransitionSupport$4:
     public android.graphics.Rect onGetEpicenter(androidx.transition.Transition)
@@ -12239,6 +12351,7 @@ com.google.android.material.progressindicator.LinearIndeterminateContiguousAnima
 com.google.android.material.transition.MaterialVisibility
 io.reactivex.rxjava3.internal.operators.single.SingleFromCallable
 io.reactivex.rxjava3.functions.Function8
+org.apache.commons.codec.binary.Base32
 io.reactivex.rxjava3.internal.operators.flowable.FlowableMapNotification
 io.reactivex.rxjava3.internal.operators.observable.ObservableGroupJoin$GroupJoinDisposable
 androidx.appcompat.widget.ScrollingTabContainerView:
@@ -12525,6 +12638,7 @@ androidx.fragment.app.FragmentContainerView:
     public void <init>(android.content.Context,android.util.AttributeSet,int)
 com.google.android.material.transition.platform.FadeModeResult
 androidx.coordinatorlayout.R$dimen
+org.apache.commons.codec.binary.package-info
 io.reactivex.rxjava3.internal.operators.observable.ObservableTakeUntil$TakeUntilMainObserver
 androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat$AnimatedStateListState:
     private static final long REVERSED_BIT
@@ -12584,6 +12698,7 @@ androidx.appcompat.widget.ToolbarWidgetWrapper:
     private static final long DEFAULT_FADE_DURATION_MS
 io.reactivex.rxjava3.internal.operators.completable.CompletableError
 androidx.constraintlayout.widget.R$dimen
+org.apache.commons.codec.binary.BaseNCodecInputStream
 io.reactivex.rxjava3.internal.operators.completable.CompletableHide
 io.reactivex.rxjava3.internal.operators.flowable.FlowableFromCallable
 io.reactivex.rxjava3.internal.operators.completable.CompletableMergeArray$InnerCompletableObserver
@@ -12711,6 +12826,9 @@ io.reactivex.rxjava3.subjects.ReplaySubject$Node
 io.reactivex.rxjava3.internal.operators.maybe.MaybeMergeArray$ClqSimpleQueue
 com.google.android.material.transition.FitModeEvaluator
 io.reactivex.rxjava3.internal.operators.observable.ObservableElementAt
+org.apache.commons.codec.net.RFC1522Codec
+org.apache.commons.codec.language.Caverphone2
+org.apache.commons.codec.language.bm.Rule$1
 org.apache.commons.io.filefilter.NameFileFilter
 com.google.android.material.bottomsheet.BottomSheetDialog
 io.reactivex.rxjava3.internal.operators.flowable.FlowableReduceMaybe$ReduceSubscriber
@@ -12769,6 +12887,7 @@ androidx.room.RoomMasterTable:
     public static final java.lang.String CREATE_QUERY
     public static final java.lang.String READ_QUERY
 io.reactivex.rxjava3.schedulers.Timed
+org.apache.commons.codec.binary.Base16
 androidx.core.graphics.BlendModeCompat
 com.lgh.advertising.going.R
 io.reactivex.rxjava3.internal.operators.mixed.ObservableSwitchMapCompletable$SwitchMapCompletableObserver
@@ -12801,6 +12920,7 @@ androidx.appcompat.app.AlertController$RecycleListView:
     public void <init>(android.content.Context)
 com.google.android.material.animation.AnimatorSetCompat:
     public void <init>()
+org.apache.commons.codec.CharEncoding
 io.reactivex.rxjava3.internal.operators.observable.ObservableSkipLastTimed$SkipLastTimedObserver
 io.reactivex.rxjava3.internal.operators.observable.ObservableGroupJoin$LeftRightObserver
 com.google.android.material.transition.platform.FitModeEvaluators$2
@@ -12809,6 +12929,7 @@ okhttp3.RequestBody$3
 androidx.activity.contextaware.ContextAwareHelper:
     public android.content.Context peekAvailableContext()
     public void removeOnContextAvailableListener(androidx.activity.contextaware.OnContextAvailableListener)
+org.apache.commons.codec.digest.Blake3$ChunkState
 com.google.android.material.progressindicator.LinearIndeterminateDisjointAnimatorDelegate
 androidx.core.location.LocationManagerCompat$InlineHandlerExecutor
 com.google.android.material.timepicker.TimePickerTextInputPresenter$1
@@ -12842,9 +12963,11 @@ com.google.android.material.resources.MaterialAttributes:
     public static int resolveDimension(android.content.Context,int,int)
 androidx.room.util.TableInfo$Index:
     public static final java.lang.String DEFAULT_PREFIX
+org.apache.commons.codec.language.bm.RuleType
 org.apache.commons.io.input.TailerListener
 io.reactivex.rxjava3.internal.operators.flowable.FlowableBufferTimed$BufferSkipBoundedSubscriber$RemoveFromBuffer
 io.reactivex.rxjava3.internal.operators.parallel.ParallelJoin$JoinSubscriptionDelayError
+org.apache.commons.codec.language.bm.Lang$1
 androidx.sqlite.db.framework.FrameworkSQLiteStatement:
     public void execute()
     public long simpleQueryForLong()
@@ -14167,6 +14290,7 @@ io.reactivex.rxjava3.schedulers.Schedulers$IoHolder:
     void <init>()
 io.reactivex.rxjava3.internal.jdk8.ObservableFromCompletionStage
 androidx.transition.ArcMotion
+org.apache.commons.codec.language.DaitchMokotoffSoundex$Branch
 androidx.fragment.app.Fragment$OnPreAttachedListener:
     synthetic void <init>(androidx.fragment.app.Fragment$1)
 io.reactivex.rxjava3.internal.operators.flowable.FlowableDelay$DelaySubscriber$OnComplete
@@ -14233,6 +14357,7 @@ androidx.core.view.WindowInsetsControllerCompat$Impl26
 io.reactivex.rxjava3.internal.operators.mixed.FlowableConcatMapMaybePublisher
 io.reactivex.rxjava3.internal.operators.single.SingleDoOnError$DoOnError
 org.apache.commons.io.output.TaggedOutputStream
+org.apache.commons.codec.digest.HmacUtils
 androidx.appcompat.widget.AppCompatSeekBarHelper:
     android.graphics.drawable.Drawable getTickMark()
     void setTickMarkTintList(android.content.res.ColorStateList)
@@ -14363,6 +14488,7 @@ androidx.core.app.NotificationChannelGroupCompat
 androidx.room.Ignore
 io.reactivex.rxjava3.internal.schedulers.IoScheduler$EventLoopWorker:
     public boolean isDisposed()
+org.apache.commons.codec.Resources
 io.reactivex.rxjava3.internal.subscribers.StrictSubscriber
 androidx.constraintlayout.solver.widgets.ConstraintAnchor:
     private boolean isConnectionToMe(androidx.constraintlayout.solver.widgets.ConstraintWidget,java.util.HashSet)
@@ -14404,6 +14530,7 @@ com.google.android.material.circularreveal.CircularRevealHelper:
 io.reactivex.rxjava3.internal.operators.observable.ObservableFlatMapCompletableCompletable$FlatMapCompletableMainObserver$InnerObserver
 io.reactivex.rxjava3.internal.operators.single.SingleZipArray
 androidx.loader.content.ModernAsyncTask$2
+org.apache.commons.codec.binary.Base64
 androidx.loader.content.ModernAsyncTask$WorkerRunnable
 okio.Utf8
 io.reactivex.rxjava3.internal.operators.maybe.MaybeDelayOtherPublisher$DelayMaybeObserver
@@ -15601,6 +15728,7 @@ org.apache.commons.io.FileUtils:
 androidx.appcompat.R$bool:
     private void <init>()
     public static final int abc_config_actionMenuItemAllCaps
+org.apache.commons.codec.language.ColognePhonetic$CologneInputBuffer
 androidx.core.os.UserManagerCompat
 androidx.appcompat.app.WindowDecorActionBar$TabImpl
 androidx.core.util.AtomicFile
@@ -15749,6 +15877,128 @@ io.reactivex.rxjava3.disposables.CompositeDisposable:
     public varargs boolean addAll(io.reactivex.rxjava3.disposables.Disposable[])
     public void clear()
     public int size()
+org.apache.commons.codec.digest.DigestUtils:
+    public static byte[] digest(java.security.MessageDigest,byte[])
+    public static byte[] digest(java.security.MessageDigest,java.nio.ByteBuffer)
+    public static byte[] digest(java.security.MessageDigest,java.io.File)
+    public static byte[] digest(java.security.MessageDigest,java.io.InputStream)
+    public static varargs byte[] digest(java.security.MessageDigest,java.nio.file.Path,java.nio.file.OpenOption[])
+    public static byte[] digest(java.security.MessageDigest,java.io.RandomAccessFile)
+    public static java.security.MessageDigest getDigest(java.lang.String,java.security.MessageDigest)
+    public static java.security.MessageDigest getMd2Digest()
+    public static java.security.MessageDigest getSha1Digest()
+    public static java.security.MessageDigest getSha256Digest()
+    public static java.security.MessageDigest getSha3_224Digest()
+    public static java.security.MessageDigest getSha3_256Digest()
+    public static java.security.MessageDigest getSha3_384Digest()
+    public static java.security.MessageDigest getSha3_512Digest()
+    public static java.security.MessageDigest getSha384Digest()
+    public static java.security.MessageDigest getSha512_224Digest()
+    public static java.security.MessageDigest getSha512_256Digest()
+    public static java.security.MessageDigest getSha512Digest()
+    public static java.security.MessageDigest getShaDigest()
+    public static boolean isAvailable(java.lang.String)
+    public static byte[] md2(byte[])
+    public static byte[] md2(java.io.InputStream)
+    public static byte[] md2(java.lang.String)
+    public static java.lang.String md2Hex(byte[])
+    public static java.lang.String md2Hex(java.io.InputStream)
+    public static java.lang.String md2Hex(java.lang.String)
+    public static byte[] md5(java.io.InputStream)
+    public static java.lang.String md5Hex(byte[])
+    public static java.lang.String md5Hex(java.io.InputStream)
+    public static byte[] sha(byte[])
+    public static byte[] sha(java.io.InputStream)
+    public static byte[] sha(java.lang.String)
+    public static byte[] sha1(byte[])
+    public static byte[] sha1(java.io.InputStream)
+    public static byte[] sha1(java.lang.String)
+    public static java.lang.String sha1Hex(byte[])
+    public static java.lang.String sha1Hex(java.io.InputStream)
+    public static java.lang.String sha1Hex(java.lang.String)
+    public static byte[] sha256(byte[])
+    public static byte[] sha256(java.io.InputStream)
+    public static byte[] sha256(java.lang.String)
+    public static java.lang.String sha256Hex(byte[])
+    public static java.lang.String sha256Hex(java.io.InputStream)
+    public static java.lang.String sha256Hex(java.lang.String)
+    public static byte[] sha3_224(byte[])
+    public static byte[] sha3_224(java.io.InputStream)
+    public static byte[] sha3_224(java.lang.String)
+    public static java.lang.String sha3_224Hex(byte[])
+    public static java.lang.String sha3_224Hex(java.io.InputStream)
+    public static java.lang.String sha3_224Hex(java.lang.String)
+    public static byte[] sha3_256(byte[])
+    public static byte[] sha3_256(java.io.InputStream)
+    public static byte[] sha3_256(java.lang.String)
+    public static java.lang.String sha3_256Hex(byte[])
+    public static java.lang.String sha3_256Hex(java.io.InputStream)
+    public static java.lang.String sha3_256Hex(java.lang.String)
+    public static byte[] sha3_384(byte[])
+    public static byte[] sha3_384(java.io.InputStream)
+    public static byte[] sha3_384(java.lang.String)
+    public static java.lang.String sha3_384Hex(byte[])
+    public static java.lang.String sha3_384Hex(java.io.InputStream)
+    public static java.lang.String sha3_384Hex(java.lang.String)
+    public static byte[] sha3_512(byte[])
+    public static byte[] sha3_512(java.io.InputStream)
+    public static byte[] sha3_512(java.lang.String)
+    public static java.lang.String sha3_512Hex(byte[])
+    public static java.lang.String sha3_512Hex(java.io.InputStream)
+    public static java.lang.String sha3_512Hex(java.lang.String)
+    public static byte[] sha384(byte[])
+    public static byte[] sha384(java.io.InputStream)
+    public static byte[] sha384(java.lang.String)
+    public static java.lang.String sha384Hex(byte[])
+    public static java.lang.String sha384Hex(java.io.InputStream)
+    public static java.lang.String sha384Hex(java.lang.String)
+    public static byte[] sha512(byte[])
+    public static byte[] sha512(java.io.InputStream)
+    public static byte[] sha512(java.lang.String)
+    public static byte[] sha512_224(byte[])
+    public static byte[] sha512_224(java.io.InputStream)
+    public static byte[] sha512_224(java.lang.String)
+    public static java.lang.String sha512_224Hex(byte[])
+    public static java.lang.String sha512_224Hex(java.io.InputStream)
+    public static java.lang.String sha512_224Hex(java.lang.String)
+    public static byte[] sha512_256(byte[])
+    public static byte[] sha512_256(java.io.InputStream)
+    public static byte[] sha512_256(java.lang.String)
+    public static java.lang.String sha512_256Hex(byte[])
+    public static java.lang.String sha512_256Hex(java.io.InputStream)
+    public static java.lang.String sha512_256Hex(java.lang.String)
+    public static java.lang.String sha512Hex(byte[])
+    public static java.lang.String sha512Hex(java.io.InputStream)
+    public static java.lang.String sha512Hex(java.lang.String)
+    public static java.lang.String shaHex(byte[])
+    public static java.lang.String shaHex(java.io.InputStream)
+    public static java.lang.String shaHex(java.lang.String)
+    public static java.security.MessageDigest updateDigest(java.security.MessageDigest,byte[])
+    public static java.security.MessageDigest updateDigest(java.security.MessageDigest,java.nio.ByteBuffer)
+    public static java.security.MessageDigest updateDigest(java.security.MessageDigest,java.io.File)
+    private static java.security.MessageDigest updateDigest(java.security.MessageDigest,java.nio.channels.FileChannel)
+    public static java.security.MessageDigest updateDigest(java.security.MessageDigest,java.io.InputStream)
+    public static varargs java.security.MessageDigest updateDigest(java.security.MessageDigest,java.nio.file.Path,java.nio.file.OpenOption[])
+    public static java.security.MessageDigest updateDigest(java.security.MessageDigest,java.io.RandomAccessFile)
+    public static java.security.MessageDigest updateDigest(java.security.MessageDigest,java.lang.String)
+    public void <init>()
+    public void <init>(java.security.MessageDigest)
+    public void <init>(java.lang.String)
+    public byte[] digest(byte[])
+    public byte[] digest(java.nio.ByteBuffer)
+    public byte[] digest(java.io.File)
+    public byte[] digest(java.io.InputStream)
+    public varargs byte[] digest(java.nio.file.Path,java.nio.file.OpenOption[])
+    public byte[] digest(java.lang.String)
+    public java.lang.String digestAsHex(byte[])
+    public java.lang.String digestAsHex(java.nio.ByteBuffer)
+    public java.lang.String digestAsHex(java.io.File)
+    public java.lang.String digestAsHex(java.io.InputStream)
+    public varargs java.lang.String digestAsHex(java.nio.file.Path,java.nio.file.OpenOption[])
+    public java.lang.String digestAsHex(java.lang.String)
+    public java.security.MessageDigest getMessageDigest()
+    private final java.security.MessageDigest messageDigest
+    private static final int STREAM_BUFFER_LENGTH
 com.google.gson.JsonIOException:
     private static final long serialVersionUID
 io.reactivex.rxjava3.internal.operators.single.SingleDoOnSubscribe$DoOnSubscribeSingleObserver
@@ -15763,6 +16013,7 @@ okhttp3.internal.http.RetryAndFollowUpInterceptor:
 io.reactivex.rxjava3.internal.operators.observable.ObservableScalarXMap
 androidx.fragment.app.Fragment$8
 okhttp3.internal.annotations.EverythingIsNonNull
+org.apache.commons.codec.language.ColognePhonetic$CologneOutputBuffer
 androidx.recyclerview.widget.RecyclerView:
     public void <init>(android.content.Context)
     public boolean hasFixedSize()
@@ -15932,6 +16183,7 @@ androidx.constraintlayout.solver.ArrayRow:
     private static final boolean DEBUG
     private static final boolean FULL_NEW_CHECK
 okhttp3.internal.cache.DiskLruCache$Snapshot
+org.apache.commons.codec.BinaryDecoder
 org.apache.commons.io.filefilter.TrueFileFilter:
     public org.apache.commons.io.filefilter.IOFileFilter negate()
     public org.apache.commons.io.filefilter.IOFileFilter or(org.apache.commons.io.filefilter.IOFileFilter)
@@ -16173,6 +16425,7 @@ androidx.core.text.TextUtilsCompat:
 androidx.appcompat.resources.R$style
 androidx.constraintlayout.utils.widget.ImageFilterView$ImageMatrix
 io.reactivex.rxjava3.internal.operators.single.SingleDoOnLifecycle$SingleLifecycleObserver
+org.apache.commons.codec.language.AbstractCaverphone
 io.reactivex.rxjava3.internal.operators.single.SingleInternalHelper
 io.reactivex.rxjava3.internal.operators.observable.ObservableIgnoreElements$IgnoreObservable
 androidx.core.app.NotificationCompat$Action$WearableExtender
@@ -16258,6 +16511,7 @@ androidx.room.AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase:
     public boolean enableWriteAheadLogging()
     public void disableWriteAheadLogging()
     public boolean isDatabaseIntegrityOk()
+org.apache.commons.codec.language.bm.Rule$PhonemeList
 androidx.room.Fts4
 androidx.versionedparcelable.ParcelImpl:
     public void <init>(androidx.versionedparcelable.VersionedParcelable)
@@ -16325,11 +16579,13 @@ androidx.fragment.app.FragmentActivity:
     public void startActivityFromFragment(androidx.fragment.app.Fragment,android.content.Intent,int,android.os.Bundle)
     public void startIntentSenderFromFragment(androidx.fragment.app.Fragment,android.content.IntentSender,int,android.content.Intent,int,int,int,android.os.Bundle)
     static final java.lang.String FRAGMENTS_TAG
+org.apache.commons.codec.StringDecoder
 androidx.annotation.FractionRes
 androidx.appcompat.widget.LinearLayoutCompat$DividerMode
 androidx.constraintlayout.motion.widget.KeyCycleOscillator$WavePoint
 io.reactivex.rxjava3.internal.operators.observable.ObservableWithLatestFrom$WithLatestFromOtherObserver
 androidx.localbroadcastmanager.content.LocalBroadcastManager$1
+org.apache.commons.codec.net.URLCodec
 androidx.fragment.app.ListFragment$1
 okhttp3.HttpUrl$Builder:
     private okhttp3.HttpUrl$Builder addPathSegments(java.lang.String,boolean)
@@ -16402,6 +16658,7 @@ androidx.room.Relation
 com.google.android.material.internal.TextScale
 androidx.legacy.content.WakefulBroadcastReceiver
 androidx.core.content.pm.PackageInfoCompat
+org.apache.commons.codec.language.bm.Lang
 androidx.fragment.app.FragmentManagerViewModel:
     void restoreFromSnapshot(androidx.fragment.app.FragmentManagerNonConfig)
     androidx.fragment.app.FragmentManagerNonConfig getSnapshot()
@@ -17751,6 +18008,7 @@ io.reactivex.rxjava3.internal.operators.observable.ObservableIgnoreElementsCompl
 androidx.appcompat.widget.SwitchCompat$1
 io.reactivex.rxjava3.internal.operators.maybe.MaybeDefer
 io.reactivex.rxjava3.internal.operators.single.SingleDoAfterSuccess
+org.apache.commons.codec.language.DaitchMokotoffSoundex$1
 androidx.core.view.ViewCompat$FocusRelativeDirection
 org.apache.commons.io.ByteOrderMark
 io.reactivex.rxjava3.subjects.UnicastSubject$UnicastQueueDisposable
@@ -17873,6 +18131,7 @@ io.reactivex.rxjava3.internal.functions.Functions$TimestampFunction
 io.reactivex.rxjava3.internal.operators.observable.ObservableReplay$InnerDisposable
 io.reactivex.rxjava3.internal.operators.mixed.ObservableSwitchMapCompletable$SwitchMapCompletableObserver$SwitchMapInnerObserver
 io.reactivex.rxjava3.internal.operators.maybe.MaybeDoOnLifecycle$MaybeLifecycleObserver
+org.apache.commons.codec.binary.Base64InputStream
 androidx.tracing.TraceApi18Impl:
     private void <init>()
 androidx.annotation.InspectableProperty$ValueType
@@ -17883,6 +18142,7 @@ org.apache.commons.io.serialization.WildcardClassNameMatcher
 io.reactivex.rxjava3.internal.functions.Functions$FutureAction
 io.reactivex.rxjava3.internal.operators.observable.ObservableFilter$FilterObserver
 com.google.android.material.badge.BadgeUtils
+org.apache.commons.codec.language.bm.Languages
 androidx.transition.ChangeImageTransform$2
 io.reactivex.rxjava3.internal.operators.observable.ObservableFromArray
 com.google.android.material.progressindicator.BaseProgressIndicator$3
@@ -17949,6 +18209,7 @@ androidx.core.view.WindowInsetsCompat$Api21ReflectionHolder:
     private void <init>()
 androidx.core.view.accessibility.AccessibilityManagerCompat$AccessibilityStateChangeListener
 com.google.android.material.transition.Hold
+org.apache.commons.codec.net.package-info
 com.google.android.material.bottomsheet.BottomSheetDialogFragment$1
 androidx.viewpager2.widget.ViewPager2$DataSetChangeObserver
 io.reactivex.rxjava3.internal.operators.flowable.FlowableElementAtMaybe
@@ -17961,6 +18222,7 @@ androidx.constraintlayout.widget.ConstraintLayoutStates$Variant:
     int mId
 com.google.gson.stream.JsonScope
 org.reactivestreams.Publisher
+org.apache.commons.codec.language.bm.NameType
 io.reactivex.rxjava3.internal.schedulers.ExecutorScheduler$ExecutorWorker$InterruptibleRunnable
 androidx.fragment.R$integer
 com.lgh.advertising.going.R$interpolator
@@ -17976,6 +18238,7 @@ io.reactivex.rxjava3.internal.disposables.CancellableDisposable
 androidx.viewpager2.adapter.FragmentStateAdapter$FragmentMaxLifecycleEnforcer$1
 androidx.transition.ObjectAnimatorUtils:
     private void <init>()
+org.apache.commons.codec.language.DoubleMetaphone
 com.google.android.material.elevation.ElevationOverlayProvider:
     public int compositeOverlayWithThemeSurfaceColorIfNeeded(float,android.view.View)
     public int compositeOverlayWithThemeSurfaceColorIfNeeded(float)
@@ -18521,6 +18784,7 @@ com.google.android.material.bottomappbar.BottomAppBarTopEdgeTreatment:
 androidx.constraintlayout.solver.state.helpers.BarrierReference$1
 org.apache.commons.io.input.TailerListenerAdapter
 org.apache.commons.io.file.Counters$NoopPathCounters
+org.apache.commons.codec.language.DaitchMokotoffSoundex$Rule
 androidx.core.view.DisplayCompat$Api17Impl
 com.google.android.material.slider.RangeSlider$1
 io.reactivex.rxjava3.internal.operators.completable.CompletableMergeArrayDelayError$TryTerminateAndReportDisposable
@@ -18564,6 +18828,7 @@ io.reactivex.rxjava3.internal.operators.completable.CompletableMaterialize
 io.reactivex.rxjava3.internal.operators.observable.ObservableUnsubscribeOn$UnsubscribeObserver
 androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView:
     public void <init>(android.content.Context)
+org.apache.commons.codec.language.bm.Rule$2
 androidx.loader.content.ModernAsyncTask$1
 androidx.core.widget.TextViewCompat$AutoSizeTextType
 androidx.annotation.NavigationRes
@@ -18593,6 +18858,7 @@ com.google.android.material.transition.SlideDistanceProvider
 com.google.android.material.bottomsheet.BottomSheetBehavior$SavedState:
     public void <init>(android.os.Parcel)
     public void <init>(android.os.Parcelable,int)
+org.apache.commons.codec.language.bm.Languages$SomeLanguages
 androidx.core.view.accessibility.AccessibilityNodeInfoCompat:
     static androidx.core.view.accessibility.AccessibilityNodeInfoCompat wrapNonNullInstance(java.lang.Object)
     public void <init>(java.lang.Object)
@@ -18829,6 +19095,8 @@ androidx.recyclerview.widget.ViewInfoStore$InfoRecord:
     static final int FLAG_APPEAR_PRE_AND_POST
 okhttp3.WebSocket$Factory
 com.lgh.advertising.going.R$anim
+org.apache.commons.codec.cli.package-info
+org.apache.commons.codec.language.bm.Languages$2
 androidx.activity.result.contract.ActivityResultContracts$GetContent
 com.google.android.material.transition.FadeProvider$1
 io.reactivex.rxjava3.internal.operators.parallel.ParallelRunOn$RunOnConditionalSubscriber
@@ -18895,6 +19163,7 @@ androidx.constraintlayout.widget.ConstraintSet$Constraint:
 okhttp3.Cache$1
 io.reactivex.rxjava3.annotations.CheckReturnValue
 okhttp3.internal.ws.WebSocketReader$FrameCallback
+org.apache.commons.codec.net.PercentCodec
 androidx.recyclerview.R$drawable
 io.reactivex.rxjava3.internal.functions.Functions$TruePredicate:
     public boolean test(java.lang.Object)
@@ -18992,6 +19261,7 @@ io.reactivex.rxjava3.internal.operators.observable.ObservableNever
 androidx.viewpager2.widget.ViewPager2$PageTransformer
 com.google.android.material.tabs.TabLayout$1
 io.reactivex.rxjava3.internal.operators.observable.ObservableInternalHelper$BufferedReplaySupplier
+org.apache.commons.codec.binary.Base16InputStream
 androidx.core.view.WindowInsetsControllerCompat$OnControllableInsetsChangedListener
 androidx.appcompat.app.ActionBarDrawerToggleHoneycomb$SetIndicatorInfo
 androidx.constraintlayout.widget.R$string
@@ -19293,6 +19563,7 @@ io.reactivex.rxjava3.internal.operators.observable.ObservableConcatMap$SourceObs
 android.support.v4.app.INotificationSideChannel$Stub$Proxy
 androidx.lifecycle.MediatorLiveData
 androidx.constraintlayout.motion.widget.Animatable
+org.apache.commons.codec.digest.B64
 io.reactivex.rxjava3.internal.operators.single.SingleDoOnSuccess$DoOnSuccess
 androidx.room.Delete
 androidx.room.FtsOptions$MatchInfo
@@ -19423,6 +19694,7 @@ androidx.appcompat.widget.ActivityChooserModel$PersistHistoryAsyncTask
 androidx.constraintlayout.motion.widget.SplineSet$PathRotate
 androidx.dynamicanimation.R$drawable
 com.google.android.material.transition.platform.MaterialFadeThrough
+org.apache.commons.codec.digest.PureJavaCrc32C
 androidx.loader.content.CursorLoader
 androidx.core.app.NavUtils:
     public static void navigateUpFromSameTask(android.app.Activity)
@@ -19521,6 +19793,7 @@ androidx.constraintlayout.widget.Constraints:
     public static final java.lang.String TAG
 com.google.android.material.tabs.TabLayout$TabIndicatorGravity
 io.reactivex.rxjava3.internal.operators.flowable.FlowableConcatWithSingle
+org.apache.commons.codec.digest.MessageDigestAlgorithms
 io.reactivex.rxjava3.internal.operators.flowable.FlowableDelaySubscriptionOther$MainSubscriber$OtherSubscriber
 io.reactivex.rxjava3.internal.operators.flowable.FlowableTakeUntilPredicate$InnerSubscriber
 io.reactivex.rxjava3.internal.operators.completable.CompletableFromObservable$CompletableFromObservableObserver
@@ -19596,6 +19869,7 @@ io.reactivex.rxjava3.internal.operators.flowable.FlowableBuffer$PublisherBufferE
 io.reactivex.rxjava3.internal.operators.flowable.FlowableFromArray$ArrayConditionalSubscription
 com.google.android.material.bottomnavigation.LabelVisibilityMode
 io.reactivex.rxjava3.internal.operators.observable.ObservableLift
+org.apache.commons.codec.language.DaitchMokotoffSoundex
 io.reactivex.rxjava3.internal.operators.maybe.MaybeFlatMapIterableFlowable
 androidx.constraintlayout.motion.widget.TimeCycleSplineSet$ScaleYset
 io.reactivex.rxjava3.internal.subscriptions.DeferredScalarSubscription
@@ -19687,7 +19961,7 @@ okio.ForwardingSink:
     public void flush()
     public void close()
 com.lgh.advertising.going.myclass.DataDao_Impl$6:
-    public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.Coordinate)
+    public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.AppDescribe)
     public final synthetic com.lgh.advertising.going.myclass.DataDao_Impl this$0
 io.reactivex.rxjava3.internal.operators.flowable.FlowableOnBackpressureDrop
 androidx.core.view.ActionProvider$VisibilityListener:
@@ -20398,6 +20672,9 @@ com.google.gson.FieldNamingPolicy:
 androidx.core.graphics.PathParser$PathDataNode
 retrofit2.KotlinExtensions$suspendAndThrow$1:
     public synthetic java.lang.Object result
+com.lgh.advertising.going.myclass.DataDao_Impl$14:
+    public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.MyAppConfig)
+    public final synthetic com.lgh.advertising.going.myclass.DataDao_Impl this$0
 androidx.appcompat.view.menu.MenuDialogHelper
 androidx.transition.Scene:
     public static void setCurrentScene(android.view.ViewGroup,androidx.transition.Scene)
@@ -20515,6 +20792,13 @@ androidx.appcompat.widget.ScrollingTabContainerView$TabClickListener
 com.lgh.advertising.going.myclass.DataDao_Impl$5:
     public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.MyAppConfig)
     public final synthetic com.lgh.advertising.going.myclass.DataDao_Impl this$0
+org.apache.commons.codec.binary.Hex:
+    public static char[] encodeHex(byte[])
+    public static char[] encodeHex(byte[],boolean)
+    public static char[] encodeHex(byte[],char[])
+    public static void encodeHex(byte[],int,int,char[],char[],int)
+    public static java.lang.String encodeHexString(byte[])
+    public static final java.nio.charset.Charset DEFAULT_CHARSET
 androidx.core.graphics.Insets:
     public static androidx.core.graphics.Insets of(android.graphics.Rect)
     public static androidx.core.graphics.Insets max(androidx.core.graphics.Insets,androidx.core.graphics.Insets)
@@ -20787,6 +21071,8 @@ androidx.appcompat.widget.DecorToolbar:
     public abstract int getNavigationMode()
     public abstract androidx.core.view.ViewPropertyAnimatorCompat setupAnimatorToVisibility(int,long)
     public abstract void setVisibility(int)
+com.lgh.advertising.going.myactivity.RegulationImportActivity$MyAdapter$ViewHolder$1:
+    public final synthetic com.lgh.advertising.going.myactivity.RegulationImportActivity$MyAdapter val$this$1
 com.google.android.material.floatingactionbutton.FloatingActionButton$BaseBehavior:
     public static boolean isBottomSheet(android.view.View)
     public boolean onDependentViewChanged(androidx.coordinatorlayout.widget.CoordinatorLayout,com.google.android.material.floatingactionbutton.FloatingActionButton,android.view.View)
@@ -20877,6 +21163,8 @@ androidx.coordinatorlayout.R$styleable:
     public static final int[] FontFamilyFont
     public static final int[] GradientColor
     public static final int[] GradientColorItem
+androidx.recyclerview.widget.RecyclerView$RecyclerViewDataObserver:
+    public void triggerUpdateProcessor()
 androidx.appcompat.app.AlertController$3
 com.google.gson.internal.LinkedTreeMap$1:
     public int compare(java.lang.Comparable,java.lang.Comparable)
@@ -21133,9 +21421,6 @@ androidx.loader.app.LoaderManagerImpl$LoaderViewModel:
     public void markForRedelivery()
     public void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[])
     public boolean mCreatingLoader
-com.lgh.advertising.going.myactivity.ListDataActivity$6$1:
-    public int compare(com.lgh.advertising.going.mybean.AppDescribe,com.lgh.advertising.going.mybean.AppDescribe)
-    public final synthetic com.lgh.advertising.going.myactivity.ListDataActivity$6 this$1
 androidx.appcompat.app.AppCompatActivity$2
 androidx.constraintlayout.solver.widgets.WidgetContainer:
     public void add(androidx.constraintlayout.solver.widgets.ConstraintWidget)
@@ -21288,6 +21573,8 @@ com.lgh.advertising.going.myactivity.EditDataActivity$10:
     public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity this$0
 androidx.appcompat.view.menu.ListMenuPresenter$MenuAdapter
 androidx.loader.app.LoaderManagerImpl$LoaderObserver
+com.lgh.advertising.going.myactivity.RegulationImportActivity$6:
+    public final synthetic com.lgh.advertising.going.myactivity.RegulationImportActivity this$0
 androidx.core.graphics.TypefaceCompatBaseImpl:
     public static long getUniqueKey(android.graphics.Typeface)
     public androidx.core.provider.FontsContractCompat$FontInfo findBestInfo(androidx.core.provider.FontsContractCompat$FontInfo[],int)
@@ -21297,18 +21584,11 @@ androidx.core.graphics.TypefaceCompatBaseImpl:
 androidx.room.EntityInsertionAdapter:
     public final void insert(java.lang.Object)
 com.google.android.material.appbar.AppBarLayout$BaseBehavior$BaseDragCallback
-com.lgh.advertising.going.databinding.ViewListItemBinding:
-    public static com.lgh.advertising.going.databinding.ViewListItemBinding inflate(android.view.LayoutInflater)
-    public static com.lgh.advertising.going.databinding.ViewListItemBinding inflate(android.view.LayoutInflater,android.view.ViewGroup,boolean)
-    public static com.lgh.advertising.going.databinding.ViewListItemBinding bind(android.view.View)
-    public android.widget.RelativeLayout getRoot()
-    public final android.widget.ImageView imgForward
 androidx.appcompat.app.AppCompatViewInflater
 androidx.recyclerview.widget.RecyclerView$ViewHolder:
     public final void createPayloadsIfNeeded()
     public void flagRemovedAndOffsetPosition(int,int,boolean)
     public void saveOldPosition()
-    public final int getAdapterPosition()
     public final int getOldPosition()
     public final long getItemId()
     public final int getItemViewType()
@@ -21543,14 +21823,15 @@ com.lgh.advertising.going.myactivity.ListDataActivity:
     public static synthetic java.util.List access$100(com.lgh.advertising.going.myactivity.ListDataActivity)
     public static synthetic android.content.pm.PackageManager access$200(com.lgh.advertising.going.myactivity.ListDataActivity)
     public static synthetic java.util.Set access$300(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic android.widget.BaseAdapter access$400(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic android.view.LayoutInflater access$500(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic com.lgh.advertising.going.myclass.DataDao access$600(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$700(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter access$400(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic java.util.List access$500(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic com.lgh.advertising.going.databinding.ActivityListDataBinding access$600(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static void access$700(com.lgh.advertising.going.myactivity.ListDataActivity,java.lang.String)
     public static synthetic android.content.Context access$800(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic com.lgh.advertising.going.databinding.ActivityListDataBinding access$900(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic java.util.List access$1002(com.lgh.advertising.going.myactivity.ListDataActivity,java.util.List)
+    public static synthetic com.lgh.advertising.going.myclass.DataDao access$900(com.lgh.advertising.going.myactivity.ListDataActivity)
     public static synthetic java.util.List access$1000(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$1100(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public final void showEditShareFileNameDialog(java.lang.String)
 androidx.fragment.app.FragmentTransition:
     public static androidx.fragment.app.FragmentTransitionImpl resolveSupportImpl()
     public static androidx.collection.ArrayMap calculateNameOverrides(int,java.util.ArrayList,java.util.ArrayList,int,int)
@@ -21578,8 +21859,8 @@ androidx.room.RoomDatabase:
     public void endTransaction()
     public java.util.concurrent.Executor getQueryExecutor()
     public void internalInitInvalidationTracker(androidx.sqlite.db.SupportSQLiteDatabase)
-    public synthetic java.lang.Object lambda$beginTransaction$0$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public synthetic java.lang.Object lambda$endTransaction$1$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
+    public synthetic java.lang.Object lambda$beginTransaction$0$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public java.util.concurrent.Executor mTransactionExecutor
     public final java.util.Map mBackingFieldMap
 retrofit2.CompletableFutureCallAdapterFactory$ResponseCallAdapter$ResponseCallback:
@@ -21835,6 +22116,8 @@ com.google.android.material.appbar.AppBarLayout$BaseBehavior:
     public boolean canDragView(android.view.View)
     public void onFlingFinished(androidx.coordinatorlayout.widget.CoordinatorLayout,android.view.View)
     public com.google.android.material.appbar.AppBarLayout$BaseBehavior$BaseDragCallback onDragCallback
+androidx.recyclerview.widget.RecyclerView$AdapterDataObserver:
+    public void onItemRangeChanged()
 com.google.gson.internal.ConstructorConstructor$1:
     public final synthetic com.google.gson.internal.ConstructorConstructor this$0
 androidx.recyclerview.widget.ChildHelper$Callback:
@@ -21946,7 +22229,7 @@ androidx.recyclerview.widget.RecyclerView$ItemAnimator$ItemHolderInfo:
     public int right
     public int bottom
 com.lgh.advertising.going.myclass.DataDao_Impl$11:
-    public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.AppDescribe)
+    public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.Widget)
     public final synthetic com.lgh.advertising.going.myclass.DataDao_Impl this$0
 androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat$AnimatedVectorDrawableDelegateState
 com.google.android.material.internal.CheckableImageButton:
@@ -22118,7 +22401,7 @@ androidx.constraintlayout.widget.Barrier:
     public final void updateType(androidx.constraintlayout.solver.widgets.ConstraintWidget,int,boolean)
 androidx.appcompat.view.SupportActionModeWrapper$CallbackWrapper
 com.lgh.advertising.going.myclass.DataDao_Impl$12:
-    public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.MyAppConfig)
+    public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.AutoFinder)
     public final synthetic com.lgh.advertising.going.myclass.DataDao_Impl this$0
 retrofit2.converter.scalars.ScalarResponseBodyConverters$LongResponseBodyConverter:
     public java.lang.Long convert(okhttp3.ResponseBody)
@@ -22169,6 +22452,8 @@ androidx.fragment.app.BackStackState:
 androidx.versionedparcelable.ParcelImpl$1:
     public androidx.versionedparcelable.ParcelImpl createFromParcel(android.os.Parcel)
     public androidx.versionedparcelable.ParcelImpl[] newArray(int)
+com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter$ViewHolder$4:
+    public final synthetic com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter val$this$1
 androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat$1
 androidx.appcompat.app.WindowDecorActionBar$3:
     public void <init>(androidx.appcompat.app.WindowDecorActionBar)
@@ -22405,6 +22690,12 @@ androidx.room.RoomOpenHelper:
     public final java.lang.String mLegacyHash
 androidx.appcompat.widget.TintInfo:
     public void clear()
+com.lgh.advertising.going.databinding.ActivityRegulationImportBinding:
+    public static com.lgh.advertising.going.databinding.ActivityRegulationImportBinding inflate(android.view.LayoutInflater)
+    public static com.lgh.advertising.going.databinding.ActivityRegulationImportBinding inflate(android.view.LayoutInflater,android.view.ViewGroup,boolean)
+    public static com.lgh.advertising.going.databinding.ActivityRegulationImportBinding bind(android.view.View)
+    public android.widget.FrameLayout getRoot()
+    public final android.widget.LinearLayout rlBottom
 androidx.appcompat.widget.AppCompatCheckedTextView
 androidx.viewpager2.adapter.FragmentStateAdapter
 androidx.customview.widget.ExploreByTouchHelper:
@@ -22447,6 +22738,10 @@ androidx.core.graphics.TypefaceCompatBaseImpl$1:
 androidx.appcompat.R$style
 androidx.recyclerview.widget.RecyclerView$ItemAnimator$ItemAnimatorListener:
     public abstract void onAnimationFinished(androidx.recyclerview.widget.RecyclerView$ViewHolder)
+com.lgh.advertising.going.databinding.ViewItemImportBinding:
+    public static com.lgh.advertising.going.databinding.ViewItemImportBinding inflate(android.view.LayoutInflater,android.view.ViewGroup,boolean)
+    public static com.lgh.advertising.going.databinding.ViewItemImportBinding bind(android.view.View)
+    public android.widget.RelativeLayout getRoot()
 androidx.fragment.app.FragmentManagerState$1:
     public androidx.fragment.app.FragmentManagerState createFromParcel(android.os.Parcel)
     public androidx.fragment.app.FragmentManagerState[] newArray(int)
@@ -22507,6 +22802,8 @@ androidx.lifecycle.SavedStateHandleController:
     public void attachToLifecycle(androidx.savedstate.SavedStateRegistry,androidx.lifecycle.Lifecycle)
     public final java.lang.String mKey
     public final androidx.lifecycle.SavedStateHandle mHandle
+com.lgh.advertising.going.myactivity.RegulationImportActivity$3:
+    public final synthetic com.lgh.advertising.going.myactivity.RegulationImportActivity this$0
 androidx.recyclerview.R$attr
 androidx.cursoradapter.widget.CursorFilter$CursorFilterClient:
     public abstract java.lang.CharSequence convertToString(android.database.Cursor)
@@ -23405,6 +23702,9 @@ androidx.fragment.app.SpecialEffectsController:
     public void updateOperationDirection(boolean)
     public void forcePostponedExecutePendingOperations()
     public final androidx.fragment.app.SpecialEffectsController$Operation findRunningOperation(androidx.fragment.app.Fragment)
+com.lgh.advertising.going.myclass.DataDao_Impl$13:
+    public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.AppDescribe)
+    public final synthetic com.lgh.advertising.going.myclass.DataDao_Impl this$0
 com.google.android.material.bottomappbar.BottomAppBar$AnimationListener
 io.reactivex.rxjava3.exceptions.Exceptions
 androidx.core.provider.FontRequest:
@@ -23437,6 +23737,8 @@ androidx.loader.app.LoaderManagerImpl$LoaderInfo:
     public androidx.lifecycle.LifecycleOwner mLifecycleOwner
     public androidx.loader.app.LoaderManagerImpl$LoaderObserver mObserver
     public androidx.loader.content.Loader mPriorLoader
+com.lgh.advertising.going.myactivity.ListDataActivity$7:
+    public void onNext()
 okhttp3.internal.platform.AndroidPlatform:
     public static okhttp3.internal.platform.Platform buildIfSupported()
     public static int getSdkInt()
@@ -24002,6 +24304,12 @@ io.reactivex.rxjava3.plugins.RxJavaPlugins:
     public static boolean redirectsToGet(java.lang.String)
     public static java.lang.String get(okhttp3.Request,java.net.Proxy$Type)
     public static boolean includeAuthorityInRequestLine(okhttp3.Request,java.net.Proxy$Type)
+    public static byte[] getBytes(java.lang.String,java.nio.charset.Charset)
+    public static byte[] getBytesUtf8(java.lang.String)
+    public static java.security.MessageDigest getDigest(java.lang.String)
+    public static java.security.MessageDigest getMd5Digest()
+    public static byte[] md5(byte[])
+    public static byte[] md5(java.lang.String)
     public static org.apache.commons.io.file.Counters$PathCounters longPathCounters()
     public static final java.lang.Object awaitNullable(retrofit2.Call,kotlin.coroutines.Continuation)
     public static volatile io.reactivex.rxjava3.functions.Consumer errorHandler
@@ -24103,6 +24411,7 @@ androidx.recyclerview.widget.AdapterHelper:
     public void reset()
     public boolean hasAnyUpdateTypes(int)
     public int findPositionOffset(int)
+    public boolean onItemRangeChanged(int,int,java.lang.Object)
     public int applyPendingUpdatesToPosition(int)
     public boolean hasUpdates()
     public final void applyMove(androidx.recyclerview.widget.AdapterHelper$UpdateOp)
@@ -24111,7 +24420,6 @@ androidx.recyclerview.widget.AdapterHelper:
     public final void applyAdd(androidx.recyclerview.widget.AdapterHelper$UpdateOp)
     public java.lang.Runnable mOnItemProcessedCallback
     public final boolean mDisableRecycler
-    public int mExistingUpdateTypes
 io.reactivex.rxjava3.core.ObservableSource:
     public abstract void subscribe(io.reactivex.rxjava3.core.Observer)
 androidx.appcompat.app.AppCompatDelegateImpl$Api21Impl
@@ -24123,7 +24431,6 @@ androidx.constraintlayout.solver.PriorityGoalRow$GoalVariableAccessor:
     public final boolean isSmallerThan(androidx.constraintlayout.solver.SolverVariable)
     public void reset()
     public androidx.constraintlayout.solver.PriorityGoalRow row
-androidx.recyclerview.widget.RecyclerView$1
 androidx.core.graphics.PathParser
 com.google.android.material.datepicker.MaterialCalendarGridView:
     public void <init>(android.content.Context,android.util.AttributeSet,int)
@@ -24151,6 +24458,8 @@ androidx.transition.AutoTransition:
     public final void init()
 androidx.appcompat.content.res.AppCompatResources$ColorStateListCacheEntry
 androidx.core.view.ViewCompat$AccessibilityPaneVisibilityManager
+com.lgh.advertising.going.myactivity.MainActivity$10:
+    public final synthetic com.lgh.advertising.going.myactivity.MainActivity this$0
 androidx.transition.ViewGroupUtilsApi14$1
 androidx.lifecycle.Lifecycle:
     public abstract void removeObserver(androidx.lifecycle.LifecycleObserver)
@@ -24318,6 +24627,7 @@ com.lgh.advertising.going.myfunction.MyUtils:
     public boolean requestUpdateKeepAliveByFloatingWindow(boolean)
     public boolean setKeepAliveByNotification(boolean)
     public boolean setKeepAliveByFloatingWindow(boolean)
+    public boolean requestUpdateAllDate()
 androidx.appcompat.widget.ActionBarOverlayLayout:
     public final androidx.appcompat.widget.DecorToolbar getDecorToolbar(android.view.View)
     public final void postRemoveActionBarHideOffset()
@@ -24403,6 +24713,8 @@ androidx.core.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityAction
 androidx.fragment.app.FragmentAnim
 androidx.sqlite.db.framework.FrameworkSQLiteDatabase$1:
     public final synthetic androidx.sqlite.db.framework.FrameworkSQLiteDatabase this$0
+com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter$ViewHolder$2:
+    public final synthetic com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter val$this$1
 androidx.appcompat.app.WindowDecorActionBar$1
 androidx.core.util.Pools$Pool
 androidx.recyclerview.widget.RecyclerView$Adapter:
@@ -24422,6 +24734,7 @@ androidx.recyclerview.widget.RecyclerView$Adapter:
     public void onAttachedToRecyclerView()
     public void onDetachedFromRecyclerView()
     public final void notifyDataSetChanged()
+    public final void notifyItemChanged(int)
 androidx.fragment.app.Fragment:
     public static androidx.fragment.app.Fragment instantiate(android.content.Context,java.lang.String,android.os.Bundle)
     public final void initLifecycle()
@@ -24581,6 +24894,11 @@ io.reactivex.rxjava3.core.Observable:
     public final io.reactivex.rxjava3.core.Maybe singleElement()
     public final io.reactivex.rxjava3.core.Single singleOrError()
     public final io.reactivex.rxjava3.core.Flowable toFlowable(io.reactivex.rxjava3.core.BackpressureStrategy)
+com.lgh.advertising.going.databinding.ViewItemAppBinding:
+    public static com.lgh.advertising.going.databinding.ViewItemAppBinding inflate(android.view.LayoutInflater,android.view.ViewGroup,boolean)
+    public static com.lgh.advertising.going.databinding.ViewItemAppBinding bind(android.view.View)
+    public android.widget.RelativeLayout getRoot()
+    public final android.widget.ImageView imgForward
 androidx.core.widget.PopupWindowCompat
 androidx.fragment.app.FragmentTransitionImpl$1:
     public final synthetic androidx.fragment.app.FragmentTransitionImpl this$0
@@ -24995,7 +25313,6 @@ com.google.android.material.R$style:
     public static void write(com.google.gson.JsonElement,com.google.gson.stream.JsonWriter)
     public static java.io.Writer writerForAppendable(java.lang.Appendable)
     public static java.util.List JsonToStringList(java.lang.String)
-    public static java.lang.String StringListToJson(java.util.List)
     public static android.graphics.Rect JsonToRect(java.lang.String)
     public static java.lang.String RectToJson(android.graphics.Rect)
     public static io.reactivex.rxjava3.core.Scheduler initMainThreadScheduler(java.util.concurrent.Callable)
@@ -25178,6 +25495,7 @@ org.apache.commons.io.Charsets:
 androidx.lifecycle.MethodCallsLogger:
     public java.util.Map mCalledMethods
 androidx.core.app.ActivityRecreator$LifecycleCheckCallbacks
+org.apache.commons.codec.binary.StringUtils
 androidx.room.SQLiteCopyOpenHelper:
     public void <init>(android.content.Context,java.lang.String,java.io.File,java.util.concurrent.Callable,int,androidx.sqlite.db.SupportSQLiteOpenHelper)
     public synchronized androidx.sqlite.db.SupportSQLiteDatabase getReadableDatabase()
@@ -25622,8 +25940,11 @@ androidx.appcompat.graphics.drawable.StateListDrawable$StateListState
 androidx.sqlite.db.SupportSQLiteOpenHelper$Factory:
     public abstract androidx.sqlite.db.SupportSQLiteOpenHelper create(androidx.sqlite.db.SupportSQLiteOpenHelper$Configuration)
 androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$1
+com.lgh.advertising.going.myactivity.RegulationImportActivity$1:
+    public int compare(com.lgh.advertising.going.mybean.Regulation,com.lgh.advertising.going.mybean.Regulation)
+    public final synthetic com.lgh.advertising.going.myactivity.RegulationImportActivity this$0
 com.lgh.advertising.going.myclass.DataDao_Impl$10:
-    public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.AutoFinder)
+    public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.Coordinate)
     public final synthetic com.lgh.advertising.going.myclass.DataDao_Impl this$0
 com.google.android.material.behavior.SwipeDismissBehavior:
     public static int clamp(int,int,int)
@@ -25677,6 +25998,8 @@ androidx.appcompat.view.menu.MenuBuilder:
 retrofit2.converter.gson.GsonConverterFactory:
     public static retrofit2.converter.gson.GsonConverterFactory create()
     public static retrofit2.converter.gson.GsonConverterFactory create(com.google.gson.Gson)
+androidx.recyclerview.widget.RecyclerView$AdapterDataObservable:
+    public void notifyItemRangeChanged(int,int,java.lang.Object)
 retrofit2.OptionalConverterFactory$OptionalConverter:
     public java.util.Optional convert(okhttp3.ResponseBody)
 androidx.recyclerview.widget.RecyclerView$ViewCacheExtension:
@@ -25785,6 +26108,9 @@ com.google.android.material.floatingactionbutton.FloatingActionButtonImpl:
 com.google.gson.internal.bind.TypeAdapters$21:
     public java.net.URL read(com.google.gson.stream.JsonReader)
     public void write(com.google.gson.stream.JsonWriter,java.net.URL)
+com.lgh.advertising.going.myactivity.RegulationImportActivity$MyAdapter:
+    public com.lgh.advertising.going.myactivity.RegulationImportActivity$MyAdapter$ViewHolder onCreateViewHolder(android.view.ViewGroup)
+    public void onBindViewHolder(com.lgh.advertising.going.myactivity.RegulationImportActivity$MyAdapter$ViewHolder,int)
 androidx.core.provider.CalleeHandler
 com.google.gson.internal.ConstructorConstructor$10:
     public final synthetic com.google.gson.internal.ConstructorConstructor this$0
@@ -25807,6 +26133,8 @@ androidx.savedstate.SavedStateRegistry:
     public void performRestore(androidx.lifecycle.Lifecycle,android.os.Bundle)
     public void performSave(android.os.Bundle)
 com.google.gson.internal.Streams
+com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter$ViewHolder$3:
+    public final synthetic com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter val$this$1
 com.google.android.material.resources.MaterialResources
 androidx.core.text.PrecomputedTextCompat$Params:
     public android.text.TextPaint getTextPaint()
@@ -25856,8 +26184,6 @@ com.google.gson.JsonArray:
     public void add(com.google.gson.JsonElement)
 androidx.appcompat.view.menu.MenuItemWrapperICS$CollapsibleActionViewWrapper:
     public android.view.View getWrappedView()
-com.lgh.advertising.going.myactivity.ListDataActivity$5:
-    public void onNext()
 androidx.transition.FragmentTransitionSupport$4:
     public final synthetic android.graphics.Rect val$epicenter
     public final synthetic androidx.transition.FragmentTransitionSupport this$0
@@ -25927,6 +26253,9 @@ okhttp3.Dispatcher:
 androidx.activity.OnBackPressedDispatcher:
     public androidx.activity.Cancellable addCancellableCallback(androidx.activity.OnBackPressedCallback)
     public void addCallback(androidx.lifecycle.LifecycleOwner,androidx.activity.OnBackPressedCallback)
+com.lgh.advertising.going.myactivity.ListDataActivity$8$1:
+    public int compare(com.lgh.advertising.going.mybean.AppDescribe,com.lgh.advertising.going.mybean.AppDescribe)
+    public final synthetic com.lgh.advertising.going.myactivity.ListDataActivity$8 this$1
 androidx.core.view.KeyEventDispatcher:
     public static boolean actionBarOnMenuKeyEventPre28(android.app.ActionBar,android.view.KeyEvent)
     public static boolean activitySuperDispatchKeyEventPre28(android.app.Activity,android.view.KeyEvent)
@@ -25966,6 +26295,12 @@ androidx.core.view.TintableBackgroundView
 androidx.appcompat.app.AppCompatViewInflater$DeclaredOnClickListener
 androidx.sqlite.db.SupportSQLiteOpenHelper$Configuration
 androidx.room.MultiInstanceInvalidationClient$3
+com.lgh.advertising.going.myactivity.RegulationImportActivity:
+    public static synthetic java.util.List access$000(com.lgh.advertising.going.myactivity.RegulationImportActivity)
+    public static synthetic java.util.List access$100(com.lgh.advertising.going.myactivity.RegulationImportActivity)
+    public static synthetic com.lgh.advertising.going.myactivity.RegulationImportActivity$MyAdapter access$200(com.lgh.advertising.going.myactivity.RegulationImportActivity)
+    public static synthetic java.util.List access$300(com.lgh.advertising.going.myactivity.RegulationImportActivity)
+    public static synthetic com.lgh.advertising.going.databinding.ActivityRegulationImportBinding access$400(com.lgh.advertising.going.myactivity.RegulationImportActivity)
 io.reactivex.rxjava3.functions.Supplier
 com.google.android.material.internal.CollapsingTextHelper$1:
     public void apply(android.graphics.Typeface)
@@ -26538,7 +26873,6 @@ okhttp3.CacheControl:
     public static final okhttp3.CacheControl FORCE_NETWORK
     public static final okhttp3.CacheControl FORCE_CACHE
 com.lgh.advertising.going.databinding.ViewEditFileNameBinding:
-    public static com.lgh.advertising.going.databinding.ViewEditFileNameBinding inflate(android.view.LayoutInflater)
     public static com.lgh.advertising.going.databinding.ViewEditFileNameBinding inflate(android.view.LayoutInflater,android.view.ViewGroup,boolean)
     public static com.lgh.advertising.going.databinding.ViewEditFileNameBinding bind(android.view.View)
     public android.widget.LinearLayout getRoot()
@@ -26851,6 +27185,7 @@ androidx.appcompat.app.ActionBar:
 io.reactivex.rxjava3.disposables.CompositeDisposable:
     public boolean isDisposed()
     public void dispose(io.reactivex.rxjava3.internal.util.OpenHashSet)
+org.apache.commons.codec.digest.DigestUtils
 androidx.loader.content.Loader$OnLoadCompleteListener
 com.lgh.advertising.going.myclass.DataDao_Impl:
     public static java.util.List getRequiredConverters()
@@ -26918,8 +27253,6 @@ androidx.recyclerview.widget.RecyclerView:
     public void dispatchChildAttached(android.view.View)
     public void dispatchPendingImportantForAccessibilityChanges()
     public void initFastScroller(android.graphics.drawable.StateListDrawable,android.graphics.drawable.Drawable,android.graphics.drawable.StateListDrawable,android.graphics.drawable.Drawable)
-    public final java.lang.Runnable mUpdateChildViewsRunnable
-    public boolean mAdapterUpdateDuringMeasure
     public java.util.List mOnChildAttachStateListeners
     public static final boolean FORCE_INVALIDATE_DISPLAY_LIST
     public static final boolean ALLOW_SIZE_IN_UNSPECIFIED_SPEC
@@ -27092,7 +27425,7 @@ androidx.recyclerview.widget.StaggeredGridLayoutManager$AnchorInfo:
     public void saveSpanReferenceLines(androidx.recyclerview.widget.StaggeredGridLayoutManager$Span[])
     public void assignCoordinateFromPadding(int)
 com.lgh.advertising.going.myactivity.ListDataActivity$4:
-    public final synthetic com.lgh.advertising.going.myactivity.ListDataActivity this$0
+    public static synthetic void lambda$onClick$0(com.lgh.advertising.going.myactivity.ListDataActivity$AppDescribeItem)
 androidx.constraintlayout.solver.LinearSystem$ValuesRow
 retrofit2.adapter.rxjava3.RxJava3CallAdapter:
     public final io.reactivex.rxjava3.core.Scheduler scheduler
@@ -27708,7 +28041,7 @@ com.google.android.material.animation.ImageMatrixProperty:
     public void set(android.widget.ImageView,android.graphics.Matrix)
     public android.graphics.Matrix get(android.widget.ImageView)
 com.lgh.advertising.going.myclass.DataDao_Impl$7:
-    public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.Widget)
+    public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.AutoFinder)
     public final synthetic com.lgh.advertising.going.myclass.DataDao_Impl this$0
 androidx.appcompat.view.ActionMode$Callback
 androidx.fragment.app.DefaultSpecialEffectsController$7:
@@ -27716,6 +28049,9 @@ androidx.fragment.app.DefaultSpecialEffectsController$7:
 okhttp3.internal.platform.Android10Platform:
     public static okhttp3.internal.platform.Platform buildIfSupported()
     public final void enableSessionTickets(javax.net.ssl.SSLSocket)
+com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter:
+    public com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter$ViewHolder onCreateViewHolder(android.view.ViewGroup)
+    public void onBindViewHolder(com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter$ViewHolder,int)
 com.google.android.material.datepicker.CalendarConstraints$Builder:
     public com.google.android.material.datepicker.CalendarConstraints$Builder setOpenAt(long)
     public com.google.android.material.datepicker.CalendarConstraints build()
@@ -28132,6 +28468,8 @@ androidx.fragment.app.FragmentStore:
     public androidx.fragment.app.Fragment findFragmentByTag(java.lang.String)
     public int findFragmentIndexInContainer(androidx.fragment.app.Fragment)
     public void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[])
+com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter$ViewHolder$1:
+    public final synthetic com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter val$this$1
 androidx.appcompat.app.AppCompatActivity
 androidx.room.AutoCloser$1
 com.google.gson.internal.Streams$AppendableWriter
@@ -28170,8 +28508,8 @@ androidx.transition.ViewUtils$1:
 retrofit2.DefaultCallAdapterFactory$ExecutorCallbackCall$1:
     private synthetic void lambda$onFailure$1(retrofit2.Callback,java.lang.Throwable)
     private synthetic void lambda$onResponse$0(retrofit2.Callback,retrofit2.Response)
-    public synthetic void lambda$onResponse$0$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,retrofit2.Response)
     public synthetic void lambda$onFailure$1$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,java.lang.Throwable)
+    public synthetic void lambda$onResponse$0$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,retrofit2.Response)
 androidx.appcompat.widget.AppCompatSpinner$DialogPopup
 androidx.lifecycle.runtime.R$id
 com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton$4:
@@ -28593,6 +28931,8 @@ androidx.recyclerview.widget.PagerSnapHelper:
     public final boolean isForwardFling(androidx.recyclerview.widget.RecyclerView$LayoutManager,int,int)
     public final boolean isReverseLayout(androidx.recyclerview.widget.RecyclerView$LayoutManager)
     public final androidx.recyclerview.widget.OrientationHelper getOrientationHelper(androidx.recyclerview.widget.RecyclerView$LayoutManager)
+com.lgh.advertising.going.myactivity.ListDataActivity$3:
+    public final synthetic com.lgh.advertising.going.myactivity.ListDataActivity this$0
 com.lgh.advertising.going.myactivity.EditDataActivity$12:
     public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity this$0
 com.lgh.advertising.going.databinding.ViewNewRuleBinding:
@@ -28733,32 +29073,32 @@ com.google.android.material.transformation.ExpandableBehavior:
     public static synthetic int access$000(com.google.android.material.transformation.ExpandableBehavior)
     public com.google.android.material.expandable.ExpandableWidget findExpandableWidget(androidx.coordinatorlayout.widget.CoordinatorLayout,android.view.View)
 androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
-androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
-androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
-androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
-androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
-androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
-okhttp3.-$$Lambda$EventListener$OXICzLQ3RHlsN3BZyIksLMm-GlQ:
-    public final okhttp3.EventListener create(okhttp3.Call)
-androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
-okhttp3.-$$Lambda$Dns$9evC3uO-H_z08sS9O-4-hLhZ8es:
-    public final java.util.List lookup(java.lang.String)
-androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
-androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
-androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
-androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
-androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
 okhttp3.-$$Lambda$Authenticator$esJoevooYalsFzydukZpZJT5arU:
     public final okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)
-androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
-androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
-androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
-androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
-androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
+androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
+androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
 androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
+androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
+androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
+androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
+androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
+androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
+androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
+androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
+androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
+androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
+androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
+androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
+okhttp3.-$$Lambda$EventListener$OXICzLQ3RHlsN3BZyIksLMm-GlQ:
+    public final okhttp3.EventListener create(okhttp3.Call)
+androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
+okhttp3.-$$Lambda$Dns$9evC3uO-H_z08sS9O-4-hLhZ8es:
+    public final java.util.List lookup(java.lang.String)
+androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
+androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
+androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
 com.android.tools.r8.GeneratedOutlineSupport:
     public static java.lang.String outline5(org.xmlpull.v1.XmlPullParser,java.lang.StringBuilder,java.lang.String)
