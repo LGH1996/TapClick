@@ -77,4 +77,16 @@ public interface DataDao {
 
     @Update
     void updateMyAppConfig(MyAppConfig myAppConfig);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAppDescribeForce(List<AppDescribe> appDescribes);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAutoFinderForce(List<AutoFinder> autoFinders);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertCoordinateForce(List<Coordinate> coordinates);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertWidgetForce(List<Widget> widgets);
 }

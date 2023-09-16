@@ -22,7 +22,7 @@
         android:layout_above="@+id/button"
         android:layout_below="@+id/title"
         android:fadingEdge="vertical"
-        android:fadingEdgeLength="20dp"
+        android:fadingEdgeLength="5dp"
         android:paddingHorizontal="10dp"
         android:paddingTop="14dp"
         android:paddingBottom="2dp"

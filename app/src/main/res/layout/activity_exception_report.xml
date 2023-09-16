@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="5dp"
         android:fadingEdge="horizontal"
-        android:fadingEdgeLength="15dp"
+        android:fadingEdgeLength="5dp"
         android:requiresFadingEdge="horizontal"
         android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@+id/send"
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fadingEdge="vertical"
-            android:fadingEdgeLength="15dp"
+            android:fadingEdgeLength="5dp"
             android:requiresFadingEdge="vertical"
             android:scrollbars="none">
 

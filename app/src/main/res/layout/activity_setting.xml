@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fadingEdge="vertical"
-        android:fadingEdgeLength="15dp"
+        android:fadingEdgeLength="5dp"
         android:requiresFadingEdge="vertical"
         android:scrollbars="none">
 
@@ -135,17 +135,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="退出后不显示在最近任务列表中："
+                    android:text="主页不显示在最近任务列表中："
                     android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
                 <CheckBox
                     android:id="@+id/setting_autoHideOnTaskList"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/check_select"
-                    android:button="@null"
+                    android:button="@drawable/check_select"
                     android:gravity="center" />
             </LinearLayout>
 

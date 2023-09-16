@@ -16,7 +16,7 @@
             android:layout_above="@+id/start"
             android:layout_alignParentTop="true"
             android:fadingEdge="vertical"
-            android:fadingEdgeLength="15dp"
+            android:fadingEdgeLength="5dp"
             android:requiresFadingEdge="vertical"
             android:scrollbars="none">
 
@@ -94,9 +94,9 @@
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="20dp"
-            android:textColor="@android:color/white"
             android:background="@drawable/button_selector"
-            android:text="创建规则" />
+            android:text="创建规则"
+            android:textColor="@android:color/white" />
     </RelativeLayout>
 
     <include layout="@layout/view_no_vip" />

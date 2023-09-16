@@ -33,6 +33,8 @@ import com.lgh.advertising.going.mybean.AppDescribe;
 import com.lgh.advertising.going.mybean.CoordinateShare;
 import com.lgh.advertising.going.mybean.LatestMessage;
 import com.lgh.advertising.going.mybean.MyAppConfig;
+import com.lgh.advertising.going.mybean.Regulation;
+import com.lgh.advertising.going.mybean.RegulationExport;
 import com.lgh.advertising.going.mybean.WidgetShare;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
@@ -42,9 +44,11 @@ import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -306,7 +310,7 @@ public class MainActivity extends BaseActivity {
             if (TextUtils.isEmpty(strRule)) {
                 return;
             }
-            String regStr = "^\"(" + WidgetShare.class.getSimpleName() + "|" + CoordinateShare.class.getSimpleName() + ")\"\\s*:\\s*(.+)$";
+            String regStr = "^\"(" + WidgetShare.class.getSimpleName() + "|" + CoordinateShare.class.getSimpleName() + "|" + RegulationExport.class.getSimpleName() + ")\"\\s*:\\s*(.+)$";
             Pattern pattern = Pattern.compile(regStr, Pattern.DOTALL);
             Matcher matcher = pattern.matcher(strRule);
             if (!matcher.matches()) {
@@ -422,6 +426,54 @@ public class MainActivity extends BaseActivity {
                             intent.putExtra("packageName", appDescribe.appPackage);
                             startActivity(intent);
                         }
+                    }
+                });
+                newRuleBinding.cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+                Window window = alertDialog.getWindow();
+                window.setBackgroundDrawableResource(R.drawable.add_data_background);
+                alertDialog.show();
+                WindowManager.LayoutParams lp = window.getAttributes();
+                DisplayMetrics metrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+                lp.width = metrics.widthPixels / 5 * 4;
+                lp.height = metrics.heightPixels / 2;
+                window.setAttributes(lp);
+            } else if (TextUtils.equals(matcher.group(1), RegulationExport.class.getSimpleName())) {
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                RegulationExport regulationExport = gson.fromJson(matcher.group(2), RegulationExport.class);
+
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("我的系统指纹：").append(Build.FINGERPRINT).append("\n");
+                stringBuilder.append("他的系统指纹：").append(regulationExport.fingerPrint).append("\n\n");
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
+                stringBuilder.append("我的手机屏幕：").append(displayMetrics).append("\n");
+                stringBuilder.append("他的手机屏幕：").append(regulationExport.displayMetrics).append("\n\n");
+                int coordinateNum = 0;
+                int widgetNum = 0;
+                Set<String> keyWordSet = new HashSet<>();
+                for (Regulation e : regulationExport.regulationList) {
+                    keyWordSet.addAll(e.autoFinder.keywordList);
+                    coordinateNum += e.coordinateList.size();
+                    widgetNum += e.widgetList.size();
+                }
+                stringBuilder.append(String.format(Locale.ROOT, "共%d个应用，%d个字词检索，%d条控件规则，%d条坐标规则。", regulationExport.regulationList.size(), keyWordSet.size(), widgetNum, coordinateNum));
+
+                ViewNewRuleBinding newRuleBinding = ViewNewRuleBinding.inflate(getLayoutInflater());
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setCancelable(false).setView(newRuleBinding.getRoot()).create();
+                newRuleBinding.content.setText(stringBuilder);
+                newRuleBinding.sure.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                        autoHideOnTaskList = false;
+                        RegulationImportActivity.regulationList = regulationExport.regulationList;
+                        startActivity(new Intent(MainActivity.this, RegulationImportActivity.class));
                     }
                 });
                 newRuleBinding.cancel.setOnClickListener(new View.OnClickListener() {

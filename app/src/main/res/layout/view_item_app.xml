@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/item_bg_ripple"
@@ -30,7 +31,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/on_off"
+                android:layout_marginEnd="20dp"
+                android:layout_toStartOf="@id/cb_select"
                 android:layout_toEndOf="@id/img"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
@@ -58,16 +60,27 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
+            <CheckBox
+                android:id="@+id/cb_select"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/on_off"
+                android:button="@drawable/check_select"
+                android:gravity="center_vertical"
+                android:paddingEnd="16dp" />
+
             <Switch
                 android:id="@+id/on_off"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_toStartOf="@id/img_forward"
                 android:layout_centerVertical="true"
-                android:paddingHorizontal="10dp"
+                android:layout_toStartOf="@+id/img_forward"
                 android:gravity="center_vertical"
+                android:paddingEnd="10dp"
                 android:thumb="@drawable/switch_custom_thumb_selector"
-                android:track="@drawable/switch_custom_track_selector" />
+                android:track="@drawable/switch_custom_track_selector"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
             <ImageView
                 android:id="@+id/img_forward"

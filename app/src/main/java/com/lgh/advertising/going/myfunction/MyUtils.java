@@ -110,4 +110,11 @@ public class MyUtils {
         preferences.edit().putBoolean("keepAliveByFloatingWindow", enable).apply();
         return true;
     }
+
+    public boolean requestUpdateAllDate() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("updateScope", "allDate");
+        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+        return re > 0;
+    }
 }

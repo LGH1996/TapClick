@@ -13,6 +13,7 @@ import com.lgh.advertising.going.mybean.AppDescribe;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -56,10 +57,12 @@ public class MyContentProvider extends ContentProvider {
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         if (MyAccessibilityService.mainFunction != null) {
             updateData(MyAccessibilityService.mainFunction.getAppDescribeMap(), values);
+            updateAllDate(MyAccessibilityService.mainFunction.getAppDescribeMap(), values);
             updateKeepAlive(MyAccessibilityService.mainFunction, values);
         }
         if (MyAccessibilityServiceNoGesture.mainFunction != null) {
             updateData(MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap(), values);
+            updateAllDate(MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap(), values);
             updateKeepAlive(MyAccessibilityServiceNoGesture.mainFunction, values);
         }
         return 1;
@@ -120,5 +123,21 @@ public class MyContentProvider extends ContentProvider {
                 }
             });
         }
+    }
+
+    private void updateAllDate(Map<String, AppDescribe> appDescribeMap, ContentValues values) {
+        String updateScope = values.getAsString("updateScope");
+        if (!TextUtils.equals(updateScope, "allDate")) {
+            return;
+        }
+        Map<String, AppDescribe> newAppDescribeMap = new HashMap<>();
+        for (String e : appDescribeMap.keySet()) {
+            AppDescribe appDescribeTmp = dataDao.getAppDescribeByPackage(e);
+            if (appDescribeTmp != null) {
+                appDescribeTmp.getOtherFieldsFromDatabase(dataDao);
+                newAppDescribeMap.put(e, appDescribeTmp);
+            }
+        }
+        appDescribeMap.putAll(newAppDescribeMap);
     }
 }

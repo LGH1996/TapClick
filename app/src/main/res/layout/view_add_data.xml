@@ -31,9 +31,9 @@
             android:id="@+id/pacName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:hint="显示当前应用的包名"
             android:singleLine="true"
-            android:ellipsize="end"
             android:textColor="@color/text_color"
             android:textSize="12sp" />
     </LinearLayout>
@@ -62,9 +62,9 @@
             android:id="@+id/actName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:hint="显示当前页面的活动"
             android:singleLine="true"
-            android:ellipsize="end"
             android:textColor="@color/text_color"
             android:textSize="12sp" />
     </LinearLayout>
@@ -93,10 +93,10 @@
             android:id="@+id/widget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:hint="显示控件信息，长按快速打开规则管理页面"
             android:singleLine="true"
             android:textColor="@color/text_color"
-            android:ellipsize="end"
             android:textSize="12sp" />
     </LinearLayout>
 

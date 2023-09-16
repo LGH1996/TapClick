@@ -241,9 +241,9 @@
             <EditText
                 android:id="@+id/coordinate_createTime"
                 android:layout_width="match_parent"
-                android:ellipsize="end"
                 android:layout_height="match_parent"
                 android:background="@null"
+                android:ellipsize="end"
                 android:enabled="false"
                 android:gravity="center_vertical"
                 android:singleLine="true"
@@ -263,11 +263,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@+id/coordinate_share"
-                android:singleLine="true"
                 android:layout_marginEnd="25dp"
-                android:textColor="@color/text_color"
+                android:layout_toStartOf="@+id/coordinate_share"
                 android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
             <TextView
@@ -276,8 +276,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="25dp"
                 android:layout_toStartOf="@+id/coordinate_delete"
-                android:text="分享"
                 android:paddingVertical="10dp"
+                android:text="分享"
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
 
@@ -286,8 +286,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="删除"
                 android:paddingVertical="10dp"
+                android:text="删除"
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
         </RelativeLayout>

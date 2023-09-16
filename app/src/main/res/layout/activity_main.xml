@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:divider="@null"
             android:fadingEdge="vertical"
-            android:fadingEdgeLength="15dp"
+            android:fadingEdgeLength="5dp"
             android:requiresFadingEdge="vertical" />
 
     </LinearLayout>

@@ -18,26 +18,28 @@
         android:roundIcon="@drawable/app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".myactivity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:mimeType="text/plain"
                     android:scheme="content" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
 
@@ -45,31 +47,24 @@
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
-
         <activity
             android:name=".myactivity.ExceptionReportActivity"
             android:exported="false" />
-
         <activity android:name=".myactivity.SettingActivity" />
-
         <activity android:name=".myactivity.AuthorizationActivity" />
-
         <activity android:name=".myactivity.AddDataActivity" />
-
         <activity
             android:name=".myactivity.UpdateActivity"
             android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar" />
         <activity android:name=".myactivity.MoreMessageActivity" />
-
         <activity
             android:name=".myactivity.ShortCutActivity"
             android:theme="@android:style/Theme.NoDisplay" />
-
         <activity android:name=".myactivity.ListDataActivity" />
-
         <activity
             android:name=".myactivity.EditDataActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".myactivity.RegulationImportActivity" />
 
         <service
             android:name=".myfunction.MyTileServer"
@@ -115,7 +110,6 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/configure" />
         </service>
-
         <service
             android:name=".myfunction.MyAccessibilityServiceNoGesture"
             android:enabled="true"
@@ -149,9 +143,11 @@
             <meta-data
                 android:name="android.app.device_admin"
                 android:resource="@xml/configure_device_admin" />
+
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
     </application>
+
 </manifest>

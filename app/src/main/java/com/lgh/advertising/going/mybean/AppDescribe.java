@@ -31,11 +31,11 @@ public class AppDescribe {
     public boolean widgetOnOff;
 
     @Ignore
-    public AutoFinder autoFinder;
+    public transient AutoFinder autoFinder;
     @Ignore
-    public Map<String, Coordinate> coordinateMap;
+    public transient Map<String, Coordinate> coordinateMap;
     @Ignore
-    public Map<String, Set<Widget>> widgetSetMap;
+    public transient Map<String, Set<Widget>> widgetSetMap;
 
     public AppDescribe() {
         this.appName = "";

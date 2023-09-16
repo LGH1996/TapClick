@@ -35,7 +35,7 @@
             android:textCursorDrawable="@drawable/edit_cursor"
             android:textSize="14sp" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/searchBox"
@@ -45,7 +45,8 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_above="@id/rl_bottom"
+                android:layout_alignParentTop="true"
                 android:divider="@null"
                 android:fadingEdge="vertical"
                 android:fadingEdgeLength="5dp"
@@ -54,9 +55,10 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <LinearLayout
-                android:id="@+id/ll_select"
+                android:id="@+id/rl_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="15dp"
                 android:paddingTop="10dp"
@@ -73,7 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@drawable/check_select"
-                        android:paddingHorizontal="5dp"
+                        android:padding="5dp"
                         android:text="全选" />
 
                     <TextView
@@ -86,35 +88,15 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/bt_cancel"
+                    android:id="@+id/bt_import"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:background="@drawable/button_selector"
-                    android:text="取消"
-                    android:textColor="@android:color/white" />
-
-                <Button
-                    android:id="@+id/bt_export"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_selector"
-                    android:text="导出规则"
+                    android:text="确认导入"
                     android:textColor="@android:color/white" />
             </LinearLayout>
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/progress"
-            style="@android:style/Widget.Holo.Light.ProgressBar.Small"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <include layout="@layout/view_no_vip" />

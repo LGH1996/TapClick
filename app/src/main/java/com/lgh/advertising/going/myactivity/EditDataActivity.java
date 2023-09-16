@@ -48,6 +48,7 @@ import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
 import com.lgh.advertising.going.myfunction.MyUtils;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -145,6 +146,7 @@ public class EditDataActivity extends BaseActivity {
         }
         if (appDescribe == null) {
             finishAndRemoveTask();
+            return;
         }
         if (baseSettingBinding != null) {
             editDataBinding.baseSettingLayout.removeView(baseSettingBinding.getRoot());
@@ -624,9 +626,9 @@ public class EditDataActivity extends BaseActivity {
         myUtils.requestUpdateWidget(appDescribe.appPackage);
     }
 
-    private void showEditShareFileNameDialog(String strRule) {
+    private void showEditShareFileNameDialog(String strRegulation) {
         ViewEditFileNameBinding binding = ViewEditFileNameBinding.inflate(inflater);
-        binding.fileName.setHint(String.valueOf(Math.abs(strRule.hashCode())));
+        binding.fileName.setHint(DigestUtils.md5Hex(strRegulation));
         new AlertDialog.Builder(EditDataActivity.this)
                 .setView(binding.getRoot())
                 .setCancelable(false)
@@ -638,14 +640,14 @@ public class EditDataActivity extends BaseActivity {
                         try {
                             FileUtils.cleanDirectory(getCacheDir());
                             String fileName = binding.fileName.getText().toString();
-                            File file = new File(getCacheDir(), (fileName.isEmpty() ? "" : fileName + "-") + binding.fileName.getHint() + ".txt");
-                            FileUtils.writeStringToFile(file, strRule, StandardCharsets.UTF_8);
+                            File file = new File(getCacheDir(), (fileName.isEmpty() ? binding.fileName.getHint() : fileName) + ".txt");
+                            FileUtils.writeStringToFile(file, strRegulation, StandardCharsets.UTF_8);
                             Intent intent = new Intent(Intent.ACTION_SEND);
                             Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file);
                             intent.setDataAndType(uri, getContentResolver().getType(uri));
-                            intent.putExtra(Intent.EXTRA_TEXT, strRule);
+                            intent.putExtra(Intent.EXTRA_TEXT, strRegulation);
                             intent.putExtra(Intent.EXTRA_STREAM, uri);
-                            intent.setClipData(new ClipData(ClipData.newUri(getContentResolver(), "rule", uri)));
+                            intent.setClipData(new ClipData(ClipData.newUri(getContentResolver(), "regulation", uri)));
                             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                             startActivity(Intent.createChooser(intent, "分享"));
                         } catch (IOException ex) {

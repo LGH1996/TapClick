@@ -79,6 +79,8 @@ import java.util.stream.Collectors;
 
 public class MainFunction {
 
+    private static final String ACTION_SHOW_ADD_DATA_WINDOW = "action.lingh.show.add.data.window";
+    private static final String isScreenOffPre = "isScreenOffPre";
     private final AccessibilityService service;
     private WindowManager windowManager;
     private PackageManager packageManager;
@@ -116,8 +118,6 @@ public class MainFunction {
     private ImageView viewClickPosition;
     private Set<String> pkgSuggestNotOnList;
     private View ignoreView;
-    private static final String ACTION_SHOW_ADD_DATA_WINDOW = "action.lingh.show.add.data.window";
-    private static final String isScreenOffPre = "isScreenOffPre";
 
     public MainFunction(AccessibilityService service) {
         this.service = service;

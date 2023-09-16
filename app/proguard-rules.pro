@@ -31,3 +31,5 @@
 -keep class com.lgh.advertising.going.mybean.BasicContent {*;}
 -keep class com.lgh.advertising.going.mybean.CoordinateShare {*;}
 -keep class com.lgh.advertising.going.mybean.WidgetShare {*;}
+-keep class com.lgh.advertising.going.mybean.Regulation {*;}
+-keep class com.lgh.advertising.going.mybean.RegulationExport {*;}
