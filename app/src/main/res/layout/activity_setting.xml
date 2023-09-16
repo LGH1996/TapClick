@@ -44,7 +44,8 @@
                     android:background="@drawable/button_selector"
                     android:gravity="center"
                     android:padding="1dp"
-                    android:text="打开" />
+                    android:text="打开"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -70,7 +71,8 @@
                     android:background="@drawable/button_selector"
                     android:gravity="center"
                     android:padding="1dp"
-                    android:text="开始" />
+                    android:text="开始"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -96,7 +98,8 @@
                     android:background="@drawable/button_selector"
                     android:gravity="center"
                     android:padding="1dp"
-                    android:text="分享" />
+                    android:text="分享"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
             <LinearLayout

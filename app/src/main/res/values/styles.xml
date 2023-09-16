@@ -1,16 +1,8 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
         <!--<item name="android:windowAnimationStyle">@style/ActivityAnimation</item>-->
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">#00000000</item>
-    </style>
-
-    <style name="ActivityAnimation">
-        <item name="android:activityOpenEnterAnimation">@animator/activity_open_in</item>
-        <item name="android:activityOpenExitAnimation">@animator/activity_open_out</item>
-        <item name="android:activityCloseEnterAnimation">@animator/activity_close_in</item>
-        <item name="android:activityCloseExitAnimation">@animator/activity_close_out</item>
     </style>
 </resources>
