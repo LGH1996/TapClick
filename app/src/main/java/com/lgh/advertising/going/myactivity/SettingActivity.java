@@ -175,12 +175,12 @@ public class SettingActivity extends BaseActivity {
         settingBinding.settingAuthorChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent weiBo = new Intent(Intent.ACTION_VIEW);
-                weiBo.addCategory(Intent.CATEGORY_DEFAULT);
-                weiBo.addCategory(Intent.CATEGORY_BROWSABLE);
-                weiBo.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                weiBo.setData(Uri.parse("http://weibo.cn/qr/userinfo?uid=6271910684"));
-                startActivity(Intent.createChooser(weiBo, "WeiBo"));
+                Intent github = new Intent(Intent.ACTION_VIEW);
+                github.addCategory(Intent.CATEGORY_DEFAULT);
+                github.addCategory(Intent.CATEGORY_BROWSABLE);
+                github.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                github.setData(Uri.parse("https://github.com/LGH1996/ADGO"));
+                startActivity(Intent.createChooser(github, "github"));
             }
         });
 

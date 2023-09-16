@@ -167,7 +167,7 @@
                     android:layout_height="15sp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/weibo" />
+                    android:src="@drawable/svg_github" />
 
                 <TextView
                     android:id="@+id/setting_groupChat"
