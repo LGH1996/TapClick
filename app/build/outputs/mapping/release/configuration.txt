@@ -1,4 +1,4 @@
-# The proguard configuration file for the following section is D:\MyAndroidStudioProject\ADGO\app\build\intermediates\proguard-files\proguard-android-optimize.txt-4.1.0
+# The proguard configuration file for the following section is D:\MyAndroidStudioProject\ADGO2\ADGO\app\build\intermediates\proguard-files\proguard-android-optimize.txt-4.1.0
 # This is a configuration file for ProGuard.
 # http://proguard.sourceforge.net/index.html#manual/usage.html
 #
@@ -111,8 +111,8 @@
 # These classes are duplicated between android.jar and core-lambda-stubs.jar.
 -dontnote java.lang.invoke.**
 
-# End of content from D:\MyAndroidStudioProject\ADGO\app\build\intermediates\proguard-files\proguard-android-optimize.txt-4.1.0
-# The proguard configuration file for the following section is D:\MyAndroidStudioProject\ADGO\app\proguard-rules.pro
+# End of content from D:\MyAndroidStudioProject\ADGO2\ADGO\app\build\intermediates\proguard-files\proguard-android-optimize.txt-4.1.0
+# The proguard configuration file for the following section is D:\MyAndroidStudioProject\ADGO2\ADGO\app\proguard-rules.pro
 # Add project specific ProGuard rules here.
 # You can control the set of applied configuration files using the
 # proguardFiles setting in build.gradle.
@@ -146,9 +146,11 @@
 -keep class com.lgh.advertising.going.mybean.BasicContent {*;}
 -keep class com.lgh.advertising.going.mybean.CoordinateShare {*;}
 -keep class com.lgh.advertising.going.mybean.WidgetShare {*;}
+-keep class com.lgh.advertising.going.mybean.Regulation {*;}
+-keep class com.lgh.advertising.going.mybean.RegulationExport {*;}
 
-# End of content from D:\MyAndroidStudioProject\ADGO\app\proguard-rules.pro
-# The proguard configuration file for the following section is D:\MyAndroidStudioProject\ADGO\app\build\intermediates\aapt_proguard_file\release\aapt_rules.txt
+# End of content from D:\MyAndroidStudioProject\ADGO2\ADGO\app\proguard-rules.pro
+# The proguard configuration file for the following section is D:\MyAndroidStudioProject\ADGO2\ADGO\app\build\intermediates\aapt_proguard_file\release\aapt_rules.txt
 -keep class androidx.core.app.CoreComponentFactory { <init>(); }
 -keep class androidx.core.content.FileProvider { <init>(); }
 -keep class androidx.room.MultiInstanceInvalidationService { <init>(); }
@@ -159,6 +161,7 @@
 -keep class com.lgh.advertising.going.myactivity.ListDataActivity { <init>(); }
 -keep class com.lgh.advertising.going.myactivity.MainActivity { <init>(); }
 -keep class com.lgh.advertising.going.myactivity.MoreMessageActivity { <init>(); }
+-keep class com.lgh.advertising.going.myactivity.RegulationImportActivity { <init>(); }
 -keep class com.lgh.advertising.going.myactivity.SettingActivity { <init>(); }
 -keep class com.lgh.advertising.going.myactivity.ShortCutActivity { <init>(); }
 -keep class com.lgh.advertising.going.myactivity.UpdateActivity { <init>(); }
@@ -259,7 +262,7 @@
 -keep class me.codeboy.android.aligntextview.AlignTextView { <init>(android.content.Context, android.util.AttributeSet); }
 
 
-# End of content from D:\MyAndroidStudioProject\ADGO\app\build\intermediates\aapt_proguard_file\release\aapt_rules.txt
+# End of content from D:\MyAndroidStudioProject\ADGO2\ADGO\app\build\intermediates\aapt_proguard_file\release\aapt_rules.txt
 # The proguard configuration file for the following section is C:\Users\22814\.gradle\caches\transforms-2\files-2.1\aecbdcc6bb53d8b93206b174f7393aef\material-1.4.0\proguard.txt
 # Copyright (C) 2015 The Android Open Source Project
 #
