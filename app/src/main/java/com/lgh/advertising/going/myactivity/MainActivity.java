@@ -263,7 +263,7 @@ public class MainActivity extends BaseActivity {
                 DisplayMetrics metrics = new DisplayMetrics();
                 getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
                 lp.width = metrics.widthPixels / 5 * 4;
-                lp.height = metrics.heightPixels / 2;
+                lp.height = metrics.heightPixels / 5 * 2;
                 window.setAttributes(lp);
             }
 

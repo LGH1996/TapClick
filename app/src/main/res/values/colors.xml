@@ -7,5 +7,5 @@
     <color name="main_color">#ff30a0e0</color>
     <color name="state_err">#ffe45757</color>
     <color name="checkbox_disable">#30000000</color>
-    <color name="switch_disable">#20000000</color>
+    <color name="switch_disable">#e0e0e0</color>
 </resources>

@@ -11,8 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="安全隐私政策概要" />
+        android:layout_marginTop="25dp"
+        android:text="安全隐私政策概要"
+        android:textStyle="bold" />
 
     <ScrollView
         android:id="@+id/scroll"
@@ -22,8 +23,8 @@
         android:layout_below="@+id/title"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="5dp"
-        android:paddingHorizontal="10dp"
-        android:paddingTop="10dp"
+        android:paddingHorizontal="15dp"
+        android:paddingTop="20dp"
         android:paddingBottom="2dp"
         android:requiresFadingEdge="vertical"
         android:scrollbars="none">
@@ -33,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.5"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
     </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
