@@ -3901,6 +3901,12 @@ androidx.constraintlayout.widget.ConstraintAttribute:
     private static final java.lang.String TAG
 androidx.transition.ViewUtilsApi29:
     public void setAnimationMatrix(android.view.View,android.graphics.Matrix)
+io.reactivex.rxjava3.internal.disposables.ListCompositeDisposable:
+    public varargs void <init>(io.reactivex.rxjava3.disposables.Disposable[])
+    public void <init>(java.lang.Iterable)
+    public boolean isDisposed()
+    public varargs boolean addAll(io.reactivex.rxjava3.disposables.Disposable[])
+    public void clear()
 androidx.appcompat.widget.ActionMenuPresenter:
     public void setWidthLimit(int,boolean)
     public void setItemLimit(int)
@@ -3909,12 +3915,6 @@ androidx.appcompat.widget.ActionMenuPresenter:
     public void onRestoreInstanceState(android.os.Parcelable)
     public void onSubUiVisibilityChanged(boolean)
     private static final java.lang.String TAG
-io.reactivex.rxjava3.internal.disposables.ListCompositeDisposable:
-    public varargs void <init>(io.reactivex.rxjava3.disposables.Disposable[])
-    public void <init>(java.lang.Iterable)
-    public boolean isDisposed()
-    public varargs boolean addAll(io.reactivex.rxjava3.disposables.Disposable[])
-    public void clear()
 androidx.viewpager2.widget.AnimateLayoutChangeDetector
 me.codeboy.android.aligntextview.R
 io.reactivex.rxjava3.internal.jdk8.ObservableCollectWithCollectorSingle
@@ -6525,7 +6525,6 @@ io.reactivex.rxjava3.internal.operators.single.SingleFlatMapNotification
 io.reactivex.rxjava3.internal.operators.observable.ObservableWindowBoundarySelector$WindowBoundaryMainObserver$WindowEndObserverIntercept
 io.reactivex.rxjava3.internal.jdk8.ParallelMapTryOptional$ParallelMapTrySubscriber
 androidx.loader.R
-com.lgh.advertising.going.databinding.ViewQuestionBinding
 androidx.activity.result.contract.ActivityResultContracts$StartIntentSenderForResult
 com.google.gson.Gson:
     public com.google.gson.GsonBuilder newBuilder()
@@ -21859,8 +21858,8 @@ androidx.room.RoomDatabase:
     public void endTransaction()
     public java.util.concurrent.Executor getQueryExecutor()
     public void internalInitInvalidationTracker(androidx.sqlite.db.SupportSQLiteDatabase)
-    public synthetic java.lang.Object lambda$endTransaction$1$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public synthetic java.lang.Object lambda$beginTransaction$0$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
+    public synthetic java.lang.Object lambda$endTransaction$1$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public java.util.concurrent.Executor mTransactionExecutor
     public final java.util.Map mBackingFieldMap
 retrofit2.CompletableFutureCallAdapterFactory$ResponseCallAdapter$ResponseCallback:
@@ -22168,6 +22167,8 @@ com.google.gson.internal.bind.MapTypeAdapterFactory$Adapter:
 androidx.constraintlayout.widget.ConstraintAttribute:
     public static java.util.HashMap extractAttributes(java.util.HashMap,android.view.View)
     public static void setAttributes(android.view.View,java.util.HashMap)
+io.reactivex.rxjava3.internal.disposables.ListCompositeDisposable:
+    public void dispose(java.util.List)
 androidx.appcompat.widget.ActionMenuPresenter:
     public static synthetic androidx.appcompat.view.menu.MenuBuilder access$000(androidx.appcompat.widget.ActionMenuPresenter)
     public static synthetic androidx.appcompat.view.menu.MenuBuilder access$100(androidx.appcompat.widget.ActionMenuPresenter)
@@ -22192,8 +22193,6 @@ androidx.appcompat.widget.ActionMenuPresenter:
     public boolean mStrictWidthLimit
     public boolean mWidthLimitSet
     public int mOpenSubMenuId
-io.reactivex.rxjava3.internal.disposables.ListCompositeDisposable:
-    public void dispose(java.util.List)
 androidx.constraintlayout.solver.Metrics
 androidx.transition.TransitionManager$MultiListener:
     public final void removeListeners()
@@ -28508,8 +28507,8 @@ androidx.transition.ViewUtils$1:
 retrofit2.DefaultCallAdapterFactory$ExecutorCallbackCall$1:
     private synthetic void lambda$onFailure$1(retrofit2.Callback,java.lang.Throwable)
     private synthetic void lambda$onResponse$0(retrofit2.Callback,retrofit2.Response)
-    public synthetic void lambda$onFailure$1$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,java.lang.Throwable)
     public synthetic void lambda$onResponse$0$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,retrofit2.Response)
+    public synthetic void lambda$onFailure$1$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,java.lang.Throwable)
 androidx.appcompat.widget.AppCompatSpinner$DialogPopup
 androidx.lifecycle.runtime.R$id
 com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton$4:
@@ -29072,33 +29071,33 @@ androidx.sqlite.db.framework.FrameworkSQLiteDatabase$2:
 com.google.android.material.transformation.ExpandableBehavior:
     public static synthetic int access$000(com.google.android.material.transformation.ExpandableBehavior)
     public com.google.android.material.expandable.ExpandableWidget findExpandableWidget(androidx.coordinatorlayout.widget.CoordinatorLayout,android.view.View)
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
-androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
-okhttp3.-$$Lambda$EventListener$OXICzLQ3RHlsN3BZyIksLMm-GlQ:
-    public final okhttp3.EventListener create(okhttp3.Call)
-androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
-androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
-androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
-androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
-androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
-androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
-androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
 androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
-androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
-androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
 okhttp3.-$$Lambda$Authenticator$esJoevooYalsFzydukZpZJT5arU:
     public final okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)
+androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
+okhttp3.-$$Lambda$EventListener$OXICzLQ3RHlsN3BZyIksLMm-GlQ:
+    public final okhttp3.EventListener create(okhttp3.Call)
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
+androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
+androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
+androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
+androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
+androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
+androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
+androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
 androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
-androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
-androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
+androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
 androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
 androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
+androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
+androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
 okhttp3.-$$Lambda$Dns$9evC3uO-H_z08sS9O-4-hLhZ8es:
     public final java.util.List lookup(java.lang.String)
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
-androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
-androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
+androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
+androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
+androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
+androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
 com.android.tools.r8.GeneratedOutlineSupport:
     public static java.lang.String outline5(org.xmlpull.v1.XmlPullParser,java.lang.StringBuilder,java.lang.String)

@@ -2210,21 +2210,21 @@ Marking color:radiobutton_themeable_attribute_color:2131034305 used because its 
 Marking color:ripple_material_dark:2131034306 used because its prefix matches string pool constant r
 Marking color:ripple_material_light:2131034307 used because its prefix matches string pool constant r
 Marking drawable:retrieve_setting:2131165345 used because its prefix matches string pool constant r
-Marking id:radio:2131231098 used because its prefix matches string pool constant r
-Marking id:ratio:2131231099 used because its prefix matches string pool constant r
-Marking id:rectangles:2131231100 used because its prefix matches string pool constant r
-Marking id:recyclerView:2131231101 used because its prefix matches string pool constant r
-Marking id:retrieveKeyword:2131231102 used because its prefix matches string pool constant r
-Marking id:retrieveNumber:2131231103 used because its prefix matches string pool constant r
-Marking id:reverseSawtooth:2131231104 used because its prefix matches string pool constant r
-Marking id:right:2131231105 used because its prefix matches string pool constant r
-Marking id:rightToLeft:2131231106 used because its prefix matches string pool constant r
-Marking id:right_icon:2131231107 used because its prefix matches string pool constant r
-Marking id:right_side:2131231108 used because its prefix matches string pool constant r
-Marking id:rl_bottom:2131231109 used because its prefix matches string pool constant r
-Marking id:root_layout:2131231110 used because its prefix matches string pool constant r
-Marking id:rounded:2131231111 used because its prefix matches string pool constant r
-Marking id:row_index_key:2131231112 used because its prefix matches string pool constant r
+Marking id:radio:2131231097 used because its prefix matches string pool constant r
+Marking id:ratio:2131231098 used because its prefix matches string pool constant r
+Marking id:rectangles:2131231099 used because its prefix matches string pool constant r
+Marking id:recyclerView:2131231100 used because its prefix matches string pool constant r
+Marking id:retrieveKeyword:2131231101 used because its prefix matches string pool constant r
+Marking id:retrieveNumber:2131231102 used because its prefix matches string pool constant r
+Marking id:reverseSawtooth:2131231103 used because its prefix matches string pool constant r
+Marking id:right:2131231104 used because its prefix matches string pool constant r
+Marking id:rightToLeft:2131231105 used because its prefix matches string pool constant r
+Marking id:right_icon:2131231106 used because its prefix matches string pool constant r
+Marking id:right_side:2131231107 used because its prefix matches string pool constant r
+Marking id:rl_bottom:2131231108 used because its prefix matches string pool constant r
+Marking id:root_layout:2131231109 used because its prefix matches string pool constant r
+Marking id:rounded:2131231110 used because its prefix matches string pool constant r
+Marking id:row_index_key:2131231111 used because its prefix matches string pool constant r
 Marking attr:tabBackground:2130903800 used because its prefix matches string pool constant t
 Marking attr:tabContentStart:2130903801 used because its prefix matches string pool constant t
 Marking attr:tabGravity:2130903802 used because its prefix matches string pool constant t
@@ -2377,61 +2377,61 @@ Marking drawable:test_custom_background:2131165358 used because its prefix match
 Marking drawable:text_click_color:2131165359 used because its prefix matches string pool constant t
 Marking drawable:tooltip_frame_dark:2131165360 used because its prefix matches string pool constant t
 Marking drawable:tooltip_frame_light:2131165361 used because its prefix matches string pool constant t
-Marking id:tabMode:2131231185 used because its prefix matches string pool constant t
-Marking id:tag_accessibility_actions:2131231186 used because its prefix matches string pool constant t
-Marking id:tag_accessibility_clickable_spans:2131231187 used because its prefix matches string pool constant t
-Marking id:tag_accessibility_heading:2131231188 used because its prefix matches string pool constant t
-Marking id:tag_accessibility_pane_title:2131231189 used because its prefix matches string pool constant t
-Marking id:tag_on_apply_window_listener:2131231190 used because its prefix matches string pool constant t
-Marking id:tag_on_receive_content_listener:2131231191 used because its prefix matches string pool constant t
-Marking id:tag_on_receive_content_mime_types:2131231192 used because its prefix matches string pool constant t
-Marking id:tag_screen_reader_focusable:2131231193 used because its prefix matches string pool constant t
-Marking id:tag_state_description:2131231194 used because its prefix matches string pool constant t
-Marking id:tag_transition_group:2131231195 used because its prefix matches string pool constant t
-Marking id:tag_unhandled_key_event_manager:2131231196 used because its prefix matches string pool constant t
-Marking id:tag_unhandled_key_listeners:2131231197 used because its prefix matches string pool constant t
-Marking id:tag_window_insets_animation_callback:2131231198 used because its prefix matches string pool constant t
-Marking id:test_checkbox_android_button_tint:2131231199 used because its prefix matches string pool constant t
-Marking id:test_checkbox_app_button_tint:2131231200 used because its prefix matches string pool constant t
-Marking id:test_radiobutton_android_button_tint:2131231201 used because its prefix matches string pool constant t
-Marking id:test_radiobutton_app_button_tint:2131231202 used because its prefix matches string pool constant t
-Marking id:text:2131231203 used because its prefix matches string pool constant t
-Marking id:text2:2131231204 used because its prefix matches string pool constant t
-Marking id:textEnd:2131231205 used because its prefix matches string pool constant t
-Marking id:textSpacerNoButtons:2131231206 used because its prefix matches string pool constant t
-Marking id:textSpacerNoTitle:2131231207 used because its prefix matches string pool constant t
-Marking id:textStart:2131231208 used because its prefix matches string pool constant t
-Marking id:textTop:2131231209 used because its prefix matches string pool constant t
-Marking id:text_input_end_icon:2131231210 used because its prefix matches string pool constant t
-Marking id:text_input_error_icon:2131231211 used because its prefix matches string pool constant t
-Marking id:text_input_start_icon:2131231212 used because its prefix matches string pool constant t
-Marking id:textinput_counter:2131231213 used because its prefix matches string pool constant t
-Marking id:textinput_error:2131231214 used because its prefix matches string pool constant t
-Marking id:textinput_helper_text:2131231215 used because its prefix matches string pool constant t
-Marking id:textinput_placeholder:2131231216 used because its prefix matches string pool constant t
-Marking id:textinput_prefix_text:2131231217 used because its prefix matches string pool constant t
-Marking id:textinput_suffix_text:2131231218 used because its prefix matches string pool constant t
-Marking id:time:2131231219 used because its prefix matches string pool constant t
-Marking id:title:2131231220 used because its prefix matches string pool constant t
-Marking id:titleDividerNoCustom:2131231221 used because its prefix matches string pool constant t
-Marking id:title_template:2131231222 used because its prefix matches string pool constant t
-Marking id:toggle:2131231223 used because its prefix matches string pool constant t
-Marking id:top:2131231224 used because its prefix matches string pool constant t
-Marking id:topPanel:2131231225 used because its prefix matches string pool constant t
-Marking id:touch_outside:2131231226 used because its prefix matches string pool constant t
-Marking id:transitionToEnd:2131231227 used because its prefix matches string pool constant t
-Marking id:transitionToStart:2131231228 used because its prefix matches string pool constant t
-Marking id:transition_current_scene:2131231229 used because its prefix matches string pool constant t
-Marking id:transition_layout_save:2131231230 used because its prefix matches string pool constant t
-Marking id:transition_position:2131231231 used because its prefix matches string pool constant t
-Marking id:transition_scene_layoutid_cache:2131231232 used because its prefix matches string pool constant t
-Marking id:transition_transform:2131231233 used because its prefix matches string pool constant t
-Marking id:triangle:2131231234 used because its prefix matches string pool constant t
-Marking id:tv_auto_finder:2131231235 used because its prefix matches string pool constant t
-Marking id:tv_base_setting:2131231236 used because its prefix matches string pool constant t
-Marking id:tv_desc:2131231237 used because its prefix matches string pool constant t
-Marking id:tv_name:2131231238 used because its prefix matches string pool constant t
-Marking id:tv_selected_num:2131231239 used because its prefix matches string pool constant t
+Marking id:tabMode:2131231184 used because its prefix matches string pool constant t
+Marking id:tag_accessibility_actions:2131231185 used because its prefix matches string pool constant t
+Marking id:tag_accessibility_clickable_spans:2131231186 used because its prefix matches string pool constant t
+Marking id:tag_accessibility_heading:2131231187 used because its prefix matches string pool constant t
+Marking id:tag_accessibility_pane_title:2131231188 used because its prefix matches string pool constant t
+Marking id:tag_on_apply_window_listener:2131231189 used because its prefix matches string pool constant t
+Marking id:tag_on_receive_content_listener:2131231190 used because its prefix matches string pool constant t
+Marking id:tag_on_receive_content_mime_types:2131231191 used because its prefix matches string pool constant t
+Marking id:tag_screen_reader_focusable:2131231192 used because its prefix matches string pool constant t
+Marking id:tag_state_description:2131231193 used because its prefix matches string pool constant t
+Marking id:tag_transition_group:2131231194 used because its prefix matches string pool constant t
+Marking id:tag_unhandled_key_event_manager:2131231195 used because its prefix matches string pool constant t
+Marking id:tag_unhandled_key_listeners:2131231196 used because its prefix matches string pool constant t
+Marking id:tag_window_insets_animation_callback:2131231197 used because its prefix matches string pool constant t
+Marking id:test_checkbox_android_button_tint:2131231198 used because its prefix matches string pool constant t
+Marking id:test_checkbox_app_button_tint:2131231199 used because its prefix matches string pool constant t
+Marking id:test_radiobutton_android_button_tint:2131231200 used because its prefix matches string pool constant t
+Marking id:test_radiobutton_app_button_tint:2131231201 used because its prefix matches string pool constant t
+Marking id:text:2131231202 used because its prefix matches string pool constant t
+Marking id:text2:2131231203 used because its prefix matches string pool constant t
+Marking id:textEnd:2131231204 used because its prefix matches string pool constant t
+Marking id:textSpacerNoButtons:2131231205 used because its prefix matches string pool constant t
+Marking id:textSpacerNoTitle:2131231206 used because its prefix matches string pool constant t
+Marking id:textStart:2131231207 used because its prefix matches string pool constant t
+Marking id:textTop:2131231208 used because its prefix matches string pool constant t
+Marking id:text_input_end_icon:2131231209 used because its prefix matches string pool constant t
+Marking id:text_input_error_icon:2131231210 used because its prefix matches string pool constant t
+Marking id:text_input_start_icon:2131231211 used because its prefix matches string pool constant t
+Marking id:textinput_counter:2131231212 used because its prefix matches string pool constant t
+Marking id:textinput_error:2131231213 used because its prefix matches string pool constant t
+Marking id:textinput_helper_text:2131231214 used because its prefix matches string pool constant t
+Marking id:textinput_placeholder:2131231215 used because its prefix matches string pool constant t
+Marking id:textinput_prefix_text:2131231216 used because its prefix matches string pool constant t
+Marking id:textinput_suffix_text:2131231217 used because its prefix matches string pool constant t
+Marking id:time:2131231218 used because its prefix matches string pool constant t
+Marking id:title:2131231219 used because its prefix matches string pool constant t
+Marking id:titleDividerNoCustom:2131231220 used because its prefix matches string pool constant t
+Marking id:title_template:2131231221 used because its prefix matches string pool constant t
+Marking id:toggle:2131231222 used because its prefix matches string pool constant t
+Marking id:top:2131231223 used because its prefix matches string pool constant t
+Marking id:topPanel:2131231224 used because its prefix matches string pool constant t
+Marking id:touch_outside:2131231225 used because its prefix matches string pool constant t
+Marking id:transitionToEnd:2131231226 used because its prefix matches string pool constant t
+Marking id:transitionToStart:2131231227 used because its prefix matches string pool constant t
+Marking id:transition_current_scene:2131231228 used because its prefix matches string pool constant t
+Marking id:transition_layout_save:2131231229 used because its prefix matches string pool constant t
+Marking id:transition_position:2131231230 used because its prefix matches string pool constant t
+Marking id:transition_scene_layoutid_cache:2131231231 used because its prefix matches string pool constant t
+Marking id:transition_transform:2131231232 used because its prefix matches string pool constant t
+Marking id:triangle:2131231233 used because its prefix matches string pool constant t
+Marking id:tv_auto_finder:2131231234 used because its prefix matches string pool constant t
+Marking id:tv_base_setting:2131231235 used because its prefix matches string pool constant t
+Marking id:tv_desc:2131231236 used because its prefix matches string pool constant t
+Marking id:tv_name:2131231237 used because its prefix matches string pool constant t
+Marking id:tv_selected_num:2131231238 used because its prefix matches string pool constant t
 Marking layout:test_action_chip:2131427435 used because its prefix matches string pool constant t
 Marking layout:test_chip_zero_corner_radius:2131427436 used because its prefix matches string pool constant t
 Marking layout:test_design_checkbox:2131427437 used because its prefix matches string pool constant t
@@ -2465,37 +2465,37 @@ Marking attr:windowMinWidthMajor:2130903942 used because its prefix matches stri
 Marking attr:windowMinWidthMinor:2130903943 used because its prefix matches string pool constant w
 Marking attr:windowNoTitle:2130903944 used because its prefix matches string pool constant w
 Marking drawable:widget:2131165362 used because its prefix matches string pool constant w
-Marking id:webViewMore:2131231251 used because its prefix matches string pool constant w
-Marking id:webView_update:2131231252 used because its prefix matches string pool constant w
-Marking id:widget:2131231253 used because its prefix matches string pool constant w
-Marking id:widget_activity:2131231254 used because its prefix matches string pool constant w
-Marking id:widget_clickDelay:2131231255 used because its prefix matches string pool constant w
-Marking id:widget_clickOnly:2131231256 used because its prefix matches string pool constant w
-Marking id:widget_clickable:2131231257 used because its prefix matches string pool constant w
-Marking id:widget_comment:2131231258 used because its prefix matches string pool constant w
-Marking id:widget_createTime:2131231259 used because its prefix matches string pool constant w
-Marking id:widget_delete:2131231260 used because its prefix matches string pool constant w
-Marking id:widget_describe:2131231261 used because its prefix matches string pool constant w
-Marking id:widget_id:2131231262 used because its prefix matches string pool constant w
-Marking id:widget_img:2131231263 used because its prefix matches string pool constant w
-Marking id:widget_layout:2131231264 used because its prefix matches string pool constant w
-Marking id:widget_modify:2131231265 used because its prefix matches string pool constant w
-Marking id:widget_noRepeat:2131231266 used because its prefix matches string pool constant w
-Marking id:widget_on_off_layout:2131231267 used because its prefix matches string pool constant w
-Marking id:widget_rect:2131231268 used because its prefix matches string pool constant w
-Marking id:widget_retrieveAllTime:2131231269 used because its prefix matches string pool constant w
-Marking id:widget_share:2131231270 used because its prefix matches string pool constant w
-Marking id:widget_sustainTime:2131231271 used because its prefix matches string pool constant w
-Marking id:widget_sustain_layout:2131231272 used because its prefix matches string pool constant w
-Marking id:widget_switch:2131231273 used because its prefix matches string pool constant w
-Marking id:widget_text:2131231274 used because its prefix matches string pool constant w
-Marking id:widget_time_layout:2131231275 used because its prefix matches string pool constant w
-Marking id:withText:2131231276 used because its prefix matches string pool constant w
-Marking id:withinBounds:2131231277 used because its prefix matches string pool constant w
-Marking id:wrap:2131231278 used because its prefix matches string pool constant w
-Marking id:wrap_content:2131231279 used because its prefix matches string pool constant w
-Marking id:xy:2131231280 used because its prefix matches string pool constant x
-Marking id:standard:2131231168 used because its prefix matches string pool constant standard
+Marking id:webViewMore:2131231250 used because its prefix matches string pool constant w
+Marking id:webView_update:2131231251 used because its prefix matches string pool constant w
+Marking id:widget:2131231252 used because its prefix matches string pool constant w
+Marking id:widget_activity:2131231253 used because its prefix matches string pool constant w
+Marking id:widget_clickDelay:2131231254 used because its prefix matches string pool constant w
+Marking id:widget_clickOnly:2131231255 used because its prefix matches string pool constant w
+Marking id:widget_clickable:2131231256 used because its prefix matches string pool constant w
+Marking id:widget_comment:2131231257 used because its prefix matches string pool constant w
+Marking id:widget_createTime:2131231258 used because its prefix matches string pool constant w
+Marking id:widget_delete:2131231259 used because its prefix matches string pool constant w
+Marking id:widget_describe:2131231260 used because its prefix matches string pool constant w
+Marking id:widget_id:2131231261 used because its prefix matches string pool constant w
+Marking id:widget_img:2131231262 used because its prefix matches string pool constant w
+Marking id:widget_layout:2131231263 used because its prefix matches string pool constant w
+Marking id:widget_modify:2131231264 used because its prefix matches string pool constant w
+Marking id:widget_noRepeat:2131231265 used because its prefix matches string pool constant w
+Marking id:widget_on_off_layout:2131231266 used because its prefix matches string pool constant w
+Marking id:widget_rect:2131231267 used because its prefix matches string pool constant w
+Marking id:widget_retrieveAllTime:2131231268 used because its prefix matches string pool constant w
+Marking id:widget_share:2131231269 used because its prefix matches string pool constant w
+Marking id:widget_sustainTime:2131231270 used because its prefix matches string pool constant w
+Marking id:widget_sustain_layout:2131231271 used because its prefix matches string pool constant w
+Marking id:widget_switch:2131231272 used because its prefix matches string pool constant w
+Marking id:widget_text:2131231273 used because its prefix matches string pool constant w
+Marking id:widget_time_layout:2131231274 used because its prefix matches string pool constant w
+Marking id:withText:2131231275 used because its prefix matches string pool constant w
+Marking id:withinBounds:2131231276 used because its prefix matches string pool constant w
+Marking id:wrap:2131231277 used because its prefix matches string pool constant w
+Marking id:wrap_content:2131231278 used because its prefix matches string pool constant w
+Marking id:xy:2131231279 used because its prefix matches string pool constant x
+Marking id:standard:2131231167 used because its prefix matches string pool constant standard
 Marking id:decelerate:2131230893 used because its prefix matches string pool constant decelerate
 Marking id:decelerateAndComplete:2131230894 used because its prefix matches string pool constant decelerate
 Marking attr:drawableLeftCompat:2130903322 used because its prefix matches string pool constant drawableLeft
@@ -3044,13 +3044,13 @@ Marking string:path_password_eye_mask_visible:2131558508 used because its prefix
 Marking string:path_password_strike_through:2131558509 used because its prefix matches string pool constant path
 Marking styleable:StateSet:-1 used because its prefix matches string pool constant StateSet
 Marking drawable:setting:2131165348 used because its prefix matches string pool constant set
-Marking id:setting_authorChat:2131231140 used because its prefix matches string pool constant set
-Marking id:setting_autoHideOnTaskList:2131231141 used because its prefix matches string pool constant set
-Marking id:setting_groupChat:2131231142 used because its prefix matches string pool constant set
-Marking id:setting_open:2131231143 used because its prefix matches string pool constant set
-Marking id:setting_praise:2131231144 used because its prefix matches string pool constant set
-Marking id:setting_share:2131231145 used because its prefix matches string pool constant set
-Marking id:setting_update:2131231146 used because its prefix matches string pool constant set
+Marking id:setting_authorChat:2131231139 used because its prefix matches string pool constant set
+Marking id:setting_autoHideOnTaskList:2131231140 used because its prefix matches string pool constant set
+Marking id:setting_groupChat:2131231141 used because its prefix matches string pool constant set
+Marking id:setting_open:2131231142 used because its prefix matches string pool constant set
+Marking id:setting_praise:2131231143 used because its prefix matches string pool constant set
+Marking id:setting_share:2131231144 used because its prefix matches string pool constant set
+Marking id:setting_update:2131231145 used because its prefix matches string pool constant set
 Marking styleable:CoordinatorLayout:-1 used because its prefix matches string pool constant CoordinatorLayout
 Marking styleable:CoordinatorLayout_Layout:-1 used because its prefix matches string pool constant CoordinatorLayout
 Marking attr:font:2130903402 used because its prefix matches string pool constant font
@@ -3095,14 +3095,14 @@ Marking id:contentPanel:2131230862 used because its prefix matches string pool c
 Marking styleable:ListPopupWindow:-1 used because its prefix matches string pool constant ListPopupWindow
 Marking attr:alpha:2130903083 used because its prefix matches string pool constant alpha
 Marking attr:alphabeticModifiers:2130903084 used because its prefix matches string pool constant alpha
-Marking id:retrieveNumber:2131231103 used because its prefix matches string pool constant retrieveNumber
+Marking id:retrieveNumber:2131231102 used because its prefix matches string pool constant retrieveNumber
 Marking attr:selectableItemBackground:2130903735 used because its prefix matches string pool constant select
 Marking attr:selectableItemBackgroundBorderless:2130903736 used because its prefix matches string pool constant select
 Marking attr:selectionRequired:2130903737 used because its prefix matches string pool constant select
 Marking attr:selectorSize:2130903738 used because its prefix matches string pool constant select
-Marking id:select_dialog_listview:2131231136 used because its prefix matches string pool constant select
-Marking id:selected:2131231137 used because its prefix matches string pool constant select
-Marking id:selection_type:2131231138 used because its prefix matches string pool constant select
+Marking id:select_dialog_listview:2131231135 used because its prefix matches string pool constant select
+Marking id:selected:2131231136 used because its prefix matches string pool constant select
+Marking id:selection_type:2131231137 used because its prefix matches string pool constant select
 Marking layout:select_dialog_item_material:2131427431 used because its prefix matches string pool constant select
 Marking layout:select_dialog_multichoice_material:2131427432 used because its prefix matches string pool constant select
 Marking layout:select_dialog_singlechoice_material:2131427433 used because its prefix matches string pool constant select
@@ -3111,7 +3111,7 @@ Marking string:authorizationQuestion:2131558432 used because its prefix matches 
 Marking attr:closeIconEnabled:2130903208 used because its prefix matches string pool constant closeIconEnabled
 Marking id:TOP_END:2131230732 used because its prefix matches string pool constant TOP
 Marking id:TOP_START:2131230733 used because its prefix matches string pool constant TOP
-Marking id:skipCollapsed:2131231152 used because its prefix matches string pool constant skip
+Marking id:skipCollapsed:2131231151 used because its prefix matches string pool constant skip
 Marking id:file_name:2131230937 used because its prefix matches string pool constant file
 Marking attr:menu:2130903618 used because its prefix matches string pool constant menu
 Marking attr:menuGravity:2130903619 used because its prefix matches string pool constant menu
@@ -3122,7 +3122,7 @@ Marking color:secondary_text_disabled_material_dark:2131034310 used because its 
 Marking color:secondary_text_disabled_material_light:2131034311 used because its prefix matches string pool constant second
 Marking attr:limitBoundsTo:2130903559 used because its prefix matches string pool constant limit
 Marking id:accelerate:2131230734 used because its prefix matches string pool constant accelerate
-Marking id:selected:2131231137 used because its prefix matches string pool constant selected
+Marking id:selected:2131231136 used because its prefix matches string pool constant selected
 Marking styleable:RangeSlider:-1 used because its prefix matches string pool constant Range
 Marking attr:background:2130903101 used because its prefix matches string pool constant background
 Marking attr:backgroundColor:2130903102 used because its prefix matches string pool constant background
@@ -3205,26 +3205,26 @@ Marking dimen:test_navigation_bar_shadow_height:2131100060 used because its pref
 Marking dimen:test_navigation_bar_text_size:2131100061 used because its prefix matches string pool constant te
 Marking drawable:test_custom_background:2131165358 used because its prefix matches string pool constant te
 Marking drawable:text_click_color:2131165359 used because its prefix matches string pool constant te
-Marking id:test_checkbox_android_button_tint:2131231199 used because its prefix matches string pool constant te
-Marking id:test_checkbox_app_button_tint:2131231200 used because its prefix matches string pool constant te
-Marking id:test_radiobutton_android_button_tint:2131231201 used because its prefix matches string pool constant te
-Marking id:test_radiobutton_app_button_tint:2131231202 used because its prefix matches string pool constant te
-Marking id:text:2131231203 used because its prefix matches string pool constant te
-Marking id:text2:2131231204 used because its prefix matches string pool constant te
-Marking id:textEnd:2131231205 used because its prefix matches string pool constant te
-Marking id:textSpacerNoButtons:2131231206 used because its prefix matches string pool constant te
-Marking id:textSpacerNoTitle:2131231207 used because its prefix matches string pool constant te
-Marking id:textStart:2131231208 used because its prefix matches string pool constant te
-Marking id:textTop:2131231209 used because its prefix matches string pool constant te
-Marking id:text_input_end_icon:2131231210 used because its prefix matches string pool constant te
-Marking id:text_input_error_icon:2131231211 used because its prefix matches string pool constant te
-Marking id:text_input_start_icon:2131231212 used because its prefix matches string pool constant te
-Marking id:textinput_counter:2131231213 used because its prefix matches string pool constant te
-Marking id:textinput_error:2131231214 used because its prefix matches string pool constant te
-Marking id:textinput_helper_text:2131231215 used because its prefix matches string pool constant te
-Marking id:textinput_placeholder:2131231216 used because its prefix matches string pool constant te
-Marking id:textinput_prefix_text:2131231217 used because its prefix matches string pool constant te
-Marking id:textinput_suffix_text:2131231218 used because its prefix matches string pool constant te
+Marking id:test_checkbox_android_button_tint:2131231198 used because its prefix matches string pool constant te
+Marking id:test_checkbox_app_button_tint:2131231199 used because its prefix matches string pool constant te
+Marking id:test_radiobutton_android_button_tint:2131231200 used because its prefix matches string pool constant te
+Marking id:test_radiobutton_app_button_tint:2131231201 used because its prefix matches string pool constant te
+Marking id:text:2131231202 used because its prefix matches string pool constant te
+Marking id:text2:2131231203 used because its prefix matches string pool constant te
+Marking id:textEnd:2131231204 used because its prefix matches string pool constant te
+Marking id:textSpacerNoButtons:2131231205 used because its prefix matches string pool constant te
+Marking id:textSpacerNoTitle:2131231206 used because its prefix matches string pool constant te
+Marking id:textStart:2131231207 used because its prefix matches string pool constant te
+Marking id:textTop:2131231208 used because its prefix matches string pool constant te
+Marking id:text_input_end_icon:2131231209 used because its prefix matches string pool constant te
+Marking id:text_input_error_icon:2131231210 used because its prefix matches string pool constant te
+Marking id:text_input_start_icon:2131231211 used because its prefix matches string pool constant te
+Marking id:textinput_counter:2131231212 used because its prefix matches string pool constant te
+Marking id:textinput_error:2131231213 used because its prefix matches string pool constant te
+Marking id:textinput_helper_text:2131231214 used because its prefix matches string pool constant te
+Marking id:textinput_placeholder:2131231215 used because its prefix matches string pool constant te
+Marking id:textinput_prefix_text:2131231216 used because its prefix matches string pool constant te
+Marking id:textinput_suffix_text:2131231217 used because its prefix matches string pool constant te
 Marking layout:test_action_chip:2131427435 used because its prefix matches string pool constant te
 Marking layout:test_chip_zero_corner_radius:2131427436 used because its prefix matches string pool constant te
 Marking layout:test_design_checkbox:2131427437 used because its prefix matches string pool constant te
@@ -3263,11 +3263,11 @@ Marking dimen:tooltip_y_offset_non_touch:2131100068 used because its prefix matc
 Marking dimen:tooltip_y_offset_touch:2131100069 used because its prefix matches string pool constant to
 Marking drawable:tooltip_frame_dark:2131165360 used because its prefix matches string pool constant to
 Marking drawable:tooltip_frame_light:2131165361 used because its prefix matches string pool constant to
-Marking id:toggle:2131231223 used because its prefix matches string pool constant to
-Marking id:top:2131231224 used because its prefix matches string pool constant to
-Marking id:topPanel:2131231225 used because its prefix matches string pool constant to
-Marking id:touch_outside:2131231226 used because its prefix matches string pool constant to
-Marking id:up:2131231243 used because its prefix matches string pool constant up
+Marking id:toggle:2131231222 used because its prefix matches string pool constant to
+Marking id:top:2131231223 used because its prefix matches string pool constant to
+Marking id:topPanel:2131231224 used because its prefix matches string pool constant to
+Marking id:touch_outside:2131231225 used because its prefix matches string pool constant to
+Marking id:up:2131231242 used because its prefix matches string pool constant up
 Marking attr:queryBackground:2130903711 used because its prefix matches string pool constant query
 Marking attr:queryHint:2130903712 used because its prefix matches string pool constant query
 Marking attr:allowStacking:2130903082 used because its prefix matches string pool constant allow
@@ -3443,7 +3443,7 @@ Marking id:none:2131231062 used because its prefix matches string pool constant 
 Marking attr:rangeFillColor:2130903714 used because its prefix matches string pool constant range
 Marking id:date_picker_actions:2131230892 used because its prefix matches string pool constant date
 Marking id:clickOnly:2131230854 used because its prefix matches string pool constant clickOnly
-Marking id:scale:2131231118 used because its prefix matches string pool constant scale
+Marking id:scale:2131231117 used because its prefix matches string pool constant scale
 Marking attr:values:2130903924 used because its prefix matches string pool constant value
 Marking anim:fragment_fast_out_extra_slow_in:2130771996 used because its prefix matches string pool constant fragment
 Marking animator:fragment_close_enter:2130837507 used because its prefix matches string pool constant fragment
@@ -3597,7 +3597,7 @@ dimen:design_snackbar_padding_vertical_2lines:2131099783 => [dimen:design_snackb
 dimen:notification_media_narrow_margin:2131100042 => [dimen:notification_content_margin_start:2131100038]
 drawable:abc_btn_borderless_material:2131165192 => [drawable:abc_btn_default_mtrl_shape:2131165198]
 drawable:abc_btn_check_material:2131165193 => [drawable:abc_btn_check_to_on_mtrl_015:2131165196, drawable:abc_btn_check_to_on_mtrl_000:2131165195]
-drawable:abc_btn_check_material_anim:2131165194 => [drawable:btn_checkbox_checked_mtrl:2131165277, drawable:btn_checkbox_unchecked_mtrl:2131165279, drawable:btn_checkbox_unchecked_to_checked_mtrl_animation:2131165280, id:unchecked:2131231240, id:checked:2131230844, drawable:btn_checkbox_checked_to_unchecked_mtrl_animation:2131165278]
+drawable:abc_btn_check_material_anim:2131165194 => [drawable:btn_checkbox_checked_mtrl:2131165277, drawable:btn_checkbox_unchecked_mtrl:2131165279, drawable:btn_checkbox_unchecked_to_checked_mtrl_animation:2131165280, id:unchecked:2131231239, id:checked:2131230844, drawable:btn_checkbox_checked_to_unchecked_mtrl_animation:2131165278]
 drawable:abc_btn_colored_material:2131165197 => [dimen:abc_button_inset_vertical_material:2131099667, dimen:abc_button_inset_horizontal_material:2131099666, dimen:abc_control_corner_material:2131099672, dimen:abc_button_padding_vertical_material:2131099669, dimen:abc_button_padding_horizontal_material:2131099668]
 drawable:abc_btn_default_mtrl_shape:2131165198 => [dimen:abc_button_inset_vertical_material:2131099667, dimen:abc_button_inset_horizontal_material:2131099666, dimen:abc_control_corner_material:2131099672, dimen:abc_button_padding_vertical_material:2131099669, dimen:abc_button_padding_horizontal_material:2131099668]
 drawable:abc_btn_radio_material:2131165199 => [drawable:abc_btn_radio_to_on_mtrl_015:2131165202, drawable:abc_btn_radio_to_on_mtrl_000:2131165201]
@@ -3635,7 +3635,7 @@ drawable:btn_radio_on_to_off_mtrl_animation:2131165284 => [drawable:btn_radio_on
 drawable:button_selector:2131165285 => [color:main_color:2131034209]
 drawable:check_select:2131165286 => [drawable:svg_check:2131165351, drawable:shape_uncheck:2131165349]
 drawable:design_ic_visibility:2131165289 => [string:path_password_eye:2131558506]
-drawable:design_password_eye:2131165291 => [drawable:design_ic_visibility_off:2131165290, drawable:design_ic_visibility:2131165289, drawable:avd_hide_password:2131165274, id:masked:2131230999, id:visible:2131231249, drawable:avd_show_password:2131165275]
+drawable:design_password_eye:2131165291 => [drawable:design_ic_visibility_off:2131165290, drawable:design_ic_visibility:2131165289, drawable:avd_hide_password:2131165274, id:masked:2131230999, id:visible:2131231248, drawable:avd_show_password:2131165275]
 drawable:design_snackbar_background:2131165292 => [dimen:design_snackbar_background_corner_radius:2131099776, color:design_snackbar_background_color:2131034197]
 drawable:ic_error:2131165297 => [color:state_err:2131034312]
 drawable:ic_ok:2131165303 => [color:main_color:2131034209]
@@ -3676,27 +3676,27 @@ layout:abc_alert_dialog_title_material:2131427338 => [attr:dialogPreferredPaddin
 layout:abc_cascading_menu_item_layout:2131427339 => [drawable:abc_list_divider_material:2131165226, attr:dropdownListPreferredItemHeight:2130903331, style:RtlOverlay_Widget_AppCompat_PopupMenuItem:2131624197, attr:textAppearanceLargePopupMenu:2130903842, style:RtlOverlay_Widget_AppCompat_PopupMenuItem_Title:2131624202, attr:textAppearanceSmallPopupMenu:2130903851, style:RtlOverlay_Widget_AppCompat_PopupMenuItem_Shortcut:2131624199, style:RtlOverlay_Widget_AppCompat_PopupMenuItem_SubmenuArrow:2131624200]
 layout:abc_dialog_title_material:2131427340 => [attr:dialogPreferredPadding:2130903309, dimen:abc_dialog_padding_top_material:2131099685, layout:abc_screen_content_include:2131427348]
 layout:abc_expanded_menu_layout:2131427341 => [attr:panelMenuListWidth:2130903681]
-layout:abc_list_menu_item_layout:2131427344 => [attr:listPreferredItemHeightSmall:2130903573, attr:listPreferredItemPaddingLeft:2130903575, attr:listPreferredItemPaddingRight:2130903576, attr:textAppearanceListItemSmall:2130903846, id:title:2131231220]
+layout:abc_list_menu_item_layout:2131427344 => [attr:listPreferredItemHeightSmall:2130903573, attr:listPreferredItemPaddingLeft:2130903575, attr:listPreferredItemPaddingRight:2130903576, attr:textAppearanceListItemSmall:2130903846, id:title:2131231219]
 layout:abc_popup_menu_header_item_layout:2131427346 => [attr:dropdownListPreferredItemHeight:2130903331, attr:textAppearancePopupMenuHeader:2130903848]
-layout:abc_popup_menu_item_layout:2131427347 => [drawable:abc_list_divider_material:2131165226, attr:dropdownListPreferredItemHeight:2130903331, style:RtlOverlay_Widget_AppCompat_PopupMenuItem:2131624197, style:RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup:2131624198, attr:textAppearanceLargePopupMenu:2130903842, style:RtlOverlay_Widget_AppCompat_PopupMenuItem_Text:2131624201, id:title:2131231220, attr:textAppearanceSmallPopupMenu:2130903851, style:RtlOverlay_Widget_AppCompat_PopupMenuItem_SubmenuArrow:2131624200]
+layout:abc_popup_menu_item_layout:2131427347 => [drawable:abc_list_divider_material:2131165226, attr:dropdownListPreferredItemHeight:2130903331, style:RtlOverlay_Widget_AppCompat_PopupMenuItem:2131624197, style:RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup:2131624198, attr:textAppearanceLargePopupMenu:2130903842, style:RtlOverlay_Widget_AppCompat_PopupMenuItem_Text:2131624201, id:title:2131231219, attr:textAppearanceSmallPopupMenu:2130903851, style:RtlOverlay_Widget_AppCompat_PopupMenuItem_SubmenuArrow:2131624200]
 layout:abc_screen_content_include:2131427348 => [id:action_bar_activity_content:2131230773]
 layout:abc_screen_simple:2131427349 => [id:action_mode_bar:2131230785, layout:abc_action_mode_bar:2131427332, layout:abc_screen_content_include:2131427348]
 layout:abc_screen_simple_overlay_action_mode:2131427350 => [layout:abc_screen_content_include:2131427348, id:action_mode_bar:2131230785, layout:abc_action_mode_bar:2131427332]
 layout:abc_screen_toolbar:2131427351 => [layout:abc_screen_content_include:2131427348, attr:actionBarStyle:2130903045, string:abc_action_bar_up_description:2131558401, attr:toolbarStyle:2130903896, attr:actionModeTheme:2130903069, attr:actionModeStyle:2130903068]
 layout:abc_search_dropdown_item_icons_2line:2131427352 => [style:RtlOverlay_Widget_AppCompat_Search_DropDown:2131624203, dimen:abc_dropdownitem_icon_width:2131099689, style:RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1:2131624204, attr:selectableItemBackground:2130903735, style:RtlOverlay_Widget_AppCompat_Search_DropDown_Query:2131624206, style:RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2:2131624205, attr:textAppearanceSearchResultSubtitle:2130903849, attr:textAppearanceSearchResultTitle:2130903850]
-layout:abc_search_view:2131427353 => [string:abc_searchview_description_search:2131558421, attr:actionButtonStyle:2130903051, dimen:abc_dropdownitem_icon_width:2131099689, style:RtlOverlay_Widget_AppCompat_SearchView_MagIcon:2131624208, id:search_edit_frame:2131231130, dimen:abc_dropdownitem_text_padding_left:2131099690, dimen:abc_dropdownitem_text_padding_right:2131099691, attr:selectableItemBackgroundBorderless:2130903736, string:abc_searchview_description_clear:2131558419, string:abc_searchview_description_submit:2131558422, string:abc_searchview_description_voice:2131558423]
+layout:abc_search_view:2131427353 => [string:abc_searchview_description_search:2131558421, attr:actionButtonStyle:2130903051, dimen:abc_dropdownitem_icon_width:2131099689, style:RtlOverlay_Widget_AppCompat_SearchView_MagIcon:2131624208, id:search_edit_frame:2131231129, dimen:abc_dropdownitem_text_padding_left:2131099690, dimen:abc_dropdownitem_text_padding_right:2131099691, attr:selectableItemBackgroundBorderless:2130903736, string:abc_searchview_description_clear:2131558419, string:abc_searchview_description_submit:2131558422, string:abc_searchview_description_voice:2131558423]
 layout:abc_select_dialog_material:2131427354 => [attr:listDividerAlertDialog:2130903566, dimen:abc_dialog_list_padding_bottom_no_buttons:2131099680, dimen:abc_dialog_list_padding_top_no_title:2131099681, style:Widget_AppCompat_ListView:2131624503]
 layout:abc_tooltip:2131427355 => [attr:tooltipFrameBackground:2130903898, dimen:tooltip_margin:2131100064, dimen:tooltip_vertical_padding:2131100067, dimen:tooltip_horizontal_padding:2131100063, style:TextAppearance_AppCompat_Tooltip:2131624271, attr:tooltipForegroundColor:2130903897]
-layout:activity_add_data:2131427356 => [color:background:2131034141, id:start:2131231169, color:text_color:2131034322, drawable:button_selector:2131165285, layout:view_no_vip:2131427460]
+layout:activity_add_data:2131427356 => [color:background:2131034141, id:start:2131231168, color:text_color:2131034322, drawable:button_selector:2131165285, layout:view_no_vip:2131427460]
 layout:activity_authorization:2131427357 => [color:background:2131034141, drawable:item_bg_ripple:2131165306, id:accessibility_on_off_img:2131230770, id:accessibility_forward:2131230768, color:text_color:2131034322, drawable:forward:2131165295, id:device_admin_on_off_img:2131230908, id:device_admin_forward:2131230906, id:batteryIgnore_on_off_img:2131230822, id:batteryIgnore_forward:2131230820, id:notification_on_off_img:2131231069, id:notification_forward:2131231065, id:floating_window_on_off_img:2131230948, id:floating_window_forward:2131230946, string:authorizationQuestion:2131558432, layout:view_no_vip:2131427460]
-layout:activity_edit_data:2131427358 => [drawable:bg_radius:2131165276, drawable:retrieve_setting:2131165345, id:base_setting_img:2131230816, color:text_color:2131034322, id:tv_base_setting:2131231236, color:divide_line:2131034202, drawable:auto_finder:2131165273, id:auto_finder_img:2131230805, id:tv_auto_finder:2131231235, drawable:coordinate:2131165287, id:coordinate_img:2131230874, drawable:widget:2131165362, id:widget_img:2131231263, layout:view_no_vip:2131427460]
-layout:activity_exception_report:2131427359 => [id:send:2131231139, drawable:button_selector:2131165285]
-layout:activity_list_data:2131427360 => [color:background:2131034141, drawable:search_box:2131165346, drawable:search_popup_bg:2131165347, drawable:edit_cursor:2131165293, id:searchBox:2131231125, drawable:check_select:2131165286, drawable:button_selector:2131165285, layout:view_no_vip:2131427460]
+layout:activity_edit_data:2131427358 => [drawable:bg_radius:2131165276, drawable:retrieve_setting:2131165345, id:base_setting_img:2131230816, color:text_color:2131034322, id:tv_base_setting:2131231235, color:divide_line:2131034202, drawable:auto_finder:2131165273, id:auto_finder_img:2131230805, id:tv_auto_finder:2131231234, drawable:coordinate:2131165287, id:coordinate_img:2131230874, drawable:widget:2131165362, id:widget_img:2131231262, layout:view_no_vip:2131427460]
+layout:activity_exception_report:2131427359 => [id:send:2131231138, drawable:button_selector:2131165285]
+layout:activity_list_data:2131427360 => [color:background:2131034141, drawable:search_box:2131165346, drawable:search_popup_bg:2131165347, drawable:edit_cursor:2131165293, id:searchBox:2131231124, drawable:check_select:2131165286, drawable:button_selector:2131165285, layout:view_no_vip:2131427460]
 layout:activity_main:2131427361 => [color:background:2131034141, layout:view_no_vip:2131427460]
 layout:activity_more_message:2131427362 => [color:background:2131034141, layout:view_no_vip:2131427460]
-layout:activity_regulation_import:2131427363 => [color:background:2131034141, drawable:search_box:2131165346, drawable:search_popup_bg:2131165347, drawable:edit_cursor:2131165293, id:searchBox:2131231125, id:rl_bottom:2131231109, drawable:check_select:2131165286, drawable:button_selector:2131165285, layout:view_no_vip:2131427460]
-layout:activity_setting:2131427364 => [color:background:2131034141, color:text_color:2131034322, drawable:button_selector:2131165285, drawable:check_select:2131165286, drawable:svg_github:2131165352, drawable:text_click_color:2131165359, id:support_txt:2131231181, drawable:support_me:2131165350, layout:view_no_vip:2131427460]
-layout:activity_update:2131427365 => [color:background:2131034141, id:webView_update:2131231252, color:divide_line:2131034202, drawable:item_bg_ripple:2131165306, id:deviLineMid:2131230904, id:deviLineTop:2131230905, id:sure:2131231182, id:cancel:2131230834]
+layout:activity_regulation_import:2131427363 => [color:background:2131034141, drawable:search_box:2131165346, drawable:search_popup_bg:2131165347, drawable:edit_cursor:2131165293, id:searchBox:2131231124, id:rl_bottom:2131231108, drawable:check_select:2131165286, drawable:button_selector:2131165285, layout:view_no_vip:2131427460]
+layout:activity_setting:2131427364 => [color:background:2131034141, color:text_color:2131034322, drawable:button_selector:2131165285, drawable:check_select:2131165286, drawable:svg_github:2131165352, drawable:text_click_color:2131165359, id:support_txt:2131231180, drawable:support_me:2131165350, layout:view_no_vip:2131427460]
+layout:activity_update:2131427365 => [color:background:2131034141, id:webView_update:2131231251, color:divide_line:2131034202, drawable:item_bg_ripple:2131165306, id:deviLineMid:2131230904, id:deviLineTop:2131230905, id:sure:2131231181, id:cancel:2131230834]
 layout:design_bottom_navigation_item:2131427367 => [id:navigation_bar_item_icon_view:2131231054, dimen:design_bottom_navigation_margin:2131099753, id:navigation_bar_item_labels_group:2131231055, dimen:design_bottom_navigation_label_padding:2131099752, id:navigation_bar_item_small_label_view:2131231057, dimen:design_bottom_navigation_text_size:2131099755, id:navigation_bar_item_large_label_view:2131231056, dimen:design_bottom_navigation_active_text_size:2131099746]
 layout:design_bottom_sheet_dialog:2131427368 => [string:bottom_sheet_behavior:2131558433, attr:bottomSheetStyle:2130903135]
 layout:design_layout_snackbar:2131427369 => [style:ThemeOverlay_AppCompat_Dark:2131624406, style:Widget_Design_Snackbar:2131624535]
@@ -3771,20 +3771,19 @@ layout:text_view_with_line_height_from_appearance:2131427445 => [style:TestStyle
 layout:text_view_with_line_height_from_layout:2131427446 => [style:TestStyleWithLineHeight:2131624237, dimen:material_text_view_test_line_height_override:2131099833]
 layout:text_view_with_line_height_from_style:2131427447 => [style:TestStyleWithLineHeightAppearance:2131624238]
 layout:text_view_with_theme_line_height:2131427448 => [style:TestStyleWithThemeLineHeightAttribute:2131624239]
-layout:view_add_data:2131427450 => [drawable:add_data_background:2131165270, id:layout_act:2131230983, color:text_color:2131034322, id:layout_widget:2131230986, id:layout_pac:2131230985, id:layout_xy:2131230987, id:layout_button:2131230984, drawable:button_selector:2131165285, id:switch_wid:2131231184, id:save_wid:2131231116, id:quit:2131231097, id:switch_aim:2131231183, id:save_aim:2131231113]
+layout:view_add_data:2131427450 => [drawable:add_data_background:2131165270, id:layout_act:2131230983, color:text_color:2131034322, id:layout_widget:2131230986, id:layout_pac:2131230985, id:layout_xy:2131230987, id:layout_button:2131230984, drawable:button_selector:2131165285, id:switch_wid:2131231183, id:save_wid:2131231115, id:quit:2131231096, id:switch_aim:2131231182, id:save_aim:2131231112]
 layout:view_add_warning:2131427451 => [color:text_color:2131034322]
 layout:view_auto_finder:2131427452 => [color:text_color:2131034322, drawable:check_select:2131165286]
-layout:view_base_setting:2131427453 => [id:auto_finder_on_off_layout:2131230808, color:text_color:2131034322, drawable:switch_custom_thumb_selector:2131165354, drawable:switch_custom_track_selector:2131165357, id:auto_finder_time_layout:2131230813, id:base_on_off_layout:2131230815, id:widget_on_off_layout:2131231267, id:widget_time_layout:2131231275, id:auto_finder_sustain_layout:2131230811, id:widget_sustain_layout:2131231272, drawable:check_select:2131165286, id:coordinate_on_off_layout:2131230877, id:coordinate_time_layout:2131230883, id:coordinate_sustain_layout:2131230881]
+layout:view_base_setting:2131427453 => [id:auto_finder_on_off_layout:2131230808, color:text_color:2131034322, drawable:switch_custom_thumb_selector:2131165354, drawable:switch_custom_track_selector:2131165357, id:auto_finder_time_layout:2131230813, id:base_on_off_layout:2131230815, id:widget_on_off_layout:2131231266, id:widget_time_layout:2131231274, id:auto_finder_sustain_layout:2131230811, id:widget_sustain_layout:2131231271, drawable:check_select:2131165286, id:coordinate_on_off_layout:2131230877, id:coordinate_time_layout:2131230883, id:coordinate_sustain_layout:2131230881]
 layout:view_coordinate:2131427454 => [color:text_color:2131034322, id:coordinate_clickDelay_layout:2131230866, id:coordinate_clickInterval_layout:2131230868, id:coordinate_clickNumber_layout:2131230870, id:coordinate_share:2131230879, id:coordinate_delete:2131230873, drawable:text_click_color:2131165359]
 layout:view_item_app:2131427456 => [drawable:item_bg_ripple:2131165306, drawable:app:2131165271, id:img:2131230972, id:cb_select:2131230836, string:app_name:2131558430, color:text_color:2131034322, drawable:check_select:2131165286, id:on_off:2131231072, id:img_forward:2131230973, drawable:switch_custom_thumb_selector:2131165354, drawable:switch_custom_track_selector:2131165357, drawable:forward:2131165295, color:divide_line:2131034202]
 layout:view_item_import:2131427457 => [drawable:item_bg_ripple:2131165306, id:cb_select:2131230836, string:app_name:2131558430, color:text_color:2131034322, drawable:check_select:2131165286, color:divide_line:2131034202]
 layout:view_main_item:2131427458 => [id:main_img:2131230996, id:img_forward:2131230973, color:text_color:2131034322, drawable:forward:2131165295]
-layout:view_new_rule:2131427459 => [string:new_rule:2131558504, id:button:2131230831, id:title:2131231220, color:divide_line:2131034202, drawable:item_bg_ripple:2131165306, id:deviLineMid:2131230904, id:deviLineTop:2131230905, id:sure:2131231182, id:cancel:2131230834]
+layout:view_new_rule:2131427459 => [string:new_rule:2131558504, id:button:2131230831, id:title:2131231219, color:divide_line:2131034202, drawable:item_bg_ripple:2131165306, id:deviLineMid:2131230904, id:deviLineTop:2131230905, id:sure:2131231181, id:cancel:2131230834]
 layout:view_no_vip:2131427460 => [drawable:no_vip_circle:2131165328]
 layout:view_on_off_warning:2131427461 => [color:text_color:2131034322]
-layout:view_privacy_agreement:2131427462 => [id:button:2131230831, id:title:2131231220, color:divide_line:2131034202, drawable:item_bg_ripple:2131165306, id:deviLineMid:2131230904, id:deviLineTop:2131230905, id:sure:2131231182, id:cancel:2131230834]
-layout:view_question:2131427463 => [color:text_color:2131034322]
-layout:view_widget:2131427464 => [color:text_color:2131034322, drawable:check_select:2131165286, id:widget_share:2131231270, id:widget_delete:2131231260, drawable:text_click_color:2131165359]
+layout:view_privacy_agreement:2131427462 => [id:button:2131230831, id:title:2131231219, color:divide_line:2131034202, drawable:item_bg_ripple:2131165306, id:deviLineMid:2131230904, id:deviLineTop:2131230905, id:sure:2131231181, id:cancel:2131230834]
+layout:view_widget:2131427463 => [color:text_color:2131034322, drawable:check_select:2131165286, id:widget_share:2131231269, id:widget_delete:2131231259, drawable:text_click_color:2131165359]
 style:AlertDialog_AppCompat:2131623936 => [style:Base_AlertDialog_AppCompat:2131623946]
 style:AlertDialog_AppCompat_Light:2131623937 => [style:Base_AlertDialog_AppCompat_Light:2131623947]
 style:Animation_AppCompat_Dialog:2131623939 => [style:Base_Animation_AppCompat_Dialog:2131623948]
@@ -5754,155 +5753,155 @@ anim:fragment_fast_out_extra_slow_in:2130771996,
    id:pkg:2131231090,
    id:position:2131231091,
    id:progress:2131231093,
-   id:quit:2131231097,
-   id:radio:2131231098,
-   id:ratio:2131231099,
-   id:rectangles:2131231100,
-   id:recyclerView:2131231101,
-   id:retrieveKeyword:2131231102,
-   id:retrieveNumber:2131231103,
-   id:reverseSawtooth:2131231104,
-   id:right:2131231105,
-   id:rightToLeft:2131231106,
-   id:right_icon:2131231107,
-   id:right_side:2131231108,
-   id:rl_bottom:2131231109,
-   id:root_layout:2131231110,
-   id:rounded:2131231111,
-   id:row_index_key:2131231112,
-   id:save_aim:2131231113,
-   id:save_overlay_view:2131231115,
-   id:save_wid:2131231116,
-   id:scale:2131231118,
-   id:scroll:2131231120,
-   id:scrollView:2131231123,
-   id:searchBox:2131231125,
-   id:search_button:2131231128,
-   id:search_close_btn:2131231129,
-   id:search_edit_frame:2131231130,
-   id:search_go_btn:2131231131,
-   id:search_mag_icon:2131231132,
-   id:search_plate:2131231133,
-   id:search_src_text:2131231134,
-   id:search_voice_btn:2131231135,
-   id:select_dialog_listview:2131231136,
-   id:selected:2131231137,
-   id:selection_type:2131231138,
-   id:send:2131231139,
-   id:setting_authorChat:2131231140,
-   id:setting_autoHideOnTaskList:2131231141,
-   id:setting_groupChat:2131231142,
-   id:setting_open:2131231143,
-   id:setting_praise:2131231144,
-   id:setting_share:2131231145,
-   id:setting_update:2131231146,
-   id:shortcut:2131231147,
-   id:skipCollapsed:2131231152,
-   id:snackbar_action:2131231154,
-   id:snackbar_text:2131231155,
-   id:spacer:2131231158,
-   id:special_effects_controller_view_tag:2131231159,
-   id:split_action_bar:2131231161,
-   id:standard:2131231168,
-   id:start:2131231169,
-   id:status_img:2131231175,
-   id:status_tip:2131231176,
-   id:submenuarrow:2131231179,
-   id:submit_area:2131231180,
-   id:support_txt:2131231181,
-   id:sure:2131231182,
-   id:switch_aim:2131231183,
-   id:switch_wid:2131231184,
-   id:tabMode:2131231185,
-   id:tag_accessibility_actions:2131231186,
-   id:tag_accessibility_clickable_spans:2131231187,
-   id:tag_accessibility_heading:2131231188,
-   id:tag_accessibility_pane_title:2131231189,
-   id:tag_on_apply_window_listener:2131231190,
-   id:tag_on_receive_content_listener:2131231191,
-   id:tag_on_receive_content_mime_types:2131231192,
-   id:tag_screen_reader_focusable:2131231193,
-   id:tag_state_description:2131231194,
-   id:tag_transition_group:2131231195,
-   id:tag_unhandled_key_event_manager:2131231196,
-   id:tag_unhandled_key_listeners:2131231197,
-   id:tag_window_insets_animation_callback:2131231198,
-   id:test_checkbox_android_button_tint:2131231199,
-   id:test_checkbox_app_button_tint:2131231200,
-   id:test_radiobutton_android_button_tint:2131231201,
-   id:test_radiobutton_app_button_tint:2131231202,
-   id:text:2131231203,
-   id:text2:2131231204,
-   id:textEnd:2131231205,
-   id:textSpacerNoButtons:2131231206,
-   id:textSpacerNoTitle:2131231207,
-   id:textStart:2131231208,
-   id:textTop:2131231209,
-   id:text_input_end_icon:2131231210,
-   id:text_input_error_icon:2131231211,
-   id:text_input_start_icon:2131231212,
-   id:textinput_counter:2131231213,
-   id:textinput_error:2131231214,
-   id:textinput_helper_text:2131231215,
-   id:textinput_placeholder:2131231216,
-   id:textinput_prefix_text:2131231217,
-   id:textinput_suffix_text:2131231218,
-   id:time:2131231219,
-   id:title:2131231220,
-   id:titleDividerNoCustom:2131231221,
-   id:title_template:2131231222,
-   id:toggle:2131231223,
-   id:top:2131231224,
-   id:topPanel:2131231225,
-   id:touch_outside:2131231226,
-   id:transitionToEnd:2131231227,
-   id:transitionToStart:2131231228,
-   id:transition_current_scene:2131231229,
-   id:transition_layout_save:2131231230,
-   id:transition_position:2131231231,
-   id:transition_scene_layoutid_cache:2131231232,
-   id:transition_transform:2131231233,
-   id:triangle:2131231234,
-   id:tv_auto_finder:2131231235,
-   id:tv_base_setting:2131231236,
-   id:tv_desc:2131231237,
-   id:tv_name:2131231238,
-   id:tv_selected_num:2131231239,
-   id:up:2131231243,
-   id:view_tree_lifecycle_owner:2131231246,
-   id:view_tree_saved_state_registry_owner:2131231247,
-   id:view_tree_view_model_store_owner:2131231248,
-   id:visible_removing_fragment_view_tag:2131231250,
-   id:webViewMore:2131231251,
-   id:webView_update:2131231252,
-   id:widget:2131231253,
-   id:widget_activity:2131231254,
-   id:widget_clickDelay:2131231255,
-   id:widget_clickOnly:2131231256,
-   id:widget_clickable:2131231257,
-   id:widget_comment:2131231258,
-   id:widget_createTime:2131231259,
-   id:widget_delete:2131231260,
-   id:widget_describe:2131231261,
-   id:widget_id:2131231262,
-   id:widget_img:2131231263,
-   id:widget_layout:2131231264,
-   id:widget_modify:2131231265,
-   id:widget_noRepeat:2131231266,
-   id:widget_on_off_layout:2131231267,
-   id:widget_rect:2131231268,
-   id:widget_retrieveAllTime:2131231269,
-   id:widget_share:2131231270,
-   id:widget_sustainTime:2131231271,
-   id:widget_sustain_layout:2131231272,
-   id:widget_switch:2131231273,
-   id:widget_text:2131231274,
-   id:widget_time_layout:2131231275,
-   id:withText:2131231276,
-   id:withinBounds:2131231277,
-   id:wrap:2131231278,
-   id:wrap_content:2131231279,
-   id:xy:2131231280,
+   id:quit:2131231096,
+   id:radio:2131231097,
+   id:ratio:2131231098,
+   id:rectangles:2131231099,
+   id:recyclerView:2131231100,
+   id:retrieveKeyword:2131231101,
+   id:retrieveNumber:2131231102,
+   id:reverseSawtooth:2131231103,
+   id:right:2131231104,
+   id:rightToLeft:2131231105,
+   id:right_icon:2131231106,
+   id:right_side:2131231107,
+   id:rl_bottom:2131231108,
+   id:root_layout:2131231109,
+   id:rounded:2131231110,
+   id:row_index_key:2131231111,
+   id:save_aim:2131231112,
+   id:save_overlay_view:2131231114,
+   id:save_wid:2131231115,
+   id:scale:2131231117,
+   id:scroll:2131231119,
+   id:scrollView:2131231122,
+   id:searchBox:2131231124,
+   id:search_button:2131231127,
+   id:search_close_btn:2131231128,
+   id:search_edit_frame:2131231129,
+   id:search_go_btn:2131231130,
+   id:search_mag_icon:2131231131,
+   id:search_plate:2131231132,
+   id:search_src_text:2131231133,
+   id:search_voice_btn:2131231134,
+   id:select_dialog_listview:2131231135,
+   id:selected:2131231136,
+   id:selection_type:2131231137,
+   id:send:2131231138,
+   id:setting_authorChat:2131231139,
+   id:setting_autoHideOnTaskList:2131231140,
+   id:setting_groupChat:2131231141,
+   id:setting_open:2131231142,
+   id:setting_praise:2131231143,
+   id:setting_share:2131231144,
+   id:setting_update:2131231145,
+   id:shortcut:2131231146,
+   id:skipCollapsed:2131231151,
+   id:snackbar_action:2131231153,
+   id:snackbar_text:2131231154,
+   id:spacer:2131231157,
+   id:special_effects_controller_view_tag:2131231158,
+   id:split_action_bar:2131231160,
+   id:standard:2131231167,
+   id:start:2131231168,
+   id:status_img:2131231174,
+   id:status_tip:2131231175,
+   id:submenuarrow:2131231178,
+   id:submit_area:2131231179,
+   id:support_txt:2131231180,
+   id:sure:2131231181,
+   id:switch_aim:2131231182,
+   id:switch_wid:2131231183,
+   id:tabMode:2131231184,
+   id:tag_accessibility_actions:2131231185,
+   id:tag_accessibility_clickable_spans:2131231186,
+   id:tag_accessibility_heading:2131231187,
+   id:tag_accessibility_pane_title:2131231188,
+   id:tag_on_apply_window_listener:2131231189,
+   id:tag_on_receive_content_listener:2131231190,
+   id:tag_on_receive_content_mime_types:2131231191,
+   id:tag_screen_reader_focusable:2131231192,
+   id:tag_state_description:2131231193,
+   id:tag_transition_group:2131231194,
+   id:tag_unhandled_key_event_manager:2131231195,
+   id:tag_unhandled_key_listeners:2131231196,
+   id:tag_window_insets_animation_callback:2131231197,
+   id:test_checkbox_android_button_tint:2131231198,
+   id:test_checkbox_app_button_tint:2131231199,
+   id:test_radiobutton_android_button_tint:2131231200,
+   id:test_radiobutton_app_button_tint:2131231201,
+   id:text:2131231202,
+   id:text2:2131231203,
+   id:textEnd:2131231204,
+   id:textSpacerNoButtons:2131231205,
+   id:textSpacerNoTitle:2131231206,
+   id:textStart:2131231207,
+   id:textTop:2131231208,
+   id:text_input_end_icon:2131231209,
+   id:text_input_error_icon:2131231210,
+   id:text_input_start_icon:2131231211,
+   id:textinput_counter:2131231212,
+   id:textinput_error:2131231213,
+   id:textinput_helper_text:2131231214,
+   id:textinput_placeholder:2131231215,
+   id:textinput_prefix_text:2131231216,
+   id:textinput_suffix_text:2131231217,
+   id:time:2131231218,
+   id:title:2131231219,
+   id:titleDividerNoCustom:2131231220,
+   id:title_template:2131231221,
+   id:toggle:2131231222,
+   id:top:2131231223,
+   id:topPanel:2131231224,
+   id:touch_outside:2131231225,
+   id:transitionToEnd:2131231226,
+   id:transitionToStart:2131231227,
+   id:transition_current_scene:2131231228,
+   id:transition_layout_save:2131231229,
+   id:transition_position:2131231230,
+   id:transition_scene_layoutid_cache:2131231231,
+   id:transition_transform:2131231232,
+   id:triangle:2131231233,
+   id:tv_auto_finder:2131231234,
+   id:tv_base_setting:2131231235,
+   id:tv_desc:2131231236,
+   id:tv_name:2131231237,
+   id:tv_selected_num:2131231238,
+   id:up:2131231242,
+   id:view_tree_lifecycle_owner:2131231245,
+   id:view_tree_saved_state_registry_owner:2131231246,
+   id:view_tree_view_model_store_owner:2131231247,
+   id:visible_removing_fragment_view_tag:2131231249,
+   id:webViewMore:2131231250,
+   id:webView_update:2131231251,
+   id:widget:2131231252,
+   id:widget_activity:2131231253,
+   id:widget_clickDelay:2131231254,
+   id:widget_clickOnly:2131231255,
+   id:widget_clickable:2131231256,
+   id:widget_comment:2131231257,
+   id:widget_createTime:2131231258,
+   id:widget_delete:2131231259,
+   id:widget_describe:2131231260,
+   id:widget_id:2131231261,
+   id:widget_img:2131231262,
+   id:widget_layout:2131231263,
+   id:widget_modify:2131231264,
+   id:widget_noRepeat:2131231265,
+   id:widget_on_off_layout:2131231266,
+   id:widget_rect:2131231267,
+   id:widget_retrieveAllTime:2131231268,
+   id:widget_share:2131231269,
+   id:widget_sustainTime:2131231270,
+   id:widget_sustain_layout:2131231271,
+   id:widget_switch:2131231272,
+   id:widget_text:2131231273,
+   id:widget_time_layout:2131231274,
+   id:withText:2131231275,
+   id:withinBounds:2131231276,
+   id:wrap:2131231277,
+   id:wrap_content:2131231278,
+   id:xy:2131231279,
    integer:app_bar_elevation_anim_duration:2131296258,
    integer:cancel_button_image_alpha:2131296260,
    integer:config_tooltipAnimTime:2131296261,
@@ -6027,8 +6026,8 @@ anim:fragment_fast_out_extra_slow_in:2130771996,
    layout:view_new_rule:2131427459,
    layout:view_on_off_warning:2131427461,
    layout:view_privacy_agreement:2131427462,
-   layout:view_widget:2131427464,
-   layout:view_widget_select:2131427465,
+   layout:view_widget:2131427463,
+   layout:view_widget_select:2131427464,
    plurals:mtrl_badge_content_description:2131492864,
    string:abc_action_bar_up_description:2131558401,
    string:abc_menu_alt_shortcut_label:2131558408,
@@ -6734,7 +6733,6 @@ Skipped unused resource res/layout-v21/notification_template_icon_group.xml: 988
 Skipped unused resource res/layout/notification_template_part_chronometer.xml: 440 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/layout/notification_template_part_time.xml: 440 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/layout/support_simple_spinner_dropdown_item.xml: 464 bytes (replaced with small dummy file of size 104 bytes)
-Skipped unused resource res/layout/view_question.xml: 940 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/layout-sw600dp-v13/design_layout_snackbar.xml: 528 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/layout-v26/abc_screen_toolbar.xml: 1560 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/xml/standalone_badge.xml: 268 bytes (replaced with small dummy file of size 104 bytes)
