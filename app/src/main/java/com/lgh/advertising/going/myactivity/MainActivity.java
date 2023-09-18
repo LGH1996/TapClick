@@ -127,7 +127,7 @@ public class MainActivity extends BaseActivity {
                         break;
                     }
                     case 2: {
-                        MainActivity.this.startActivity(new Intent(context, ListDataActivity.class));
+                        startActivity(new Intent(context, ListDataActivity.class));
                         break;
                     }
                     case 3: {
@@ -358,6 +358,7 @@ public class MainActivity extends BaseActivity {
                         Toast.makeText(context, "导入成功", Toast.LENGTH_SHORT).show();
                         AppDescribe appDescribe = dataDao.getAppDescribeByPackage(widgetShare.widget.appPackage);
                         if (appDescribe != null) {
+                            autoHideOnTaskList = false;
                             Intent intent = new Intent(context, EditDataActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intent.putExtra("packageName", appDescribe.appPackage);
@@ -421,6 +422,7 @@ public class MainActivity extends BaseActivity {
                         Toast.makeText(context, "导入成功", Toast.LENGTH_SHORT).show();
                         AppDescribe appDescribe = dataDao.getAppDescribeByPackage(coordinateShare.coordinate.appPackage);
                         if (appDescribe != null) {
+                            autoHideOnTaskList = false;
                             Intent intent = new Intent(context, EditDataActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intent.putExtra("packageName", appDescribe.appPackage);
@@ -471,9 +473,11 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         alertDialog.dismiss();
-                        autoHideOnTaskList = false;
                         RegulationImportActivity.regulationList = regulationExport.regulationList;
-                        startActivity(new Intent(MainActivity.this, RegulationImportActivity.class));
+                        autoHideOnTaskList = false;
+                        Intent intent = new Intent(MainActivity.this, RegulationImportActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                 });
                 newRuleBinding.cancel.setOnClickListener(new View.OnClickListener() {
