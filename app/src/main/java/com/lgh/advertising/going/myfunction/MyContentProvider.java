@@ -59,11 +59,17 @@ public class MyContentProvider extends ContentProvider {
             updateData(MyAccessibilityService.mainFunction.getAppDescribeMap(), values);
             updateAllDate(MyAccessibilityService.mainFunction.getAppDescribeMap(), values);
             updateKeepAlive(MyAccessibilityService.mainFunction, values);
+            showDbClickSetting(MyAccessibilityService.mainFunction, values);
+            showDbClickFloating(MyAccessibilityService.mainFunction, values);
+            showAddDataWindow(MyAccessibilityService.mainFunction, values);
         }
         if (MyAccessibilityServiceNoGesture.mainFunction != null) {
             updateData(MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap(), values);
             updateAllDate(MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap(), values);
             updateKeepAlive(MyAccessibilityServiceNoGesture.mainFunction, values);
+            showDbClickSetting(MyAccessibilityServiceNoGesture.mainFunction, values);
+            showDbClickFloating(MyAccessibilityServiceNoGesture.mainFunction, values);
+            showAddDataWindow(MyAccessibilityServiceNoGesture.mainFunction, values);
         }
         return 1;
     }
@@ -139,5 +145,45 @@ public class MyContentProvider extends ContentProvider {
             }
         }
         appDescribeMap.putAll(newAppDescribeMap);
+    }
+
+    private void showDbClickSetting(MainFunction mainFunction, ContentValues values) {
+        String updateScope = values.getAsString("updateScope");
+        if (!TextUtils.equals(updateScope, "showDbClickSetting")) {
+            return;
+        }
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                mainFunction.showDbClickSetting();
+            }
+        });
+    }
+
+    private void showDbClickFloating(MainFunction mainFunction, ContentValues values) {
+        String updateScope = values.getAsString("updateScope");
+        Boolean enable = values.getAsBoolean("value");
+        if (!TextUtils.equals(updateScope, "showDbClickFloating") || Objects.isNull(enable)) {
+            return;
+        }
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                mainFunction.showDbClickFloating(enable);
+            }
+        });
+    }
+
+    private void showAddDataWindow(MainFunction mainFunction, ContentValues values) {
+        String updateScope = values.getAsString("updateScope");
+        if (!TextUtils.equals(updateScope, "showAddDataWindow")) {
+            return;
+        }
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                mainFunction.showAddDataWindow(false);
+            }
+        });
     }
 }

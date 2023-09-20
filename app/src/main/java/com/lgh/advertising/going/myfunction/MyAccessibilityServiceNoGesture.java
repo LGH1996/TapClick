@@ -14,7 +14,9 @@ public class MyAccessibilityServiceNoGesture extends AccessibilityService {
     @Override
     public void onCreate() {
         super.onCreate();
-        mainFunction = new MainFunction(this);
+        if (mainFunction != null) {
+            mainFunction = new MainFunction(this);
+        }
     }
 
     @Override

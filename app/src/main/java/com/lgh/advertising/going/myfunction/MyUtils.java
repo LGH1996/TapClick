@@ -2,15 +2,16 @@ package com.lgh.advertising.going.myfunction;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Rect;
 import android.net.Uri;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import com.lgh.advertising.going.BuildConfig;
 
 public class MyUtils {
-    private static final String ACTION_SHOW_ADD_DATA_WINDOW = "action.lingh.show.add.data.window";
     private static final String contentProviderAuthority = "content://" + BuildConfig.APPLICATION_ID;
     private static MyUtils mInstance;
     private final Context mContext;
@@ -26,10 +27,11 @@ public class MyUtils {
         return mInstance;
     }
 
-    public void requestShowAddDataWindow() {
-        Intent intent = new Intent(ACTION_SHOW_ADD_DATA_WINDOW);
-        intent.setPackage(mContext.getPackageName());
-        mContext.sendBroadcast(intent);
+    public boolean requestShowAddDataWindow() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("updateScope", "showAddDataWindow");
+        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+        return re > 0;
     }
 
     public boolean isServiceRunning() {
@@ -116,5 +118,52 @@ public class MyUtils {
         contentValues.put("updateScope", "allDate");
         int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
         return re > 0;
+    }
+
+    public boolean requestShowDbClickSetting() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("updateScope", "showDbClickSetting");
+        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+        return re > 0;
+    }
+
+    public boolean requestUpdateShowDbClickFloating(boolean enable) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("updateScope", "showDbClickFloating");
+        contentValues.put("value", enable);
+        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+        return re > 0;
+    }
+
+    public boolean getDbClickEnable() {
+        SharedPreferences preferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
+        return preferences.getBoolean("dbClickEnable", false);
+    }
+
+    public boolean setDbClickEnable(boolean enable) {
+        SharedPreferences preferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
+        preferences.edit().putBoolean("dbClickEnable", enable).apply();
+        return true;
+    }
+
+    public Rect getDbClickPosition() {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        mContext.getSystemService(WindowManager.class).getDefaultDisplay().getRealMetrics(displayMetrics);
+        Rect rect = new Rect();
+        rect.left = sharedPreferences.getInt("dbClickPositionLeft", displayMetrics.widthPixels - 150);
+        rect.top = sharedPreferences.getInt("dbClickPositionTop", 0);
+        rect.right = sharedPreferences.getInt("dbClickPositionRight", displayMetrics.widthPixels);
+        rect.bottom = sharedPreferences.getInt("dbClickPositionBottom", 100);
+        return rect;
+    }
+
+    public boolean setDbClickPosition(Rect rect) {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
+        sharedPreferences.edit().putInt("dbClickPositionLeft", rect.left).apply();
+        sharedPreferences.edit().putInt("dbClickPositionTop", rect.top).apply();
+        sharedPreferences.edit().putInt("dbClickPositionRight", rect.right).apply();
+        sharedPreferences.edit().putInt("dbClickPositionBottom", rect.bottom).apply();
+        return true;
     }
 }

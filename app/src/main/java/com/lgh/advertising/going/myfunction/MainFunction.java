@@ -18,6 +18,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
@@ -37,11 +38,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ViewAddDataBinding;
 import com.lgh.advertising.going.databinding.ViewAddWarningBinding;
+import com.lgh.advertising.going.databinding.ViewDbClickSettingBinding;
 import com.lgh.advertising.going.databinding.ViewWidgetSelectBinding;
 import com.lgh.advertising.going.myactivity.EditDataActivity;
 import com.lgh.advertising.going.myactivity.MainActivity;
@@ -78,13 +81,11 @@ import java.util.stream.Collectors;
  */
 
 public class MainFunction {
-
-    private static final String ACTION_SHOW_ADD_DATA_WINDOW = "action.lingh.show.add.data.window";
     private static final String isScreenOffPre = "isScreenOffPre";
     private final AccessibilityService service;
-    private WindowManager windowManager;
+    private final WindowManager windowManager;
     private PackageManager packageManager;
-    private InputMethodManager inputMethodManager;
+    private final InputMethodManager inputMethodManager;
     private DataDao dataDao;
     private Map<String, AppDescribe> appDescribeMap;
     private AppDescribe appDescribe;
@@ -118,6 +119,8 @@ public class MainFunction {
     private ImageView viewClickPosition;
     private Set<String> pkgSuggestNotOnList;
     private View ignoreView;
+    private WindowManager.LayoutParams dbClickLp;
+    private View dbClickView;
 
     public MainFunction(AccessibilityService service) {
         this.service = service;
@@ -136,7 +139,6 @@ public class MainFunction {
         appDescribeMap = new HashMap<>();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        intentFilter.addAction(ACTION_SHOW_ADD_DATA_WINDOW);
         myBroadcastReceiver = new MyBroadcastReceiver();
         service.registerReceiver(myBroadcastReceiver, intentFilter);
         IntentFilter filterPackage = new IntentFilter();
@@ -147,6 +149,7 @@ public class MainFunction {
         service.registerReceiver(myPackageReceiver, filterPackage);
         keepAliveByNotification(MyUtils.getInstance(service).getKeepAliveByNotification());
         keepAliveByFloatingWindow(MyUtils.getInstance(service).getKeepAliveByFloatingWindow());
+        showDbClickFloating(MyUtils.getInstance(service).getDbClickEnable());
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -624,7 +627,7 @@ public class MainFunction {
      * 创建规则时调用
      */
     @SuppressLint("ClickableViewAccessibility")
-    public void showAddDataWindow() {
+    public void showAddDataWindow(boolean capture) {
         if (pkgSuggestNotOnList == null) {
             Set<String> pkgSysSet = packageManager
                     .getInstalledPackages(PackageManager.MATCH_SYSTEM_ONLY)
@@ -667,7 +670,9 @@ public class MainFunction {
         aParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
         aParams.format = PixelFormat.TRANSPARENT;
         aParams.gravity = Gravity.START | Gravity.TOP;
-        aParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
+        aParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
         aParams.width = width;
         aParams.height = height / 5;
         aParams.x = (metrics.widthPixels - aParams.width) / 2;
@@ -680,13 +685,19 @@ public class MainFunction {
         bParams.gravity = Gravity.START | Gravity.TOP;
         bParams.width = metrics.widthPixels;
         bParams.height = metrics.heightPixels;
-        bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+        bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
         bParams.alpha = 0f;
 
         cParams = new WindowManager.LayoutParams();
         cParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
         cParams.format = PixelFormat.TRANSPARENT;
-        cParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+        cParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
         cParams.gravity = Gravity.START | Gravity.TOP;
         cParams.width = cParams.height = width / 4;
         cParams.x = (metrics.widthPixels - cParams.width) / 2;
@@ -852,14 +863,19 @@ public class MainFunction {
                         widgetSelectBinding.frame.addView(img, params);
                     }
                     bParams.alpha = 0.5f;
-                    bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+                    bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                            | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
                     windowManager.updateViewLayout(widgetSelectBinding.getRoot(), bParams);
                     addDataBinding.pacName.setText(widgetSelect.appPackage);
                     addDataBinding.actName.setText(widgetSelect.appActivity);
                     button.setText("隐藏布局");
                 } else {
                     bParams.alpha = 0f;
-                    bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+                    bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                            | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                            | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
                     windowManager.updateViewLayout(widgetSelectBinding.getRoot(), bParams);
                     addDataBinding.saveWid.setEnabled(false);
                     button.setText("显示布局");
@@ -874,14 +890,19 @@ public class MainFunction {
                     coordinateSelect.appPackage = currentPackage;
                     coordinateSelect.appActivity = currentActivity;
                     cParams.alpha = 0.5f;
-                    cParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+                    cParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                            | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
                     windowManager.updateViewLayout(viewClickPosition, cParams);
                     addDataBinding.pacName.setText(coordinateSelect.appPackage);
                     addDataBinding.actName.setText(coordinateSelect.appActivity);
                     button.setText("隐藏准星");
                 } else {
                     cParams.alpha = 0f;
-                    cParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+                    cParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                            | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                            | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
                     windowManager.updateViewLayout(viewClickPosition, cParams);
                     addDataBinding.saveAim.setEnabled(false);
                     button.setText("显示准星");
@@ -996,6 +1017,10 @@ public class MainFunction {
         windowManager.addView(widgetSelectBinding.getRoot(), bParams);
         windowManager.addView(addDataBinding.getRoot(), aParams);
         windowManager.addView(viewClickPosition, cParams);
+
+        if (capture) {
+            addDataBinding.switchWid.callOnClick();
+        }
     }
 
     public void keepAliveByNotification(boolean enable) {
@@ -1020,9 +1045,12 @@ public class MainFunction {
     }
 
     public void keepAliveByFloatingWindow(boolean enable) {
-        if (enable) {
+        if (enable && ignoreView == null) {
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+            lp.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                    | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                    | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                    | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
             lp.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
             lp.gravity = Gravity.START | Gravity.TOP;
             lp.format = PixelFormat.TRANSPARENT;
@@ -1032,6 +1060,7 @@ public class MainFunction {
             lp.x = 0;
             lp.y = 0;
             ignoreView = new View(service);
+            ignoreView.setBackgroundColor(Color.TRANSPARENT);
             windowManager.addView(ignoreView, lp);
         } else if (ignoreView != null) {
             windowManager.removeView(ignoreView);
@@ -1039,14 +1068,121 @@ public class MainFunction {
         }
     }
 
+    public void showDbClickFloating(boolean enable) {
+        if (enable && dbClickView == null) {
+            dbClickLp = new WindowManager.LayoutParams();
+            dbClickLp.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                    | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                    | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                    | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+            dbClickLp.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
+            dbClickLp.gravity = Gravity.START | Gravity.TOP;
+            dbClickLp.format = PixelFormat.TRANSPARENT;
+            dbClickLp.alpha = 0.5f;
+            Rect rect = MyUtils.getInstance(service).getDbClickPosition();
+            dbClickLp.x = rect.left;
+            dbClickLp.y = rect.top;
+            dbClickLp.width = rect.width();
+            dbClickLp.height = rect.height();
+
+            dbClickView = new View(service);
+            dbClickView.setBackgroundColor(Color.TRANSPARENT);
+            dbClickView.setOnClickListener(new View.OnClickListener() {
+                private long previousTime = 0;
+
+                @Override
+                public void onClick(View v) {
+                    long currentTime = System.currentTimeMillis();
+                    long interval = currentTime - previousTime;
+                    previousTime = currentTime;
+                    if (interval <= 1000) {
+                        showAddDataWindow(true);
+                    }
+                }
+            });
+            windowManager.addView(dbClickView, dbClickLp);
+        } else if (dbClickView != null) {
+            windowManager.removeView(dbClickView);
+            dbClickView = null;
+        }
+    }
+
+    public void showDbClickSetting() {
+        if (dbClickView == null) {
+            return;
+        }
+        ViewDbClickSettingBinding dbClickSettingBinding = ViewDbClickSettingBinding.inflate(LayoutInflater.from(service));
+        AlertDialog alertDialog = new AlertDialog.Builder(service).setView(dbClickSettingBinding.getRoot()).create();
+        alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY);
+        alertDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        alertDialog.show();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getRealMetrics(displayMetrics);
+        WindowManager.LayoutParams lp = alertDialog.getWindow().getAttributes();
+        lp.width = displayMetrics.widthPixels / 5 * 4;
+        lp.height = displayMetrics.heightPixels / 3;
+        alertDialog.onWindowAttributesChanged(lp);
+
+        dbClickSettingBinding.seekBarW.setMax(displayMetrics.widthPixels / 2);
+        dbClickSettingBinding.seekBarH.setMax(displayMetrics.heightPixels / 4);
+        dbClickSettingBinding.seekBarX.setMax(displayMetrics.widthPixels);
+        dbClickSettingBinding.seekBarY.setMax(displayMetrics.heightPixels);
+        dbClickSettingBinding.seekBarW.setProgress(dbClickLp.width);
+        dbClickSettingBinding.seekBarH.setProgress(dbClickLp.height);
+        dbClickSettingBinding.seekBarX.setProgress(dbClickLp.x);
+        dbClickSettingBinding.seekBarY.setProgress(dbClickLp.y);
+        SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if (seekBar == dbClickSettingBinding.seekBarW) {
+                    dbClickLp.width = i;
+                }
+                if (seekBar == dbClickSettingBinding.seekBarH) {
+                    dbClickLp.height = i;
+                }
+                if (seekBar == dbClickSettingBinding.seekBarX) {
+                    dbClickLp.x = i;
+                }
+                if (seekBar == dbClickSettingBinding.seekBarY) {
+                    dbClickLp.y = i;
+                }
+                windowManager.updateViewLayout(dbClickView, dbClickLp);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Rect rect = new Rect();
+                rect.left = dbClickLp.x;
+                rect.top = dbClickLp.y;
+                rect.right = dbClickLp.x + dbClickLp.width;
+                rect.bottom = dbClickLp.y + dbClickLp.height;
+                MyUtils.getInstance(service).setDbClickPosition(rect);
+            }
+        };
+        dbClickSettingBinding.seekBarW.setOnSeekBarChangeListener(onSeekBarChangeListener);
+        dbClickSettingBinding.seekBarH.setOnSeekBarChangeListener(onSeekBarChangeListener);
+        dbClickSettingBinding.seekBarX.setOnSeekBarChangeListener(onSeekBarChangeListener);
+        dbClickSettingBinding.seekBarY.setOnSeekBarChangeListener(onSeekBarChangeListener);
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                dbClickView.setBackgroundColor(Color.TRANSPARENT);
+                windowManager.updateViewLayout(dbClickView, dbClickLp);
+            }
+        });
+        dbClickView.setBackgroundColor(Color.RED);
+        windowManager.updateViewLayout(dbClickView, dbClickLp);
+    }
+
     public class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (TextUtils.equals(intent.getAction(), Intent.ACTION_SCREEN_OFF)) {
                 currentPackageSub = isScreenOffPre;
-            }
-            if (TextUtils.equals(intent.getAction(), ACTION_SHOW_ADD_DATA_WINDOW)) {
-                showAddDataWindow();
             }
         }
     }

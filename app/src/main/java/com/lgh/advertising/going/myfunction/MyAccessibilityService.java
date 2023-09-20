@@ -28,7 +28,9 @@ public class MyAccessibilityService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        mainFunction.onAccessibilityEvent(event);
+        if (mainFunction != null) {
+            mainFunction.onAccessibilityEvent(event);
+        }
     }
 
     @Override

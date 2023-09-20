@@ -13,8 +13,9 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/start"
+            android:layout_above="@+id/ll_bottom"
             android:layout_alignParentTop="true"
+            android:layout_marginBottom="30dp"
             android:fadingEdge="vertical"
             android:fadingEdgeLength="5dp"
             android:requiresFadingEdge="vertical"
@@ -87,16 +88,51 @@
             </LinearLayout>
         </ScrollView>
 
-        <Button
-            android:id="@+id/start"
+        <LinearLayout
+            android:id="@+id/ll_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/button_selector"
-            android:text="创建规则"
-            android:textColor="@android:color/white" />
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_vertical">
+
+                <CheckBox
+                    android:id="@+id/dbClick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/check_select"
+                    android:paddingHorizontal="5dp"
+                    android:paddingVertical="10dp"
+                    android:text="双击屏幕捕获控件 (默认右上角)" />
+
+                <TextView
+                    android:id="@+id/dbClick_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:paddingVertical="10dp"
+                    android:text="调整触发区域"
+                    android:textColor="#0000ff" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_selector"
+                android:text="创建规则"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
     </RelativeLayout>
 
     <include layout="@layout/view_no_vip" />
