@@ -40,6 +40,7 @@ public class RegulationImportActivity extends BaseActivity {
     private final List<RegulationItem> regulationItemFilterList = new ArrayList<>();
     private final List<Regulation> importList = new ArrayList<>();
     private ActivityRegulationImportBinding regulationImportBinding;
+    private MyUtils myUtils;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -47,6 +48,7 @@ public class RegulationImportActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         regulationImportBinding = ActivityRegulationImportBinding.inflate(getLayoutInflater());
         setContentView(regulationImportBinding.getRoot());
+        myUtils = MyApplication.myUtils;
         regulationList.sort(new Comparator<Regulation>() {
             @Override
             public int compare(Regulation o1, Regulation o2) {
@@ -107,7 +109,6 @@ public class RegulationImportActivity extends BaseActivity {
             }
         });
 
-
         regulationImportBinding.btImport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +133,7 @@ public class RegulationImportActivity extends BaseActivity {
                                 dataDao.insertAutoFinderForce(autoFinders);
                                 dataDao.insertCoordinateForce(coordinates);
                                 dataDao.insertWidgetForce(widgets);
-                                MyUtils.getInstance(getApplicationContext()).requestUpdateAllDate();
+                                myUtils.requestUpdateAllDate();
                                 Toast.makeText(RegulationImportActivity.this, "导入成功", Toast.LENGTH_SHORT).show();
                             }
                         }).create().show();
