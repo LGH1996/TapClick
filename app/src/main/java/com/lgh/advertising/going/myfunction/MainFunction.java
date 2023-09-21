@@ -929,28 +929,7 @@ public class MainFunction {
                     }
                 };
                 if (pkgSuggestNotOnList.contains(widgetSelect.appPackage)) {
-                    String prePackage = currentPackage;
-                    String preActivity = currentActivity;
-                    View view = ViewAddWarningBinding.inflate(inflater).getRoot();
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(service);
-                    alertDialogBuilder.setView(view);
-                    alertDialogBuilder.setNegativeButton("取消", null);
-                    alertDialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            runnable.run();
-                        }
-                    });
-                    alertDialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            currentPackage = prePackage;
-                            currentActivity = preActivity;
-                        }
-                    });
-                    AlertDialog dialog = alertDialogBuilder.create();
-                    dialog.getWindow().getAttributes().type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
-                    dialog.show();
+                    showAddWarningDialog(runnable);
                 } else {
                     runnable.run();
                 }
@@ -974,28 +953,7 @@ public class MainFunction {
                     }
                 };
                 if (pkgSuggestNotOnList.contains(coordinateSelect.appPackage)) {
-                    String prePackage = currentPackage;
-                    String preActivity = currentActivity;
-                    View view = ViewAddWarningBinding.inflate(inflater).getRoot();
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(service);
-                    alertDialogBuilder.setView(view);
-                    alertDialogBuilder.setNegativeButton("取消", null);
-                    alertDialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            runnable.run();
-                        }
-                    });
-                    alertDialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            currentPackage = prePackage;
-                            currentActivity = preActivity;
-                        }
-                    });
-                    AlertDialog dialog = alertDialogBuilder.create();
-                    dialog.getWindow().getAttributes().type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
-                    dialog.show();
+                    showAddWarningDialog(runnable);
                 } else {
                     runnable.run();
                 }
@@ -1023,6 +981,31 @@ public class MainFunction {
         if (capture) {
             addDataBinding.switchWid.callOnClick();
         }
+    }
+
+    private void showAddWarningDialog(Runnable onSureRun) {
+        String prePackage = currentPackage;
+        String preActivity = currentActivity;
+        View view = ViewAddWarningBinding.inflate(LayoutInflater.from(service)).getRoot();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(service);
+        alertDialogBuilder.setView(view);
+        alertDialogBuilder.setNegativeButton("取消", null);
+        alertDialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onSureRun.run();
+            }
+        });
+        alertDialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                currentPackage = prePackage;
+                currentActivity = preActivity;
+            }
+        });
+        AlertDialog dialog = alertDialogBuilder.create();
+        dialog.getWindow().getAttributes().type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
+        dialog.show();
     }
 
     public void keepAliveByNotification(boolean enable) {
@@ -1236,9 +1219,9 @@ public class MainFunction {
                                 autoFinder.keywordList = Collections.singletonList("跳过");
                                 dataDao.insertAppDescribe(appDescribe);
                                 dataDao.insertAutoFinder(autoFinder);
-                                appDescribe.getOtherFieldsFromDatabase(dataDao);
-                                appDescribeMap.put(appDescribe.appPackage, appDescribe);
                             }
+                            appDescribe.getOtherFieldsFromDatabase(dataDao);
+                            appDescribeMap.put(appDescribe.appPackage, appDescribe);
                         }
                     }, 2000, TimeUnit.MILLISECONDS);
                 }
