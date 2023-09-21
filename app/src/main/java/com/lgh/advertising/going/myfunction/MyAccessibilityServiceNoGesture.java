@@ -14,15 +14,15 @@ public class MyAccessibilityServiceNoGesture extends AccessibilityService {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (mainFunction != null) {
-            mainFunction = new MainFunction(this);
-        }
+        mainFunction = new MainFunction(this);
     }
 
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
-        mainFunction.onServiceConnected();
+        if (mainFunction != null) {
+            mainFunction.onServiceConnected();
+        }
         if (MyAccessibilityService.mainFunction != null) {
             MyAccessibilityService.mainFunction.closeService();
         }
@@ -30,18 +30,24 @@ public class MyAccessibilityServiceNoGesture extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        mainFunction.onAccessibilityEvent(event);
+        if (mainFunction != null) {
+            mainFunction.onAccessibilityEvent(event);
+        }
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mainFunction.onConfigurationChanged(newConfig);
+        if (mainFunction != null) {
+            mainFunction.onConfigurationChanged(newConfig);
+        }
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
-        mainFunction.onUnbind(intent);
+        if (mainFunction != null) {
+            mainFunction.onUnbind(intent);
+        }
         return super.onUnbind(intent);
     }
 
