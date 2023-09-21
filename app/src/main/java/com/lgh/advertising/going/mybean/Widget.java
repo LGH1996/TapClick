@@ -29,7 +29,7 @@ public class Widget {
         this.appPackage = "";
         this.appActivity = "";
         this.clickDelay = 0;
-        this.noRepeat = true;
+        this.noRepeat = false;
         this.clickOnly = false;
         this.widgetClickable = false;
         this.widgetRect = null;
