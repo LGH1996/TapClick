@@ -491,7 +491,6 @@ public class MainFunction {
                                 }
                             }, e.clickDelay, TimeUnit.MILLISECONDS);
                             if (widgetAllNoRepeat && alreadyClickSet.size() >= widgetSet.size()) {
-                                onOffWidget = false;
                                 onOffWidgetSub = false;
                                 if (!onOffAutoFinder) {
                                     serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
