@@ -676,7 +676,7 @@ public class MainFunction {
         aParams.width = width;
         aParams.height = height / 5;
         aParams.x = (metrics.widthPixels - aParams.width) / 2;
-        aParams.y = metrics.heightPixels - aParams.height;
+        aParams.y = metrics.heightPixels / 5 * 3;
         aParams.alpha = 0.9f;
 
         bParams = new WindowManager.LayoutParams();
