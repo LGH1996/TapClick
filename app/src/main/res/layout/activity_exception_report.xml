@@ -42,6 +42,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_selector"
         android:text="复制到剪贴板并发送给作者"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
