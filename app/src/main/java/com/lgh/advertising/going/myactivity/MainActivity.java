@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity {
             showUpdateInfo();
         }
 
-        if (sharedPreferences.getBoolean("isFirstStart", true)) {
+        if (myUtils.getIsFirstStart()) {
             showPrivacyAgreement();
         }
 
@@ -245,7 +245,7 @@ public class MainActivity extends BaseActivity {
                 privacyAgreementBinding.sure.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        sharedPreferences.edit().putBoolean("isFirstStart", false).apply();
+                        myUtils.setIsFirstStart(false);
                         alertDialog.dismiss();
                     }
                 });

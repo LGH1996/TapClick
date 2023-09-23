@@ -325,7 +325,7 @@ public class MainFunction {
                                 @Override
                                 public void run() {
                                     if (onOffCoordinateSub && ++num <= coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity)) {
-                                        click(coordinateSub.xPosition, coordinateSub.yPosition, 0, 20);
+                                        click(coordinateSub.xPosition, coordinateSub.yPosition);
                                     } else {
                                         throw new RuntimeException();
                                     }
@@ -412,7 +412,7 @@ public class MainFunction {
                                 if (e.refresh()) {
                                     Rect rect = new Rect();
                                     e.getBoundsInScreen(rect);
-                                    click(rect.centerX(), rect.centerY(), 0, 20);
+                                    click(rect.centerX(), rect.centerY());
                                 }
                             }
                         } else {
@@ -422,7 +422,7 @@ public class MainFunction {
                                         if (!e.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
                                             Rect rect = new Rect();
                                             e.getBoundsInScreen(rect);
-                                            click(rect.centerX(), rect.centerY(), 0, 20);
+                                            click(rect.centerX(), rect.centerY());
                                         }
                                     }
                                 }
@@ -479,11 +479,11 @@ public class MainFunction {
                                 public void run() {
                                     if (node.refresh()) {
                                         if (e.clickOnly) {
-                                            click(temRect.centerX(), temRect.centerY(), 0, 20);
+                                            click(temRect.centerX(), temRect.centerY());
                                         } else {
                                             if (!node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
                                                 if (!node.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                                    click(temRect.centerX(), temRect.centerY(), 0, 20);
+                                                    click(temRect.centerX(), temRect.centerY());
                                                 }
                                             }
                                         }
@@ -539,10 +539,10 @@ public class MainFunction {
      * 模拟
      * 点击
      */
-    private boolean click(int X, int Y, long startTime, long duration) {
+    private boolean click(int X, int Y) {
         Path path = new Path();
         path.moveTo(X, Y);
-        GestureDescription.Builder builder = new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path, startTime, duration));
+        GestureDescription.Builder builder = new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path, 0, 40));
         return service.dispatchGesture(builder.build(), null, null);
     }
 

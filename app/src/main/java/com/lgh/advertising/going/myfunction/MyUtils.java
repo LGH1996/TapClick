@@ -166,4 +166,14 @@ public class MyUtils {
         sharedPreferences.edit().putInt("dbClickPositionBottom", rect.bottom).apply();
         return true;
     }
+
+    public boolean getIsFirstStart() {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean("isFirstStart", true);
+    }
+
+    public void setIsFirstStart(boolean isFirstStart) {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean("isFirstStart", isFirstStart).apply();
+    }
 }
