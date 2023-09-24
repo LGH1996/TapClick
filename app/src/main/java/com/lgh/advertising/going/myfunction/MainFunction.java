@@ -63,6 +63,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -103,7 +104,8 @@ public class MainFunction {
     private ScheduledFuture<?> futureAutoFinder;
     private ScheduledFuture<?> futureWidget;
     private ScheduledFuture<?> futureCoordinate;
-    private ScheduledExecutorService executorService;
+    private ExecutorService executorServiceMain;
+    private ScheduledExecutorService executorServiceSub;
     private Set<Widget> widgetSet;
     private MyBroadcastReceiver myBroadcastReceiver;
     private MyPackageReceiver myPackageReceiver;
@@ -134,7 +136,8 @@ public class MainFunction {
         currentPackage = "Initialize CurrentPackage";
         currentActivity = "Initialize CurrentActivity";
         currentPackageSub = currentPackage;
-        executorService = Executors.newSingleThreadScheduledExecutor();
+        executorServiceMain = Executors.newSingleThreadScheduledExecutor();
+        executorServiceSub = Executors.newSingleThreadScheduledExecutor();
         serviceInfo = service.getServiceInfo();
         dataDao = MyApplication.dataDao;
         myUtils = MyApplication.myUtils;
@@ -152,13 +155,13 @@ public class MainFunction {
         keepAliveByNotification(myUtils.getKeepAliveByNotification());
         keepAliveByFloatingWindow(myUtils.getKeepAliveByFloatingWindow());
         showDbClickFloating(myUtils.getDbClickEnable());
-        executorService.execute(new Runnable() {
+        executorServiceSub.execute(new Runnable() {
             @Override
             public void run() {
                 getRunningData();
             }
         });
-        futureCoordinate = futureWidget = futureAutoFinder = futureCoordinateClick = executorService.schedule(new Runnable() {
+        futureCoordinate = futureWidget = futureAutoFinder = futureCoordinateClick = executorServiceSub.schedule(new Runnable() {
             @Override
             public void run() {
             }
@@ -185,178 +188,184 @@ public class MainFunction {
     }
 
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        switch (event.getEventType()) {
-            case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                AccessibilityNodeInfo root = service.getRootInActiveWindow();
-                String packageName = root != null ? root.getPackageName().toString() : null;
-                String activityName = event.getClassName() != null ? event.getClassName().toString() : null;
+        executorServiceMain.execute(new Runnable() {
+            @Override
+            @SuppressLint("SwitchIntDef")
+            public void run() {
+                switch (event.getEventType()) {
+                    case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
+                        AccessibilityNodeInfo root = service.getRootInActiveWindow();
+                        String packageName = root != null ? root.getPackageName().toString() : null;
+                        String activityName = event.getClassName() != null ? event.getClassName().toString() : null;
 
-                if (packageName == null) {
-                    break;
-                }
-                if (!packageName.equals(currentPackage)) {
-                    currentPackage = packageName;
-                    appDescribe = appDescribeMap.get(packageName);
-                }
-                if (appDescribe == null) {
-                    break;
-                }
-                if (!event.isFullScreen()
-                        && !appDescribe.onOff
-                        && !currentPackageSub.equals(isScreenOffPre)) {
-                    break;
-                }
-                if (!packageName.equals(currentPackageSub)) {
-                    currentPackageSub = packageName;
-                    futureAutoFinder.cancel(false);
-                    futureWidget.cancel(false);
-                    futureCoordinate.cancel(false);
-                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                    service.setServiceInfo(serviceInfo);
-                    onOffAutoFinder = false;
-                    onOffWidget = false;
-                    onOffCoordinate = false;
-                    onOffWidgetSub = false;
-                    onOffCoordinateSub = false;
-                    keywordList = null;
-                    widgetSetMap = null;
-                    coordinateMap = null;
-                    autoRetrieveNumber = 0;
-                    if (appDescribe != null && appDescribe.onOff) {
-                        keywordList = appDescribe.autoFinder.keywordList;
-                        widgetSetMap = appDescribe.widgetSetMap;
-                        coordinateMap = appDescribe.coordinateMap;
-                        onOffAutoFinder = appDescribe.autoFinderOnOFF && !keywordList.isEmpty();
-                        onOffWidget = appDescribe.widgetOnOff && !widgetSetMap.isEmpty();
-                        onOffCoordinate = appDescribe.coordinateOnOff && !coordinateMap.isEmpty();
-
-                        if (onOffAutoFinder) {
-                            serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                        if (packageName == null) {
+                            break;
+                        }
+                        if (!packageName.equals(currentPackage)) {
+                            currentPackage = packageName;
+                            appDescribe = appDescribeMap.get(packageName);
+                        }
+                        if (appDescribe == null) {
+                            break;
+                        }
+                        if (!event.isFullScreen()
+                                && !appDescribe.onOff
+                                && !currentPackageSub.equals(isScreenOffPre)) {
+                            break;
+                        }
+                        if (!packageName.equals(currentPackageSub)) {
+                            currentPackageSub = packageName;
+                            futureAutoFinder.cancel(false);
+                            futureWidget.cancel(false);
+                            futureCoordinate.cancel(false);
+                            serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                             service.setServiceInfo(serviceInfo);
-                        }
+                            onOffAutoFinder = false;
+                            onOffWidget = false;
+                            onOffCoordinate = false;
+                            onOffWidgetSub = false;
+                            onOffCoordinateSub = false;
+                            keywordList = null;
+                            widgetSetMap = null;
+                            coordinateMap = null;
+                            autoRetrieveNumber = 0;
+                            if (appDescribe != null && appDescribe.onOff) {
+                                keywordList = appDescribe.autoFinder.keywordList;
+                                widgetSetMap = appDescribe.widgetSetMap;
+                                coordinateMap = appDescribe.coordinateMap;
+                                onOffAutoFinder = appDescribe.autoFinderOnOFF && !keywordList.isEmpty();
+                                onOffWidget = appDescribe.widgetOnOff && !widgetSetMap.isEmpty();
+                                onOffCoordinate = appDescribe.coordinateOnOff && !coordinateMap.isEmpty();
 
-                        if (onOffAutoFinder && !appDescribe.autoFinderRetrieveAllTime) {
-                            futureAutoFinder = executorService.schedule(new Runnable() {
-                                @Override
-                                public void run() {
-                                    onOffAutoFinder = false;
-                                    if (!onOffWidgetSub) {
-                                        serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                        service.setServiceInfo(serviceInfo);
-                                    }
+                                if (onOffAutoFinder) {
+                                    serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                    service.setServiceInfo(serviceInfo);
                                 }
-                            }, appDescribe.autoFinderRetrieveTime, TimeUnit.MILLISECONDS);
-                        }
 
-                        if (onOffWidget && !appDescribe.widgetRetrieveAllTime) {
-                            futureWidget = executorService.schedule(new Runnable() {
-                                @Override
-                                public void run() {
-                                    onOffWidget = false;
-                                    onOffWidgetSub = false;
-                                    if (!onOffAutoFinder) {
-                                        serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                        service.setServiceInfo(serviceInfo);
-                                    }
+                                if (onOffAutoFinder && !appDescribe.autoFinderRetrieveAllTime) {
+                                    futureAutoFinder = executorServiceSub.schedule(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            onOffAutoFinder = false;
+                                            if (!onOffWidgetSub) {
+                                                serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                                service.setServiceInfo(serviceInfo);
+                                            }
+                                        }
+                                    }, appDescribe.autoFinderRetrieveTime, TimeUnit.MILLISECONDS);
                                 }
-                            }, appDescribe.widgetRetrieveTime, TimeUnit.MILLISECONDS);
-                        }
 
-                        if (onOffCoordinate && !appDescribe.coordinateRetrieveAllTime) {
-                            futureCoordinate = executorService.schedule(new Runnable() {
-                                @Override
-                                public void run() {
-                                    onOffCoordinate = false;
-                                    onOffCoordinateSub = false;
+                                if (onOffWidget && !appDescribe.widgetRetrieveAllTime) {
+                                    futureWidget = executorServiceSub.schedule(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            onOffWidget = false;
+                                            onOffWidgetSub = false;
+                                            if (!onOffAutoFinder) {
+                                                serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                                service.setServiceInfo(serviceInfo);
+                                            }
+                                        }
+                                    }, appDescribe.widgetRetrieveTime, TimeUnit.MILLISECONDS);
                                 }
-                            }, appDescribe.coordinateRetrieveTime, TimeUnit.MILLISECONDS);
-                        }
-                    }
-                }
 
-                if (activityName == null) {
-                    break;
-                }
-                if (activityName.startsWith("android.widget.")
-                        || activityName.startsWith("android.view.")
-                        || activityName.equals("android.inputmethodservice.SoftInputWindow")) {
-                    break;
-                }
-                if (!activityName.equals(currentActivity)) {
-                    currentActivity = activityName;
-                    alreadyClickSet = new HashSet<>();
-                    onOffWidgetSub = false;
-                    onOffCoordinateSub = false;
-                    widgetAllNoRepeat = true;
-                    widgetSet = null;
-                    coordinate = null;
-
-                    if (!onOffAutoFinder) {
-                        serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                        service.setServiceInfo(serviceInfo);
-                    }
-
-                    if (appDescribe != null) {
-                        coordinate = coordinateMap != null ? coordinateMap.get(activityName) : null;
-                        widgetSet = widgetSetMap != null ? widgetSetMap.get(activityName) : null;
-                        onOffCoordinateSub = onOffCoordinate && coordinate != null;
-                        onOffWidgetSub = onOffWidget && widgetSet != null;
-
-                        if (widgetSet != null && !widgetSet.isEmpty()) {
-                            for (Widget e : widgetSet) {
-                                if (!e.noRepeat) {
-                                    widgetAllNoRepeat = false;
-                                    break;
+                                if (onOffCoordinate && !appDescribe.coordinateRetrieveAllTime) {
+                                    futureCoordinate = executorServiceSub.schedule(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            onOffCoordinate = false;
+                                            onOffCoordinateSub = false;
+                                        }
+                                    }, appDescribe.coordinateRetrieveTime, TimeUnit.MILLISECONDS);
                                 }
                             }
                         }
 
-                        if (onOffWidgetSub) {
-                            serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                            service.setServiceInfo(serviceInfo);
+                        if (activityName == null) {
+                            break;
                         }
+                        if (activityName.startsWith("android.widget.")
+                                || activityName.startsWith("android.view.")
+                                || activityName.equals("android.inputmethodservice.SoftInputWindow")) {
+                            break;
+                        }
+                        if (!activityName.equals(currentActivity)) {
+                            currentActivity = activityName;
+                            alreadyClickSet = new HashSet<>();
+                            onOffWidgetSub = false;
+                            onOffCoordinateSub = false;
+                            widgetAllNoRepeat = true;
+                            widgetSet = null;
+                            coordinate = null;
 
-                        if (onOffCoordinateSub) {
-                            futureCoordinateClick.cancel(false);
-                            futureCoordinateClick = executorService.scheduleAtFixedRate(new Runnable() {
-                                private final Coordinate coordinateSub = coordinate;
-                                private int num = 0;
+                            if (!onOffAutoFinder) {
+                                serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                service.setServiceInfo(serviceInfo);
+                            }
 
-                                @Override
-                                public void run() {
-                                    if (onOffCoordinateSub && ++num <= coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity)) {
-                                        click(coordinateSub.xPosition, coordinateSub.yPosition);
-                                    } else {
-                                        throw new RuntimeException();
+                            if (appDescribe != null) {
+                                coordinate = coordinateMap != null ? coordinateMap.get(activityName) : null;
+                                widgetSet = widgetSetMap != null ? widgetSetMap.get(activityName) : null;
+                                onOffCoordinateSub = onOffCoordinate && coordinate != null;
+                                onOffWidgetSub = onOffWidget && widgetSet != null;
+
+                                if (widgetSet != null && !widgetSet.isEmpty()) {
+                                    for (Widget e : widgetSet) {
+                                        if (!e.noRepeat) {
+                                            widgetAllNoRepeat = false;
+                                            break;
+                                        }
                                     }
                                 }
-                            }, coordinate.clickDelay, coordinate.clickInterval, TimeUnit.MILLISECONDS);
+
+                                if (onOffWidgetSub) {
+                                    serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                    service.setServiceInfo(serviceInfo);
+                                }
+
+                                if (onOffCoordinateSub) {
+                                    futureCoordinateClick.cancel(false);
+                                    futureCoordinateClick = executorServiceSub.scheduleAtFixedRate(new Runnable() {
+                                        private final Coordinate coordinateSub = coordinate;
+                                        private int num = 0;
+
+                                        @Override
+                                        public void run() {
+                                            if (onOffCoordinateSub && ++num <= coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity)) {
+                                                click(coordinateSub.xPosition, coordinateSub.yPosition);
+                                            } else {
+                                                throw new RuntimeException();
+                                            }
+                                        }
+                                    }, coordinate.clickDelay, coordinate.clickInterval, TimeUnit.MILLISECONDS);
+                                }
+                            }
                         }
-                    }
+                        if (onOffAutoFinder && appDescribe != null) {
+                            findButtonByText(root, appDescribe.autoFinder);
+                        }
+                        if (onOffWidgetSub && widgetSet != null) {
+                            findButtonByWidget(root, widgetSet);
+                        }
+                        break;
+                    case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
+                        if (!TextUtils.equals(event.getPackageName(), currentPackageSub)) {
+                            break;
+                        }
+                        AccessibilityNodeInfo source = event.getSource();
+                        if (source == null) {
+                            break;
+                        }
+                        if (onOffAutoFinder && appDescribe != null) {
+                            findButtonByText(source, appDescribe.autoFinder);
+                        }
+                        if (onOffWidgetSub && widgetSet != null) {
+                            findButtonByWidget(source, widgetSet);
+                        }
+                        break;
                 }
-                if (onOffAutoFinder && appDescribe != null) {
-                    findButtonByText(root, appDescribe.autoFinder);
-                }
-                if (onOffWidgetSub && widgetSet != null) {
-                    findButtonByWidget(root, widgetSet);
-                }
-                break;
-            case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
-                if (!TextUtils.equals(event.getPackageName(), currentPackageSub)) {
-                    break;
-                }
-                AccessibilityNodeInfo source = event.getSource();
-                if (source == null) {
-                    break;
-                }
-                if (onOffAutoFinder && appDescribe != null) {
-                    findButtonByText(source, appDescribe.autoFinder);
-                }
-                if (onOffWidgetSub && widgetSet != null) {
-                    findButtonByWidget(source, widgetSet);
-                }
-                break;
-        }
+            }
+        });
     }
 
     public void onConfigurationChanged(Configuration newConfig) {
@@ -404,7 +413,7 @@ public class MainFunction {
         for (int n = 0; n < autoFinder.keywordList.size(); n++) {
             final List<AccessibilityNodeInfo> list = nodeInfo.findAccessibilityNodeInfosByText(autoFinder.keywordList.get(n));
             if (!list.isEmpty()) {
-                executorService.schedule(new Runnable() {
+                executorServiceSub.schedule(new Runnable() {
                     @Override
                     public void run() {
                         if (autoFinder.clickOnly) {
@@ -447,13 +456,13 @@ public class MainFunction {
      * 定义的控件
      */
     private void findButtonByWidget(AccessibilityNodeInfo root, Set<Widget> widgetSet) {
-        int a = 0;
-        int b = 1;
         ArrayList<AccessibilityNodeInfo> listA = new ArrayList<>();
         ArrayList<AccessibilityNodeInfo> listB = new ArrayList<>();
         listA.add(root);
-        while (a < b) {
-            final AccessibilityNodeInfo node = listA.get(a++);
+        int index = 0;
+        int count = listA.size();
+        while (index < count) {
+            final AccessibilityNodeInfo node = listA.get(index++);
             if (node != null) {
                 final Rect temRect = new Rect();
                 node.getBoundsInScreen(temRect);
@@ -474,7 +483,7 @@ public class MainFunction {
                     if (isFind) {
                         if (!e.noRepeat || !alreadyClickSet.contains(e)) {
                             alreadyClickSet.add(e);
-                            executorService.schedule(new Runnable() {
+                            executorServiceSub.schedule(new Runnable() {
                                 @Override
                                 public void run() {
                                     if (node.refresh()) {
@@ -505,11 +514,12 @@ public class MainFunction {
                     listB.add(node.getChild(n));
                 }
             }
-            if (a == b) {
-                a = 0;
-                b = listB.size();
-                listA = listB;
-                listB = new ArrayList<>();
+            if (index == count) {
+                listA.clear();
+                listA.addAll(listB);
+                listB.clear();
+                index = 0;
+                count = listA.size();
             }
         }
     }
@@ -518,21 +528,44 @@ public class MainFunction {
      * 查找所有
      * 的控件
      */
-    private void findAllNode(List<AccessibilityNodeInfo> roots, List<AccessibilityNodeInfo> list) {
-        ArrayList<AccessibilityNodeInfo> tem = new ArrayList<>();
-        for (AccessibilityNodeInfo e : roots) {
-            if (e == null) continue;
-            Rect rect = new Rect();
-            e.getBoundsInScreen(rect);
-            if (rect.width() <= 0 || rect.height() <= 0) continue;
-            list.add(e);
-            for (int n = 0; n < e.getChildCount(); n++) {
-                tem.add(e.getChild(n));
+    private ArrayList<AccessibilityNodeInfo> findAllNode(AccessibilityNodeInfo root) {
+        ArrayList<AccessibilityNodeInfo> listR = new ArrayList<>();
+        ArrayList<AccessibilityNodeInfo> listA = new ArrayList<>();
+        ArrayList<AccessibilityNodeInfo> listB = new ArrayList<>();
+        listA.add(root);
+        int index = 0;
+        int count = listA.size();
+        while (index < count) {
+            final AccessibilityNodeInfo node = listA.get(index++);
+            if (node != null) {
+                Rect rect = new Rect();
+                node.getBoundsInScreen(rect);
+                if (rect.width() > 0 && rect.height() > 0) {
+                    listR.add(node);
+                    for (int n = 0; n < node.getChildCount(); n++) {
+                        listB.add(node.getChild(n));
+                    }
+                }
+            }
+            if (index == count) {
+                listA.clear();
+                listA.addAll(listB);
+                listB.clear();
+                index = 0;
+                count = listA.size();
             }
         }
-        if (!tem.isEmpty()) {
-            findAllNode(tem, list);
-        }
+        listR.sort(new Comparator<AccessibilityNodeInfo>() {
+            @Override
+            public int compare(AccessibilityNodeInfo a, AccessibilityNodeInfo b) {
+                Rect rectA = new Rect();
+                Rect rectB = new Rect();
+                a.getBoundsInScreen(rectA);
+                b.getBoundsInScreen(rectB);
+                return rectB.width() * rectB.height() - rectA.width() * rectA.height();
+            }
+        });
+        return listR;
     }
 
     /**
@@ -707,7 +740,7 @@ public class MainFunction {
 
         addDataBinding.getRoot().setOnTouchListener(new View.OnTouchListener() {
             int startRowX = 0, startRowY = 0, startLpX = 0, startLpY = 0;
-            ScheduledFuture<?> future = executorService.schedule(new Runnable() {
+            ScheduledFuture<?> future = executorServiceSub.schedule(new Runnable() {
                 @Override
                 public void run() {
                 }
@@ -715,45 +748,50 @@ public class MainFunction {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        startRowX = Math.round(event.getRawX());
-                        startRowY = Math.round(event.getRawY());
-                        startLpX = aParams.x;
-                        startLpY = aParams.y;
-                        future = executorService.schedule(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (Math.abs(aParams.x - startLpX) < 10 && Math.abs(aParams.y - startLpY) < 10) {
-                                    Matcher matcher = Pattern.compile("(\\w|\\.)+").matcher(addDataBinding.pacName.getText().toString());
-                                    if (matcher.find()) {
-                                        if (appDescribeMap.containsKey(matcher.group())) {
-                                            Intent intent = new Intent(service, EditDataActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            intent.putExtra("packageName", matcher.group());
-                                            service.startActivity(intent);
+                addDataBinding.getRoot().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                startRowX = Math.round(event.getRawX());
+                                startRowY = Math.round(event.getRawY());
+                                startLpX = aParams.x;
+                                startLpY = aParams.y;
+                                future = executorServiceSub.schedule(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (Math.abs(aParams.x - startLpX) < 10 && Math.abs(aParams.y - startLpY) < 10) {
+                                            Matcher matcher = Pattern.compile("(\\w|\\.)+").matcher(addDataBinding.pacName.getText().toString());
+                                            if (matcher.find()) {
+                                                if (appDescribeMap.containsKey(matcher.group())) {
+                                                    Intent intent = new Intent(service, EditDataActivity.class);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                    intent.putExtra("packageName", matcher.group());
+                                                    service.startActivity(intent);
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
-                        }, 800, TimeUnit.MILLISECONDS);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        aParams.x = startLpX + (Math.round(event.getRawX()) - startRowX);
-                        aParams.y = startLpY + (Math.round(event.getRawY()) - startRowY);
-                        windowManager.updateViewLayout(addDataBinding.getRoot(), aParams);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        DisplayMetrics metrics = new DisplayMetrics();
-                        windowManager.getDefaultDisplay().getRealMetrics(metrics);
-                        aParams.x = Math.max(aParams.x, 0);
-                        aParams.x = Math.min(aParams.x, metrics.widthPixels - aParams.width);
-                        aParams.y = Math.max(aParams.y, 0);
-                        aParams.y = Math.min(aParams.y, metrics.heightPixels - aParams.height);
-                        windowManager.updateViewLayout(addDataBinding.getRoot(), aParams);
-                        future.cancel(false);
-                        break;
-                }
+                                }, 800, TimeUnit.MILLISECONDS);
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                aParams.x = startLpX + (Math.round(event.getRawX()) - startRowX);
+                                aParams.y = startLpY + (Math.round(event.getRawY()) - startRowY);
+                                windowManager.updateViewLayout(addDataBinding.getRoot(), aParams);
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                DisplayMetrics metrics = new DisplayMetrics();
+                                windowManager.getDefaultDisplay().getRealMetrics(metrics);
+                                aParams.x = Math.max(aParams.x, 0);
+                                aParams.x = Math.min(aParams.x, metrics.widthPixels - aParams.width);
+                                aParams.y = Math.max(aParams.y, 0);
+                                aParams.y = Math.min(aParams.y, metrics.heightPixels - aParams.height);
+                                windowManager.updateViewLayout(addDataBinding.getRoot(), aParams);
+                                future.cancel(false);
+                                break;
+                        }
+                    }
+                });
                 return true;
             }
         });
@@ -797,80 +835,77 @@ public class MainFunction {
         addDataBinding.switchWid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button button = (Button) v;
                 if (bParams.alpha == 0) {
-                    AccessibilityNodeInfo root = service.getRootInActiveWindow();
-                    if (root == null) return;
-                    widgetSelect.appPackage = currentPackage;
-                    widgetSelect.appActivity = currentActivity;
-                    widgetSelectBinding.frame.removeAllViews();
-                    ArrayList<AccessibilityNodeInfo> roots = new ArrayList<>();
-                    roots.add(root);
-                    ArrayList<AccessibilityNodeInfo> nodeList = new ArrayList<>();
-                    findAllNode(roots, nodeList);
-                    nodeList.sort(new Comparator<AccessibilityNodeInfo>() {
+                    executorServiceMain.execute(new Runnable() {
                         @Override
-                        public int compare(AccessibilityNodeInfo a, AccessibilityNodeInfo b) {
-                            Rect rectA = new Rect();
-                            Rect rectB = new Rect();
-                            a.getBoundsInScreen(rectA);
-                            b.getBoundsInScreen(rectB);
-                            return rectB.width() * rectB.height() - rectA.width() * rectA.height();
-                        }
-                    });
-                    for (final AccessibilityNodeInfo e : nodeList) {
-                        final Rect temRect = new Rect();
-                        e.getBoundsInScreen(temRect);
-                        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(temRect.width(), temRect.height());
-                        params.leftMargin = temRect.left;
-                        params.topMargin = temRect.top;
-                        final ImageView img = new ImageView(service);
-                        img.setBackgroundResource(R.drawable.node);
-                        img.setFocusableInTouchMode(true);
-                        img.setFocusable(true);
-                        img.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                v.requestFocus();
+                        public void run() {
+                            AccessibilityNodeInfo root = service.getRootInActiveWindow();
+                            ArrayList<AccessibilityNodeInfo> nodeList = findAllNode(root);
+                            if (nodeList.isEmpty()) {
+                                return;
                             }
-                        });
-                        img.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                            @Override
-                            public void onFocusChange(View v, boolean hasFocus) {
-                                if (hasFocus) {
-                                    widgetSelect.widgetRect = temRect;
-                                    widgetSelect.widgetClickable = e.isClickable();
-                                    CharSequence cId = e.getViewIdResourceName();
-                                    widgetSelect.widgetId = cId == null ? "" : cId.toString();
-                                    CharSequence cDesc = e.getContentDescription();
-                                    widgetSelect.widgetDescribe = cDesc == null ? "" : cDesc.toString();
-                                    CharSequence cText = e.getText();
-                                    widgetSelect.widgetText = cText == null ? "" : cText.toString();
-                                    addDataBinding.saveWid.setEnabled(appDescribeMap.containsKey(currentPackage));
+                            addDataBinding.switchWid.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    widgetSelect.appPackage = currentPackage;
+                                    widgetSelect.appActivity = currentActivity;
+                                    for (final AccessibilityNodeInfo e : nodeList) {
+                                        final Rect temRect = new Rect();
+                                        e.getBoundsInScreen(temRect);
+                                        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(temRect.width(), temRect.height());
+                                        params.leftMargin = temRect.left;
+                                        params.topMargin = temRect.top;
+                                        final View view = new ImageView(service);
+                                        view.setBackgroundResource(R.drawable.node);
+                                        view.setFocusableInTouchMode(true);
+                                        view.setFocusable(true);
+                                        view.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                v.requestFocus();
+                                            }
+                                        });
+                                        view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                                            @Override
+                                            public void onFocusChange(View v, boolean hasFocus) {
+                                                if (hasFocus) {
+                                                    widgetSelect.widgetRect = temRect;
+                                                    widgetSelect.widgetClickable = e.isClickable();
+                                                    CharSequence cId = e.getViewIdResourceName();
+                                                    widgetSelect.widgetId = cId == null ? "" : cId.toString();
+                                                    CharSequence cDesc = e.getContentDescription();
+                                                    widgetSelect.widgetDescribe = cDesc == null ? "" : cDesc.toString();
+                                                    CharSequence cText = e.getText();
+                                                    widgetSelect.widgetText = cText == null ? "" : cText.toString();
+                                                    addDataBinding.saveWid.setEnabled(appDescribeMap.containsKey(currentPackage));
+                                                    addDataBinding.pacName.setText(widgetSelect.appPackage);
+                                                    addDataBinding.actName.setText(widgetSelect.appActivity);
+                                                    String click = e.isClickable() ? "true" : "false";
+                                                    String bonus = temRect.toShortString();
+                                                    String id = cId == null || !cId.toString().contains(":id/") ? "" : cId.toString().substring(cId.toString().indexOf(":id/") + 4);
+                                                    String desc = cDesc == null ? "" : cDesc.toString();
+                                                    String text = cText == null ? "" : cText.toString();
+                                                    addDataBinding.widget.setText("click:" + click + " " + "bonus:" + bonus + (id.isEmpty() ? "" : " " + "id:" + id) + (desc.isEmpty() ? "" : " " + "desc:" + desc) + (text.isEmpty() ? "" : " " + "text:" + text));
+                                                    v.setBackgroundResource(R.drawable.node_focus);
+                                                } else {
+                                                    v.setBackgroundResource(R.drawable.node);
+                                                }
+                                            }
+                                        });
+                                        widgetSelectBinding.frame.addView(view, params);
+                                    }
+                                    bParams.alpha = 0.5f;
+                                    bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                                            | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+                                    windowManager.updateViewLayout(widgetSelectBinding.getRoot(), bParams);
                                     addDataBinding.pacName.setText(widgetSelect.appPackage);
                                     addDataBinding.actName.setText(widgetSelect.appActivity);
-                                    String click = e.isClickable() ? "true" : "false";
-                                    String bonus = temRect.toShortString();
-                                    String id = cId == null || !cId.toString().contains(":id/") ? "" : cId.toString().substring(cId.toString().indexOf(":id/") + 4);
-                                    String desc = cDesc == null ? "" : cDesc.toString();
-                                    String text = cText == null ? "" : cText.toString();
-                                    addDataBinding.widget.setText("click:" + click + " " + "bonus:" + bonus + (id.isEmpty() ? "" : " " + "id:" + id) + (desc.isEmpty() ? "" : " " + "desc:" + desc) + (text.isEmpty() ? "" : " " + "text:" + text));
-                                    v.setBackgroundResource(R.drawable.node_focus);
-                                } else {
-                                    v.setBackgroundResource(R.drawable.node);
+                                    addDataBinding.switchWid.setText("隐藏布局");
                                 }
-                            }
-                        });
-                        widgetSelectBinding.frame.addView(img, params);
-                    }
-                    bParams.alpha = 0.5f;
-                    bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-                            | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-                    windowManager.updateViewLayout(widgetSelectBinding.getRoot(), bParams);
-                    addDataBinding.pacName.setText(widgetSelect.appPackage);
-                    addDataBinding.actName.setText(widgetSelect.appActivity);
-                    button.setText("隐藏布局");
+                            });
+                        }
+                    });
                 } else {
                     bParams.alpha = 0f;
                     bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
@@ -879,7 +914,8 @@ public class MainFunction {
                             | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
                     windowManager.updateViewLayout(widgetSelectBinding.getRoot(), bParams);
                     addDataBinding.saveWid.setEnabled(false);
-                    button.setText("显示布局");
+                    widgetSelectBinding.frame.removeAllViews();
+                    addDataBinding.switchWid.setText("显示布局");
                 }
             }
         });
@@ -1179,7 +1215,7 @@ public class MainFunction {
                 String dataString = intent.getDataString();
                 String packageName = dataString != null ? dataString.substring(8) : null;
                 if (!TextUtils.isEmpty(packageName)) {
-                    executorService.schedule(new Runnable() {
+                    executorServiceSub.schedule(new Runnable() {
                         @Override
                         public void run() {
                             AppDescribe appDescribe = dataDao.getAppDescribeByPackage(packageName);
