@@ -179,7 +179,7 @@ public class SettingActivity extends BaseActivity {
                 github.addCategory(Intent.CATEGORY_DEFAULT);
                 github.addCategory(Intent.CATEGORY_BROWSABLE);
                 github.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                github.setData(Uri.parse("https://github.com/LGH1996/ADGO"));
+                github.setData(Uri.parse("https://github.com/LGH1996/TapClick"));
                 startActivity(Intent.createChooser(github, "github"));
             }
         });
