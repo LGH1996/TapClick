@@ -11,9 +11,16 @@ import android.widget.Toast;
 
 import com.lgh.advertising.going.databinding.ActivityExceptionReportBinding;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 public class ExceptionReportActivity extends BaseActivity {
 
     private ActivityExceptionReportBinding binding;
+    private String exceptionMsg = "无异常";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +32,13 @@ public class ExceptionReportActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        String exceptionStr = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-        binding.exception.setText(exceptionStr);
+        try {
+            File file = new File(getCacheDir(), "exception.txt");
+            exceptionMsg = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        binding.exception.setText(exceptionMsg);
         binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,7 +47,7 @@ public class ExceptionReportActivity extends BaseActivity {
                 if (getPackageManager().resolveActivity(intent, PackageManager.MATCH_ALL) != null) {
                     startActivity(intent);
                     ClipboardManager clipboardManager = getSystemService(ClipboardManager.class);
-                    clipboardManager.setPrimaryClip(ClipData.newPlainText(getPackageName(), exceptionStr));
+                    clipboardManager.setPrimaryClip(ClipData.newPlainText(getPackageName(), exceptionMsg));
                     Toast.makeText(ExceptionReportActivity.this, "已复制", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(ExceptionReportActivity.this, "未安装QQ或TIM", Toast.LENGTH_SHORT).show();
