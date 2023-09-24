@@ -39,7 +39,7 @@ public class MoreMessageActivity extends BaseActivity {
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setLoadsImagesAutomatically(true);
         settings.supportMultipleWindows();
-        binding.webViewMore.loadUrl("https://gitee.com/lingh1996/ADGO/blob/master/README.md");
+        binding.webViewMore.loadUrl("https://gitee.com/lingh1996/TapClick/blob/master/README.md");
     }
 
     @Override
