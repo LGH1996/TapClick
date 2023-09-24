@@ -1,14 +1,12 @@
 # TapClick (自动跳过广告)
 
-### 基于Android无障碍服务开发的应用，可以实现但不局限于以下的功能，更多的功能可通过创建规则的方式实现:
+#### 基于Android无障碍服务开发的应用，可以实现但不局限于以下的功能，更多的功能可通过创建规则的方式实现:
 
 ① 自动跳过开屏广告；
 
 ② 自动关闭某些弹窗；
 
-③ 自动点击应用安装；
-
-④ ......
+③ ......
 
 本软件需要长驻后台，但所占内存和耗电量极少，一般不会影响体验；
 
@@ -16,7 +14,7 @@
 
 如果想要实现自动关闭某些弹窗或其他自动点击动作，请根据情况自定义规则，如添加关键字或添加坐标或添加控件，本应用不预设除跳过开屏广告之外的其他操作。
 #### 1、下载链接
-* https://github.com/LGH1996/ADGO/releases
+* https://github.com/LGH1996/TapClick/releases
 
 #### 2、主要功能：
 * 跳过应用开屏广告，通过自定义规则实现自动化点击动作。
@@ -33,25 +31,25 @@
 
 #
 #### 6、如何创建坐标规则：
-![添加坐标](https://gitee.com/lingh1996/ADGO/raw/master/coordinateAddMin.jpg "coordinateAddMin.jpg")
-1) 当开屏广告出现时，点击“显示准心”，唤出准心；
-2) 拖动准心使其对准“跳过”的坐标；
+![添加坐标](https://gitee.com/lingh1996/TapClick/raw/master/coordinateAddMin.jpg "coordinateAddMin.jpg")
+1) 在相应页面上，点击“显示准星”，唤出准星；
+2) 拖动准星以选择点击坐标；
 3) 点击“添加坐标”，完成坐标的添加，下次该页面出现时就会自动点击该坐标；
 4) 长按悬浮窗，跳转到当前应用的规则管理页面，查看或编辑刚才创建的坐标规则；
 5) 点击“退出”，退出创建规则；
 
 #
 #### 7、如何创建控件规则：
-![添加控件](https://gitee.com/lingh1996/ADGO/raw/master/widgetAddMin.jpg "widgetAddMin.jpg")
-1) 当开屏广告出现时，点击“显示布局”，唤出布局分析框；
-2) 点击“跳过”控件以选中该控件；
+![添加控件](https://gitee.com/lingh1996/TapClick/raw/master/widgetAddMin.jpg "widgetAddMin.jpg")
+1) 在相应页面上，点击“显示布局”，唤出布局分析框；
+2) 选择需要点击的控件；
 3) 点击“添加控件”，完成控件的添加，下次该控件出现时就会自动点击该控件；
 4) 长按悬浮窗，跳转到当前应用的规则管理页面，查看或编辑刚才创建的控件规则；
 5) 点击“退出”，退出创建规则；
 
 #
 #### 8、规则管理中的各参数说明：
-![参数说明](https://gitee.com/lingh1996/ADGO/raw/master/regularEditMin.jpg "regularEditMin.jpg")
+![参数说明](https://gitee.com/lingh1996/TapClick/raw/master/regularEditMin.jpg "regularEditMin.jpg")
 
 ###### 【基础功能设置】
 * 当程序检测到用户切换应用时，就会触发对当前应用页面内容进行检索，在这里可以分别设置字词检索、坐标检索、控件检索的开关以及它们的总开关；
@@ -85,7 +83,18 @@
 * 注意：如果该活动页面还存在其他＂Id＂属性或＂Describe＂属性或＂Text＂属性相同的控件，则可能被干扰导致误判而失效，如果出现这种情况，可以尝试把该控件的＂Id＂属性或＂Describe＂属性或＂Text＂属性删除，只留下＂Bonus＂属性作为该控件的唯一标识；
 
 #
-#### 9、常见问题
+#### 9、规则导入导出
+
+* 规则管理页面长按某一选项，即可导出规则；
+
+![导出规则](https://gitee.com/lingh1996/TapClick/raw/master/regulationExport.png "regulationExport.png")
+
+* 导出的txt文件选择TapClick打开，即可导入规则；
+
+![导入规则](https://gitee.com/lingh1996/TapClick/raw/master/regulationImport.png "regulationImport.png")
+
+#
+#### 10、常见问题
 
 ###### 问：为什么添加控件后没有效果？
 * 相应的检索开关没有开启，设置的检索时间过短；
@@ -108,7 +117,7 @@
 ###### 问：为什么添加的规则时好时坏，具有不确定性？
 * 因为活动名有可能识别为桌面或SystemUI的活动名（系统bug，无解），与规则里的活动名不一致无法触发动作，可对比已添加规则的活动名与未生效时的活动名是否一致，不一致的话再添加一次即可。
 
-#### 9、加入群聊：
+#### 11、加入群聊：
 #####
 ![QQ群二维码，截图后扫一扫](https://gitee.com/lingh1996/ADGO/raw/master/groupChat.jpg "groupChat.jpg")
 
