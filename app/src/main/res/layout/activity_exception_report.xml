@@ -13,7 +13,7 @@
         android:fadingEdgeLength="5dp"
         android:requiresFadingEdge="horizontal"
         android:scrollbars="none"
-        app:layout_constraintBottom_toTopOf="@+id/send"
+        app:layout_constraintBottom_toTopOf="@+id/export"
         app:layout_constraintTop_toTopOf="parent">
 
         <ScrollView
@@ -35,13 +35,13 @@
     </HorizontalScrollView>
 
     <Button
-        android:id="@+id/send"
+        android:id="@+id/export"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_selector"
-        android:text="复制到剪贴板并发送给作者"
+        android:text="导出异常"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent" />
 

@@ -15,8 +15,13 @@ import com.lgh.advertising.going.BuildConfig;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.myactivity.ExceptionReportActivity;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 
 public class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
     private static MyUncaughtExceptionHandler instance;
@@ -50,7 +55,7 @@ public class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandl
     }
 
     @Override
-    public void uncaughtException(@NonNull Thread thread, Throwable e) {
+    public void uncaughtException(@NonNull Thread thread, @NonNull Throwable e) {
         createExceptionNotification(e);
         e.printStackTrace();
     }
@@ -59,19 +64,24 @@ public class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandl
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         throwable.printStackTrace(printWriter);
-        NotificationManager notificationManager = mContext.getSystemService(NotificationManager.class);
-        Intent intent = new Intent(mContext, ExceptionReportActivity.class);
         String message = Build.FINGERPRINT + "\n"
                 + "BuildTime: " + BuildConfig.BUILD_TIME + "\n"
                 + "VersionCode: " + BuildConfig.VERSION_CODE + "\n"
                 + stringWriter;
-        intent.putExtra(Intent.EXTRA_TEXT, message);
+        try {
+            File file = new File(mContext.getFilesDir(), "exception.txt");
+            FileUtils.writeStringToFile(file, message, StandardCharsets.UTF_8, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        NotificationManager notificationManager = mContext.getSystemService(NotificationManager.class);
+        Intent intent = new Intent(mContext, ExceptionReportActivity.class);
         Notification.Builder builder = new Notification.Builder(mContext)
                 .setContentIntent(PendingIntent.getActivity(mContext, 0x01, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT))
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.app)
                 .setContentTitle(mContext.getText(R.string.app_name) + "发生异常")
-                .setContentText("点击查看");
+                .setContentText(throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             builder.setChannelId(mContext.getPackageName());
             NotificationChannel channel = new NotificationChannel(mContext.getPackageName(), mContext.getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
