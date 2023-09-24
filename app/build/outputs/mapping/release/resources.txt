@@ -795,6 +795,7 @@ Referenced Strings:
   ensureImeVisible
   ep
   etag
+  exception.txt
   expandableWidgetHelper
   expansion
   expect
@@ -850,10 +851,10 @@ Referenced Strings:
   https:
   https://api.github.com/
   https://api.github.com/repos/LGH1996/...
-  https://gitee.com/lingh1996/ADGO/blob...
-  https://gitee.com/lingh1996/ADGO/raw/...
-  https://gitee.com/lingh1996/ADGO/raw/...
-  https://github.com/LGH1996/ADGO
+  https://gitee.com/lingh1996/TapClick/...
+  https://gitee.com/lingh1996/TapClick/...
+  https://gitee.com/lingh1996/TapClick/...
+  https://github.com/LGH1996/TapClick
   iconFade
   iconScale
   id
@@ -1114,6 +1115,7 @@ Referenced Strings:
   当前已是最新版本
   忽略电池优化权限已开启
   授权管理
+  无异常
   无效的规则
   无障碍服务已开启
   无障碍服务未开启
@@ -1122,7 +1124,6 @@ Referenced Strings:
   暂时不支持分享
   未安装QQ或TIM
   查询新版本时出现错误
-  点击查看
   生成分享文件时发生错误
   生成规则文件时发生错误
   确定

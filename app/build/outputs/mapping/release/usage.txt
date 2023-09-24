@@ -28,26 +28,21 @@ org.apache.commons.io.IOUtils:
     public static int copy(java.io.InputStream,java.io.OutputStream)
     public static long copy(java.io.InputStream,java.io.OutputStream,int)
     public static void copy(java.io.InputStream,java.io.Writer)
-    public static void copy(java.io.InputStream,java.io.Writer,java.nio.charset.Charset)
     public static void copy(java.io.InputStream,java.io.Writer,java.lang.String)
     public static long copy(java.io.Reader,java.lang.Appendable)
     public static long copy(java.io.Reader,java.lang.Appendable,java.nio.CharBuffer)
     public static void copy(java.io.Reader,java.io.OutputStream)
     public static void copy(java.io.Reader,java.io.OutputStream,java.nio.charset.Charset)
     public static void copy(java.io.Reader,java.io.OutputStream,java.lang.String)
-    public static int copy(java.io.Reader,java.io.Writer)
     public static long copy(java.net.URL,java.io.File)
     public static long copy(java.net.URL,java.io.OutputStream)
     public static long copyLarge(java.io.InputStream,java.io.OutputStream)
     public static long copyLarge(java.io.InputStream,java.io.OutputStream,byte[])
     public static long copyLarge(java.io.InputStream,java.io.OutputStream,long,long)
     public static long copyLarge(java.io.InputStream,java.io.OutputStream,long,long,byte[])
-    public static long copyLarge(java.io.Reader,java.io.Writer)
-    public static long copyLarge(java.io.Reader,java.io.Writer,char[])
     public static long copyLarge(java.io.Reader,java.io.Writer,long,long)
     public static long copyLarge(java.io.Reader,java.io.Writer,long,long,char[])
     static byte[] getByteArray()
-    static char[] getCharArray()
     public static int length(byte[])
     public static int length(char[])
     public static int length(java.lang.CharSequence)
@@ -108,7 +103,6 @@ org.apache.commons.io.IOUtils:
     public static java.lang.String toString(byte[])
     public static java.lang.String toString(byte[],java.lang.String)
     public static java.lang.String toString(java.io.InputStream)
-    public static java.lang.String toString(java.io.InputStream,java.nio.charset.Charset)
     public static java.lang.String toString(java.io.InputStream,java.lang.String)
     public static java.lang.String toString(java.io.Reader)
     public static java.lang.String toString(java.net.URI)
@@ -7850,7 +7844,11 @@ io.reactivex.rxjava3.internal.operators.observable.ObservableTakeUntilPredicate
 com.google.android.material.internal.ParcelableSparseBooleanArray
 androidx.dynamicanimation.R$integer
 com.google.android.material.progressindicator.CircularIndeterminateAnimatorDelegate$3
-org.apache.commons.io.output.StringBuilderWriter
+org.apache.commons.io.output.StringBuilderWriter:
+    public void <init>(int)
+    public void <init>(java.lang.StringBuilder)
+    public java.lang.StringBuilder getBuilder()
+    private static final long serialVersionUID
 androidx.transition.MatrixUtils
 io.reactivex.rxjava3.internal.operators.mixed.FlowableSwitchMapSinglePublisher
 io.reactivex.rxjava3.internal.operators.observable.ObservableTakeWhile$TakeWhileObserver
@@ -8001,11 +7999,9 @@ org.apache.commons.io.FileUtils:
     public static varargs void moveFile(java.io.File,java.io.File,java.nio.file.CopyOption[])
     public static void moveFileToDirectory(java.io.File,java.io.File,boolean)
     public static void moveToDirectory(java.io.File,java.io.File,boolean)
-    public static java.io.FileInputStream openInputStream(java.io.File)
     public static java.io.FileOutputStream openOutputStream(java.io.File)
     public static byte[] readFileToByteArray(java.io.File)
     public static java.lang.String readFileToString(java.io.File)
-    public static java.lang.String readFileToString(java.io.File,java.nio.charset.Charset)
     public static java.lang.String readFileToString(java.io.File,java.lang.String)
     public static java.util.List readLines(java.io.File)
     public static java.util.List readLines(java.io.File,java.nio.charset.Charset)
@@ -18892,6 +18888,7 @@ androidx.constraintlayout.solver.widgets.analyzer.DependencyGraph:
     private static final boolean USE_GROUPS
 org.apache.commons.io.input.CharSequenceInputStream
 com.google.android.material.badge.BadgeDrawable$1
+androidx.legacy.coreutils.R$string
 com.google.android.material.R$dimen:
     private void <init>()
     public static final int abc_action_bar_content_inset_material
@@ -19267,7 +19264,6 @@ com.google.android.material.R$dimen:
     public static final int tooltip_vertical_padding
     public static final int tooltip_y_offset_non_touch
     public static final int tooltip_y_offset_touch
-androidx.legacy.coreutils.R$string
 androidx.core.view.WindowInsetsControllerCompat
 androidx.constraintlayout.motion.widget.KeyFrames
 io.reactivex.rxjava3.internal.operators.parallel.ParallelMap$ParallelMapSubscriber
@@ -19937,7 +19933,13 @@ org.apache.commons.io.IOUtils:
     public static byte[] byteArray(int)
     public static char[] charArray()
     public static char[] charArray(int)
+    public static void copy(java.io.InputStream,java.io.Writer,java.nio.charset.Charset)
+    public static int copy(java.io.Reader,java.io.Writer)
+    public static long copyLarge(java.io.Reader,java.io.Writer)
+    public static long copyLarge(java.io.Reader,java.io.Writer,char[])
+    public static char[] getCharArray()
     public static int length(java.lang.Object[])
+    public static java.lang.String toString(java.io.InputStream,java.nio.charset.Charset)
     public static void write(java.lang.String,java.io.OutputStream,java.nio.charset.Charset)
     public static char[] lambda$zxbPsNmCQijkaISempsHC1EJows()
     public static final char DIR_SEPARATOR
@@ -19946,7 +19948,6 @@ org.apache.commons.io.IOUtils:
     public static final java.lang.String LINE_SEPARATOR_UNIX
     public static final java.lang.String LINE_SEPARATOR_WINDOWS
     public static final java.lang.ThreadLocal SKIP_BYTE_BUFFER
-    public static final java.lang.ThreadLocal SKIP_CHAR_BUFFER
 androidx.core.widget.TextViewOnReceiveContentListener:
     public static void onReceiveForDragAndDrop(android.widget.TextView,androidx.core.view.ContentInfoCompat)
     public static java.lang.CharSequence coerceToText(android.content.ClipData,android.content.Context,int)
@@ -22001,6 +22002,8 @@ com.lgh.advertising.going.myfunction.MyUtils:
     public boolean setDbClickEnable(boolean)
     public android.graphics.Rect getDbClickPosition()
     public boolean setDbClickPosition(android.graphics.Rect)
+    public boolean getIsFirstStart()
+    public void setIsFirstStart(boolean)
 androidx.appcompat.widget.ActionBarOverlayLayout:
     public final androidx.appcompat.widget.DecorToolbar getDecorToolbar(android.view.View)
     public final void postRemoveActionBarHideOffset()
@@ -22284,7 +22287,7 @@ com.lgh.advertising.going.myfunction.MainFunction:
     public static synthetic java.lang.String access$2802(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
     public static synthetic android.content.pm.PackageManager access$2900(com.lgh.advertising.going.myfunction.MainFunction)
     public static synthetic android.view.inputmethod.InputMethodManager access$3000(com.lgh.advertising.going.myfunction.MainFunction)
-    public final boolean click(int,int,long,long)
+    public final boolean click(int,int)
     public final void getRunningData()
     public final void showAddWarningDialog(java.lang.Runnable)
     public boolean onUnbind()
@@ -23192,13 +23195,14 @@ org.apache.commons.io.FileUtils:
     public static java.io.File getParentFile(java.io.File)
     public static java.io.File[] listFiles(java.io.File,java.io.FileFilter)
     public static java.io.File mkdirs(java.io.File)
+    public static java.io.FileInputStream openInputStream(java.io.File)
     public static java.io.FileOutputStream openOutputStream(java.io.File,boolean)
     public static void requireCanWrite(java.io.File,java.lang.String)
     public static java.io.File requireDirectory(java.io.File,java.lang.String)
     public static java.io.File requireDirectoryExists(java.io.File,java.lang.String)
     public static java.io.File requireExists(java.io.File,java.lang.String)
     public static java.io.File requireFile(java.io.File,java.lang.String)
-    public static void writeStringToFile(java.io.File,java.lang.String,java.nio.charset.Charset,boolean)
+    public static void writeStringToFile(java.io.File,java.lang.String,java.nio.charset.Charset)
     public static final java.math.BigInteger ONE_EB_BI
     public static final java.math.BigInteger ONE_YB
     public static final java.io.File[] EMPTY_FILE_ARRAY
@@ -24332,6 +24336,8 @@ com.google.gson.FieldNamingPolicy:
 androidx.core.graphics.PathParser$PathDataNode
 retrofit2.KotlinExtensions$suspendAndThrow$1:
     public synthetic java.lang.Object result
+com.lgh.advertising.going.myactivity.ExceptionReportActivity:
+    public static synthetic java.lang.String access$000(com.lgh.advertising.going.myactivity.ExceptionReportActivity)
 androidx.transition.Scene:
     public static void setCurrentScene(android.view.ViewGroup,androidx.transition.Scene)
     public static androidx.transition.Scene getCurrentScene(android.view.ViewGroup)
@@ -24904,8 +24910,8 @@ androidx.room.RoomDatabase:
     public void endTransaction()
     public java.util.concurrent.Executor getQueryExecutor()
     public void internalInitInvalidationTracker(androidx.sqlite.db.SupportSQLiteDatabase)
-    public synthetic java.lang.Object lambda$endTransaction$1$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public synthetic java.lang.Object lambda$beginTransaction$0$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
+    public synthetic java.lang.Object lambda$endTransaction$1$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public java.util.concurrent.Executor mTransactionExecutor
     public final java.util.Map mBackingFieldMap
 retrofit2.CompletableFutureCallAdapterFactory$ResponseCallAdapter$ResponseCallback:
@@ -25081,12 +25087,12 @@ com.lgh.advertising.going.myactivity.MainActivity:
     public static synthetic android.view.LayoutInflater access$000(com.lgh.advertising.going.myactivity.MainActivity)
     public static synthetic boolean access$102(com.lgh.advertising.going.myactivity.MainActivity,boolean)
     public static synthetic android.content.Context access$200(com.lgh.advertising.going.myactivity.MainActivity)
-    public static synthetic android.content.SharedPreferences access$300(com.lgh.advertising.going.myactivity.MainActivity)
+    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$300(com.lgh.advertising.going.myactivity.MainActivity)
     public static synthetic com.lgh.advertising.going.myclass.DataDao access$400(com.lgh.advertising.going.myactivity.MainActivity)
-    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$500(com.lgh.advertising.going.myactivity.MainActivity)
     public final void refreshAccessibilityServiceStatus()
     public final void showUpdateInfo()
     public final void showPrivacyAgreement()
+    public android.content.SharedPreferences sharedPreferences
 com.google.gson.internal.bind.TypeAdapters$13:
     public java.lang.Number read(com.google.gson.stream.JsonReader)
     public void write(com.google.gson.stream.JsonWriter,java.lang.Number)
@@ -26971,7 +26977,6 @@ androidx.fragment.app.DefaultSpecialEffectsController$9:
     public final synthetic androidx.fragment.app.DefaultSpecialEffectsController this$0
 androidx.appcompat.view.WindowCallbackWrapper
 org.apache.commons.io.Charsets:
-    public static java.nio.charset.Charset toCharset(java.nio.charset.Charset)
     public static final java.util.SortedMap STANDARD_CHARSET_MAP
     public static final java.nio.charset.Charset ISO_8859_1
     public static final java.nio.charset.Charset US_ASCII
@@ -29093,33 +29098,33 @@ io.reactivex.rxjava3.core.Emitter
 com.google.android.material.transformation.ExpandableBehavior:
     public static synthetic int access$000(com.google.android.material.transformation.ExpandableBehavior)
     public com.google.android.material.expandable.ExpandableWidget findExpandableWidget(androidx.coordinatorlayout.widget.CoordinatorLayout,android.view.View)
-androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
-okhttp3.-$$Lambda$Authenticator$esJoevooYalsFzydukZpZJT5arU:
-    public final okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)
-androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
 androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
 androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
-androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
 androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
-okhttp3.-$$Lambda$Dns$9evC3uO-H_z08sS9O-4-hLhZ8es:
-    public final java.util.List lookup(java.lang.String)
-androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
-androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
+okhttp3.-$$Lambda$Authenticator$esJoevooYalsFzydukZpZJT5arU:
+    public final okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)
 okhttp3.-$$Lambda$EventListener$OXICzLQ3RHlsN3BZyIksLMm-GlQ:
     public final okhttp3.EventListener create(okhttp3.Call)
-androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
-androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
-androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
-androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
-androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
 androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
+androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
+androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
+androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
+androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
+okhttp3.-$$Lambda$Dns$9evC3uO-H_z08sS9O-4-hLhZ8es:
+    public final java.util.List lookup(java.lang.String)
 androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
+androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
+androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
+androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
+androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
+androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
+androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
+androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
+androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
+androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
 com.android.tools.r8.GeneratedOutlineSupport:
     public static java.lang.String outline5(org.xmlpull.v1.XmlPullParser,java.lang.StringBuilder,java.lang.String)
