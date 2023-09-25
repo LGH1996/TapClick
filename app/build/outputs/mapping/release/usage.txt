@@ -28,26 +28,21 @@ org.apache.commons.io.IOUtils:
     public static int copy(java.io.InputStream,java.io.OutputStream)
     public static long copy(java.io.InputStream,java.io.OutputStream,int)
     public static void copy(java.io.InputStream,java.io.Writer)
-    public static void copy(java.io.InputStream,java.io.Writer,java.nio.charset.Charset)
     public static void copy(java.io.InputStream,java.io.Writer,java.lang.String)
     public static long copy(java.io.Reader,java.lang.Appendable)
     public static long copy(java.io.Reader,java.lang.Appendable,java.nio.CharBuffer)
     public static void copy(java.io.Reader,java.io.OutputStream)
     public static void copy(java.io.Reader,java.io.OutputStream,java.nio.charset.Charset)
     public static void copy(java.io.Reader,java.io.OutputStream,java.lang.String)
-    public static int copy(java.io.Reader,java.io.Writer)
     public static long copy(java.net.URL,java.io.File)
     public static long copy(java.net.URL,java.io.OutputStream)
     public static long copyLarge(java.io.InputStream,java.io.OutputStream)
     public static long copyLarge(java.io.InputStream,java.io.OutputStream,byte[])
     public static long copyLarge(java.io.InputStream,java.io.OutputStream,long,long)
     public static long copyLarge(java.io.InputStream,java.io.OutputStream,long,long,byte[])
-    public static long copyLarge(java.io.Reader,java.io.Writer)
-    public static long copyLarge(java.io.Reader,java.io.Writer,char[])
     public static long copyLarge(java.io.Reader,java.io.Writer,long,long)
     public static long copyLarge(java.io.Reader,java.io.Writer,long,long,char[])
     static byte[] getByteArray()
-    static char[] getCharArray()
     public static int length(byte[])
     public static int length(char[])
     public static int length(java.lang.CharSequence)
@@ -108,7 +103,6 @@ org.apache.commons.io.IOUtils:
     public static java.lang.String toString(byte[])
     public static java.lang.String toString(byte[],java.lang.String)
     public static java.lang.String toString(java.io.InputStream)
-    public static java.lang.String toString(java.io.InputStream,java.nio.charset.Charset)
     public static java.lang.String toString(java.io.InputStream,java.lang.String)
     public static java.lang.String toString(java.io.Reader)
     public static java.lang.String toString(java.net.URI)
@@ -2630,8 +2624,8 @@ org.apache.commons.io.filefilter.FileEqualsFileFilter
 io.reactivex.rxjava3.internal.operators.observable.ObservableRepeat$RepeatObserver
 androidx.core.location.LocationManagerCompat$PreRGnssStatusTransport$1
 io.reactivex.rxjava3.internal.operators.observable.ObservableWindowTimed$WindowExactUnboundedObserver
-androidx.core.view.ContentInfoCompat$Source
 okio.Buffer$UnsafeCursor
+androidx.core.view.ContentInfoCompat$Source
 androidx.room.util.FtsTableInfo
 androidx.constraintlayout.solver.state.HelperReference
 io.reactivex.rxjava3.internal.operators.flowable.FlowableWindowTimed
@@ -7850,7 +7844,11 @@ io.reactivex.rxjava3.internal.operators.observable.ObservableTakeUntilPredicate
 com.google.android.material.internal.ParcelableSparseBooleanArray
 androidx.dynamicanimation.R$integer
 com.google.android.material.progressindicator.CircularIndeterminateAnimatorDelegate$3
-org.apache.commons.io.output.StringBuilderWriter
+org.apache.commons.io.output.StringBuilderWriter:
+    public void <init>(int)
+    public void <init>(java.lang.StringBuilder)
+    public java.lang.StringBuilder getBuilder()
+    private static final long serialVersionUID
 androidx.transition.MatrixUtils
 io.reactivex.rxjava3.internal.operators.mixed.FlowableSwitchMapSinglePublisher
 io.reactivex.rxjava3.internal.operators.observable.ObservableTakeWhile$TakeWhileObserver
@@ -8001,11 +7999,9 @@ org.apache.commons.io.FileUtils:
     public static varargs void moveFile(java.io.File,java.io.File,java.nio.file.CopyOption[])
     public static void moveFileToDirectory(java.io.File,java.io.File,boolean)
     public static void moveToDirectory(java.io.File,java.io.File,boolean)
-    public static java.io.FileInputStream openInputStream(java.io.File)
     public static java.io.FileOutputStream openOutputStream(java.io.File)
     public static byte[] readFileToByteArray(java.io.File)
     public static java.lang.String readFileToString(java.io.File)
-    public static java.lang.String readFileToString(java.io.File,java.nio.charset.Charset)
     public static java.lang.String readFileToString(java.io.File,java.lang.String)
     public static java.util.List readLines(java.io.File)
     public static java.util.List readLines(java.io.File,java.nio.charset.Charset)
@@ -18892,6 +18888,7 @@ androidx.constraintlayout.solver.widgets.analyzer.DependencyGraph:
     private static final boolean USE_GROUPS
 org.apache.commons.io.input.CharSequenceInputStream
 com.google.android.material.badge.BadgeDrawable$1
+androidx.legacy.coreutils.R$string
 com.google.android.material.R$dimen:
     private void <init>()
     public static final int abc_action_bar_content_inset_material
@@ -19267,7 +19264,6 @@ com.google.android.material.R$dimen:
     public static final int tooltip_vertical_padding
     public static final int tooltip_y_offset_non_touch
     public static final int tooltip_y_offset_touch
-androidx.legacy.coreutils.R$string
 androidx.core.view.WindowInsetsControllerCompat
 androidx.constraintlayout.motion.widget.KeyFrames
 io.reactivex.rxjava3.internal.operators.parallel.ParallelMap$ParallelMapSubscriber
@@ -19405,6 +19401,7 @@ androidx.constraintlayout.widget.ConstraintSet$Constraint:
 io.reactivex.rxjava3.annotations.CheckReturnValue
 okhttp3.internal.ws.WebSocketReader$FrameCallback
 androidx.fragment.app.FragmentTabHost$DummyTabFactory
+androidx.recyclerview.R$color
 androidx.fragment.R$id:
     private void <init>()
     public static final int accessibility_action_clickable_span
@@ -19477,7 +19474,6 @@ androidx.fragment.R$id:
     public static final int view_tree_lifecycle_owner
     public static final int view_tree_saved_state_registry_owner
     public static final int view_tree_view_model_store_owner
-androidx.recyclerview.R$color
 io.reactivex.rxjava3.internal.queue.SpscLinkedArrayQueue:
     private java.lang.Object newBufferPeek(java.util.concurrent.atomic.AtomicReferenceArray,long,int)
     public java.lang.Object peek()
@@ -19937,7 +19933,13 @@ org.apache.commons.io.IOUtils:
     public static byte[] byteArray(int)
     public static char[] charArray()
     public static char[] charArray(int)
+    public static void copy(java.io.InputStream,java.io.Writer,java.nio.charset.Charset)
+    public static int copy(java.io.Reader,java.io.Writer)
+    public static long copyLarge(java.io.Reader,java.io.Writer)
+    public static long copyLarge(java.io.Reader,java.io.Writer,char[])
+    public static char[] getCharArray()
     public static int length(java.lang.Object[])
+    public static java.lang.String toString(java.io.InputStream,java.nio.charset.Charset)
     public static void write(java.lang.String,java.io.OutputStream,java.nio.charset.Charset)
     public static char[] lambda$zxbPsNmCQijkaISempsHC1EJows()
     public static final char DIR_SEPARATOR
@@ -19946,7 +19948,6 @@ org.apache.commons.io.IOUtils:
     public static final java.lang.String LINE_SEPARATOR_UNIX
     public static final java.lang.String LINE_SEPARATOR_WINDOWS
     public static final java.lang.ThreadLocal SKIP_BYTE_BUFFER
-    public static final java.lang.ThreadLocal SKIP_CHAR_BUFFER
 androidx.core.widget.TextViewOnReceiveContentListener:
     public static void onReceiveForDragAndDrop(android.widget.TextView,androidx.core.view.ContentInfoCompat)
     public static java.lang.CharSequence coerceToText(android.content.ClipData,android.content.Context,int)
@@ -21241,8 +21242,6 @@ okio.ForwardingSource:
 androidx.appcompat.widget.AppCompatTextHelper$2:
     public final synthetic androidx.appcompat.widget.AppCompatTextHelper this$0
 io.reactivex.rxjava3.internal.functions.Functions$FalsePredicate
-com.lgh.advertising.going.myfunction.MainFunction$16:
-    public final synthetic com.lgh.advertising.going.myfunction.MainFunction this$0
 com.google.android.material.timepicker.TimeModel
 androidx.appcompat.app.AlertController$1
 androidx.core.view.ViewPropertyAnimatorListenerAdapter:
@@ -22001,6 +22000,8 @@ com.lgh.advertising.going.myfunction.MyUtils:
     public boolean setDbClickEnable(boolean)
     public android.graphics.Rect getDbClickPosition()
     public boolean setDbClickPosition(android.graphics.Rect)
+    public boolean getIsFirstStart()
+    public void setIsFirstStart(boolean)
 androidx.appcompat.widget.ActionBarOverlayLayout:
     public final androidx.appcompat.widget.DecorToolbar getDecorToolbar(android.view.View)
     public final void postRemoveActionBarHideOffset()
@@ -22244,49 +22245,79 @@ com.lgh.advertising.going.myfunction.MainFunction:
     public static synthetic java.lang.String lambda$getRunningData$1(android.content.pm.ResolveInfo)
     public static synthetic java.lang.String lambda$getRunningData$0(android.content.pm.PackageInfo)
     public static void access$000(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic boolean access$102(com.lgh.advertising.going.myfunction.MainFunction,boolean)
-    public static synthetic boolean access$200(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.accessibilityservice.AccessibilityServiceInfo access$300(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.accessibilityservice.AccessibilityService access$400(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic boolean access$502(com.lgh.advertising.going.myfunction.MainFunction,boolean)
-    public static synthetic boolean access$202(com.lgh.advertising.going.myfunction.MainFunction,boolean)
-    public static synthetic boolean access$100(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic boolean access$602(com.lgh.advertising.going.myfunction.MainFunction,boolean)
-    public static synthetic boolean access$702(com.lgh.advertising.going.myfunction.MainFunction,boolean)
-    public static synthetic com.lgh.advertising.going.mybean.Coordinate access$800(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic boolean access$700(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.lang.String access$900(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.util.concurrent.ScheduledExecutorService access$1100(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.view.WindowManager$LayoutParams access$1200(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic com.lgh.advertising.going.databinding.ViewAddDataBinding access$1300(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.util.Map access$1400(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.view.WindowManager access$1500(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.view.WindowManager$LayoutParams access$1600(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.lang.String access$1700(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.widget.ImageView access$1800(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.view.WindowManager$LayoutParams access$1900(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic com.lgh.advertising.going.databinding.ViewWidgetSelectBinding access$2000(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic void access$2100(com.lgh.advertising.going.myfunction.MainFunction,java.util.List,java.util.List)
-    public static synthetic com.lgh.advertising.going.myclass.DataDao access$2200(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.util.Set access$2300(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.accessibilityservice.AccessibilityService access$100(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.lang.String access$200(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.lang.String access$202(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
+    public static synthetic com.lgh.advertising.going.mybean.AppDescribe access$302(com.lgh.advertising.going.myfunction.MainFunction,com.lgh.advertising.going.mybean.AppDescribe)
+    public static synthetic java.util.Map access$400(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic com.lgh.advertising.going.mybean.AppDescribe access$300(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.lang.String access$500(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.lang.String access$502(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
+    public static synthetic java.util.concurrent.ScheduledFuture access$600(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.concurrent.ScheduledFuture access$700(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.concurrent.ScheduledFuture access$800(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.accessibilityservice.AccessibilityServiceInfo access$900(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic boolean access$1002(com.lgh.advertising.going.myfunction.MainFunction,boolean)
+    public static synthetic boolean access$1102(com.lgh.advertising.going.myfunction.MainFunction,boolean)
+    public static synthetic boolean access$1202(com.lgh.advertising.going.myfunction.MainFunction,boolean)
+    public static synthetic boolean access$1302(com.lgh.advertising.going.myfunction.MainFunction,boolean)
+    public static synthetic boolean access$1402(com.lgh.advertising.going.myfunction.MainFunction,boolean)
+    public static synthetic java.util.List access$1502(com.lgh.advertising.going.myfunction.MainFunction,java.util.List)
+    public static synthetic java.util.Map access$1602(com.lgh.advertising.going.myfunction.MainFunction,java.util.Map)
+    public static synthetic java.util.Map access$1702(com.lgh.advertising.going.myfunction.MainFunction,java.util.Map)
+    public static synthetic int access$1802(com.lgh.advertising.going.myfunction.MainFunction,int)
+    public static synthetic java.util.List access$1500(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.Map access$1600(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.Map access$1700(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic boolean access$1000(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.concurrent.ScheduledFuture access$602(com.lgh.advertising.going.myfunction.MainFunction,java.util.concurrent.ScheduledFuture)
+    public static synthetic boolean access$1300(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.concurrent.ScheduledExecutorService access$1900(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic boolean access$1100(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.concurrent.ScheduledFuture access$702(com.lgh.advertising.going.myfunction.MainFunction,java.util.concurrent.ScheduledFuture)
+    public static synthetic boolean access$1200(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.concurrent.ScheduledFuture access$802(com.lgh.advertising.going.myfunction.MainFunction,java.util.concurrent.ScheduledFuture)
+    public static synthetic java.lang.String access$2000(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.lang.String access$2002(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
+    public static synthetic java.util.Set access$2102(com.lgh.advertising.going.myfunction.MainFunction,java.util.Set)
+    public static synthetic boolean access$2202(com.lgh.advertising.going.myfunction.MainFunction,boolean)
     public static synthetic java.util.Set access$2302(com.lgh.advertising.going.myfunction.MainFunction,java.util.Set)
-    public static synthetic com.lgh.advertising.going.databinding.ViewWidgetSelectBinding access$2002(com.lgh.advertising.going.myfunction.MainFunction,com.lgh.advertising.going.databinding.ViewWidgetSelectBinding)
-    public static synthetic com.lgh.advertising.going.databinding.ViewAddDataBinding access$1302(com.lgh.advertising.going.myfunction.MainFunction,com.lgh.advertising.going.databinding.ViewAddDataBinding)
-    public static synthetic android.widget.ImageView access$1802(com.lgh.advertising.going.myfunction.MainFunction,android.widget.ImageView)
-    public static synthetic android.view.WindowManager$LayoutParams access$1202(com.lgh.advertising.going.myfunction.MainFunction,android.view.WindowManager$LayoutParams)
-    public static synthetic android.view.WindowManager$LayoutParams access$1902(com.lgh.advertising.going.myfunction.MainFunction,android.view.WindowManager$LayoutParams)
-    public static synthetic android.view.WindowManager$LayoutParams access$1602(com.lgh.advertising.going.myfunction.MainFunction,android.view.WindowManager$LayoutParams)
-    public static synthetic java.lang.String access$1702(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
-    public static synthetic java.lang.String access$902(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
-    public static synthetic android.view.WindowManager$LayoutParams access$2500(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.view.View access$2600(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$2700(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.lang.String access$2802(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
-    public static synthetic android.content.pm.PackageManager access$2900(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.view.inputmethod.InputMethodManager access$3000(com.lgh.advertising.going.myfunction.MainFunction)
-    public final boolean click(int,int,long,long)
+    public static synthetic com.lgh.advertising.going.mybean.Coordinate access$2402(com.lgh.advertising.going.myfunction.MainFunction,com.lgh.advertising.going.mybean.Coordinate)
+    public static synthetic com.lgh.advertising.going.mybean.Coordinate access$2400(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.Set access$2300(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic boolean access$1400(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.concurrent.ScheduledFuture access$2500(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.concurrent.ScheduledFuture access$2502(com.lgh.advertising.going.myfunction.MainFunction,java.util.concurrent.ScheduledFuture)
+    public static synthetic android.view.WindowManager$LayoutParams access$2900(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic com.lgh.advertising.going.databinding.ViewAddDataBinding access$3000(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.view.WindowManager access$3100(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.view.WindowManager$LayoutParams access$3200(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.widget.ImageView access$3300(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.view.WindowManager$LayoutParams access$3400(com.lgh.advertising.going.myfunction.MainFunction)
+    public static java.util.ArrayList access$3500(com.lgh.advertising.going.myfunction.MainFunction,android.view.accessibility.AccessibilityNodeInfo)
+    public static synthetic com.lgh.advertising.going.databinding.ViewWidgetSelectBinding access$3600(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.concurrent.ExecutorService access$3700(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic com.lgh.advertising.going.myclass.DataDao access$3800(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.Set access$3900(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.Set access$3902(com.lgh.advertising.going.myfunction.MainFunction,java.util.Set)
+    public static synthetic com.lgh.advertising.going.databinding.ViewWidgetSelectBinding access$3602(com.lgh.advertising.going.myfunction.MainFunction,com.lgh.advertising.going.databinding.ViewWidgetSelectBinding)
+    public static synthetic com.lgh.advertising.going.databinding.ViewAddDataBinding access$3002(com.lgh.advertising.going.myfunction.MainFunction,com.lgh.advertising.going.databinding.ViewAddDataBinding)
+    public static synthetic android.widget.ImageView access$3302(com.lgh.advertising.going.myfunction.MainFunction,android.widget.ImageView)
+    public static synthetic android.view.WindowManager$LayoutParams access$2902(com.lgh.advertising.going.myfunction.MainFunction,android.view.WindowManager$LayoutParams)
+    public static synthetic android.view.WindowManager$LayoutParams access$3402(com.lgh.advertising.going.myfunction.MainFunction,android.view.WindowManager$LayoutParams)
+    public static synthetic android.view.WindowManager$LayoutParams access$3202(com.lgh.advertising.going.myfunction.MainFunction,android.view.WindowManager$LayoutParams)
+    public static synthetic android.view.WindowManager$LayoutParams access$4100(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.view.View access$4200(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$4300(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.content.pm.PackageManager access$4400(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.view.inputmethod.InputMethodManager access$4500(com.lgh.advertising.going.myfunction.MainFunction)
+    public final void findButtonByText(android.view.accessibility.AccessibilityNodeInfo,com.lgh.advertising.going.mybean.AutoFinder)
+    public final void findButtonByWidget(android.view.accessibility.AccessibilityNodeInfo,java.util.Set)
+    public final java.util.ArrayList findAllNode(android.view.accessibility.AccessibilityNodeInfo)
+    public final boolean click(int,int)
     public final void getRunningData()
     public final void showAddWarningDialog(java.lang.Runnable)
+    public void onAccessibilityEvent(android.view.accessibility.AccessibilityEvent)
     public boolean onUnbind()
     public java.util.Map getAppDescribeMap()
     public void closeService()
@@ -22637,6 +22668,8 @@ retrofit2.CallAdapter$Factory:
     public static java.lang.reflect.Type getParameterUpperBound(int,java.lang.reflect.ParameterizedType)
     public static java.lang.Class getRawType(java.lang.reflect.Type)
 androidx.core.content.res.ColorStateListInflaterCompat
+com.lgh.advertising.going.myfunction.MainFunction$7$1:
+    public final synthetic com.lgh.advertising.going.myfunction.MainFunction$7 this$1
 androidx.appcompat.view.menu.MenuItemWrapperICS$CollapsibleActionViewWrapper:
     public android.view.View getWrappedView()
 androidx.transition.FragmentTransitionSupport$4:
@@ -23192,13 +23225,14 @@ org.apache.commons.io.FileUtils:
     public static java.io.File getParentFile(java.io.File)
     public static java.io.File[] listFiles(java.io.File,java.io.FileFilter)
     public static java.io.File mkdirs(java.io.File)
+    public static java.io.FileInputStream openInputStream(java.io.File)
     public static java.io.FileOutputStream openOutputStream(java.io.File,boolean)
     public static void requireCanWrite(java.io.File,java.lang.String)
     public static java.io.File requireDirectory(java.io.File,java.lang.String)
     public static java.io.File requireDirectoryExists(java.io.File,java.lang.String)
     public static java.io.File requireExists(java.io.File,java.lang.String)
     public static java.io.File requireFile(java.io.File,java.lang.String)
-    public static void writeStringToFile(java.io.File,java.lang.String,java.nio.charset.Charset,boolean)
+    public static void writeStringToFile(java.io.File,java.lang.String,java.nio.charset.Charset)
     public static final java.math.BigInteger ONE_EB_BI
     public static final java.math.BigInteger ONE_YB
     public static final java.io.File[] EMPTY_FILE_ARRAY
@@ -23235,9 +23269,6 @@ com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton$5:
     public void set(android.view.View,java.lang.Float)
     public java.lang.Float get(android.view.View)
 androidx.appcompat.widget.ResourceManagerInternal$AvdcInflateDelegate
-com.lgh.advertising.going.myfunction.MainFunction$11$1:
-    public int compare(android.view.accessibility.AccessibilityNodeInfo,android.view.accessibility.AccessibilityNodeInfo)
-    public final synthetic com.lgh.advertising.going.myfunction.MainFunction$11 this$1
 com.google.gson.internal.bind.CollectionTypeAdapterFactory$Adapter:
     public java.util.Collection read(com.google.gson.stream.JsonReader)
     public void write(com.google.gson.stream.JsonWriter,java.util.Collection)
@@ -23721,8 +23752,6 @@ com.lgh.advertising.going.myclass.MyDatabase_Impl$1:
 androidx.appcompat.view.ViewPropertyAnimatorCompatSet$1:
     public void onEnd()
 io.reactivex.rxjava3.internal.functions.Functions$TruePredicate
-com.lgh.advertising.going.myfunction.MainFunction$11$2:
-    public final synthetic com.lgh.advertising.going.myfunction.MainFunction$11 this$1
 androidx.transition.FragmentTransitionSupport$2:
     public final synthetic androidx.transition.FragmentTransitionSupport this$0
 androidx.lifecycle.LiveData$1
@@ -23909,6 +23938,8 @@ okhttp3.internal.platform.Platform:
     public static okhttp3.internal.platform.Platform findPlatform()
     public static okhttp3.internal.platform.Platform findJvmPlatform()
     public static okhttp3.internal.platform.Platform findAndroidPlatform()
+com.lgh.advertising.going.myfunction.MainFunction$9$1$1$1:
+    public final synthetic com.lgh.advertising.going.myfunction.MainFunction$9$1$1 this$3
 androidx.core.view.AccessibilityDelegateCompat:
     public static java.util.List getActionList(android.view.View)
     public android.view.View$AccessibilityDelegate getBridge()
@@ -24556,8 +24587,6 @@ com.google.android.material.internal.CheckableImageButton$SavedState$1:
     public com.google.android.material.internal.CheckableImageButton$SavedState[] newArray(int)
 retrofit2.adapter.rxjava3.CallEnqueueObservable$CallCallback:
     public boolean isDisposed()
-com.lgh.advertising.going.myfunction.MainFunction$9$1:
-    public final synthetic com.lgh.advertising.going.myfunction.MainFunction$9 this$1
 com.google.android.material.datepicker.MonthsPagerAdapter:
     public static synthetic com.google.android.material.datepicker.MaterialCalendar$OnDayClickListener access$000(com.google.android.material.datepicker.MonthsPagerAdapter)
     public com.google.android.material.datepicker.MonthsPagerAdapter$ViewHolder onCreateViewHolder(android.view.ViewGroup)
@@ -24904,8 +24933,8 @@ androidx.room.RoomDatabase:
     public void endTransaction()
     public java.util.concurrent.Executor getQueryExecutor()
     public void internalInitInvalidationTracker(androidx.sqlite.db.SupportSQLiteDatabase)
-    public synthetic java.lang.Object lambda$endTransaction$1$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public synthetic java.lang.Object lambda$beginTransaction$0$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
+    public synthetic java.lang.Object lambda$endTransaction$1$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public java.util.concurrent.Executor mTransactionExecutor
     public final java.util.Map mBackingFieldMap
 retrofit2.CompletableFutureCallAdapterFactory$ResponseCallAdapter$ResponseCallback:
@@ -25081,12 +25110,12 @@ com.lgh.advertising.going.myactivity.MainActivity:
     public static synthetic android.view.LayoutInflater access$000(com.lgh.advertising.going.myactivity.MainActivity)
     public static synthetic boolean access$102(com.lgh.advertising.going.myactivity.MainActivity,boolean)
     public static synthetic android.content.Context access$200(com.lgh.advertising.going.myactivity.MainActivity)
-    public static synthetic android.content.SharedPreferences access$300(com.lgh.advertising.going.myactivity.MainActivity)
+    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$300(com.lgh.advertising.going.myactivity.MainActivity)
     public static synthetic com.lgh.advertising.going.myclass.DataDao access$400(com.lgh.advertising.going.myactivity.MainActivity)
-    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$500(com.lgh.advertising.going.myactivity.MainActivity)
     public final void refreshAccessibilityServiceStatus()
     public final void showUpdateInfo()
     public final void showPrivacyAgreement()
+    public android.content.SharedPreferences sharedPreferences
 com.google.gson.internal.bind.TypeAdapters$13:
     public java.lang.Number read(com.google.gson.stream.JsonReader)
     public void write(com.google.gson.stream.JsonWriter,java.lang.Number)
@@ -25819,6 +25848,9 @@ okhttp3.internal.http2.Http2Connection:
     public long awaitPingsSent
     public static final synthetic boolean $assertionsDisabled
 androidx.constraintlayout.solver.widgets.Chain
+com.lgh.advertising.going.myfunction.MainFunction$6:
+    public int compare(android.view.accessibility.AccessibilityNodeInfo,android.view.accessibility.AccessibilityNodeInfo)
+    public final synthetic com.lgh.advertising.going.myfunction.MainFunction this$0
 com.google.android.material.textfield.TextInputLayout:
     public void <init>(android.content.Context,android.util.AttributeSet,int)
     public static void updateCounterContentDescription(android.content.Context,android.widget.TextView,int,int,boolean)
@@ -26971,7 +27003,6 @@ androidx.fragment.app.DefaultSpecialEffectsController$9:
     public final synthetic androidx.fragment.app.DefaultSpecialEffectsController this$0
 androidx.appcompat.view.WindowCallbackWrapper
 org.apache.commons.io.Charsets:
-    public static java.nio.charset.Charset toCharset(java.nio.charset.Charset)
     public static final java.util.SortedMap STANDARD_CHARSET_MAP
     public static final java.nio.charset.Charset ISO_8859_1
     public static final java.nio.charset.Charset US_ASCII
@@ -27527,6 +27558,8 @@ com.lgh.advertising.going.databinding.ViewDbClickSettingBinding:
     public static com.lgh.advertising.going.databinding.ViewDbClickSettingBinding inflate(android.view.LayoutInflater,android.view.ViewGroup,boolean)
     public static com.lgh.advertising.going.databinding.ViewDbClickSettingBinding bind(android.view.View)
     public android.widget.RelativeLayout getRoot()
+com.lgh.advertising.going.myfunction.MainFunction$14:
+    public final synthetic com.lgh.advertising.going.myfunction.MainFunction this$0
 com.google.android.material.R$string
 com.lgh.advertising.going.myactivity.EditDataActivity$3$2:
     public final synthetic com.lgh.advertising.going.myactivity.EditDataActivity$3 this$1
@@ -27760,7 +27793,6 @@ okhttp3.internal.http2.PushObserver:
     public abstract void onReset(int,okhttp3.internal.http2.ErrorCode)
 androidx.appcompat.app.TwilightManager$TwilightState
 androidx.core.content.FileProvider:
-    public static android.net.Uri getUriForFile(android.content.Context,java.lang.String,java.io.File)
     public static int modeToMode(java.lang.String)
     public static varargs java.io.File buildPath(java.io.File,java.lang.String[])
     public static java.lang.String[] copyOf(java.lang.String[],int)
@@ -28748,8 +28780,8 @@ androidx.transition.ViewUtils$1:
 retrofit2.DefaultCallAdapterFactory$ExecutorCallbackCall$1:
     private synthetic void lambda$onFailure$1(retrofit2.Callback,java.lang.Throwable)
     private synthetic void lambda$onResponse$0(retrofit2.Callback,retrofit2.Response)
-    public synthetic void lambda$onFailure$1$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,java.lang.Throwable)
     public synthetic void lambda$onResponse$0$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,retrofit2.Response)
+    public synthetic void lambda$onFailure$1$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,java.lang.Throwable)
 androidx.appcompat.widget.AppCompatSpinner$DialogPopup
 androidx.constraintlayout.widget.ConstraintSet$Constraint:
     public static synthetic void access$000(androidx.constraintlayout.widget.ConstraintSet$Constraint,int,androidx.constraintlayout.widget.ConstraintLayout$LayoutParams)
@@ -29093,33 +29125,33 @@ io.reactivex.rxjava3.core.Emitter
 com.google.android.material.transformation.ExpandableBehavior:
     public static synthetic int access$000(com.google.android.material.transformation.ExpandableBehavior)
     public com.google.android.material.expandable.ExpandableWidget findExpandableWidget(androidx.coordinatorlayout.widget.CoordinatorLayout,android.view.View)
-androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
+androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
+androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
+androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
 androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
-okhttp3.-$$Lambda$Authenticator$esJoevooYalsFzydukZpZJT5arU:
-    public final okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)
-androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
-androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
-androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
 androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
-androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
+androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
+androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
 okhttp3.-$$Lambda$Dns$9evC3uO-H_z08sS9O-4-hLhZ8es:
     public final java.util.List lookup(java.lang.String)
-androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
-androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
+androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
+androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
+androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
+androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
 okhttp3.-$$Lambda$EventListener$OXICzLQ3RHlsN3BZyIksLMm-GlQ:
     public final okhttp3.EventListener create(okhttp3.Call)
-androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
-androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
-androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
-androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
-androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
-androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
+androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
+androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
+androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
 androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
+androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
+androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
+androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
+okhttp3.-$$Lambda$Authenticator$esJoevooYalsFzydukZpZJT5arU:
+    public final okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)
+androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
 com.android.tools.r8.GeneratedOutlineSupport:
     public static java.lang.String outline5(org.xmlpull.v1.XmlPullParser,java.lang.StringBuilder,java.lang.String)
