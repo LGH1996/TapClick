@@ -112,8 +112,12 @@ public class RegulationImportActivity extends BaseActivity {
         regulationImportBinding.btImport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (importList.isEmpty()) {
+                    Toast.makeText(RegulationImportActivity.this, "请选择要导入的规则", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 new AlertDialog.Builder(RegulationImportActivity.this)
-                        .setTitle("原有的规则将被覆盖，确定导入？")
+                        .setTitle("原有规则将被覆盖，确定导入？")
                         .setNegativeButton("取消", null)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override

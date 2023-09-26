@@ -66,7 +66,6 @@ public class MainActivity extends BaseActivity {
     private DataDao dataDao;
     private LayoutInflater inflater;
     private ActivityMainBinding mainBinding;
-    private SharedPreferences sharedPreferences;
     private MyUtils myUtils;
     private boolean autoHideOnTaskList;
 
@@ -78,7 +77,6 @@ public class MainActivity extends BaseActivity {
         context = getApplicationContext();
         dataDao = MyApplication.dataDao;
         myAppConfig = MyApplication.myAppConfig;
-        sharedPreferences = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
         myUtils = MyApplication.myUtils;
 
         final List<Resource> source = new ArrayList<>();

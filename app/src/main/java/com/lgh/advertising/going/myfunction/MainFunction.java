@@ -772,7 +772,7 @@ public class MainFunction {
                                             }
                                         }
                                     }
-                                }, 800, TimeUnit.MILLISECONDS);
+                                }, 1000, TimeUnit.MILLISECONDS);
                                 break;
                             case MotionEvent.ACTION_MOVE:
                                 aParams.x = startLpX + (Math.round(event.getRawX()) - startRowX);
@@ -849,13 +849,13 @@ public class MainFunction {
                                 public void run() {
                                     widgetSelect.appPackage = currentPackage;
                                     widgetSelect.appActivity = currentActivity;
-                                    for (final AccessibilityNodeInfo e : nodeList) {
-                                        final Rect temRect = new Rect();
+                                    for (AccessibilityNodeInfo e : nodeList) {
+                                        Rect temRect = new Rect();
                                         e.getBoundsInScreen(temRect);
                                         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(temRect.width(), temRect.height());
                                         params.leftMargin = temRect.left;
                                         params.topMargin = temRect.top;
-                                        final View view = new ImageView(service);
+                                        View view = new ImageView(service);
                                         view.setBackgroundResource(R.drawable.node);
                                         view.setFocusableInTouchMode(true);
                                         view.setFocusable(true);
