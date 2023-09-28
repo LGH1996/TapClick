@@ -81,7 +81,7 @@ import java.util.stream.Collectors;
  */
 
 public class MainFunction {
-    private static final String isScreenOffPre = "isScreenOffPre";
+    private final String isScreenOffPre = "isScreenOffPre";
     private final AccessibilityService service;
     private final WindowManager windowManager;
     private final PackageManager packageManager;
@@ -206,7 +206,8 @@ public class MainFunction {
                 }
                 if (!event.isFullScreen()
                         && !appDescribe.onOff
-                        && !currentPackageSub.equals(isScreenOffPre)) {
+                        && !currentPackageSub.equals(isScreenOffPre)
+                        && !currentActivity.equals(isScreenOffPre)) {
                     break;
                 }
                 if (!packageName.equals(currentPackageSub)) {
@@ -1217,6 +1218,7 @@ public class MainFunction {
         public void onReceive(Context context, Intent intent) {
             if (TextUtils.equals(intent.getAction(), Intent.ACTION_SCREEN_OFF)) {
                 currentPackageSub = isScreenOffPre;
+                currentActivity = isScreenOffPre;
             }
         }
     }
