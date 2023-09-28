@@ -18,10 +18,11 @@ import java.util.Map;
 import java.util.Objects;
 
 public class MyContentProvider extends ContentProvider {
-
+    private final Handler handler;
     private final DataDao dataDao;
 
     public MyContentProvider() {
+        handler = new Handler(Looper.getMainLooper());
         dataDao = MyApplication.dataDao;
     }
 
@@ -122,7 +123,7 @@ public class MyContentProvider extends ContentProvider {
             mainFunction.keepAliveByNotification(value);
         }
         if (TextUtils.equals(updateScope, "keepAliveByFloatingWindow")) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
+            handler.post(new Runnable() {
                 @Override
                 public void run() {
                     mainFunction.keepAliveByFloatingWindow(value);
@@ -152,7 +153,7 @@ public class MyContentProvider extends ContentProvider {
         if (!TextUtils.equals(updateScope, "showDbClickSetting")) {
             return;
         }
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 mainFunction.showDbClickSetting();
@@ -166,7 +167,7 @@ public class MyContentProvider extends ContentProvider {
         if (!TextUtils.equals(updateScope, "showDbClickFloating") || Objects.isNull(enable)) {
             return;
         }
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 mainFunction.showDbClickFloating(enable);
@@ -179,7 +180,7 @@ public class MyContentProvider extends ContentProvider {
         if (!TextUtils.equals(updateScope, "showAddDataWindow")) {
             return;
         }
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 mainFunction.showAddDataWindow(false);
