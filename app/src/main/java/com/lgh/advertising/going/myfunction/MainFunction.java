@@ -817,33 +817,38 @@ public class MainFunction {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        addDataBinding.saveAim.setEnabled(appDescribeMap.containsKey(currentPackage));
-                        cParams.alpha = 0.9f;
-                        windowManager.updateViewLayout(viewClickPosition, cParams);
-                        startRowX = Math.round(event.getRawX());
-                        startRowY = Math.round(event.getRawY());
-                        startLpX = cParams.x;
-                        startLpY = cParams.y;
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        cParams.x = startLpX + (Math.round(event.getRawX()) - startRowX);
-                        cParams.y = startLpY + (Math.round(event.getRawY()) - startRowY);
-                        windowManager.updateViewLayout(viewClickPosition, cParams);
-                        coordinateSelect.appPackage = currentPackage;
-                        coordinateSelect.appActivity = currentActivity;
-                        coordinateSelect.xPosition = cParams.x + width;
-                        coordinateSelect.yPosition = cParams.y + height;
-                        addDataBinding.pacName.setText(coordinateSelect.appPackage);
-                        addDataBinding.actName.setText(coordinateSelect.appActivity);
-                        addDataBinding.xy.setText("X轴：" + String.format("%-4d", coordinateSelect.xPosition) + "    " + "Y轴：" + String.format("%-4d", coordinateSelect.yPosition));
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        cParams.alpha = 0.5f;
-                        windowManager.updateViewLayout(viewClickPosition, cParams);
-                        break;
-                }
+                viewClickPosition.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                addDataBinding.saveAim.setEnabled(appDescribeMap.containsKey(currentPackage));
+                                cParams.alpha = 0.9f;
+                                windowManager.updateViewLayout(viewClickPosition, cParams);
+                                startRowX = Math.round(event.getRawX());
+                                startRowY = Math.round(event.getRawY());
+                                startLpX = cParams.x;
+                                startLpY = cParams.y;
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                cParams.x = startLpX + (Math.round(event.getRawX()) - startRowX);
+                                cParams.y = startLpY + (Math.round(event.getRawY()) - startRowY);
+                                windowManager.updateViewLayout(viewClickPosition, cParams);
+                                coordinateSelect.appPackage = currentPackage;
+                                coordinateSelect.appActivity = currentActivity;
+                                coordinateSelect.xPosition = cParams.x + width;
+                                coordinateSelect.yPosition = cParams.y + height;
+                                addDataBinding.pacName.setText(coordinateSelect.appPackage);
+                                addDataBinding.actName.setText(coordinateSelect.appActivity);
+                                addDataBinding.xy.setText("X轴：" + String.format("%-4d", coordinateSelect.xPosition) + "    " + "Y轴：" + String.format("%-4d", coordinateSelect.yPosition));
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                cParams.alpha = 0.5f;
+                                windowManager.updateViewLayout(viewClickPosition, cParams);
+                                break;
+                        }
+                    }
+                });
                 return true;
             }
         });
@@ -862,51 +867,55 @@ public class MainFunction {
                             addDataBinding.switchWid.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    widgetSelect.appPackage = currentPackage;
-                                    widgetSelect.appActivity = currentActivity;
-                                    for (AccessibilityNodeInfo e : nodeList) {
-                                        Rect temRect = new Rect();
-                                        e.getBoundsInScreen(temRect);
-                                        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(temRect.width(), temRect.height());
-                                        params.leftMargin = temRect.left;
-                                        params.topMargin = temRect.top;
-                                        View view = new ImageView(service);
+                                    View.OnClickListener onClickListener = new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            v.requestFocus();
+                                        }
+                                    };
+                                    View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
+                                        @Override
+                                        public void onFocusChange(View v, boolean hasFocus) {
+                                            if (hasFocus) {
+                                                AccessibilityNodeInfo nodeInfo = (AccessibilityNodeInfo) v.getTag(R.string.nodeInfo);
+                                                Rect rect = (Rect) v.getTag(R.string.rect);
+                                                widgetSelect.widgetRect = rect;
+                                                widgetSelect.widgetClickable = nodeInfo.isClickable();
+                                                CharSequence cId = nodeInfo.getViewIdResourceName();
+                                                widgetSelect.widgetId = cId == null ? "" : cId.toString();
+                                                CharSequence cDesc = nodeInfo.getContentDescription();
+                                                widgetSelect.widgetDescribe = cDesc == null ? "" : cDesc.toString();
+                                                CharSequence cText = nodeInfo.getText();
+                                                widgetSelect.widgetText = cText == null ? "" : cText.toString();
+                                                addDataBinding.saveWid.setEnabled(appDescribeMap.containsKey(currentPackage));
+                                                addDataBinding.pacName.setText(widgetSelect.appPackage);
+                                                addDataBinding.actName.setText(widgetSelect.appActivity);
+                                                String click = nodeInfo.isClickable() ? "true" : "false";
+                                                String bonus = rect.toShortString();
+                                                String id = cId == null || !cId.toString().contains(":id/") ? "" : cId.toString().substring(cId.toString().indexOf(":id/") + 4);
+                                                String desc = cDesc == null ? "" : cDesc.toString();
+                                                String text = cText == null ? "" : cText.toString();
+                                                addDataBinding.widget.setText("click:" + click + " " + "bonus:" + bonus + (id.isEmpty() ? "" : " " + "id:" + id) + (desc.isEmpty() ? "" : " " + "desc:" + desc) + (text.isEmpty() ? "" : " " + "text:" + text));
+                                                v.setBackgroundResource(R.drawable.node_focus);
+                                            } else {
+                                                v.setBackgroundResource(R.drawable.node);
+                                            }
+                                        }
+                                    };
+                                    for (AccessibilityNodeInfo nodeInfo : nodeList) {
+                                        Rect rect = new Rect();
+                                        nodeInfo.getBoundsInScreen(rect);
+                                        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(rect.width(), rect.height());
+                                        params.leftMargin = rect.left;
+                                        params.topMargin = rect.top;
+                                        View view = new View(service);
                                         view.setBackgroundResource(R.drawable.node);
                                         view.setFocusableInTouchMode(true);
                                         view.setFocusable(true);
-                                        view.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                v.requestFocus();
-                                            }
-                                        });
-                                        view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                                            @Override
-                                            public void onFocusChange(View v, boolean hasFocus) {
-                                                if (hasFocus) {
-                                                    widgetSelect.widgetRect = temRect;
-                                                    widgetSelect.widgetClickable = e.isClickable();
-                                                    CharSequence cId = e.getViewIdResourceName();
-                                                    widgetSelect.widgetId = cId == null ? "" : cId.toString();
-                                                    CharSequence cDesc = e.getContentDescription();
-                                                    widgetSelect.widgetDescribe = cDesc == null ? "" : cDesc.toString();
-                                                    CharSequence cText = e.getText();
-                                                    widgetSelect.widgetText = cText == null ? "" : cText.toString();
-                                                    addDataBinding.saveWid.setEnabled(appDescribeMap.containsKey(currentPackage));
-                                                    addDataBinding.pacName.setText(widgetSelect.appPackage);
-                                                    addDataBinding.actName.setText(widgetSelect.appActivity);
-                                                    String click = e.isClickable() ? "true" : "false";
-                                                    String bonus = temRect.toShortString();
-                                                    String id = cId == null || !cId.toString().contains(":id/") ? "" : cId.toString().substring(cId.toString().indexOf(":id/") + 4);
-                                                    String desc = cDesc == null ? "" : cDesc.toString();
-                                                    String text = cText == null ? "" : cText.toString();
-                                                    addDataBinding.widget.setText("click:" + click + " " + "bonus:" + bonus + (id.isEmpty() ? "" : " " + "id:" + id) + (desc.isEmpty() ? "" : " " + "desc:" + desc) + (text.isEmpty() ? "" : " " + "text:" + text));
-                                                    v.setBackgroundResource(R.drawable.node_focus);
-                                                } else {
-                                                    v.setBackgroundResource(R.drawable.node);
-                                                }
-                                            }
-                                        });
+                                        view.setOnClickListener(onClickListener);
+                                        view.setOnFocusChangeListener(onFocusChangeListener);
+                                        view.setTag(R.string.nodeInfo, nodeInfo);
+                                        view.setTag(R.string.rect, rect);
                                         widgetSelectBinding.frame.addView(view, params);
                                     }
                                     bParams.alpha = 0.5f;
@@ -914,6 +923,8 @@ public class MainFunction {
                                             | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
                                             | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
                                     windowManager.updateViewLayout(widgetSelectBinding.getRoot(), bParams);
+                                    widgetSelect.appPackage = currentPackage;
+                                    widgetSelect.appActivity = currentActivity;
                                     addDataBinding.pacName.setText(widgetSelect.appPackage);
                                     addDataBinding.actName.setText(widgetSelect.appActivity);
                                     addDataBinding.switchWid.setText("隐藏布局");
