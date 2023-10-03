@@ -104,10 +104,15 @@ Referenced Strings:
   ASC
   ATTACH
   AUTOMATIC
+  ActivityRecreator
   ActivityResultRegistry
   AppCompatCustomView
+  AppCompatDelegate
+  AppCompatSpinner
+  AppCompatViewInflater
   AppDescribe
   Authorization
+  AutoCompleteTextView
   AutoFinder
   B:
   BASELINE
@@ -128,6 +133,7 @@ Referenced Strings:
   Basic
   Both
   BottomSheetBehavior
+  Button
   C::
   CALENDAR_CONSTRAINTS_KEY
   CANCEL
@@ -154,6 +160,8 @@ Referenced Strings:
   CRLF
   CURRENT_MONTH_KEY
   Canceled
+  CheckBox
+  CheckedTextView
   Chip
   Class
   ClickableViewAccessibility
@@ -194,6 +202,7 @@ Referenced Strings:
   END_STREAM
   ENHANCE_YOUR_CALM
   ERROR
+  EditText
   EmojiCompat.EmojiCompatInitializer.run
   EmojiCompat.FontRequestEmojiCompatCon...
   EmojiCompat.MetadataRepo.create
@@ -254,6 +263,8 @@ Referenced Strings:
   ISIZE
   ISO_8859_1
   IconCompat
+  ImageButton
+  ImageView
   Infinity
   InputConnectionCompat
   KEY_COMPONENT_ACTIVITY_LAUNCHED_KEYS
@@ -288,6 +299,7 @@ Referenced Strings:
   Motion
   MotionLayout
   MotionSpec
+  MultiAutoCompleteTextView
   MyAppConfig
   NAME
   NAVIGATION_NEXT_TAG
@@ -298,6 +310,7 @@ Referenced Strings:
   NULL
   NUMBER
   NaN
+  NavUtils
   NestedScrollView
   NewApi
   NonConstantResourceId
@@ -356,12 +369,15 @@ Referenced Strings:
   ROOM
   RSA
   RST_STREAM
+  RadioButton
   Range
+  RatingBar
   ReceiveContent
   RecyclerView
   RequestPermissions
   ResourceManagerInternal
   ResourcesCompat
+  ResourcesFlusher
   RestrictedApi
   ReturnT:
   RoomCursorUtil
@@ -419,9 +435,11 @@ Referenced Strings:
   STRING
   STRING_TYPE
   SearchView
+  SeekBar
   SetJavaScriptEnabled
   Single
   SoonBlockedPrivateApi
+  Spinner
   StartActivityForResult
   StartIntentSenderForResult
   Startup
@@ -557,17 +575,22 @@ Referenced Strings:
   TRUNCATE
   TV
   TaskRunner::class.java.name
+  TaskStackBuilder
   TextAppearance
   TextInputLayout
+  TextView
   Theme.AppCompat
   Theme.MaterialComponents
   ThemeUtils
+  ToggleButton
+  ToolbarWidgetWrapper
   TooltipCompatHandler
   TooltipPopup
   TraceCompat
   Trailers
   Transform
   TransitionLayout
+  TwilightManager
   TypefaceCompatApi21Impl
   TypefaceCompatApi24Impl
   TypefaceCompatApi26Impl
@@ -650,9 +673,11 @@ Referenced Strings:
   allow
   alpha
   android
+  android.app.ActivityThread
   android.app.action.ADD_DEVICE_ADMIN
   android.app.extra.DEVICE_ADMIN
   android.graphics.FontFamily
+  android.graphics.Insets
   android.graphics.drawable.ColorStateL...
   android.graphics.drawable.VectorDrawable
   android.inputmethodservice.SoftInputW...
@@ -663,6 +688,9 @@ Referenced Strings:
   android.intent.action.SCREEN_OFF
   android.intent.action.SEARCH
   android.intent.action.SEND
+  android.intent.action.TIMEZONE_CHANGED
+  android.intent.action.TIME_SET
+  android.intent.action.TIME_TICK
   android.intent.action.VIEW
   android.intent.category.BROWSABLE
   android.intent.category.DEFAULT
@@ -672,6 +700,9 @@ Referenced Strings:
   android.intent.extra.TEXT
   android.net.Uri
   android.os.Build$VERSION
+  android.os.action.POWER_SAVE_MODE_CHA...
+  android.permission.ACCESS_COARSE_LOCA...
+  android.permission.ACCESS_FINE_LOCATION
   android.resource
   android.resource://
   android.settings.ACCESSIBILITY_SETTINGS
@@ -686,6 +717,7 @@ Referenced Strings:
   android.speech.extra.RESULTS_PENDINGI...
   android.speech.extra.RESULTS_PENDINGI...
   android.support.FILE_PROVIDER_PATHS
+  android.support.PARENT_ACTIVITY
   android.support.text.emoji.emojiCompa...
   android.support.text.emoji.emojiCompa...
   android.support.v13.view.inputmethod....
@@ -700,10 +732,12 @@ Referenced Strings:
   android.view.View
   android.view.View$AttachInfo
   android.view.ViewRootImpl
+  android.webkit.
   android.widget.
   android.widget.Button
   android.widget.CompoundButton
   android.widget.RadioButton
+  android.widget.Switch
   android:backStackId
   android:cancelable
   android:changeBounds:bounds
@@ -713,6 +747,8 @@ Referenced Strings:
   android:changeBounds:windowY
   android:dialogShowing
   android:fade:transitionAlpha
+  android:menu:actionviewstates
+  android:menu:expandedactionview
   android:savedDialogState
   android:showsDialog
   android:style
@@ -761,6 +797,7 @@ Referenced Strings:
   androidx.view.accessibility.Accessibi...
   androidx.view.accessibility.Accessibi...
   androidx.view.accessibility.Accessibi...
+  androidx:appcompat
   anim
   appActivity
   appName
@@ -774,6 +811,7 @@ Referenced Strings:
   asyncCall
   asyncTraceBegin
   asyncTraceEnd
+  audio
   auth.password
   auth.userName
   authParams
@@ -980,12 +1018,14 @@ Referenced Strings:
   getMethod
   getModule
   getNextMatch
+  getOpticalInsets
   getResId
   getScaledScrollFactor
   getSuppressed
   getTextDirectionHeuristic
   getViewRootImpl
   github
+  gps
   gravity
   group
   guideline
@@ -1105,14 +1145,19 @@ Referenced Strings:
   mAccessibilityDelegate
   mAttachInfo
   mContentInsets
+  mDrawableCache
   mH
   mIsChildViewEnabled
+  mMainThread
   mNextServedView
   mOnKeyListener
+  mResourcesImpl
   mServedView
   mStableInsets
+  mToken
   mViewFlags
   mVisibleInsets
+  makeOptionalFitsSystemWindows
   map
   marginPrefix
   markState
@@ -1140,6 +1185,7 @@ Referenced Strings:
   name
   namesAndValues
   nativePattern
+  network
   networkResponse
   newIndent
   newInstance
@@ -1196,10 +1242,12 @@ Referenced Strings:
   peerCertificatesFn
   peerName
   peerSettings
+  performStopActivity
   pins
   pk
   position
   postfix
+  power
   prefix
   private
   protocol
@@ -1229,6 +1277,7 @@ Referenced Strings:
   read
   reader
   realm
+  rebase
   record
   record.loggerName
   record.message
@@ -1245,6 +1294,7 @@ Referenced Strings:
   request
   requestHeaders
   requestLine
+  requestRelaunchActivity
   res/
   response
   responseCallback
@@ -1254,6 +1304,7 @@ Referenced Strings:
   retrofit2.KotlinExtensions
   right
   rm
+  robolectric
   room_fts_content_sync_
   room_table_modification_log
   room_table_modification_trigger_
@@ -1362,6 +1413,7 @@ Referenced Strings:
   this$0
   threadFactory
   throwableMethods
+  thumbPos
   timeUnit
   timeout
   tlsVersion
@@ -1386,6 +1438,7 @@ Referenced Strings:
   trustManager.acceptedIssuers
   trustRootIndex
   type
+  uimode
   unicodeDomain
   unique
   unit
@@ -1409,6 +1462,7 @@ Referenced Strings:
   values
   vary
   via
+  view
   w
   wa
   warnIfOpen
@@ -3480,6 +3534,7 @@ Marking attr:animateRelativeTo:2130903089 used because its prefix matches string
 Marking attr:animationMode:2130903090 used because its prefix matches string pool constant anim
 Marking id:animateToEnd:2131230800 used because its prefix matches string pool constant anim
 Marking id:animateToStart:2131230801 used because its prefix matches string pool constant anim
+Marking styleable:Spinner:-1 used because its prefix matches string pool constant Spinner
 Marking attr:defaultDuration:2130903357 used because its prefix matches string pool constant default
 Marking attr:defaultQueryHint:2130903358 used because its prefix matches string pool constant default
 Marking attr:defaultState:2130903359 used because its prefix matches string pool constant default
@@ -3503,6 +3558,32 @@ Marking styleable:ConstraintLayout_placeholder:-1 used because its prefix matche
 Marking styleable:ConstraintOverride:-1 used because its prefix matches string pool constant Constraint
 Marking styleable:ConstraintSet:-1 used because its prefix matches string pool constant Constraint
 Marking attr:closeIconVisible:2130903243 used because its prefix matches string pool constant closeIconVisible
+Marking attr:viewInflaterClass:2130904112 used because its prefix matches string pool constant view
+Marking attr:viewTransitionMode:2130904113 used because its prefix matches string pool constant view
+Marking attr:viewTransitionOnCross:2130904114 used because its prefix matches string pool constant view
+Marking attr:viewTransitionOnNegativeCross:2130904115 used because its prefix matches string pool constant view
+Marking attr:viewTransitionOnPositiveCross:2130904116 used because its prefix matches string pool constant view
+Marking id:view_offset_helper:2131231299 used because its prefix matches string pool constant view
+Marking id:view_transition:2131231300 used because its prefix matches string pool constant view
+Marking id:view_tree_lifecycle_owner:2131231301 used because its prefix matches string pool constant view
+Marking id:view_tree_saved_state_registry_owner:2131231302 used because its prefix matches string pool constant view
+Marking id:view_tree_view_model_store_owner:2131231303 used because its prefix matches string pool constant view
+Marking layout:view_add_data:2131427453 used because its prefix matches string pool constant view
+Marking layout:view_add_warning:2131427454 used because its prefix matches string pool constant view
+Marking layout:view_auto_finder:2131427455 used because its prefix matches string pool constant view
+Marking layout:view_base_setting:2131427456 used because its prefix matches string pool constant view
+Marking layout:view_coordinate:2131427457 used because its prefix matches string pool constant view
+Marking layout:view_db_click_setting:2131427458 used because its prefix matches string pool constant view
+Marking layout:view_edit_file_name:2131427459 used because its prefix matches string pool constant view
+Marking layout:view_item_app:2131427460 used because its prefix matches string pool constant view
+Marking layout:view_item_import:2131427461 used because its prefix matches string pool constant view
+Marking layout:view_main_item:2131427462 used because its prefix matches string pool constant view
+Marking layout:view_new_rule:2131427463 used because its prefix matches string pool constant view
+Marking layout:view_no_vip:2131427464 used because its prefix matches string pool constant view
+Marking layout:view_on_off_warning:2131427465 used because its prefix matches string pool constant view
+Marking layout:view_privacy_agreement:2131427466 used because its prefix matches string pool constant view
+Marking layout:view_widget:2131427467 used because its prefix matches string pool constant view
+Marking layout:view_widget_select:2131427468 used because its prefix matches string pool constant view
 Marking styleable:TextInputLayout:-1 used because its prefix matches string pool constant TextInputLayout
 Marking styleable:ConstraintSet:-1 used because its prefix matches string pool constant ConstraintSet
 Marking attr:layout_constraintStart_toStartOf:2130903627 used because its prefix matches string pool constant layout_constraintStart_toStartOf
@@ -3773,6 +3854,7 @@ Marking id:item3:2131231009 used because its prefix matches string pool constant
 Marking id:item4:2131231010 used because its prefix matches string pool constant item
 Marking id:item_touch_helper_previous_elevation:2131231011 used because its prefix matches string pool constant item
 Marking string:item_view_role_description:2131623985 used because its prefix matches string pool constant item
+Marking styleable:CheckedTextView:-1 used because its prefix matches string pool constant CheckedTextView
 Marking attr:chainUseRtl:2130903190 used because its prefix matches string pool constant chain
 Marking id:chain:2131230853 used because its prefix matches string pool constant chain
 Marking id:chain2:2131230854 used because its prefix matches string pool constant chain
@@ -4152,6 +4234,7 @@ Marking string:path_password_eye:2131624070 used because its prefix matches stri
 Marking string:path_password_eye_mask_strike_through:2131624071 used because its prefix matches string pool constant path
 Marking string:path_password_eye_mask_visible:2131624072 used because its prefix matches string pool constant path
 Marking string:path_password_strike_through:2131624073 used because its prefix matches string pool constant path
+Marking styleable:ButtonBarLayout:-1 used because its prefix matches string pool constant Button
 Marking styleable:StateSet:-1 used because its prefix matches string pool constant StateSet
 Marking attr:setsTag:2130903872 used because its prefix matches string pool constant set
 Marking drawable:setting:2131165359 used because its prefix matches string pool constant set
@@ -4211,8 +4294,8 @@ Marking attr:contentPaddingTop:2130903318 used because its prefix matches string
 Marking attr:contentScrim:2130903319 used because its prefix matches string pool constant content
 Marking id:content:2131230877 used because its prefix matches string pool constant content
 Marking id:contentPanel:2131230878 used because its prefix matches string pool constant content
-Marking styleable:ListPopupWindow:-1 used because its prefix matches string pool constant ListPopupWindow
 Marking attr:layout_constraintBottom_toTopOf:2130903602 used because its prefix matches string pool constant layout_constraintBottom_toTopOf
+Marking styleable:ListPopupWindow:-1 used because its prefix matches string pool constant ListPopupWindow
 Marking attr:alpha:2130903085 used because its prefix matches string pool constant alpha
 Marking attr:alphabeticModifiers:2130903086 used because its prefix matches string pool constant alpha
 Marking attr:selectorSize:2130903871 used because its prefix matches string pool constant selector
@@ -5335,6 +5418,7 @@ style:Animation_AppCompat_DropDownUp:2131689476 => [style:Base_Animation_AppComp
 style:Animation_AppCompat_Tooltip:2131689477 => [style:Base_Animation_AppCompat_Tooltip:2131689486]
 style:Animation_Design_BottomSheetDialog:2131689478 => [style:Animation_AppCompat_Dialog:2131689475, anim:design_bottom_sheet_slide_in:2130771992, anim:design_bottom_sheet_slide_out:2130771993]
 style:Animation_MaterialComponents_BottomSheetDialog:2131689479 => [style:Animation_AppCompat_Dialog:2131689475, anim:mtrl_bottom_sheet_slide_in:2130771997, anim:mtrl_bottom_sheet_slide_out:2130771998]
+style:AppTheme:2131689481 => [style:Theme_AppCompat_Light_NoActionBar:2131689966]
 style:Base_AlertDialog_AppCompat:2131689482 => [layout:abc_alert_dialog_material:2131427337, layout:abc_select_dialog_material:2131427354, layout:select_dialog_item_material:2131427434, layout:select_dialog_multichoice_material:2131427435, layout:select_dialog_singlechoice_material:2131427436, dimen:abc_alert_dialog_button_dimen:2131099665]
 style:Base_AlertDialog_AppCompat_Light:2131689483 => [style:Base_AlertDialog_AppCompat:2131689482]
 style:Base_Animation_AppCompat_Dialog:2131689484 => [anim:abc_popup_enter:2130771971, anim:abc_popup_exit:2130771972]
@@ -6657,6 +6741,7 @@ anim:abc_fade_in:2130771968,
    attr:defaultDuration:2130903357,
    attr:defaultQueryHint:2130903358,
    attr:defaultState:2130903359,
+   attr:dialogTheme:2130903365,
    attr:drawableEndCompat:2130903380,
    attr:drawableLeftCompat:2130903381,
    attr:drawableRightCompat:2130903382,
@@ -6862,6 +6947,7 @@ anim:abc_fade_in:2130771968,
    attr:nestedScrollable:2130903781,
    attr:paddingEnd:2130903795,
    attr:paddingStart:2130903798,
+   attr:panelMenuListTheme:2130903802,
    attr:passwordToggleContentDescription:2130903804,
    attr:passwordToggleDrawable:2130903805,
    attr:passwordToggleEnabled:2130903806,
@@ -6896,12 +6982,14 @@ anim:abc_fade_in:2130771968,
    attr:roundPercent:2130903858,
    attr:scaleFromTextSize:2130903860,
    attr:searchViewStyle:2130903866,
+   attr:seekBarStyle:2130903867,
    attr:selectableItemBackground:2130903868,
    attr:selectableItemBackgroundBorderless:2130903869,
    attr:selectionRequired:2130903870,
    attr:selectorSize:2130903871,
    attr:setsTag:2130903872,
    attr:singleLine:2130903889,
+   attr:spinnerStyle:2130903899,
    attr:state_collapsed:2130903915,
    attr:state_collapsible:2130903916,
    attr:state_dragged:2130903917,
@@ -6910,6 +6998,7 @@ anim:abc_fade_in:2130771968,
    attr:suffixText:2130903936,
    attr:suffixTextAppearance:2130903937,
    attr:suffixTextColor:2130903938,
+   attr:switchStyle:2130903942,
    attr:tabBackground:2130903944,
    attr:tabContentStart:2130903945,
    attr:tabGravity:2130903946,
@@ -7074,6 +7163,11 @@ anim:abc_fade_in:2130771968,
    attr:ttcIndex:2130904105,
    attr:upDuration:2130904106,
    attr:values:2130904109,
+   attr:viewInflaterClass:2130904112,
+   attr:viewTransitionMode:2130904113,
+   attr:viewTransitionOnCross:2130904114,
+   attr:viewTransitionOnNegativeCross:2130904115,
+   attr:viewTransitionOnPositiveCross:2130904116,
    attr:warmth:2130904119,
    attr:waveDecay:2130904120,
    attr:waveOffset:2130904121,
@@ -7645,6 +7739,7 @@ anim:abc_fade_in:2130771968,
    id:dbClick_setting:2131230912,
    id:decelerate:2131230913,
    id:decelerateAndComplete:2131230914,
+   id:decor_content_parent:2131230915,
    id:default_activity_button:2131230916,
    id:design_menu_item_action_area_stub:2131230921,
    id:design_menu_item_text:2131230922,
@@ -7777,6 +7872,8 @@ anim:abc_fade_in:2130771968,
    id:save_wid:2131231160,
    id:scale:2131231162,
    id:scroll:2131231164,
+   id:scrollIndicatorDown:2131231165,
+   id:scrollIndicatorUp:2131231166,
    id:scrollView:2131231167,
    id:searchBox:2131231169,
    id:search_button:2131231172,
@@ -7875,6 +7972,8 @@ anim:abc_fade_in:2130771968,
    id:tv_name:2131231291,
    id:tv_selected_num:2131231292,
    id:up:2131231296,
+   id:view_offset_helper:2131231299,
+   id:view_transition:2131231300,
    id:view_tree_lifecycle_owner:2131231301,
    id:view_tree_saved_state_registry_owner:2131231302,
    id:view_tree_view_model_store_owner:2131231303,
@@ -7986,6 +8085,7 @@ anim:abc_fade_in:2130771968,
    layout:select_dialog_item_material:2131427434,
    layout:select_dialog_multichoice_material:2131427435,
    layout:select_dialog_singlechoice_material:2131427436,
+   layout:support_simple_spinner_dropdown_item:2131427437,
    layout:test_action_chip:2131427438,
    layout:test_chip_zero_corner_radius:2131427439,
    layout:test_design_checkbox:2131427440,
@@ -8012,6 +8112,7 @@ anim:abc_fade_in:2130771968,
    layout:view_item_import:2131427461,
    layout:view_main_item:2131427462,
    layout:view_new_rule:2131427463,
+   layout:view_no_vip:2131427464,
    layout:view_on_off_warning:2131427465,
    layout:view_privacy_agreement:2131427466,
    layout:view_widget:2131427467,
@@ -8215,6 +8316,8 @@ anim:abc_fade_in:2130771968,
    style:TextAppearance_Widget_AppCompat_ExpandedMenu_Item:2131689943,
    style:TextAppearance_Widget_AppCompat_Toolbar_Subtitle:2131689944,
    style:TextAppearance_Widget_AppCompat_Toolbar_Title:2131689945,
+   style:Theme_AppCompat_CompactMenu:2131689947,
+   style:Theme_AppCompat_Empty:2131689959,
    style:Theme_AppCompat_Light:2131689960,
    style:Widget_AppCompat_ActionBar:2131690145,
    style:Widget_AppCompat_ActionBar_Solid:2131690146,
@@ -8567,14 +8670,17 @@ anim:abc_fade_in:2130771968,
    styleable:ActionBarLayout:-1,
    styleable:ActionMenuItemView:-1,
    styleable:ActionMode:-1,
+   styleable:AlertDialog:-1,
    styleable:AlignTextView:-1,
    styleable:AppBarLayout_Layout:-1,
    styleable:AppCompatImageView:-1,
+   styleable:AppCompatSeekBar:-1,
    styleable:AppCompatTextHelper:-1,
    styleable:AppCompatTextView:-1,
    styleable:AppCompatTheme:-1,
    styleable:BottomSheetBehavior_Layout:-1,
    styleable:ButtonBarLayout:-1,
+   styleable:CheckedTextView:-1,
    styleable:Chip:-1,
    styleable:ChipGroup:-1,
    styleable:ClockFaceView:-1,
@@ -8604,10 +8710,13 @@ anim:abc_fade_in:2130771968,
    styleable:Layout:-1,
    styleable:LinearLayoutCompat:-1,
    styleable:ListPopupWindow:-1,
+   styleable:MaterialAutoCompleteTextView:-1,
    styleable:MaterialButton:-1,
    styleable:MaterialButtonToggleGroup:-1,
    styleable:MaterialCalendar:-1,
    styleable:MaterialCalendarItem:-1,
+   styleable:MaterialCheckBox:-1,
+   styleable:MaterialRadioButton:-1,
    styleable:MaterialShape:-1,
    styleable:MaterialTextAppearance:-1,
    styleable:MaterialTextView:-1,
@@ -8876,7 +8985,6 @@ Skipped unused resource res/color/material_on_background_emphasis_medium.xml: 37
 Skipped unused resource res/color/material_on_primary_disabled.xml: 376 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/color/material_on_primary_emphasis_high_type.xml: 376 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/color/mtrl_popupmenu_overlay_color.xml: 376 bytes (replaced with small dummy file of size 104 bytes)
-Skipped unused resource res/color/switch_thumb_material_dark.xml: 464 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/color-v31/m3_dynamic_dark_default_color_primary_text.xml: 500 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/color-v31/m3_dynamic_dark_default_color_secondary_text.xml: 500 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/color-v31/m3_dynamic_dark_highlighted_text.xml: 376 bytes (replaced with small dummy file of size 104 bytes)
@@ -8948,7 +9056,6 @@ Skipped unused resource res/layout-v21/notification_template_custom_big.xml: 245
 Skipped unused resource res/layout-v21/notification_template_icon_group.xml: 988 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/layout/notification_template_part_chronometer.xml: 440 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/layout/notification_template_part_time.xml: 440 bytes (replaced with small dummy file of size 104 bytes)
-Skipped unused resource res/layout/support_simple_spinner_dropdown_item.xml: 464 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/layout-sw600dp-v13/design_layout_snackbar.xml: 528 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/layout-sw600dp-v13/mtrl_layout_snackbar.xml: 492 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/layout-ldrtl-v17/material_textinput_timepicker.xml: 1100 bytes (replaced with small dummy file of size 104 bytes)
