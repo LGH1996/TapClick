@@ -5,7 +5,7 @@
     android:background="@color/background"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -17,7 +17,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="25dp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/status_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             android:fadingEdgeLength="5dp"
             android:requiresFadingEdge="vertical" />
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <include layout="@layout/view_no_vip" />
 </FrameLayout>

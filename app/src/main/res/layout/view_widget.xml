@@ -4,16 +4,16 @@
     android:layout_height="wrap_content"
     android:paddingTop="15dp">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -21,7 +21,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/widget_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,14 +31,14 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -46,7 +46,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_clickable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,14 +55,14 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -70,7 +70,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_rect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,14 +79,14 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -94,7 +94,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,14 +103,14 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -118,7 +118,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_describe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,14 +127,14 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -142,7 +142,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -151,14 +151,14 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -166,7 +166,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_clickDelay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -177,14 +177,14 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -192,7 +192,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <CheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/widget_noRepeat"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
@@ -200,14 +200,14 @@
                 android:background="@drawable/check_select"
                 android:button="@null"
                 android:gravity="center" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -215,7 +215,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <CheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/widget_clickOnly"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
@@ -223,14 +223,14 @@
                 android:background="@drawable/check_select"
                 android:button="@null"
                 android:gravity="center" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -238,7 +238,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -247,14 +247,14 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -262,7 +262,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_createTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -272,7 +272,7 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -280,7 +280,7 @@
             android:gravity="end"
             android:orientation="horizontal">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/widget_modify"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -293,7 +293,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/widget_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -304,7 +304,7 @@
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/widget_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -314,5 +314,5 @@
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
         </RelativeLayout>
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </RelativeLayout>

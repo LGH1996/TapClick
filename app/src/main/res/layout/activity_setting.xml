@@ -13,7 +13,7 @@
         android:requiresFadingEdge="vertical"
         android:scrollbars="none">
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -21,12 +21,12 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp">
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -36,7 +36,7 @@
                     android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/setting_open"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
@@ -46,14 +46,14 @@
                     android:padding="1dp"
                     android:text="打开"
                     android:textColor="@android:color/white" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -63,7 +63,7 @@
                     android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/setting_update"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
@@ -73,14 +73,14 @@
                     android:padding="1dp"
                     android:text="开始"
                     android:textColor="@android:color/white" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -90,7 +90,7 @@
                     android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/setting_share"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
@@ -100,15 +100,15 @@
                     android:padding="1dp"
                     android:text="分享"
                     android:textColor="@android:color/white" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:visibility="gone">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -118,7 +118,7 @@
                     android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/setting_praise"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
@@ -128,14 +128,14 @@
                     android:padding="1dp"
                     android:text="前往"
                     android:textColor="@android:color/white" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
@@ -143,21 +143,21 @@
                     android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
-                <CheckBox
+                <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/setting_autoHideOnTaskList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:button="@drawable/check_select"
                     android:gravity="center" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
@@ -173,14 +173,14 @@
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/svg_github" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/setting_groupChat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="854723089 (QQ)"
                     android:textColor="@drawable/text_click_color"
                     android:textSize="15sp" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -188,7 +188,7 @@
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/support_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -205,7 +205,7 @@
                     android:adjustViewBounds="true"
                     android:src="@drawable/support_me" />
             </RelativeLayout>
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
 
     <include layout="@layout/view_no_vip" />

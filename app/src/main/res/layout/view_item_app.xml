@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/item_bg_ripple"
     android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -27,7 +27,7 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/app" />
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
@@ -37,7 +37,7 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                     android:textColor="@color/text_color"
                     android:textSize="14sp" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/pkg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -58,9 +58,9 @@
                     android:text="com.lgh.advertising.going"
                     android:textColor="@color/text_color"
                     android:textSize="14sp" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <CheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/cb_select"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -70,17 +70,16 @@
                 android:gravity="center_vertical"
                 android:paddingEnd="16dp" />
 
-            <Switch
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/on_off"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/img_forward"
                 android:gravity="center_vertical"
                 android:paddingEnd="10dp"
                 android:thumb="@drawable/switch_custom_thumb_selector"
-                android:track="@drawable/switch_custom_track_selector"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                app:track="@drawable/switch_custom_track_selector" />
 
             <ImageView
                 android:id="@+id/img_forward"
@@ -96,5 +95,5 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:src="@color/divide_line" />
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </RelativeLayout>

@@ -21,7 +21,7 @@
             android:requiresFadingEdge="vertical"
             android:scrollbars="none">
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -85,24 +85,24 @@
                     android:paddingEnd="10dp"
                     android:text="额外说明：对于系统应用、输入法应用、桌面应用，请谨慎选择是否要为其创建规则，这类应用开启后可能会频繁触发控件的检索，引起卡顿。"
                     android:textColor="@color/text_color" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </ScrollView>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="22dp"
+                android:layout_marginHorizontal="12dp"
                 android:layout_marginBottom="20dp"
                 android:gravity="center_vertical">
 
-                <CheckBox
+                <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/dbClick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                     android:paddingVertical="10dp"
                     android:text="双击屏幕捕获控件 (默认右上角)" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/dbClick_setting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -119,19 +119,19 @@
                     android:paddingVertical="10dp"
                     android:text="调整触发区域"
                     android:textColor="#0000ff" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="10dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/button_selector"
+                android:gravity="center"
                 android:text="创建规则"
                 android:textColor="@android:color/white" />
-
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </RelativeLayout>
 

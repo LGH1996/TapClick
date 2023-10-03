@@ -35,7 +35,7 @@
             android:textCursorDrawable="@drawable/edit_cursor"
             android:textSize="14sp" />
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/searchBox"
@@ -53,7 +53,7 @@
                 android:scrollbars="none"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/ll_select"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,13 +62,13 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="20dp">
 
-                <LinearLayout
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <CheckBox
+                    <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/cb_select_all"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -76,36 +76,38 @@
                         android:paddingHorizontal="5dp"
                         android:text="全选" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_selected_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:paddingHorizontal="1dp"
                         android:text="已选0项" />
-                </LinearLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/bt_cancel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_selector"
+                    android:gravity="center"
                     android:text="取消"
                     android:textColor="@android:color/white" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/bt_export"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_selector"
+                    android:gravity="center"
                     android:text="导出规则"
                     android:textColor="@android:color/white" />
-            </LinearLayout>
-        </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <ProgressBar
             android:id="@+id/progress"

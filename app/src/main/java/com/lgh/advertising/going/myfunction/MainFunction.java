@@ -89,6 +89,8 @@ public class MainFunction {
     private final DataDao dataDao;
     private final MyUtils myUtils;
     private final Map<String, AppDescribe> appDescribeMap;
+    private final ScheduledExecutorService executorServiceMain;
+    private final ScheduledExecutorService executorServiceSub;
     private volatile AppDescribe appDescribe;
     private volatile String currentPackage;
     private volatile String currentPackageSub;
@@ -103,8 +105,6 @@ public class MainFunction {
     private volatile ScheduledFuture<?> futureAutoFinder;
     private volatile ScheduledFuture<?> futureWidget;
     private volatile ScheduledFuture<?> futureCoordinate;
-    private final ScheduledExecutorService executorServiceMain;
-    private final ScheduledExecutorService executorServiceSub;
     private volatile Set<Widget> widgetSet;
     private volatile Set<Widget> alreadyClickSet;
     private volatile Map<String, Coordinate> coordinateMap;

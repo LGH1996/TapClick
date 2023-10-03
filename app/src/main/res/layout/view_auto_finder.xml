@@ -5,17 +5,17 @@
     android:paddingTop="15dp"
     android:paddingBottom="5dp">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -23,7 +23,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/retrieveKeyword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -32,14 +32,14 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -47,7 +47,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/retrieveNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,14 +59,14 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -74,7 +74,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/clickDelay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,14 +86,14 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -101,7 +101,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <CheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/clickOnly"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
@@ -109,7 +109,6 @@
                 android:background="@drawable/check_select"
                 android:button="@null"
                 android:gravity="center" />
-        </LinearLayout>
-    </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </RelativeLayout>
-

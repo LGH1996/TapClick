@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,11 +50,12 @@
             android:background="@color/divide_line"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/item_bg_ripple"
+            android:gravity="center"
             android:text="取消"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/deviLineMid"
@@ -71,11 +72,12 @@
             app:layout_constraintStart_toEndOf="@+id/cancel"
             app:layout_constraintTop_toBottomOf="@+id/deviLineTop" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/sure"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/item_bg_ripple"
+            android:gravity="center"
             android:text="导入"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

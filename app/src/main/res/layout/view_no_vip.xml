@@ -13,7 +13,7 @@
         android:scaleType="center"
         android:src="@drawable/no_vip_circle" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"

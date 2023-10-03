@@ -8,12 +8,12 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.core.widget.NestedScrollView
+        <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -22,7 +22,7 @@
             android:requiresFadingEdge="vertical"
             android:scrollbars="none">
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/root_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
                 android:animateLayoutChanges="true"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/base_setting_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/retrieve_setting" />
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_base_setting"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -68,7 +68,7 @@
                             android:textColor="@color/text_color"
                             android:textSize="15sp" />
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/base_setting_modify"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -88,10 +88,10 @@
                         android:layout_marginTop="10dp"
                         android:background="@color/divide_line" />
 
-                </LinearLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-                <LinearLayout
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/auto_finder_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/auto_finder" />
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_auto_finder"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -128,7 +128,7 @@
                             android:textColor="@color/text_color"
                             android:textSize="15sp" />
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/auto_finder_modify"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -147,9 +147,9 @@
                         android:layout_height="1px"
                         android:layout_marginTop="10dp"
                         android:background="@color/divide_line" />
-                </LinearLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <LinearLayout
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/coordinate_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/coordinate" />
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
@@ -192,9 +192,9 @@
                         android:layout_height="1px"
                         android:layout_marginTop="10dp"
                         android:background="@color/divide_line" />
-                </LinearLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <LinearLayout
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/widget_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -221,7 +221,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/widget" />
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
@@ -238,11 +238,11 @@
                         android:layout_height="1px"
                         android:layout_marginTop="10dp"
                         android:background="@color/divide_line" />
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </ScrollView>
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <include layout="@layout/view_no_vip" />
 </FrameLayout>

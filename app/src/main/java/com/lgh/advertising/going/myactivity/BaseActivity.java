@@ -1,13 +1,14 @@
 package com.lgh.advertising.going.myactivity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.myclass.MyApplication;
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

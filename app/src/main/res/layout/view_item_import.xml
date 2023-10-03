@@ -5,7 +5,7 @@
     android:background="@drawable/item_bg_ripple"
     android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -18,7 +18,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
@@ -28,7 +28,7 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                     android:textColor="@color/text_color"
                     android:textSize="14sp" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -48,9 +48,9 @@
                     android:text="0个字词检索，0条坐标规则，0条控件规则。"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <CheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/cb_select"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -65,5 +65,5 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:src="@color/divide_line" />
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </RelativeLayout>

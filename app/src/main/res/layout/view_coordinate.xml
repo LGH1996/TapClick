@@ -4,16 +4,16 @@
     android:layout_height="wrap_content"
     android:paddingTop="15dp">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="5dp"
@@ -21,7 +21,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/coordinate_activity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -32,14 +32,14 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
@@ -50,7 +50,7 @@
                 app:layout_constraintStart_toStartOf="@+id/coordinate_clickDelay_layout"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
@@ -58,7 +58,7 @@
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/coordinate_xPosition"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -70,9 +70,9 @@
                     android:singleLine="true"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
@@ -83,7 +83,7 @@
                 app:layout_constraintStart_toStartOf="@+id/coordinate_clickInterval_layout"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
@@ -91,7 +91,7 @@
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/coordinate_yPosition"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -103,9 +103,9 @@
                     android:singleLine="true"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/coordinate_clickDelay_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
@@ -123,7 +123,7 @@
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/coordinate_clickDelay"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -135,9 +135,9 @@
                     android:singleLine="true"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/coordinate_clickInterval_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/coordinate_clickNumber_layout"
                 app:layout_constraintStart_toEndOf="@+id/coordinate_clickDelay_layout">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
@@ -154,7 +154,7 @@
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/coordinate_clickInterval"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -166,9 +166,9 @@
                     android:singleLine="true"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/coordinate_clickNumber_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/coordinate_clickInterval_layout">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
@@ -185,7 +185,7 @@
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/coordinate_clickNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -197,15 +197,15 @@
                     android:singleLine="true"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="5dp"
@@ -213,7 +213,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/coordinate_comment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -223,14 +223,14 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="5dp"
@@ -238,7 +238,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/coordinate_createTime"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -249,7 +249,7 @@
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -257,7 +257,7 @@
             android:gravity="end"
             android:orientation="horizontal">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/coordinate_modify"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -270,7 +270,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/coordinate_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -281,7 +281,7 @@
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/coordinate_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -291,5 +291,5 @@
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
         </RelativeLayout>
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </RelativeLayout>

@@ -54,7 +54,7 @@
                 android:scrollbars="none"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/rl_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,13 +64,13 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="20dp">
 
-                <LinearLayout
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <CheckBox
+                    <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/cb_select_all"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -78,24 +78,25 @@
                         android:padding="5dp"
                         android:text="全选" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_selected_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:paddingHorizontal="1dp"
                         android:text="已选0项" />
-                </LinearLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/bt_import"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:background="@drawable/button_selector"
+                    android:gravity="center"
                     android:text="确认导入"
                     android:textColor="@android:color/white" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </RelativeLayout>
     </RelativeLayout>
 

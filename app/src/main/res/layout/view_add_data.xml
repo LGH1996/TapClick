@@ -8,7 +8,7 @@
     android:paddingHorizontal="10dp"
     android:paddingVertical="12dp">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/layout_pac"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,14 +21,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="包名："
             android:textColor="@color/text_color"
             android:textSize="12sp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/pacName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,10 +37,10 @@
             android:singleLine="true"
             android:textColor="@color/text_color"
             android:textSize="12sp" />
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/layout_act"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,14 +52,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_pac">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="活动："
             android:textColor="@color/text_color"
             android:textSize="12sp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/actName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,10 +68,10 @@
             android:singleLine="true"
             android:textColor="@color/text_color"
             android:textSize="12sp" />
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/layout_widget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,14 +83,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_act">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="控件："
             android:textColor="@color/text_color"
             android:textSize="12sp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/widget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,10 +99,10 @@
             android:singleLine="true"
             android:textColor="@color/text_color"
             android:textSize="12sp" />
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/layout_xy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,14 +114,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_widget">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="坐标："
             android:textColor="@color/text_color"
             android:textSize="12sp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/xy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
             android:textColor="@color/text_color"
             android:textSize="12sp" />
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_button"
@@ -141,12 +141,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_xy">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/quit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@drawable/button_selector"
-            android:padding="0dp"
+            android:gravity="center"
             android:text="退出"
             android:textColor="@android:color/white"
             android:textSize="12sp"
@@ -155,12 +155,12 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/switch_wid"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@drawable/button_selector"
-            android:padding="0dp"
+            android:gravity="center"
             android:text="显示布局"
             android:textColor="@android:color/white"
             android:textSize="12sp"
@@ -168,13 +168,13 @@
             app:layout_constraintEnd_toStartOf="@+id/save_wid"
             app:layout_constraintStart_toEndOf="@+id/quit" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/save_wid"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@drawable/button_selector"
             android:enabled="false"
-            android:padding="0dp"
+            android:gravity="center"
             android:text="添加控件"
             android:textColor="@android:color/white"
             android:textSize="12sp"
@@ -183,12 +183,12 @@
             app:layout_constraintStart_toEndOf="@+id/switch_wid" />
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/switch_aim"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@drawable/button_selector"
-            android:padding="0dp"
+            android:gravity="center"
             android:text="显示准星"
             android:textColor="@android:color/white"
             android:textSize="12sp"
@@ -196,13 +196,13 @@
             app:layout_constraintEnd_toStartOf="@+id/save_aim"
             app:layout_constraintStart_toEndOf="@+id/save_wid" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/save_aim"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@drawable/button_selector"
             android:enabled="false"
-            android:padding="0dp"
+            android:gravity="center"
             android:text="添加坐标"
             android:textColor="@android:color/white"
             android:textSize="12sp"

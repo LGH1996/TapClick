@@ -24,7 +24,7 @@
             android:requiresFadingEdge="vertical"
             android:scrollbars="none">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/exception"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,13 +34,14 @@
         </ScrollView>
     </HorizontalScrollView>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/export"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_selector"
+        android:gravity="center"
         android:text="导出异常"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent" />
