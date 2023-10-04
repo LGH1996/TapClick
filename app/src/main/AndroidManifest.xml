@@ -56,7 +56,7 @@
         <activity android:name=".myactivity.AddDataActivity" />
         <activity
             android:name=".myactivity.UpdateActivity"
-            android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar" />
+            android:theme="@style/MyDialog" />
         <activity android:name=".myactivity.MoreMessageActivity" />
         <activity
             android:name=".myactivity.ShortCutActivity"

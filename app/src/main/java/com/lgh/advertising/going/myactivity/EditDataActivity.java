@@ -21,7 +21,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
@@ -196,7 +195,7 @@ public class EditDataActivity extends BaseActivity {
         baseSettingBinding.onOffSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isChecked = ((Switch) v).isChecked();
+                boolean isChecked = baseSettingBinding.onOffSwitch.isChecked();
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {

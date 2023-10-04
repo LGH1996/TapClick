@@ -17,8 +17,8 @@
             android:background="@drawable/item_bg_ripple"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
 
             <ImageView
                 android:id="@+id/accessibility_on_off_img"
@@ -60,8 +60,8 @@
             android:background="@drawable/item_bg_ripple"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
 
             <ImageView
                 android:id="@+id/device_admin_on_off_img"
@@ -103,8 +103,8 @@
             android:background="@drawable/item_bg_ripple"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
 
             <ImageView
                 android:id="@+id/batteryIgnore_on_off_img"
@@ -146,8 +146,8 @@
             android:background="@drawable/item_bg_ripple"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
 
             <ImageView
                 android:id="@+id/notification_on_off_img"
@@ -189,8 +189,8 @@
             android:background="@drawable/item_bg_ripple"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
 
             <ImageView
                 android:id="@+id/floating_window_on_off_img"
@@ -228,6 +228,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:fadingEdge="vertical"
             android:fadingEdgeLength="5dp"
             android:requiresFadingEdge="vertical"
@@ -236,12 +237,9 @@
             <me.codeboy.android.aligntextview.AlignTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginHorizontal="16dp"
                 android:lineSpacingMultiplier="1.5"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="@string/authorizationQuestion"
-                android:textSize="12sp" />
+                android:text="@string/authorizationQuestion" />
         </ScrollView>
     </androidx.appcompat.widget.LinearLayoutCompat>
 

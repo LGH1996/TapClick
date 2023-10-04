@@ -4,4 +4,9 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">#00000000</item>
     </style>
+
+    <style name="MyDialog" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>
