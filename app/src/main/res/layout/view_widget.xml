@@ -24,7 +24,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/widget_activity"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:ellipsize="end"
                 android:enabled="false"
@@ -36,7 +36,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="8dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_clickable"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:enabled="false"
                 android:singleLine="true"
@@ -60,7 +60,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="8dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_rect"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:enabled="false"
                 android:singleLine="true"
@@ -84,7 +84,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="8dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -97,7 +97,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_id"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:hint="该属性不存在"
                 android:singleLine="true"
@@ -108,7 +108,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="8dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_describe"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:hint="该属性不存在"
                 android:singleLine="true"
@@ -132,7 +132,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="8dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -145,7 +145,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:hint="该属性不存在"
                 android:singleLine="true"
@@ -156,7 +156,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="8dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -169,7 +169,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_clickDelay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:ems="4"
                 android:inputType="number"
@@ -182,7 +182,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="8dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -205,7 +205,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="8dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -228,7 +228,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="8dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -241,7 +241,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_comment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:hint="请输入该控件的备注内容"
                 android:singleLine="true"
@@ -252,7 +252,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="8dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -265,7 +265,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/widget_createTime"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:ellipsize="end"
                 android:enabled="false"
@@ -286,7 +286,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="25dp"
+                android:layout_marginEnd="20dp"
                 android:layout_toStartOf="@+id/widget_share"
                 android:ellipsize="end"
                 android:singleLine="true"
@@ -297,8 +297,9 @@
                 android:id="@+id/widget_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="25dp"
+                android:layout_marginEnd="20dp"
                 android:layout_toStartOf="@+id/widget_delete"
+                android:paddingHorizontal="5dp"
                 android:paddingVertical="10dp"
                 android:text="分享"
                 android:textColor="@drawable/text_click_color"
@@ -310,6 +311,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:paddingVertical="10dp"
+                android:paddingStart="5dp"
                 android:text="删除"
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
