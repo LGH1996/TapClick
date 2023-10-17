@@ -73,6 +73,15 @@ public class AuthorizationActivity extends BaseActivity {
                         }
                         break;
                     }
+                    case R.id.system_alert_on_off: {
+                        Intent intentAlertWindow = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+                        if (intentAlertWindow.resolveActivity(packageManager) != null) {
+                            startActivity(intentAlertWindow);
+                        } else {
+                            Toast.makeText(context, "授权窗口打开失败，请手动打开", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    }
                     case R.id.batteryIgnore_on_off: {
                         if (powerManager.isIgnoringBatteryOptimizations(getPackageName())) {
                             Toast.makeText(context, "忽略电池优化权限已开启", Toast.LENGTH_SHORT).show();
@@ -122,6 +131,7 @@ public class AuthorizationActivity extends BaseActivity {
         authorizationBinding.batteryIgnoreOnOff.setOnClickListener(onOffClickListener);
         authorizationBinding.notificationOnOff.setOnClickListener(onOffClickListener);
         authorizationBinding.floatingWindowOnOff.setOnClickListener(onOffClickListener);
+        authorizationBinding.systemAlertOnOff.setOnClickListener(onOffClickListener);
     }
 
     @Override
@@ -139,6 +149,11 @@ public class AuthorizationActivity extends BaseActivity {
                     authorizationBinding.deviceAdminOnOffImg.setImageResource(R.drawable.ic_ok);
                 } else {
                     authorizationBinding.deviceAdminOnOffImg.setImageResource(R.drawable.ic_error);
+                }
+                if (Settings.canDrawOverlays(context)) {
+                    authorizationBinding.systemAlertOnOffImg.setImageResource(R.drawable.ic_ok);
+                } else {
+                    authorizationBinding.systemAlertOnOffImg.setImageResource(R.drawable.ic_error);
                 }
                 if (powerManager.isIgnoringBatteryOptimizations(getPackageName())) {
                     authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.ic_ok);
