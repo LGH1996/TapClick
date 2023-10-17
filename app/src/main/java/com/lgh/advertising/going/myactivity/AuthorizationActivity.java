@@ -1,6 +1,8 @@
 package com.lgh.advertising.going.myactivity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -41,7 +43,6 @@ public class AuthorizationActivity extends BaseActivity {
         packageManager = getPackageManager();
         devicePolicyManager = getSystemService(DevicePolicyManager.class);
         powerManager = getSystemService(PowerManager.class);
-
 
         View.OnClickListener onOffClickListener = new View.OnClickListener() {
             @SuppressLint("NonConstantResourceId")
@@ -86,11 +87,23 @@ public class AuthorizationActivity extends BaseActivity {
                         break;
                     }
                     case R.id.notification_on_off: {
-                        boolean keepAliveByNotification = !myUtils.getKeepAliveByNotification();
-                        myUtils.setKeepAliveByNotification(keepAliveByNotification);
-                        myUtils.requestUpdateKeepAliveByNotification(keepAliveByNotification);
-                        authorizationBinding.notificationOnOffImg.setImageResource(keepAliveByNotification ? R.drawable.ic_ok : R.drawable.ic_error);
-                        Toast.makeText(context, keepAliveByNotification ? "已开启" : "已关闭", Toast.LENGTH_SHORT).show();
+                        if (getSystemService(NotificationManager.class).areNotificationsEnabled()) {
+                            boolean keepAliveByNotification = !myUtils.getKeepAliveByNotification();
+                            myUtils.setKeepAliveByNotification(keepAliveByNotification);
+                            myUtils.requestUpdateKeepAliveByNotification(keepAliveByNotification);
+                            authorizationBinding.notificationOnOffImg.setImageResource(keepAliveByNotification ? R.drawable.ic_ok : R.drawable.ic_error);
+                            Toast.makeText(context, keepAliveByNotification ? "已开启" : "已关闭", Toast.LENGTH_SHORT).show();
+                        } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                            requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 0x01);
+                        } else {
+                            Intent intentNotification = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                            intentNotification.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+                            if (intentNotification.resolveActivity(packageManager) != null) {
+                                startActivity(intentNotification);
+                            } else {
+                                Toast.makeText(context, "授权窗口打开失败，请手动打开", Toast.LENGTH_SHORT).show();
+                            }
+                        }
                         break;
                     }
                     case R.id.floating_window_on_off: {
