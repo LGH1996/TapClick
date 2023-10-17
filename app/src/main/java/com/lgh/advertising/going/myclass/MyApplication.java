@@ -21,7 +21,6 @@ public class MyApplication extends Application {
     public static DataDao dataDao;
     public static MyAppConfig myAppConfig;
     public static MyHttpRequest myHttpRequest;
-    public static MyUtils myUtils;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -69,9 +68,7 @@ public class MyApplication extends Application {
             myHttpRequest = retrofit.create(MyHttpRequest.class);
         }
 
-        if (myUtils == null) {
-            myUtils = MyUtils.getInstance(base);
-        }
+        MyUtils.init(base);
     }
 
     @Override

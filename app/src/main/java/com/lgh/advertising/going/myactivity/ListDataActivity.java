@@ -83,7 +83,6 @@ public class ListDataActivity extends BaseActivity {
     private Context context;
     private DataDao dataDao;
     private PackageManager packageManager;
-    private MyUtils myUtils;
     private ActivityResultLauncher<Intent> itemResultLauncher;
     private int curPosition;
 
@@ -97,7 +96,6 @@ public class ListDataActivity extends BaseActivity {
         context = getApplicationContext();
         dataDao = MyApplication.dataDao;
         packageManager = getPackageManager();
-        myUtils = MyApplication.myUtils;
 
         itemResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -115,7 +113,7 @@ public class ListDataActivity extends BaseActivity {
             }
         });
 
-        if (!myUtils.isServiceRunning()) {
+        if (!MyUtils.isServiceRunning()) {
             Toast.makeText(context, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
         }
 
@@ -449,7 +447,7 @@ public class ListDataActivity extends BaseActivity {
                                 item.appDescribe.widgetOnOff = isChecked;
                                 item.appDescribe.coordinateOnOff = isChecked;
                                 dataDao.updateAppDescribe(item.appDescribe);
-                                myUtils.requestUpdateAppDescribe(item.appDescribe.appPackage);
+                                MyUtils.requestUpdateAppDescribe(item.appDescribe.appPackage);
                             }
                         };
                         if (isChecked && pkgSuggestNotOnList.contains(item.appDescribe.appPackage)) {

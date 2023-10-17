@@ -75,7 +75,6 @@ public class EditDataActivity extends BaseActivity {
     private ViewBaseSettingBinding baseSettingBinding;
     private ViewAutoFinderBinding autoFinderBinding;
     private Set<String> pkgSuggestNotOnList;
-    private MyUtils myUtils;
     private String packageName;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -87,7 +86,6 @@ public class EditDataActivity extends BaseActivity {
         setContentView(editDataBinding.getRoot());
 
         dataDao = MyApplication.dataDao;
-        myUtils = MyApplication.myUtils;
         context = getApplicationContext();
         dateFormatModify = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
         dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.getDefault());
@@ -614,10 +612,10 @@ public class EditDataActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        myUtils.requestUpdateAppDescribe(appDescribe.appPackage);
-        myUtils.requestUpdateAutoFinder(appDescribe.appPackage);
-        myUtils.requestUpdateCoordinate(appDescribe.appPackage);
-        myUtils.requestUpdateWidget(appDescribe.appPackage);
+        MyUtils.requestUpdateAppDescribe(appDescribe.appPackage);
+        MyUtils.requestUpdateAutoFinder(appDescribe.appPackage);
+        MyUtils.requestUpdateCoordinate(appDescribe.appPackage);
+        MyUtils.requestUpdateWidget(appDescribe.appPackage);
     }
 
     @Override

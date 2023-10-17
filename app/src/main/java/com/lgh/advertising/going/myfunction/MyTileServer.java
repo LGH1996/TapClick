@@ -5,14 +5,12 @@ import android.provider.Settings;
 import android.service.quicksettings.TileService;
 import android.widget.Toast;
 
-import com.lgh.advertising.going.myclass.MyApplication;
-
 public class MyTileServer extends TileService {
 
     @Override
     public void onClick() {
-        if (MyApplication.myUtils.isServiceRunning()) {
-            MyApplication.myUtils.requestShowAddDataWindow();
+        if (MyUtils.isServiceRunning()) {
+            MyUtils.requestShowAddDataWindow();
         } else {
             Intent intentAccessibility = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
             intentAccessibility.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

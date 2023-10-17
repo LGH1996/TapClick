@@ -87,7 +87,6 @@ public class MainFunction {
     private final PackageManager packageManager;
     private final InputMethodManager inputMethodManager;
     private final DataDao dataDao;
-    private final MyUtils myUtils;
     private final Map<String, AppDescribe> appDescribeMap;
     private final ScheduledExecutorService executorServiceMain;
     private final ScheduledExecutorService executorServiceSub;
@@ -133,7 +132,6 @@ public class MainFunction {
         executorServiceSub = Executors.newSingleThreadScheduledExecutor();
         appDescribeMap = new HashMap<>();
         dataDao = MyApplication.dataDao;
-        myUtils = MyApplication.myUtils;
         currentPackage = "Initialize CurrentPackage";
         currentActivity = "Initialize CurrentActivity";
     }
@@ -151,9 +149,9 @@ public class MainFunction {
         filterPackage.addDataScheme("package");
         myPackageReceiver = new MyPackageReceiver();
         service.registerReceiver(myPackageReceiver, filterPackage);
-        keepAliveByNotification(myUtils.getKeepAliveByNotification());
-        keepAliveByFloatingWindow(myUtils.getKeepAliveByFloatingWindow());
-        showDbClickFloating(myUtils.getDbClickEnable());
+        keepAliveByNotification(MyUtils.getKeepAliveByNotification());
+        keepAliveByFloatingWindow(MyUtils.getKeepAliveByFloatingWindow());
+        showDbClickFloating(MyUtils.getDbClickEnable());
         executorServiceSub.execute(new Runnable() {
             @Override
             public void run() {
@@ -1125,7 +1123,7 @@ public class MainFunction {
             dbClickLp.gravity = Gravity.START | Gravity.TOP;
             dbClickLp.format = PixelFormat.TRANSPARENT;
             dbClickLp.alpha = 0.5f;
-            Rect rect = myUtils.getDbClickPosition();
+            Rect rect = MyUtils.getDbClickPosition();
             dbClickLp.x = rect.left;
             dbClickLp.y = rect.top;
             dbClickLp.width = rect.width();
@@ -1206,7 +1204,7 @@ public class MainFunction {
                 rect.top = dbClickLp.y;
                 rect.right = dbClickLp.x + dbClickLp.width;
                 rect.bottom = dbClickLp.y + dbClickLp.height;
-                myUtils.setDbClickPosition(rect);
+                MyUtils.setDbClickPosition(rect);
             }
         };
         dbClickSettingBinding.seekBarW.setOnSeekBarChangeListener(onSeekBarChangeListener);

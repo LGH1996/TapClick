@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivityAuthorizationBinding;
-import com.lgh.advertising.going.myclass.MyApplication;
 import com.lgh.advertising.going.myfunction.MyDeviceAdminReceiver;
 import com.lgh.advertising.going.myfunction.MyUtils;
 
@@ -26,7 +25,6 @@ public class AuthorizationActivity extends BaseActivity {
 
     private ActivityAuthorizationBinding authorizationBinding;
     private Context context;
-    private MyUtils myUtils;
     private Handler handler;
     private PackageManager packageManager;
     private DevicePolicyManager devicePolicyManager;
@@ -38,7 +36,6 @@ public class AuthorizationActivity extends BaseActivity {
         authorizationBinding = ActivityAuthorizationBinding.inflate(getLayoutInflater());
         setContentView(authorizationBinding.getRoot());
         context = getApplicationContext();
-        myUtils = MyApplication.myUtils;
         handler = new Handler();
         packageManager = getPackageManager();
         devicePolicyManager = getSystemService(DevicePolicyManager.class);
@@ -97,9 +94,9 @@ public class AuthorizationActivity extends BaseActivity {
                     }
                     case R.id.notification_on_off: {
                         if (getSystemService(NotificationManager.class).areNotificationsEnabled()) {
-                            boolean keepAliveByNotification = !myUtils.getKeepAliveByNotification();
-                            myUtils.setKeepAliveByNotification(keepAliveByNotification);
-                            myUtils.requestUpdateKeepAliveByNotification(keepAliveByNotification);
+                            boolean keepAliveByNotification = !MyUtils.getKeepAliveByNotification();
+                            MyUtils.setKeepAliveByNotification(keepAliveByNotification);
+                            MyUtils.requestUpdateKeepAliveByNotification(keepAliveByNotification);
                             authorizationBinding.notificationOnOffImg.setImageResource(keepAliveByNotification ? R.drawable.ic_ok : R.drawable.ic_error);
                             Toast.makeText(context, keepAliveByNotification ? "已开启" : "已关闭", Toast.LENGTH_SHORT).show();
                         } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
@@ -116,9 +113,9 @@ public class AuthorizationActivity extends BaseActivity {
                         break;
                     }
                     case R.id.floating_window_on_off: {
-                        boolean keepAliveByFloatingWindow = !myUtils.getKeepAliveByFloatingWindow();
-                        myUtils.setKeepAliveByFloatingWindow(keepAliveByFloatingWindow);
-                        myUtils.requestUpdateKeepAliveByFloatingWindow(keepAliveByFloatingWindow);
+                        boolean keepAliveByFloatingWindow = !MyUtils.getKeepAliveByFloatingWindow();
+                        MyUtils.setKeepAliveByFloatingWindow(keepAliveByFloatingWindow);
+                        MyUtils.requestUpdateKeepAliveByFloatingWindow(keepAliveByFloatingWindow);
                         authorizationBinding.floatingWindowOnOffImg.setImageResource(keepAliveByFloatingWindow ? R.drawable.ic_ok : R.drawable.ic_error);
                         Toast.makeText(context, keepAliveByFloatingWindow ? "已开启" : "已关闭", Toast.LENGTH_SHORT).show();
                         break;
@@ -140,7 +137,7 @@ public class AuthorizationActivity extends BaseActivity {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (myUtils.isServiceRunning()) {
+                if (MyUtils.isServiceRunning()) {
                     authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ic_ok);
                 } else {
                     authorizationBinding.accessibilityOnOffImg.setImageResource(R.drawable.ic_error);
@@ -160,12 +157,12 @@ public class AuthorizationActivity extends BaseActivity {
                 } else {
                     authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.ic_error);
                 }
-                if (myUtils.getKeepAliveByNotification()) {
+                if (MyUtils.getKeepAliveByNotification()) {
                     authorizationBinding.notificationOnOffImg.setImageResource(R.drawable.ic_ok);
                 } else {
                     authorizationBinding.notificationOnOffImg.setImageResource(R.drawable.ic_error);
                 }
-                if (myUtils.getKeepAliveByFloatingWindow()) {
+                if (MyUtils.getKeepAliveByFloatingWindow()) {
                     authorizationBinding.floatingWindowOnOffImg.setImageResource(R.drawable.ic_ok);
                 } else {
                     authorizationBinding.floatingWindowOnOffImg.setImageResource(R.drawable.ic_error);

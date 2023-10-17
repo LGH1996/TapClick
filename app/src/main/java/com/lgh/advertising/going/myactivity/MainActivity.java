@@ -65,7 +65,6 @@ public class MainActivity extends BaseActivity {
     private DataDao dataDao;
     private LayoutInflater inflater;
     private ActivityMainBinding mainBinding;
-    private MyUtils myUtils;
     private boolean autoHideOnTaskList;
 
     @Override
@@ -76,7 +75,6 @@ public class MainActivity extends BaseActivity {
         context = getApplicationContext();
         dataDao = MyApplication.dataDao;
         myAppConfig = MyApplication.myAppConfig;
-        myUtils = MyApplication.myUtils;
 
         final List<Resource> source = new ArrayList<>();
         source.add(new Resource("授权管理", R.drawable.authorization));
@@ -148,7 +146,7 @@ public class MainActivity extends BaseActivity {
             showUpdateInfo();
         }
 
-        if (myUtils.getIsFirstStart()) {
+        if (MyUtils.getIsFirstStart()) {
             showPrivacyAgreement();
         }
 
@@ -179,7 +177,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void refreshAccessibilityServiceStatus() {
-        if (myUtils.isServiceRunning()) {
+        if (MyUtils.isServiceRunning()) {
             mainBinding.statusImg.setImageResource(R.drawable.ic_ok);
             mainBinding.statusTip.setText("无障碍服务已开启");
         } else {
@@ -242,7 +240,7 @@ public class MainActivity extends BaseActivity {
                 privacyAgreementBinding.sure.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myUtils.setIsFirstStart(false);
+                        MyUtils.setIsFirstStart(false);
                         alertDialog.dismiss();
                     }
                 });
@@ -350,7 +348,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         dataDao.insertWidget(widgetShare.widget);
-                        myUtils.requestUpdateWidget(widgetShare.widget.appPackage);
+                        MyUtils.requestUpdateWidget(widgetShare.widget.appPackage);
                         alertDialog.dismiss();
                         Toast.makeText(context, "导入成功", Toast.LENGTH_SHORT).show();
                         AppDescribe appDescribe = dataDao.getAppDescribeByPackage(widgetShare.widget.appPackage);
@@ -414,7 +412,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         dataDao.insertCoordinate(coordinateShare.coordinate);
-                        myUtils.requestUpdateWidget(coordinateShare.coordinate.appPackage);
+                        MyUtils.requestUpdateWidget(coordinateShare.coordinate.appPackage);
                         alertDialog.dismiss();
                         Toast.makeText(context, "导入成功", Toast.LENGTH_SHORT).show();
                         AppDescribe appDescribe = dataDao.getAppDescribeByPackage(coordinateShare.coordinate.appPackage);
