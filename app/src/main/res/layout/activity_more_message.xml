@@ -7,16 +7,18 @@
     android:fitsSystemWindows="true">
 
     <WebView
-        android:id="@+id/webViewMore"
+        android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ProgressBar
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/progress"
-        style="@android:style/Widget.Holo.Light.ProgressBar.Small"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:alpha="0.5"
+        android:padding="20dp"
+        android:textStyle="bold" />
 
     <include layout="@layout/view_no_vip" />
 </FrameLayout>

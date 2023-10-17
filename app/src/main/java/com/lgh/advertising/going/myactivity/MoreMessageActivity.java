@@ -6,7 +6,6 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.lgh.advertising.going.databinding.ActivityMoreMessageBinding;
 
@@ -19,33 +18,39 @@ public class MoreMessageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMoreMessageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.webViewMore.setWebViewClient(new WebViewClient());
-        binding.webViewMore.setWebChromeClient(new WebChromeClient() {
+        binding.webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                if (newProgress == 100) {
+                binding.progress.setText(String.valueOf(newProgress));
+                if (newProgress >= 100) {
                     binding.progress.setVisibility(View.GONE);
                 }
             }
         });
-        WebSettings settings = binding.webViewMore.getSettings();
+        WebSettings settings = binding.webView.getSettings();
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setMediaPlaybackRequiresUserGesture(true);
         settings.setJavaScriptEnabled(true);
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
         settings.setSupportZoom(true);
         settings.setBuiltInZoomControls(true);
         settings.setDisplayZoomControls(false);
-        settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setLoadsImagesAutomatically(true);
+        settings.setDomStorageEnabled(true);
+        settings.setAllowFileAccess(true);
+        settings.setAllowContentAccess(true);
+        settings.setGeolocationEnabled(true);
+        settings.setDatabaseEnabled(true);
         settings.supportMultipleWindows();
-        binding.webViewMore.loadUrl("https://gitee.com/lingh1996/TapClick/blob/master/README.md");
+        binding.webView.loadUrl("https://docs.qq.com/doc/DWXhWVmFodlJGRnhL");
     }
 
     @Override
     public void onBackPressed() {
-        if (binding.webViewMore.canGoBack()) {
-            binding.webViewMore.goBack();
+        if (binding.webView.canGoBack()) {
+            binding.webView.goBack();
             return;
         }
         super.onBackPressed();
