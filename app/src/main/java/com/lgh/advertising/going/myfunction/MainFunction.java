@@ -588,7 +588,7 @@ public class MainFunction {
     private boolean click(int X, int Y) {
         Path path = new Path();
         path.moveTo(X, Y);
-        GestureDescription.Builder builder = new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path, 0, 40));
+        GestureDescription.Builder builder = new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path, 0, 50));
         return service.dispatchGesture(builder.build(), null, null);
     }
 
