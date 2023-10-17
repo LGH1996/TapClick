@@ -79,11 +79,11 @@ public class ListDataActivity extends BaseActivity {
     private final List<AppDescribeItem> appDescribeItemFilterList = new ArrayList<>();
     private final Set<String> pkgSuggestNotOnList = new HashSet<>();
     private final List<AppDescribe> regulationExportList = new ArrayList<>();
+    private ActivityResultLauncher<Intent> itemResultLauncher;
     private ActivityListDataBinding listDataBinding;
     private Context context;
     private DataDao dataDao;
     private PackageManager packageManager;
-    private ActivityResultLauncher<Intent> itemResultLauncher;
     private int curPosition;
 
     @SuppressLint("ClickableViewAccessibility")

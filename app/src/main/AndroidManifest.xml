@@ -70,7 +70,7 @@
         <activity android:name=".myactivity.RegulationImportActivity" />
 
         <service
-            android:name=".myfunction.MyTileServer"
+            android:name=".myfunction.MyTileService"
             android:enabled="true"
             android:exported="true"
             android:icon="@drawable/add_data"

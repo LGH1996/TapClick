@@ -168,14 +168,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0x01) {
-            myAppConfig = dataDao.getMyAppConfig();
-        }
-    }
-
     private void refreshAccessibilityServiceStatus() {
         if (MyUtils.isServiceRunning()) {
             mainBinding.statusImg.setImageResource(R.drawable.ic_ok);

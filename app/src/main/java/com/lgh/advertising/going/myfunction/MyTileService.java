@@ -5,7 +5,7 @@ import android.provider.Settings;
 import android.service.quicksettings.TileService;
 import android.widget.Toast;
 
-public class MyTileServer extends TileService {
+public class MyTileService extends TileService {
 
     @Override
     public void onClick() {
