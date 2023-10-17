@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 
 import com.lgh.advertising.going.myclass.DataDao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -36,6 +37,10 @@ public class AppDescribe {
     public transient Map<String, Coordinate> coordinateMap;
     @Ignore
     public transient Map<String, Set<Widget>> widgetSetMap;
+    @Ignore
+    public transient List<Coordinate> coordinateList;
+    @Ignore
+    public transient List<Widget> widgetList;
 
     public AppDescribe() {
         this.appName = "";
@@ -53,12 +58,34 @@ public class AppDescribe {
         this.autoFinder = new AutoFinder();
         this.coordinateMap = new HashMap<>();
         this.widgetSetMap = new HashMap<>();
+        this.coordinateList = new ArrayList<>();
+        this.widgetList = new ArrayList<>();
+    }
+
+    public void copy(AppDescribe appDescribe) {
+        this.appName = appDescribe.appName;
+        this.appPackage = appDescribe.appPackage;
+        this.onOff = appDescribe.onOff;
+        this.autoFinderRetrieveTime = appDescribe.autoFinderRetrieveTime;
+        this.autoFinderRetrieveAllTime = appDescribe.autoFinderRetrieveAllTime;
+        this.coordinateRetrieveTime = appDescribe.coordinateRetrieveTime;
+        this.coordinateRetrieveAllTime = appDescribe.coordinateRetrieveAllTime;
+        this.widgetRetrieveTime = appDescribe.widgetRetrieveTime;
+        this.widgetRetrieveAllTime = appDescribe.widgetRetrieveAllTime;
+        this.autoFinderOnOFF = appDescribe.autoFinderOnOFF;
+        this.coordinateOnOff = appDescribe.coordinateOnOff;
+        this.widgetOnOff = appDescribe.widgetOnOff;
+        this.autoFinder = appDescribe.autoFinder;
+        this.coordinateMap = appDescribe.coordinateMap;
+        this.widgetSetMap = appDescribe.widgetSetMap;
+        this.coordinateList = appDescribe.coordinateList;
+        this.widgetList = appDescribe.widgetList;
     }
 
     public void getOtherFieldsFromDatabase(DataDao dataDao) {
         getAutoFinderFromDatabase(dataDao);
-        getCoordinateMapFromDatabase(dataDao);
-        getWidgetSetMapFromDatabase(dataDao);
+        getCoordinateFromDatabase(dataDao);
+        getWidgetFromDatabase(dataDao);
     }
 
     public void getAutoFinderFromDatabase(DataDao dataDao) {
@@ -66,16 +93,19 @@ public class AppDescribe {
         autoFinder = autoFinderGet != null ? autoFinderGet : autoFinder;
     }
 
-    public void getCoordinateMapFromDatabase(DataDao dataDao) {
+    public void getCoordinateFromDatabase(DataDao dataDao) {
         coordinateMap.clear();
-        for (Coordinate e : dataDao.getCoordinatesByPackage(this.appPackage)) {
+        coordinateList.clear();
+        coordinateList.addAll(dataDao.getCoordinatesByPackage(this.appPackage));
+        for (Coordinate e : coordinateList) {
             coordinateMap.put(e.appActivity, e);
         }
     }
 
-    public void getWidgetSetMapFromDatabase(DataDao dataDao) {
+    public void getWidgetFromDatabase(DataDao dataDao) {
         widgetSetMap.clear();
-        List<Widget> widgetList = dataDao.getWidgetsByPackage(this.appPackage);
+        widgetList.clear();
+        widgetList.addAll(dataDao.getWidgetsByPackage(this.appPackage));
         for (Widget w : widgetList) {
             Set<Widget> widgetSet = this.widgetSetMap.get(w.appActivity);
             if (widgetSet == null) {
@@ -107,6 +137,8 @@ public class AppDescribe {
                 ", autoFinder=" + autoFinder +
                 ", coordinateMap=" + coordinateMap +
                 ", widgetSetMap=" + widgetSetMap +
+                ", coordinateList=" + coordinateList +
+                ", widgetList=" + widgetList +
                 '}';
     }
 }

@@ -2,6 +2,7 @@ package com.lgh.advertising.going.myactivity;
 
 import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
@@ -54,7 +55,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -64,8 +64,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class EditDataActivity extends BaseActivity {
-
-    public static AppDescribe appDescribe;
+    private AppDescribe appDescribe;
     private Context context;
     private LayoutInflater inflater;
     private DataDao dataDao;
@@ -77,6 +76,7 @@ public class EditDataActivity extends BaseActivity {
     private ViewAutoFinderBinding autoFinderBinding;
     private Set<String> pkgSuggestNotOnList;
     private MyUtils myUtils;
+    private String packageName;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -137,7 +137,10 @@ public class EditDataActivity extends BaseActivity {
         super.onStart();
         String extraStr = getIntent().getStringExtra("packageName");
         if (!TextUtils.isEmpty(extraStr)) {
-            AppDescribe appDescribeTemp = dataDao.getAppDescribeByPackage(extraStr);
+            packageName = extraStr;
+        }
+        if (!TextUtils.isEmpty(packageName)) {
+            AppDescribe appDescribeTemp = dataDao.getAppDescribeByPackage(packageName);
             if (appDescribeTemp != null) {
                 appDescribeTemp.getOtherFieldsFromDatabase(dataDao);
                 appDescribe = appDescribeTemp;
@@ -147,6 +150,7 @@ public class EditDataActivity extends BaseActivity {
             finishAndRemoveTask();
             return;
         }
+
         if (baseSettingBinding != null) {
             editDataBinding.baseSettingLayout.removeView(baseSettingBinding.getRoot());
         }
@@ -340,13 +344,12 @@ public class EditDataActivity extends BaseActivity {
         });
         editDataBinding.autoFinderLayout.addView(autoFinderBinding.getRoot());
 
-        final List<Coordinate> coordinateList = new ArrayList<>(appDescribe.coordinateMap.values());
-        if (coordinateList.isEmpty()) {
+        if (appDescribe.coordinateList.isEmpty()) {
             editDataBinding.coordinateLayout.setVisibility(View.GONE);
         } else {
             editDataBinding.coordinateLayout.setVisibility(View.VISIBLE);
         }
-        coordinateList.sort(new Comparator<Coordinate>() {
+        appDescribe.coordinateList.sort(new Comparator<Coordinate>() {
             @Override
             public int compare(Coordinate o1, Coordinate o2) {
                 return (int) (o2.createTime - o1.createTime);
@@ -355,7 +358,7 @@ public class EditDataActivity extends BaseActivity {
         if (editDataBinding.coordinateLayout.getChildCount() > 2) {
             editDataBinding.coordinateLayout.removeViews(2, editDataBinding.coordinateLayout.getChildCount() - 2);
         }
-        for (final Coordinate e : coordinateList) {
+        for (final Coordinate e : appDescribe.coordinateList) {
             final ViewCoordinateBinding coordinateBinding = ViewCoordinateBinding.inflate(inflater);
             coordinateBinding.coordinateActivity.setText(e.appActivity);
             coordinateBinding.coordinateXPosition.setText(String.valueOf(e.xPosition));
@@ -465,9 +468,9 @@ public class EditDataActivity extends BaseActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dataDao.deleteCoordinate(e);
-                                    appDescribe.coordinateMap.remove(e.appActivity);
+                                    appDescribe.coordinateList.remove(e);
                                     editDataBinding.coordinateLayout.removeView(coordinateBinding.getRoot());
-                                    if (appDescribe.coordinateMap.isEmpty()) {
+                                    if (appDescribe.coordinateList.isEmpty()) {
                                         editDataBinding.coordinateLayout.setVisibility(View.GONE);
                                     }
                                 }
@@ -477,8 +480,7 @@ public class EditDataActivity extends BaseActivity {
             editDataBinding.coordinateLayout.addView(coordinateBinding.getRoot());
         }
 
-        List<Set<Widget>> widgetSetList = new ArrayList<>(appDescribe.widgetSetMap.values());
-        if (widgetSetList.isEmpty()) {
+        if (appDescribe.widgetList.isEmpty()) {
             editDataBinding.widgetLayout.setVisibility(View.GONE);
         } else {
             editDataBinding.widgetLayout.setVisibility(View.VISIBLE);
@@ -486,133 +488,126 @@ public class EditDataActivity extends BaseActivity {
         if (editDataBinding.widgetLayout.getChildCount() > 2) {
             editDataBinding.widgetLayout.removeViews(2, editDataBinding.widgetLayout.getChildCount() - 2);
         }
-        for (final Set<Widget> widgetSet : widgetSetList) {
-            final List<Widget> widgetList = new ArrayList<>(widgetSet);
-            widgetList.sort(new Comparator<Widget>() {
+        appDescribe.widgetList.sort(new Comparator<Widget>() {
+            @Override
+            public int compare(Widget o1, Widget o2) {
+                return (int) (o2.createTime - o1.createTime);
+            }
+        });
+        for (final Widget e : appDescribe.widgetList) {
+            final ViewWidgetBinding widgetBinding = ViewWidgetBinding.inflate(inflater);
+            widgetBinding.widgetActivity.setText(e.appActivity);
+            widgetBinding.widgetClickable.setText(String.valueOf(e.widgetClickable));
+            widgetBinding.widgetRect.setText(e.widgetRect.toShortString());
+            widgetBinding.widgetId.setText(e.widgetId);
+            widgetBinding.widgetDescribe.setText(e.widgetDescribe);
+            widgetBinding.widgetText.setText(e.widgetText);
+            widgetBinding.widgetClickDelay.setText(String.valueOf(e.clickDelay));
+            widgetBinding.widgetNoRepeat.setChecked(e.noRepeat);
+            widgetBinding.widgetClickOnly.setChecked(e.clickOnly);
+            widgetBinding.widgetComment.setText(e.comment);
+            widgetBinding.widgetCreateTime.setText(dateFormatCreate.format(new Date(e.createTime)));
+
+            Runnable widgetSaveRun = new Runnable() {
                 @Override
-                public int compare(Widget o1, Widget o2) {
-                    return (int) (o2.createTime - o1.createTime);
+                public void run() {
+                    String clickDelay = widgetBinding.widgetClickDelay.getText().toString();
+                    widgetBinding.widgetModify.setTextColor(0xffff0000);
+                    if (clickDelay.isEmpty()) {
+                        widgetBinding.widgetModify.setText("延迟点击不能为空");
+                        return;
+                    } else if (Integer.parseInt(clickDelay) > 8000) {
+                        widgetBinding.widgetModify.setText("点击延迟应为0~8000(ms)之间");
+                        return;
+                    }
+                    e.widgetId = widgetBinding.widgetId.getText().toString().trim();
+                    e.widgetDescribe = widgetBinding.widgetDescribe.getText().toString().trim();
+                    e.widgetText = widgetBinding.widgetText.getText().toString().trim();
+                    e.clickDelay = Integer.parseInt(clickDelay);
+                    e.noRepeat = widgetBinding.widgetNoRepeat.isChecked();
+                    e.clickOnly = widgetBinding.widgetClickOnly.isChecked();
+                    e.comment = widgetBinding.widgetComment.getText().toString().trim();
+                    dataDao.updateWidget(e);
+                    widgetBinding.widgetModify.setTextColor(0xff000000);
+                    widgetBinding.widgetModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
+                }
+            };
+
+            TextWatcher widgetTextWatcher = new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    widgetSaveRun.run();
+                }
+            };
+
+            widgetBinding.widgetId.addTextChangedListener(widgetTextWatcher);
+            widgetBinding.widgetDescribe.addTextChangedListener(widgetTextWatcher);
+            widgetBinding.widgetText.addTextChangedListener(widgetTextWatcher);
+            widgetBinding.widgetClickDelay.addTextChangedListener(widgetTextWatcher);
+            widgetBinding.widgetComment.addTextChangedListener(widgetTextWatcher);
+
+            View.OnClickListener widgetClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    widgetSaveRun.run();
+                }
+            };
+            widgetBinding.widgetNoRepeat.setOnClickListener(widgetClickListener);
+            widgetBinding.widgetClickOnly.setOnClickListener(widgetClickListener);
+
+            widgetBinding.widgetShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WidgetShare widgetShare = new WidgetShare();
+                    widgetShare.widget = e;
+                    widgetShare.basicContent = new BasicContent();
+                    widgetShare.basicContent.fingerPrint = Build.FINGERPRINT;
+                    widgetShare.basicContent.displayMetrics = new DisplayMetrics();
+                    getWindowManager().getDefaultDisplay().getRealMetrics(widgetShare.basicContent.displayMetrics);
+                    widgetShare.basicContent.packageName = e.appPackage;
+                    try {
+                        PackageInfo packageInfo = getPackageManager().getPackageInfo(e.appPackage, PackageManager.GET_META_DATA);
+                        widgetShare.basicContent.versionCode = packageInfo.versionCode;
+                        widgetShare.basicContent.versionName = packageInfo.versionName;
+                    } catch (PackageManager.NameNotFoundException ex) {
+                        ex.printStackTrace();
+                    }
+                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    String strRule = '"' + WidgetShare.class.getSimpleName() + '"' + ": " + gson.toJson(widgetShare);
+                    showEditShareFileNameDialog(strRule);
                 }
             });
-            for (final Widget e : widgetList) {
-                final ViewWidgetBinding widgetBinding = ViewWidgetBinding.inflate(inflater);
-                widgetBinding.widgetActivity.setText(e.appActivity);
-                widgetBinding.widgetClickable.setText(String.valueOf(e.widgetClickable));
-                widgetBinding.widgetRect.setText(e.widgetRect.toShortString());
-                widgetBinding.widgetId.setText(e.widgetId);
-                widgetBinding.widgetDescribe.setText(e.widgetDescribe);
-                widgetBinding.widgetText.setText(e.widgetText);
-                widgetBinding.widgetClickDelay.setText(String.valueOf(e.clickDelay));
-                widgetBinding.widgetNoRepeat.setChecked(e.noRepeat);
-                widgetBinding.widgetClickOnly.setChecked(e.clickOnly);
-                widgetBinding.widgetComment.setText(e.comment);
-                widgetBinding.widgetCreateTime.setText(dateFormatCreate.format(new Date(e.createTime)));
 
-                Runnable widgetSaveRun = new Runnable() {
-                    @Override
-                    public void run() {
-                        String clickDelay = widgetBinding.widgetClickDelay.getText().toString();
-                        widgetBinding.widgetModify.setTextColor(0xffff0000);
-                        if (clickDelay.isEmpty()) {
-                            widgetBinding.widgetModify.setText("延迟点击不能为空");
-                            return;
-                        } else if (Integer.parseInt(clickDelay) > 8000) {
-                            widgetBinding.widgetModify.setText("点击延迟应为0~8000(ms)之间");
-                            return;
-                        }
-                        e.widgetId = widgetBinding.widgetId.getText().toString().trim();
-                        e.widgetDescribe = widgetBinding.widgetDescribe.getText().toString().trim();
-                        e.widgetText = widgetBinding.widgetText.getText().toString().trim();
-                        e.clickDelay = Integer.parseInt(clickDelay);
-                        e.noRepeat = widgetBinding.widgetNoRepeat.isChecked();
-                        e.clickOnly = widgetBinding.widgetClickOnly.isChecked();
-                        e.comment = widgetBinding.widgetComment.getText().toString().trim();
-                        dataDao.updateWidget(e);
-                        widgetBinding.widgetModify.setTextColor(0xff000000);
-                        widgetBinding.widgetModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
-                    }
-                };
-
-                TextWatcher widgetTextWatcher = new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        widgetSaveRun.run();
-                    }
-                };
-
-                widgetBinding.widgetId.addTextChangedListener(widgetTextWatcher);
-                widgetBinding.widgetDescribe.addTextChangedListener(widgetTextWatcher);
-                widgetBinding.widgetText.addTextChangedListener(widgetTextWatcher);
-                widgetBinding.widgetClickDelay.addTextChangedListener(widgetTextWatcher);
-                widgetBinding.widgetComment.addTextChangedListener(widgetTextWatcher);
-
-                View.OnClickListener widgetClickListener = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        widgetSaveRun.run();
-                    }
-                };
-                widgetBinding.widgetNoRepeat.setOnClickListener(widgetClickListener);
-                widgetBinding.widgetClickOnly.setOnClickListener(widgetClickListener);
-
-                widgetBinding.widgetShare.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        WidgetShare widgetShare = new WidgetShare();
-                        widgetShare.widget = e;
-                        widgetShare.basicContent = new BasicContent();
-                        widgetShare.basicContent.fingerPrint = Build.FINGERPRINT;
-                        widgetShare.basicContent.displayMetrics = new DisplayMetrics();
-                        getWindowManager().getDefaultDisplay().getRealMetrics(widgetShare.basicContent.displayMetrics);
-                        widgetShare.basicContent.packageName = e.appPackage;
-                        try {
-                            PackageInfo packageInfo = getPackageManager().getPackageInfo(e.appPackage, PackageManager.GET_META_DATA);
-                            widgetShare.basicContent.versionCode = packageInfo.versionCode;
-                            widgetShare.basicContent.versionName = packageInfo.versionName;
-                        } catch (PackageManager.NameNotFoundException ex) {
-                            ex.printStackTrace();
-                        }
-                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                        String strRule = '"' + WidgetShare.class.getSimpleName() + '"' + ": " + gson.toJson(widgetShare);
-                        showEditShareFileNameDialog(strRule);
-                    }
-                });
-
-                widgetBinding.widgetDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        new AlertDialog.Builder(EditDataActivity.this)
-                                .setTitle("确定删除？")
-                                .setNegativeButton("取消", null)
-                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dataDao.deleteWidget(e);
-                                        widgetSet.remove(e);
-                                        widgetList.remove(e);
-                                        editDataBinding.widgetLayout.removeView(widgetBinding.getRoot());
-                                        if (widgetSet.isEmpty()) {
-                                            appDescribe.widgetSetMap.remove(e.appActivity);
-                                        }
-                                        if (appDescribe.widgetSetMap.isEmpty()) {
-                                            editDataBinding.widgetLayout.setVisibility(View.GONE);
-                                        }
+            widgetBinding.widgetDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AlertDialog.Builder(EditDataActivity.this)
+                            .setTitle("确定删除？")
+                            .setNegativeButton("取消", null)
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dataDao.deleteWidget(e);
+                                    appDescribe.widgetList.remove(e);
+                                    editDataBinding.widgetLayout.removeView(widgetBinding.getRoot());
+                                    if (appDescribe.widgetList.isEmpty()) {
+                                        editDataBinding.widgetLayout.setVisibility(View.GONE);
                                     }
-                                }).create().show();
-                    }
-                });
-                editDataBinding.widgetLayout.addView(widgetBinding.getRoot());
-            }
+                                }
+                            }).create().show();
+                }
+            });
+            editDataBinding.widgetLayout.addView(widgetBinding.getRoot());
         }
     }
 
@@ -623,6 +618,14 @@ public class EditDataActivity extends BaseActivity {
         myUtils.requestUpdateAutoFinder(appDescribe.appPackage);
         myUtils.requestUpdateCoordinate(appDescribe.appPackage);
         myUtils.requestUpdateWidget(appDescribe.appPackage);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = getIntent();
+        intent.putExtra("packageName", packageName);
+        setResult(Activity.RESULT_OK, intent);
+        super.onBackPressed();
     }
 
     private void showEditShareFileNameDialog(String strRegulation) {

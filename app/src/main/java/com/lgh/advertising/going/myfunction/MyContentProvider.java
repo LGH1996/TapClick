@@ -102,13 +102,13 @@ public class MyContentProvider extends ContentProvider {
         if (TextUtils.equals(updateScope, "updateWidget")) {
             AppDescribe appDescribe = appDescribeMap.get(packageName);
             if (appDescribe != null) {
-                appDescribe.getWidgetSetMapFromDatabase(dataDao);
+                appDescribe.getWidgetFromDatabase(dataDao);
             }
         }
         if (TextUtils.equals(updateScope, "updateCoordinate")) {
             AppDescribe appDescribe = appDescribeMap.get(packageName);
             if (appDescribe != null) {
-                appDescribe.getCoordinateMapFromDatabase(dataDao);
+                appDescribe.getCoordinateFromDatabase(dataDao);
             }
         }
     }

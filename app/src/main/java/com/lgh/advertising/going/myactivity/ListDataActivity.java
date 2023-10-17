@@ -1,6 +1,7 @@
 package com.lgh.advertising.going.myactivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
@@ -22,9 +23,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +42,6 @@ import com.lgh.advertising.going.databinding.ViewOnOffWarningBinding;
 import com.lgh.advertising.going.mybean.AppDescribe;
 import com.lgh.advertising.going.mybean.Regulation;
 import com.lgh.advertising.going.mybean.RegulationExport;
-import com.lgh.advertising.going.mybean.Widget;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
 import com.lgh.advertising.going.myfunction.MyUtils;
@@ -81,6 +84,8 @@ public class ListDataActivity extends BaseActivity {
     private DataDao dataDao;
     private PackageManager packageManager;
     private MyUtils myUtils;
+    private ActivityResultLauncher<Intent> itemResultLauncher;
+    private int curPosition;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -93,6 +98,22 @@ public class ListDataActivity extends BaseActivity {
         dataDao = MyApplication.dataDao;
         packageManager = getPackageManager();
         myUtils = MyApplication.myUtils;
+
+        itemResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getData() == null || result.getResultCode() != Activity.RESULT_OK) {
+                    return;
+                }
+                String packageName = result.getData().getStringExtra("packageName");
+                AppDescribe appDescribe = dataDao.getAppDescribeByPackage(packageName);
+                if (appDescribe != null) {
+                    appDescribe.getOtherFieldsFromDatabase(dataDao);
+                    appDescribeItemFilterList.get(curPosition).appDescribe.copy(appDescribe);
+                    myAdapter.notifyItemChanged(curPosition);
+                }
+            }
+        });
 
         if (!myUtils.isServiceRunning()) {
             Toast.makeText(context, "无障碍服务未开启", Toast.LENGTH_SHORT).show();
@@ -127,89 +148,6 @@ public class ListDataActivity extends BaseActivity {
         searchKeyword.add("@非系统应用");
         searchKeyword.add("@非必要不开启应用");
         listDataBinding.searchBox.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, searchKeyword));
-        final Filter filter = new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                appDescribeItemFilterList.clear();
-                if (constraint.equals("@开启")) {
-                    for (AppDescribeItem e : appDescribeItemList) {
-                        if (e.appDescribe.onOff) {
-                            appDescribeItemFilterList.add(e);
-                        }
-                    }
-                    return null;
-                }
-                if (constraint.equals("@关闭")) {
-                    for (AppDescribeItem e : appDescribeItemList) {
-                        if (!e.appDescribe.onOff) {
-                            appDescribeItemFilterList.add(e);
-                        }
-                    }
-                    return null;
-                }
-                if (constraint.equals("@已创建规则")) {
-                    for (AppDescribeItem e : appDescribeItemList) {
-                        if (!e.appDescribe.coordinateMap.isEmpty() || !e.appDescribe.widgetSetMap.isEmpty()) {
-                            appDescribeItemFilterList.add(e);
-                        }
-                    }
-                    return null;
-                }
-                if (constraint.equals("@未创建规则")) {
-                    for (AppDescribeItem e : appDescribeItemList) {
-                        if (e.appDescribe.coordinateMap.isEmpty() && e.appDescribe.widgetSetMap.isEmpty()) {
-                            appDescribeItemFilterList.add(e);
-                        }
-                    }
-                    return null;
-                }
-                if (constraint.equals("@系统应用")) {
-                    for (AppDescribeItem e : appDescribeItemList) {
-                        try {
-                            if ((packageManager.getApplicationInfo(e.appDescribe.appPackage, PackageManager.GET_META_DATA).flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM) {
-                                appDescribeItemFilterList.add(e);
-                            }
-                        } catch (PackageManager.NameNotFoundException ex) {
-                            // ex.printStackTrace();
-                        }
-                    }
-                    return null;
-                }
-                if (constraint.equals("@非系统应用")) {
-                    for (AppDescribeItem e : appDescribeItemList) {
-                        try {
-                            if ((packageManager.getApplicationInfo(e.appDescribe.appPackage, PackageManager.GET_META_DATA).flags & ApplicationInfo.FLAG_SYSTEM) != ApplicationInfo.FLAG_SYSTEM) {
-                                appDescribeItemFilterList.add(e);
-                            }
-                        } catch (PackageManager.NameNotFoundException ex) {
-                            // ex.printStackTrace();
-                        }
-                    }
-                    return null;
-                }
-                if (constraint.equals("@非必要不开启应用")) {
-                    for (AppDescribeItem e : appDescribeItemList) {
-                        if (pkgSuggestNotOnList.contains(e.appDescribe.appPackage)) {
-                            appDescribeItemFilterList.add(e);
-                        }
-                    }
-                    return null;
-                }
-
-                for (AppDescribeItem e : appDescribeItemList) {
-                    String str = constraint.toString().toLowerCase();
-                    if (e.appDescribe.appName.toLowerCase().contains(str) || e.appDescribe.appPackage.contains(str)) {
-                        appDescribeItemFilterList.add(e);
-                    }
-                }
-                return null;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                myAdapter.notifyDataSetChanged();
-            }
-        };
         listDataBinding.searchBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -221,7 +159,78 @@ public class ListDataActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                filter.filter(s.toString().trim());
+                String constraint = s.toString().trim();
+                List<AppDescribeItem> listTemp = new ArrayList<>();
+                switch (constraint) {
+                    case "@开启":
+                        for (AppDescribeItem e : appDescribeItemList) {
+                            if (e.appDescribe.onOff) {
+                                listTemp.add(e);
+                            }
+                        }
+                        break;
+                    case "@关闭":
+                        for (AppDescribeItem e : appDescribeItemList) {
+                            if (!e.appDescribe.onOff) {
+                                listTemp.add(e);
+                            }
+                        }
+                        break;
+                    case "@已创建规则":
+                        for (AppDescribeItem e : appDescribeItemList) {
+                            if (!e.appDescribe.coordinateList.isEmpty() || !e.appDescribe.widgetList.isEmpty()) {
+                                listTemp.add(e);
+                            }
+                        }
+                        break;
+                    case "@未创建规则":
+                        for (AppDescribeItem e : appDescribeItemList) {
+                            if (e.appDescribe.coordinateList.isEmpty() && e.appDescribe.widgetList.isEmpty()) {
+                                listTemp.add(e);
+                            }
+                        }
+                        break;
+                    case "@系统应用":
+                        for (AppDescribeItem e : appDescribeItemList) {
+                            try {
+                                if ((packageManager.getApplicationInfo(e.appDescribe.appPackage, PackageManager.GET_META_DATA).flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM) {
+                                    listTemp.add(e);
+                                }
+                            } catch (PackageManager.NameNotFoundException ex) {
+                                // ex.printStackTrace();
+                            }
+                        }
+                        break;
+                    case "@非系统应用":
+                        for (AppDescribeItem e : appDescribeItemList) {
+                            try {
+                                if ((packageManager.getApplicationInfo(e.appDescribe.appPackage, PackageManager.GET_META_DATA).flags & ApplicationInfo.FLAG_SYSTEM) != ApplicationInfo.FLAG_SYSTEM) {
+                                    listTemp.add(e);
+                                }
+                            } catch (PackageManager.NameNotFoundException ex) {
+                                // ex.printStackTrace();
+                            }
+                        }
+                        break;
+                    case "@非必要不开启应用":
+                        for (AppDescribeItem e : appDescribeItemList) {
+                            if (pkgSuggestNotOnList.contains(e.appDescribe.appPackage)) {
+                                listTemp.add(e);
+                            }
+                        }
+                        break;
+                    default:
+                        for (AppDescribeItem e : appDescribeItemList) {
+                            String str = constraint.toLowerCase();
+                            if (e.appDescribe.appName.toLowerCase().contains(str) || e.appDescribe.appPackage.contains(str)) {
+                                listTemp.add(e);
+                            }
+                        }
+                        break;
+                }
+                appDescribeItemFilterList.clear();
+                appDescribeItemFilterList.addAll(listTemp);
+                myAdapter.notifyDataSetChanged();
             }
         });
 
@@ -257,10 +266,8 @@ public class ListDataActivity extends BaseActivity {
                     Regulation regulation = new Regulation();
                     regulation.appDescribe = appdescribe;
                     regulation.autoFinder = appdescribe.autoFinder;
-                    regulation.coordinateList.addAll(appdescribe.coordinateMap.values());
-                    for (Set<Widget> widgetSet : appdescribe.widgetSetMap.values()) {
-                        regulation.widgetList.addAll(widgetSet);
-                    }
+                    regulation.coordinateList = appdescribe.coordinateList;
+                    regulation.widgetList = appdescribe.widgetList;
                     regulationExport.regulationList.add(regulation);
                 }
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -342,7 +349,6 @@ public class ListDataActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        myAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -470,8 +476,10 @@ public class ListDataActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         AppDescribeItem item = appDescribeItemFilterList.get(getAdapterPosition());
-                        EditDataActivity.appDescribe = item.appDescribe;
-                        startActivity(new Intent(context, EditDataActivity.class));
+                        Intent intent = new Intent(context, EditDataActivity.class);
+                        intent.putExtra("packageName", item.appDescribe.appPackage);
+                        itemResultLauncher.launch(intent);
+                        curPosition = getAdapterPosition();
                     }
                 });
 

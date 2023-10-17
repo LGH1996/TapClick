@@ -985,7 +985,7 @@ public class MainFunction {
                             dataDao.insertWidget(temWidget);
                             addDataBinding.saveWid.setEnabled(false);
                             addDataBinding.pacName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
-                            temAppDescribe.getWidgetSetMapFromDatabase(dataDao);
+                            temAppDescribe.getWidgetFromDatabase(dataDao);
                         }
                     }
                 };
@@ -1009,7 +1009,7 @@ public class MainFunction {
                             dataDao.insertCoordinate(temCoordinate);
                             addDataBinding.saveAim.setEnabled(false);
                             addDataBinding.pacName.setText(coordinateSelect.appPackage + " (以下坐标数据已保存)");
-                            temAppDescribe.getCoordinateMapFromDatabase(dataDao);
+                            temAppDescribe.getCoordinateFromDatabase(dataDao);
                         }
                     }
                 };
