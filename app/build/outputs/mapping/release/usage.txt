@@ -708,7 +708,6 @@ com.google.android.material.snackbar.BaseTransientBottomBar$16
 kotlin.io.FileTreeWalk$FileTreeWalkIterator$SingleFileState
 io.reactivex.rxjava3.internal.observers.BasicQueueDisposable
 androidx.activity.result.ActivityResultRegistry$3:
-    public void launch(java.lang.Object,androidx.core.app.ActivityOptionsCompat)
     public androidx.activity.result.contract.ActivityResultContract getContract()
 com.google.android.material.navigation.NavigationView$OnNavigationItemSelectedListener
 com.google.android.material.shape.MaterialShapeUtils:
@@ -1969,8 +1968,6 @@ io.reactivex.rxjava3.functions.Predicate:
     public abstract boolean test(java.lang.Object)
 androidx.core.R$color
 io.reactivex.rxjava3.internal.operators.flowable.FlowableTakeUntilPredicate
-androidx.activity.ComponentActivity$2:
-    public void onLaunch(int,androidx.activity.result.contract.ActivityResultContract,java.lang.Object,androidx.core.app.ActivityOptionsCompat)
 androidx.core.app.unusedapprestrictions.IUnusedAppRestrictionsBackportCallback
 androidx.core.view.GestureDetectorCompat$GestureDetectorCompatImplBase$GestureHandler
 org.apache.commons.io.output.ThresholdingOutputStream
@@ -4367,7 +4364,6 @@ com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton$On
     public void onShrunken(com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton)
 androidx.appcompat.resources.Compatibility$Api15Impl:
     private void <init>()
-androidx.core.app.ActivityCompat$OnRequestPermissionsResultCallback
 io.reactivex.rxjava3.internal.operators.observable.ObservableFlattenIterable
 org.apache.commons.codec.language.bm.Lang$LangRule
 androidx.fragment.app.Fragment$SavedState$1
@@ -4394,8 +4390,6 @@ okhttp3.internal.http2.Http2Stream$FramingSink:
     public final void setTrailers(okhttp3.Headers)
 androidx.room.DeleteTable
 androidx.room.RoomSQLiteQuery$1
-androidx.activity.result.ActivityResultRegistry$1:
-    void <init>(androidx.activity.result.ActivityResultRegistry,java.lang.String,androidx.activity.result.ActivityResultCallback,androidx.activity.result.contract.ActivityResultContract)
 io.reactivex.rxjava3.internal.operators.observable.ObservableZipIterable$ZipIterableObserver
 com.google.android.material.progressindicator.LinearProgressIndicatorSpec
 androidx.concurrent.futures.AbstractResolvableFuture$1
@@ -4483,8 +4477,6 @@ androidx.core.app.ActivityCompat:
     public static void setPermissionCompatDelegate(androidx.core.app.ActivityCompat$PermissionCompatDelegate)
     public static androidx.core.app.ActivityCompat$PermissionCompatDelegate getPermissionCompatDelegate()
     public static boolean invalidateOptionsMenu(android.app.Activity)
-    public static void startActivityForResult(android.app.Activity,android.content.Intent,int,android.os.Bundle)
-    public static void startIntentSenderForResult(android.app.Activity,android.content.IntentSender,int,android.content.Intent,int,int,int,android.os.Bundle)
     public static void finishAfterTransition(android.app.Activity)
     public static android.net.Uri getReferrer(android.app.Activity)
     public static android.view.View requireViewById(android.app.Activity,int)
@@ -4492,17 +4484,14 @@ androidx.core.app.ActivityCompat:
     public static void setExitSharedElementCallback(android.app.Activity,androidx.core.app.SharedElementCallback)
     public static void postponeEnterTransition(android.app.Activity)
     public static void startPostponedEnterTransition(android.app.Activity)
-    public static void requestPermissions(android.app.Activity,java.lang.String[],int)
     public static boolean shouldShowRequestPermissionRationale(android.app.Activity,java.lang.String)
     public static boolean isLaunchedFromBubble(android.app.Activity)
     public static androidx.core.view.DragAndDropPermissionsCompat requestDragAndDropPermissions(android.app.Activity,android.view.DragEvent)
     public static void setLocusContext(android.app.Activity,androidx.core.content.LocusIdCompat,android.os.Bundle)
-    private static androidx.core.app.ActivityCompat$PermissionCompatDelegate sDelegate
 kotlin.coroutines.CoroutineContext:
     public abstract java.lang.Object fold(java.lang.Object,kotlin.jvm.functions.Function2)
     public abstract kotlin.coroutines.CoroutineContext plus(kotlin.coroutines.CoroutineContext)
     public abstract kotlin.coroutines.CoroutineContext minusKey(kotlin.coroutines.CoroutineContext$Key)
-androidx.activity.ComponentActivity$2$1
 kotlin.collections.unsigned.UArraysKt___UArraysJvmKt
 okhttp3.internal.ws.WebSocketExtensions
 androidx.core.view.ContentInfoCompat$Compat31Impl:
@@ -4687,7 +4676,6 @@ androidx.constraintlayout.core.widgets.analyzer.DependencyGraph:
     private java.lang.String generateDisplayGraph(androidx.constraintlayout.core.widgets.analyzer.WidgetRun,java.lang.String)
     public void defineTerminalWidgets(androidx.constraintlayout.core.widgets.ConstraintWidget$DimensionBehaviour,androidx.constraintlayout.core.widgets.ConstraintWidget$DimensionBehaviour)
     private static final boolean USE_GROUPS
-androidx.core.app.ActivityCompat$1
 io.reactivex.rxjava3.internal.operators.observable.ObservableInternalHelper$ObserverOnError
 com.google.android.material.R$id:
     private void <init>()
@@ -5507,7 +5495,6 @@ io.reactivex.rxjava3.internal.operators.flowable.FlowableConcatMap$ConcatMapImme
 androidx.room.RoomOpenHelper:
     public void <init>(androidx.room.DatabaseConfiguration,androidx.room.RoomOpenHelper$Delegate,java.lang.String)
 org.apache.commons.io.output.ClosedOutputStream
-androidx.activity.ComponentActivity$2$2
 io.reactivex.rxjava3.internal.operators.parallel.ParallelRunOn$MultiWorkerCallback
 androidx.viewpager2.adapter.FragmentStateAdapter:
     public void <init>(androidx.fragment.app.FragmentActivity)
@@ -5678,7 +5665,8 @@ androidx.constraintlayout.core.LinearSystem:
 io.reactivex.rxjava3.internal.operators.observable.BlockingObservableMostRecent$MostRecentObserver$MostRecentIterator
 androidx.fragment.app.FragmentPagerAdapter
 androidx.constraintlayout.widget.SharedValues$SharedValuesListener
-androidx.activity.result.ActivityResultRegistry$2
+androidx.activity.result.ActivityResultRegistry$2:
+    public androidx.activity.result.contract.ActivityResultContract getContract()
 kotlin.ranges.LongProgression$Companion
 io.reactivex.rxjava3.annotations.BackpressureKind
 androidx.emoji2.viewsintegration.EmojiEditTextHelper:
@@ -7407,7 +7395,22 @@ androidx.core.content.res.CamColor:
     private static final float CHROMA_SEARCH_ENDPOINT
     private static final float LIGHTNESS_SEARCH_ENDPOINT
 io.reactivex.rxjava3.internal.operators.maybe.MaybeMergeArray$MergeMaybeObserver
-androidx.core.app.ActivityOptionsCompat
+androidx.core.app.ActivityOptionsCompat:
+    public static androidx.core.app.ActivityOptionsCompat makeCustomAnimation(android.content.Context,int,int)
+    public static androidx.core.app.ActivityOptionsCompat makeScaleUpAnimation(android.view.View,int,int,int,int)
+    public static androidx.core.app.ActivityOptionsCompat makeClipRevealAnimation(android.view.View,int,int,int,int)
+    public static androidx.core.app.ActivityOptionsCompat makeThumbnailScaleUpAnimation(android.view.View,android.graphics.Bitmap,int,int)
+    public static androidx.core.app.ActivityOptionsCompat makeSceneTransitionAnimation(android.app.Activity,android.view.View,java.lang.String)
+    public static varargs androidx.core.app.ActivityOptionsCompat makeSceneTransitionAnimation(android.app.Activity,androidx.core.util.Pair[])
+    public static androidx.core.app.ActivityOptionsCompat makeTaskLaunchBehind()
+    public static androidx.core.app.ActivityOptionsCompat makeBasic()
+    protected void <init>()
+    public androidx.core.app.ActivityOptionsCompat setLaunchBounds(android.graphics.Rect)
+    public android.graphics.Rect getLaunchBounds()
+    public void update(androidx.core.app.ActivityOptionsCompat)
+    public void requestUsageTimeReport(android.app.PendingIntent)
+    public static final java.lang.String EXTRA_USAGE_TIME_REPORT
+    public static final java.lang.String EXTRA_USAGE_TIME_REPORT_PACKAGES
 io.reactivex.rxjava3.internal.jdk8.ObservableFromStream$StreamDisposable
 io.reactivex.rxjava3.internal.operators.flowable.FlowableInterval$IntervalSubscriber
 io.reactivex.rxjava3.internal.jdk8.ObservableFlatMapStream
@@ -7957,6 +7960,7 @@ androidx.core.content.pm.ShortcutInfoCompatSaver
 kotlin.sequences.SequencesKt___SequencesKt$minus$3$iterator$1
 androidx.constraintlayout.helper.widget.MotionEffect
 com.lgh.advertising.going.myfunction.MyUtils:
+    public void <init>()
     private static final java.lang.String contentProviderAuthority
 androidx.appcompat.widget.ActionBarOverlayLayout:
     public void <init>(android.content.Context)
@@ -8523,9 +8527,6 @@ io.reactivex.rxjava3.subjects.SingleSubject$SingleDisposable
 androidx.transition.ChangeTransform$2
 org.apache.commons.io.comparator.PathFileComparator
 androidx.activity.result.ActivityResultRegistry:
-    public abstract void onLaunch(int,androidx.activity.result.contract.ActivityResultContract,java.lang.Object,androidx.core.app.ActivityOptionsCompat)
-    public final androidx.activity.result.ActivityResultLauncher register(java.lang.String,androidx.lifecycle.LifecycleOwner,androidx.activity.result.contract.ActivityResultContract,androidx.activity.result.ActivityResultCallback)
-    public final boolean dispatchResult(int,java.lang.Object)
     private static final java.lang.String KEY_COMPONENT_ACTIVITY_REGISTERED_RCS
     private static final java.lang.String KEY_COMPONENT_ACTIVITY_REGISTERED_KEYS
     private static final java.lang.String KEY_COMPONENT_ACTIVITY_LAUNCHED_KEYS
@@ -10857,9 +10858,6 @@ kotlin.collections.SlidingWindowKt$windowedIterator$1
 kotlin.jvm.internal.markers.KMutableIterator
 kotlin.text.StringsKt__StringsKt$iterator$1
 io.reactivex.rxjava3.internal.operators.flowable.FlowableRepeat
-androidx.activity.result.ActivityResultRegistry$LifecycleContainer:
-    void <init>(androidx.lifecycle.Lifecycle)
-    void addObserver(androidx.lifecycle.LifecycleEventObserver)
 androidx.appcompat.app.AppCompatDelegateImpl$Api17Impl:
     private void <init>()
 okhttp3.internal.http2.Http2Stream:
@@ -11138,7 +11136,6 @@ okhttp3.internal.connection.RealCall:
     public boolean isExecuted()
     public synthetic bridge okio.Timeout timeout()
     public synthetic bridge okhttp3.Call clone()
-androidx.core.app.ActivityCompat$RequestPermissionsRequestCodeValidator
 io.reactivex.rxjava3.internal.subscribers.BoundedSubscriber
 io.reactivex.rxjava3.internal.operators.flowable.FlowableSingle$SingleElementSubscriber
 com.google.android.material.switchmaterial.SwitchMaterial
@@ -12690,9 +12687,6 @@ com.google.android.material.R$styleable:
     public static final int ViewStubCompat_android_id
     public static final int ViewStubCompat_android_layout
     public static final int ViewStubCompat_android_inflatedId
-androidx.fragment.app.FragmentManager$FragmentIntentSenderContract:
-    public android.content.Intent createIntent(android.content.Context,androidx.activity.result.IntentSenderRequest)
-    public synthetic bridge android.content.Intent createIntent(android.content.Context,java.lang.Object)
 io.reactivex.rxjava3.internal.operators.observable.ObservableDelay
 kotlin.comparisons.UComparisonsKt
 kotlin.comparisons.ComparisonsKt___ComparisonsJvmKt:
@@ -13716,7 +13710,6 @@ androidx.fragment.app.FragmentActivity:
     public void supportPostponeEnterTransition()
     public void supportStartPostponedEnterTransition()
     public androidx.loader.app.LoaderManager getSupportLoaderManager()
-    public final void validateRequestPermissionsRequestCode(int)
     public void startActivityFromFragment(androidx.fragment.app.Fragment,android.content.Intent,int)
     public void startActivityFromFragment(androidx.fragment.app.Fragment,android.content.Intent,int,android.os.Bundle)
     public void startIntentSenderFromFragment(androidx.fragment.app.Fragment,android.content.IntentSender,int,android.content.Intent,int,int,int,android.os.Bundle)
@@ -13880,8 +13873,6 @@ com.google.android.material.datepicker.DateStrings:
     static androidx.core.util.Pair getDateRangeString(java.lang.Long,java.lang.Long,java.text.SimpleDateFormat)
 androidx.core.view.ContentInfoCompat$Flags
 androidx.activity.result.contract.ActivityResultContracts$StartActivityForResult:
-    public android.content.Intent createIntent(android.content.Context,android.content.Intent)
-    public synthetic bridge android.content.Intent createIntent(android.content.Context,java.lang.Object)
     public static final java.lang.String EXTRA_ACTIVITY_OPTIONS_BUNDLE
 androidx.core.content.LocusIdCompat
 androidx.transition.AnimatorUtils:
@@ -13902,7 +13893,8 @@ kotlin.reflect.KProperty$DefaultImpls
 kotlin.collections.ArraysKt___ArraysKt$withIndex$1
 org.apache.commons.io.ByteOrderMark
 io.reactivex.rxjava3.subjects.UnicastSubject$UnicastQueueDisposable
-androidx.activity.result.IntentSenderRequest$Builder
+androidx.activity.result.IntentSenderRequest$Builder:
+    public void <init>(android.app.PendingIntent)
 io.reactivex.rxjava3.internal.operators.observable.ObservableToListSingle$ToListObserver
 io.reactivex.rxjava3.internal.operators.observable.ObservableInternalHelper$ObserverOnComplete
 io.reactivex.rxjava3.internal.subscribers.InnerQueuedSubscriberSupport
@@ -15942,7 +15934,8 @@ okhttp3.internal.concurrent.Task:
     public final void setQueue$okhttp(okhttp3.internal.concurrent.TaskQueue)
 androidx.core.app.NotificationCompat$BigTextStyle
 com.google.android.material.transition.platform.SlideDistanceProvider$2
-androidx.core.app.ActivityCompat$PermissionCompatDelegate
+androidx.core.app.ActivityCompat$PermissionCompatDelegate:
+    public abstract boolean onActivityResult(android.app.Activity,int,int,android.content.Intent)
 kotlin.jvm.internal.CharSpreadBuilder
 io.reactivex.rxjava3.internal.operators.flowable.FlowableReduceWithSingle
 androidx.annotation.AnyThread
@@ -16639,7 +16632,6 @@ io.reactivex.rxjava3.internal.operators.maybe.MaybeCount$CountMaybeObserver
 io.reactivex.rxjava3.internal.operators.flowable.FlowableFlatMapSingle$FlatMapSingleSubscriber
 androidx.room.ColumnInfo$SQLiteTypeAffinity
 io.reactivex.rxjava3.internal.operators.completable.CompletableAndThenCompletable$SourceObserver
-androidx.activity.result.IntentSenderRequest$1
 com.google.android.material.transition.platform.TransitionUtils$2
 androidx.core.app.NotificationManagerCompat$SideChannelManager$ListenerRecord
 org.apache.commons.io.input.MarkShieldInputStream
@@ -17536,9 +17528,6 @@ androidx.viewpager.widget.ViewPager$OnPageChangeListener
 io.reactivex.rxjava3.internal.operators.flowable.FlowableObserveOn
 androidx.core.location.LocationCompat$Api18Impl
 org.apache.commons.io.LineIterator
-androidx.activity.result.contract.ActivityResultContract:
-    public abstract android.content.Intent createIntent(android.content.Context,java.lang.Object)
-    public androidx.activity.result.contract.ActivityResultContract$SynchronousResult getSynchronousResult(android.content.Context,java.lang.Object)
 androidx.core.app.SharedElementCallback$OnSharedElementsReadyListener
 io.reactivex.rxjava3.internal.operators.observable.ObservableFromIterable$FromIterableDisposable
 androidx.core.view.MenuCompat
@@ -18072,8 +18061,6 @@ androidx.activity.ComponentActivity:
     public android.content.Context peekAvailableContext()
     public final void removeOnContextAvailableListener(androidx.activity.contextaware.OnContextAvailableListener)
     public androidx.lifecycle.ViewModelProvider$Factory getDefaultViewModelProviderFactory()
-    public final androidx.activity.result.ActivityResultLauncher registerForActivityResult(androidx.activity.result.contract.ActivityResultContract,androidx.activity.result.ActivityResultRegistry,androidx.activity.result.ActivityResultCallback)
-    public final androidx.activity.result.ActivityResultLauncher registerForActivityResult(androidx.activity.result.contract.ActivityResultContract,androidx.activity.result.ActivityResultCallback)
     private androidx.lifecycle.ViewModelProvider$Factory mDefaultFactory
     private static final java.lang.String ACTIVITY_RESULT_TAG
 com.google.android.material.datepicker.DateFormatTextWatcher
@@ -19083,11 +19070,6 @@ org.apache.commons.io.input.DemuxInputStream
 kotlin.reflect.KCallable$DefaultImpls
 kotlin.time.TimeSourceKt
 androidx.activity.result.contract.ActivityResultContracts$RequestMultiplePermissions:
-    static android.content.Intent createIntent(java.lang.String[])
-    public android.content.Intent createIntent(android.content.Context,java.lang.String[])
-    public androidx.activity.result.contract.ActivityResultContract$SynchronousResult getSynchronousResult(android.content.Context,java.lang.String[])
-    public synthetic bridge androidx.activity.result.contract.ActivityResultContract$SynchronousResult getSynchronousResult(android.content.Context,java.lang.Object)
-    public synthetic bridge android.content.Intent createIntent(android.content.Context,java.lang.Object)
     public static final java.lang.String ACTION_REQUEST_PERMISSIONS
     public static final java.lang.String EXTRA_PERMISSIONS
     public static final java.lang.String EXTRA_PERMISSION_GRANT_RESULTS
@@ -21253,7 +21235,6 @@ org.reactivestreams.Subscriber
 io.reactivex.rxjava3.internal.operators.parallel.ParallelFlatMap
 androidx.startup.R$string:
     private void <init>()
-androidx.activity.result.contract.ActivityResultContract$SynchronousResult
 androidx.recyclerview.widget.RecyclerView$EdgeEffectFactory$EdgeDirection
 androidx.loader.R$drawable
 androidx.appcompat.widget.DrawableUtils$Api18Impl:
@@ -22152,8 +22133,6 @@ okio.ZipFileSystem$Companion
 kotlin.time.Duration$Companion
 io.reactivex.rxjava3.internal.operators.observable.ObservableMap
 androidx.activity.result.ActivityResultLauncher:
-    public void launch(java.lang.Object)
-    public abstract void launch(java.lang.Object,androidx.core.app.ActivityOptionsCompat)
     public abstract androidx.activity.result.contract.ActivityResultContract getContract()
 com.google.android.material.transition.platform.MaterialContainerTransform$FadeMode
 io.reactivex.rxjava3.disposables.SubscriptionDisposable
@@ -24362,7 +24341,6 @@ org.apache.commons.io.filefilter.TrueFileFilter:
     public org.apache.commons.io.filefilter.IOFileFilter and(org.apache.commons.io.filefilter.IOFileFilter)
     private static final long serialVersionUID
 androidx.core.location.GpsStatusWrapper
-androidx.activity.result.IntentSenderRequest
 androidx.annotation.Px
 io.reactivex.rxjava3.internal.operators.flowable.FlowableBufferBoundary
 androidx.core.net.MailTo
@@ -28007,9 +27985,6 @@ androidx.constraintlayout.widget.ConstraintSet$Transform:
     public void copyFrom(androidx.constraintlayout.widget.ConstraintSet$Transform)
 retrofit2.converter.scalars.ScalarResponseBodyConverters$ShortResponseBodyConverter:
     public java.lang.Short convert(okhttp3.ResponseBody)
-androidx.activity.result.ActivityResultRegistry$3:
-    public final synthetic int val$requestCode
-    public final synthetic androidx.activity.result.contract.ActivityResultContract val$contract
 com.google.android.material.shape.MaterialShapeUtils
 androidx.core.view.NestedScrollingChild:
     public abstract boolean isNestedScrollingEnabled()
@@ -28681,8 +28656,6 @@ com.google.gson.Gson$5:
     public java.util.concurrent.atomic.AtomicLongArray read(com.google.gson.stream.JsonReader)
 androidx.emoji2.text.FontRequestEmojiCompatConfig$FontRequestMetadataLoader$1
 io.reactivex.rxjava3.functions.Predicate
-androidx.activity.ComponentActivity$2:
-    public final synthetic androidx.activity.ComponentActivity this$0
 androidx.appcompat.widget.TintResources:
     public void <init>(android.content.Context,android.content.res.Resources)
     public android.graphics.drawable.Drawable getDrawable(int)
@@ -28872,7 +28845,6 @@ androidx.lifecycle.LifecycleRegistry:
     public void <init>(androidx.lifecycle.LifecycleOwner,boolean)
     public void markState(androidx.lifecycle.Lifecycle$State)
     public void setCurrentState(androidx.lifecycle.Lifecycle$State)
-    public void removeObserver(androidx.lifecycle.LifecycleObserver)
     public androidx.lifecycle.Lifecycle$State getCurrentState()
     public final boolean isSynced()
     public final void pushParentState(androidx.lifecycle.Lifecycle$State)
@@ -28943,18 +28915,20 @@ androidx.core.graphics.drawable.WrappedDrawableApi14
 com.lgh.advertising.going.myactivity.ListDataActivity:
     public static synthetic java.lang.String lambda$onCreate$1(android.content.pm.ResolveInfo)
     public static synthetic java.lang.String lambda$onCreate$0(android.content.pm.PackageInfo)
-    public static synthetic java.util.List access$000(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic java.util.List access$100(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic android.content.pm.PackageManager access$200(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic java.util.Set access$300(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter access$400(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic java.util.List access$500(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic com.lgh.advertising.going.databinding.ActivityListDataBinding access$600(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static void access$700(com.lgh.advertising.going.myactivity.ListDataActivity,java.lang.String)
-    public static synthetic android.content.Context access$800(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic com.lgh.advertising.going.myclass.DataDao access$900(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic java.util.List access$1000(com.lgh.advertising.going.myactivity.ListDataActivity)
-    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$1100(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic com.lgh.advertising.going.myclass.DataDao access$000(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic int access$100(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic java.util.List access$200(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter access$300(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic java.util.List access$400(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic android.content.pm.PackageManager access$500(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic java.util.Set access$600(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic java.util.List access$700(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic com.lgh.advertising.going.databinding.ActivityListDataBinding access$800(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static void access$900(com.lgh.advertising.going.myactivity.ListDataActivity,java.lang.String)
+    public static synthetic android.content.Context access$1000(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic java.util.List access$1100(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic androidx.activity.result.ActivityResultLauncher access$1200(com.lgh.advertising.going.myactivity.ListDataActivity)
+    public static synthetic int access$102(com.lgh.advertising.going.myactivity.ListDataActivity,int)
     public final void showEditShareFileNameDialog(java.lang.String)
 kotlin.ranges.RangesKt__RangesKt
 kotlin.ranges.IntRange$Companion
@@ -28977,6 +28951,7 @@ androidx.lifecycle.ProcessLifecycleOwner$2:
 androidx.core.os.BuildCompat
 com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton$OnChangedCallback
 androidx.appcompat.resources.Compatibility$Api15Impl
+androidx.core.app.ActivityCompat$OnRequestPermissionsResultCallback
 com.google.android.material.timepicker.ClockHandView$OnActionUpListener
 androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VPathRenderer
 androidx.constraintlayout.core.motion.utils.MonotonicCurveFit
@@ -28987,11 +28962,6 @@ okhttp3.internal.http2.Http2Stream$FramingSink:
     public final boolean getClosed()
     public final void setClosed(boolean)
     public okhttp3.Headers trailers
-androidx.activity.result.ActivityResultRegistry$1:
-    public final synthetic java.lang.String val$key
-    public final synthetic androidx.activity.result.ActivityResultCallback val$callback
-    public final synthetic androidx.activity.result.contract.ActivityResultContract val$contract
-    public final synthetic androidx.activity.result.ActivityResultRegistry this$0
 androidx.appcompat.widget.AppCompatSpinner$SavedState$1:
     public androidx.appcompat.widget.AppCompatSpinner$SavedState createFromParcel(android.os.Parcel)
     public androidx.appcompat.widget.AppCompatSpinner$SavedState[] newArray(int)
@@ -29007,8 +28977,12 @@ kotlin.collections.SetsKt__SetsJVMKt
 com.google.android.material.floatingactionbutton.BorderDrawable
 androidx.constraintlayout.core.widgets.ConstraintWidget$1
 androidx.core.app.ActivityCompat:
+    public static void startActivityForResult(android.app.Activity,android.content.Intent,int,android.os.Bundle)
+    public static void startIntentSenderForResult(android.app.Activity,android.content.IntentSender,int,android.content.Intent,int,int,int,android.os.Bundle)
     public static void finishAffinity(android.app.Activity)
+    public static void requestPermissions(android.app.Activity,java.lang.String[],int)
     public static void recreate(android.app.Activity)
+    public static androidx.core.app.ActivityCompat$PermissionCompatDelegate sDelegate
 io.reactivex.rxjava3.internal.schedulers.IoScheduler$ThreadWorker:
     public long getExpirationTime()
     public void setExpirationTime(long)
@@ -29142,6 +29116,7 @@ androidx.constraintlayout.core.widgets.analyzer.DependencyGraph:
     public void invalidateMeasures()
     public void buildGraph(java.util.ArrayList)
     public java.util.ArrayList runGroups
+androidx.core.app.ActivityCompat$1
 com.google.android.material.R$id
 okhttp3.Headers$Builder:
     public final java.util.List getNamesAndValues$okhttp()
@@ -30083,6 +30058,8 @@ androidx.core.content.res.CamColor:
     public final float mQ
     public final float mM
     public final float mS
+androidx.core.app.ActivityOptionsCompat:
+    public android.os.Bundle toBundle()
 retrofit2.ParameterHandler$PartMap:
     public void apply(retrofit2.RequestBuilder,java.util.Map)
 androidx.fragment.app.SpecialEffectsControllerFactory:
@@ -30248,7 +30225,6 @@ androidx.core.view.ViewCompat$AccessibilityPaneVisibilityManager:
 com.lgh.advertising.going.myactivity.MainActivity$10:
     public final synthetic com.lgh.advertising.going.myactivity.MainActivity this$0
 androidx.lifecycle.Lifecycle:
-    public abstract void removeObserver(androidx.lifecycle.LifecycleObserver)
     public abstract androidx.lifecycle.Lifecycle$State getCurrentState()
     public java.util.concurrent.atomic.AtomicReference mInternalScopeRef
 com.lgh.advertising.going.myclass.MyApplication$3:
@@ -30337,22 +30313,7 @@ com.google.android.material.button.MaterialButtonToggleGroup$CornerData:
     public static com.google.android.material.button.MaterialButtonToggleGroup$CornerData top(com.google.android.material.button.MaterialButtonToggleGroup$CornerData)
     public static com.google.android.material.button.MaterialButtonToggleGroup$CornerData bottom(com.google.android.material.button.MaterialButtonToggleGroup$CornerData)
 androidx.fragment.app.FragmentResultListener
-com.lgh.advertising.going.myfunction.MyUtils:
-    public static com.lgh.advertising.going.myfunction.MyUtils getInstance(android.content.Context)
-    public boolean requestUpdateAutoFinder(java.lang.String)
-    public boolean requestUpdateCoordinate(java.lang.String)
-    public boolean requestUpdateKeepAliveByNotification(boolean)
-    public boolean requestUpdateKeepAliveByFloatingWindow(boolean)
-    public boolean setKeepAliveByNotification(boolean)
-    public boolean setKeepAliveByFloatingWindow(boolean)
-    public boolean requestUpdateAllDate()
-    public boolean requestShowDbClickSetting()
-    public boolean requestUpdateShowDbClickFloating(boolean)
-    public boolean setDbClickEnable(boolean)
-    public android.graphics.Rect getDbClickPosition()
-    public boolean setDbClickPosition(android.graphics.Rect)
-    public boolean getIsFirstStart()
-    public void setIsFirstStart(boolean)
+com.lgh.advertising.going.myfunction.MyUtils
 androidx.appcompat.widget.ActionBarOverlayLayout:
     public final androidx.appcompat.widget.DecorToolbar getDecorToolbar(android.view.View)
     public final void postRemoveActionBarHideOffset()
@@ -30434,7 +30395,6 @@ androidx.core.widget.NestedScrollView:
     public final boolean scrollToChildRect(android.graphics.Rect,boolean)
     public final void endDrag()
     public void dispatchNestedScroll(int,int,int,int,int[],int,int[])
-    public void stopNestedScroll(int)
     public boolean pageScroll(int)
     public final void smoothScrollBy(int,int)
     public void smoothScrollTo(int,int,boolean)
@@ -30539,10 +30499,11 @@ androidx.constraintlayout.widget.ConstraintLayoutStates:
     public androidx.constraintlayout.widget.ConstraintSet mDefaultConstraintSet
     public androidx.constraintlayout.widget.ConstraintsChangedListener mConstraintsChangedListener
 androidx.activity.result.ActivityResultRegistry:
+    public final androidx.activity.result.ActivityResultLauncher register(java.lang.String,androidx.lifecycle.LifecycleOwner,androidx.activity.result.contract.ActivityResultContract,androidx.activity.result.ActivityResultCallback)
     public final void onSaveInstanceState(android.os.Bundle)
     public final void onRestoreInstanceState(android.os.Bundle)
+    public final boolean dispatchResult(int,java.lang.Object)
     public final void doDispatch(java.lang.String,int,android.content.Intent,androidx.activity.result.ActivityResultRegistry$CallbackAndContract)
-    public final int registerKey(java.lang.String)
     public final int generateRandomNumber()
     public final void bindRcKey(int,java.lang.String)
 androidx.appcompat.widget.ViewStubCompat:
@@ -30568,9 +30529,8 @@ com.lgh.advertising.going.myactivity.AuthorizationActivity:
     public static synthetic android.content.Context access$100(com.lgh.advertising.going.myactivity.AuthorizationActivity)
     public static synthetic android.app.admin.DevicePolicyManager access$200(com.lgh.advertising.going.myactivity.AuthorizationActivity)
     public static synthetic android.os.PowerManager access$300(com.lgh.advertising.going.myactivity.AuthorizationActivity)
-    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$400(com.lgh.advertising.going.myactivity.AuthorizationActivity)
-    public static synthetic com.lgh.advertising.going.databinding.ActivityAuthorizationBinding access$500(com.lgh.advertising.going.myactivity.AuthorizationActivity)
-    public static synthetic android.os.Handler access$600(com.lgh.advertising.going.myactivity.AuthorizationActivity)
+    public static synthetic com.lgh.advertising.going.databinding.ActivityAuthorizationBinding access$400(com.lgh.advertising.going.myactivity.AuthorizationActivity)
+    public static synthetic android.os.Handler access$500(com.lgh.advertising.going.myactivity.AuthorizationActivity)
 androidx.lifecycle.ViewModelProvider$KeyedFactory:
     public androidx.lifecycle.ViewModel create(java.lang.Class)
 androidx.core.view.accessibility.AccessibilityViewCommand$SetTextArguments
@@ -30681,10 +30641,9 @@ com.lgh.advertising.going.myfunction.MainFunction:
     public static synthetic java.lang.String access$902(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
     public static synthetic android.view.WindowManager$LayoutParams access$3000(com.lgh.advertising.going.myfunction.MainFunction)
     public static synthetic android.view.View access$3100(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$3200(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.lang.String access$3302(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
-    public static synthetic android.content.pm.PackageManager access$3400(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.view.inputmethod.InputMethodManager access$3500(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.lang.String access$3202(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
+    public static synthetic android.content.pm.PackageManager access$3300(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.view.inputmethod.InputMethodManager access$3400(com.lgh.advertising.going.myfunction.MainFunction)
     public final void findButtonByText(android.view.accessibility.AccessibilityNodeInfo,com.lgh.advertising.going.mybean.AutoFinder)
     public final void findButtonByWidget(android.view.accessibility.AccessibilityNodeInfo,java.util.Set)
     public final java.util.ArrayList findAllNode(android.view.accessibility.AccessibilityNodeInfo)
@@ -30750,6 +30709,21 @@ com.google.android.material.R$style:
     public static java.util.List JsonToStringList(java.lang.String)
     public static android.graphics.Rect JsonToRect(java.lang.String)
     public static java.lang.String RectToJson(android.graphics.Rect)
+    public static void init(android.content.Context)
+    public static boolean requestUpdateAutoFinder(java.lang.String)
+    public static boolean requestUpdateCoordinate(java.lang.String)
+    public static boolean requestUpdateKeepAliveByNotification(boolean)
+    public static boolean requestUpdateKeepAliveByFloatingWindow(boolean)
+    public static boolean setKeepAliveByNotification(boolean)
+    public static boolean setKeepAliveByFloatingWindow(boolean)
+    public static boolean requestUpdateAllDate()
+    public static boolean requestShowDbClickSetting()
+    public static boolean requestUpdateShowDbClickFloating(boolean)
+    public static boolean setDbClickEnable(boolean)
+    public static android.graphics.Rect getDbClickPosition()
+    public static boolean setDbClickPosition(android.graphics.Rect)
+    public static boolean getIsFirstStart()
+    public static void setIsFirstStart(boolean)
     public static io.reactivex.rxjava3.core.Scheduler initMainThreadScheduler(java.util.concurrent.Callable)
     public static io.reactivex.rxjava3.core.Scheduler onMainThreadScheduler(io.reactivex.rxjava3.core.Scheduler)
     public static io.reactivex.rxjava3.core.Scheduler callRequireNonNull(java.util.concurrent.Callable)
@@ -31176,9 +31150,8 @@ androidx.core.text.PrecomputedTextCompat$Params:
     public int getHyphenationFrequency()
     public final android.text.PrecomputedText$Params mWrapped
 androidx.activity.result.ActivityResultRegistry$LifecycleContainer:
+    public void addObserver(androidx.lifecycle.LifecycleEventObserver)
     public void clearObservers()
-    public final androidx.lifecycle.Lifecycle mLifecycle
-    public final java.util.ArrayList mObservers
 androidx.appcompat.app.AppCompatDelegateImpl$Api17Impl
 okhttp3.internal.http2.Http2Stream:
     public static void <clinit>()
@@ -31369,7 +31342,6 @@ okhttp3.internal.http2.Http2Connection$Builder:
     public final okhttp3.internal.http2.Http2Connection$Builder pingIntervalMillis(int)
     public final okhttp3.internal.http2.Http2Connection build()
 com.lgh.advertising.going.myactivity.AddDataActivity:
-    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$000(com.lgh.advertising.going.myactivity.AddDataActivity)
     public final void requestEnableAccessibility()
 okhttp3.internal.http2.Http2Stream$Companion
 androidx.sqlite.db.SupportSQLiteOpenHelper$Configuration
@@ -31806,6 +31778,7 @@ com.google.android.material.R$styleable:
     public static final int[] ViewPager2
     public static final int[] ViewStubCompat
 androidx.fragment.app.FragmentManager$FragmentIntentSenderContract:
+    public android.content.Intent createIntent(androidx.activity.result.IntentSenderRequest)
     public androidx.activity.result.ActivityResult parseResult(int,android.content.Intent)
 kotlin.comparisons.ComparisonsKt___ComparisonsJvmKt
 kotlin.collections.CollectionsKt__IteratorsJVMKt
@@ -32149,6 +32122,7 @@ okhttp3.MediaType:
     public final java.lang.String subtype
 com.google.android.material.datepicker.DateStrings
 androidx.activity.result.contract.ActivityResultContracts$StartActivityForResult:
+    public android.content.Intent createIntent(android.content.Intent)
     public androidx.activity.result.ActivityResult parseResult(int,android.content.Intent)
 androidx.transition.AnimatorUtils
 androidx.emoji2.text.EmojiProcessor$CodepointIndexFinder
@@ -32158,6 +32132,7 @@ com.google.android.material.animation.ImageMatrixProperty:
 com.lgh.advertising.going.myclass.DataDao_Impl$7:
     public void bind(androidx.sqlite.db.SupportSQLiteStatement,com.lgh.advertising.going.mybean.AutoFinder)
     public final synthetic com.lgh.advertising.going.myclass.DataDao_Impl this$0
+androidx.activity.result.IntentSenderRequest$Builder
 okhttp3.internal.platform.android.BouncyCastleSocketAdapter$Companion
 com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter:
     public com.lgh.advertising.going.myactivity.ListDataActivity$MyAdapter$ViewHolder onCreateViewHolder(android.view.ViewGroup)
@@ -33264,6 +33239,7 @@ okhttp3.internal.concurrent.Task:
     public final long getNextExecuteNanoTime$okhttp()
     public final void setNextExecuteNanoTime$okhttp(long)
     public final void initQueue$okhttp(okhttp3.internal.concurrent.TaskQueue)
+androidx.core.app.ActivityCompat$PermissionCompatDelegate
 androidx.appcompat.widget.AppCompatTextHelper:
     public void onAsyncTypefaceReceived(java.lang.ref.WeakReference,android.graphics.Typeface)
     public void setAllCaps(boolean)
@@ -33305,9 +33281,9 @@ io.reactivex.rxjava3.internal.util.ExceptionHelper:
     public static java.lang.NullPointerException createNullPointerException(java.lang.String)
     public static final java.lang.Throwable TERMINATED
 androidx.constraintlayout.widget.ConstraintAttribute$1
-com.lgh.advertising.going.myactivity.ListDataActivity$2:
-    public final synthetic com.lgh.advertising.going.myactivity.ListDataActivity this$0
 okhttp3.FormBody$Companion
+com.lgh.advertising.going.myactivity.AddDataActivity$2:
+    public final synthetic com.lgh.advertising.going.myactivity.AddDataActivity this$0
 okhttp3.internal.platform.android.AndroidCertificateChainCleaner:
     public static void <clinit>()
     public static final okhttp3.internal.platform.android.AndroidCertificateChainCleaner buildIfSupported(javax.net.ssl.X509TrustManager)
@@ -33667,6 +33643,9 @@ androidx.fragment.app.Fragment$OnStartEnterTransitionListener:
     public abstract void startListening()
 com.google.gson.internal.ConstructorConstructor$3:
     public final synthetic com.google.gson.internal.ConstructorConstructor this$0
+androidx.activity.result.IntentSenderRequest$1:
+    public androidx.activity.result.IntentSenderRequest createFromParcel(android.os.Parcel)
+    public androidx.activity.result.IntentSenderRequest[] newArray(int)
 androidx.constraintlayout.widget.ConstraintHelper:
     public final int findId(java.lang.String)
     public void applyLayoutFeatures()
@@ -33791,6 +33770,8 @@ androidx.constraintlayout.motion.utils.ViewSpline$TranslationXset
 com.google.gson.internal.reflect.ReflectionAccessor:
     public static com.google.gson.internal.reflect.ReflectionAccessor getInstance()
 kotlin.coroutines.intrinsics.IntrinsicsKt
+com.lgh.advertising.going.myactivity.ListDataActivity$1:
+    public void onActivityResult(androidx.activity.result.ActivityResult)
 com.google.android.material.internal.ViewUtils$OnApplyWindowInsetsListener:
     public abstract androidx.core.view.WindowInsetsCompat onApplyWindowInsets(android.view.View,androidx.core.view.WindowInsetsCompat,com.google.android.material.internal.ViewUtils$RelativePadding)
 com.lgh.advertising.going.databinding.ViewOnOffWarningBinding:
@@ -33908,8 +33889,8 @@ androidx.room.RoomDatabase:
     public void endTransaction()
     public java.util.concurrent.Executor getQueryExecutor()
     public void internalInitInvalidationTracker(androidx.sqlite.db.SupportSQLiteDatabase)
-    public synthetic java.lang.Object lambda$beginTransaction$0$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public synthetic java.lang.Object lambda$endTransaction$1$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
+    public synthetic java.lang.Object lambda$beginTransaction$0$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public java.util.concurrent.Executor mTransactionExecutor
     public boolean mWriteAheadLoggingEnabled
     public final java.util.Map mBackingFieldMap
@@ -34033,6 +34014,7 @@ com.lgh.advertising.going.databinding.ActivityAuthorizationBinding:
     public final android.widget.ImageView deviceAdminForward
     public final android.widget.ImageView floatingWindowForward
     public final android.widget.ImageView notificationForward
+    public final android.widget.ImageView systemAlertForward
 androidx.recyclerview.widget.StaggeredGridLayoutManager:
     public final void createOrientationHelpers()
     public final boolean checkSpanForGap(androidx.recyclerview.widget.StaggeredGridLayoutManager$Span)
@@ -34135,8 +34117,7 @@ com.lgh.advertising.going.myactivity.MainActivity:
     public static synthetic android.view.LayoutInflater access$000(com.lgh.advertising.going.myactivity.MainActivity)
     public static synthetic boolean access$102(com.lgh.advertising.going.myactivity.MainActivity,boolean)
     public static synthetic android.content.Context access$200(com.lgh.advertising.going.myactivity.MainActivity)
-    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$300(com.lgh.advertising.going.myactivity.MainActivity)
-    public static synthetic com.lgh.advertising.going.myclass.DataDao access$400(com.lgh.advertising.going.myactivity.MainActivity)
+    public static synthetic com.lgh.advertising.going.myclass.DataDao access$300(com.lgh.advertising.going.myactivity.MainActivity)
     public final void refreshAccessibilityServiceStatus()
     public final void showUpdateInfo()
     public final void showPrivacyAgreement()
@@ -34377,8 +34358,9 @@ com.google.android.material.math.MathUtils
 androidx.activity.ComponentActivity:
     public static synthetic androidx.activity.result.ActivityResultRegistry access$100(androidx.activity.ComponentActivity)
     public java.lang.Object onRetainCustomNonConfigurationInstance()
+    public final androidx.activity.result.ActivityResultLauncher registerForActivityResult(androidx.activity.result.contract.ActivityResultContract,androidx.activity.result.ActivityResultRegistry,androidx.activity.result.ActivityResultCallback)
+    public final androidx.activity.result.ActivityResultLauncher registerForActivityResult(androidx.activity.result.contract.ActivityResultContract,androidx.activity.result.ActivityResultCallback)
     public int mContentLayoutId
-    public final java.util.concurrent.atomic.AtomicInteger mNextLocalRequestCode
 androidx.room.InvalidationTracker$ObserverWrapper:
     public void <init>(androidx.room.InvalidationTracker$Observer,int[],java.lang.String[])
     public void notifyByTableInvalidStatus(java.util.Set)
@@ -34722,6 +34704,9 @@ androidx.coordinatorlayout.widget.CoordinatorLayout:
     public androidx.coordinatorlayout.widget.CoordinatorLayout$LayoutParams generateLayoutParams(android.view.ViewGroup$LayoutParams)
     public androidx.coordinatorlayout.widget.CoordinatorLayout$LayoutParams generateDefaultLayoutParams()
 androidx.activity.result.contract.ActivityResultContracts$RequestMultiplePermissions:
+    public static android.content.Intent createIntent(java.lang.String[])
+    public android.content.Intent createIntent1(java.lang.String[])
+    public androidx.activity.result.contract.ActivityResultContract$SynchronousResult getSynchronousResult(android.content.Context,java.lang.String[])
     public java.util.Map parseResult(int,android.content.Intent)
 okhttp3.Cookie:
     public void <init>(java.lang.String,java.lang.String,long,java.lang.String,java.lang.String,boolean,boolean,boolean,boolean)
@@ -35974,6 +35959,8 @@ androidx.startup.R$string:
     public static final int mtrl_fab_show_motion_spec
     public static final int mtrl_fab_transformation_sheet_collapse_spec
     public static final int mtrl_fab_transformation_sheet_expand_spec
+androidx.activity.result.contract.ActivityResultContract$SynchronousResult:
+    public java.lang.Object getValue()
 androidx.constraintlayout.motion.utils.ViewSpline$PivotYset
 androidx.appcompat.widget.DrawableUtils$Api18Impl:
     public static android.graphics.Rect getOpticalInsets(android.graphics.drawable.Drawable)
@@ -36035,12 +36022,13 @@ com.lgh.advertising.going.myactivity.EditDataActivity:
     public static synthetic java.lang.String lambda$onCreate$0(android.content.pm.PackageInfo)
     public static synthetic com.lgh.advertising.going.databinding.ActivityEditDataBinding access$000(com.lgh.advertising.going.myactivity.EditDataActivity)
     public static synthetic com.lgh.advertising.going.databinding.ViewBaseSettingBinding access$100(com.lgh.advertising.going.myactivity.EditDataActivity)
-    public static synthetic com.lgh.advertising.going.myclass.DataDao access$200(com.lgh.advertising.going.myactivity.EditDataActivity)
-    public static synthetic java.text.SimpleDateFormat access$300(com.lgh.advertising.going.myactivity.EditDataActivity)
-    public static synthetic java.util.Set access$400(com.lgh.advertising.going.myactivity.EditDataActivity)
-    public static synthetic com.lgh.advertising.going.databinding.ViewAutoFinderBinding access$500(com.lgh.advertising.going.myactivity.EditDataActivity)
-    public static synthetic android.util.DisplayMetrics access$600(com.lgh.advertising.going.myactivity.EditDataActivity)
-    public static synthetic android.content.Context access$800(com.lgh.advertising.going.myactivity.EditDataActivity)
+    public static synthetic com.lgh.advertising.going.mybean.AppDescribe access$200(com.lgh.advertising.going.myactivity.EditDataActivity)
+    public static synthetic com.lgh.advertising.going.myclass.DataDao access$300(com.lgh.advertising.going.myactivity.EditDataActivity)
+    public static synthetic java.text.SimpleDateFormat access$400(com.lgh.advertising.going.myactivity.EditDataActivity)
+    public static synthetic java.util.Set access$500(com.lgh.advertising.going.myactivity.EditDataActivity)
+    public static synthetic com.lgh.advertising.going.databinding.ViewAutoFinderBinding access$600(com.lgh.advertising.going.myactivity.EditDataActivity)
+    public static synthetic android.util.DisplayMetrics access$700(com.lgh.advertising.going.myactivity.EditDataActivity)
+    public static synthetic android.content.Context access$900(com.lgh.advertising.going.myactivity.EditDataActivity)
     public final void showEditShareFileNameDialog(java.lang.String)
 androidx.customview.view.AbsSavedState$2:
     public androidx.customview.view.AbsSavedState createFromParcel(android.os.Parcel,java.lang.ClassLoader)
@@ -36573,6 +36561,8 @@ androidx.core.view.ViewCompat$1:
     public java.lang.Boolean frameworkGet(android.view.View)
     public void frameworkSet(android.view.View,java.lang.Boolean)
     public boolean shouldUpdate(java.lang.Boolean,java.lang.Boolean)
+androidx.activity.result.ActivityResultLauncher:
+    public void launch(java.lang.Object)
 androidx.core.text.TextDirectionHeuristicsCompat$AnyStrong
 androidx.constraintlayout.motion.widget.MotionLayout$TransitionListener:
     public abstract void onTransitionCompleted(androidx.constraintlayout.motion.widget.MotionLayout,int)
@@ -36665,7 +36655,6 @@ com.lgh.advertising.going.myactivity.RegulationImportActivity:
     public static synthetic com.lgh.advertising.going.myactivity.RegulationImportActivity$MyAdapter access$200(com.lgh.advertising.going.myactivity.RegulationImportActivity)
     public static synthetic java.util.List access$300(com.lgh.advertising.going.myactivity.RegulationImportActivity)
     public static synthetic com.lgh.advertising.going.databinding.ActivityRegulationImportBinding access$400(com.lgh.advertising.going.myactivity.RegulationImportActivity)
-    public static synthetic com.lgh.advertising.going.myfunction.MyUtils access$500(com.lgh.advertising.going.myactivity.RegulationImportActivity)
 io.reactivex.rxjava3.functions.Supplier
 com.google.android.material.internal.CollapsingTextHelper$1:
     public void apply(android.graphics.Typeface)
@@ -37157,6 +37146,8 @@ androidx.core.view.inputmethod.EditorInfoCompat:
     public static void setInitialSurroundingSubText(android.view.inputmethod.EditorInfo,java.lang.CharSequence,int)
     public static void trimLongSurroundingText(android.view.inputmethod.EditorInfo,java.lang.CharSequence,int,int)
     public static boolean isPasswordInputType(int)
+com.lgh.advertising.going.myactivity.MainActivity$4$1:
+    public final synthetic com.lgh.advertising.going.myactivity.MainActivity$4 this$1
 com.google.android.material.circularreveal.CircularRevealWidget$RevealInfo:
     public void set(float,float,float)
 androidx.transition.ViewUtils$2:
@@ -37178,6 +37169,11 @@ okio.ByteString$Companion:
     public void <init>()
     public final okio.ByteString of(byte[],int,int)
     public final okio.ByteString encodeString(java.lang.String,java.nio.charset.Charset)
+androidx.activity.result.IntentSenderRequest:
+    public android.content.IntentSender getIntentSender()
+    public android.content.Intent getFillInIntent()
+    public int getFlagsMask()
+    public int getFlagsValues()
 androidx.fragment.app.FragmentManager$7
 androidx.core.view.WindowInsetsCompat$BuilderImpl20:
     public static android.view.WindowInsets createWindowInsetsInstance()
@@ -38110,8 +38106,8 @@ androidx.transition.ViewUtils$1:
 retrofit2.DefaultCallAdapterFactory$ExecutorCallbackCall$1:
     private synthetic void lambda$onFailure$1(retrofit2.Callback,java.lang.Throwable)
     private synthetic void lambda$onResponse$0(retrofit2.Callback,retrofit2.Response)
-    public synthetic void lambda$onFailure$1$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,java.lang.Throwable)
     public synthetic void lambda$onResponse$0$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,retrofit2.Response)
+    public synthetic void lambda$onFailure$1$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,java.lang.Throwable)
 androidx.constraintlayout.widget.ConstraintSet$Constraint:
     public static synthetic void access$000(androidx.constraintlayout.widget.ConstraintSet$Constraint,int,androidx.constraintlayout.widget.ConstraintLayout$LayoutParams)
     public static void access$700(androidx.constraintlayout.widget.ConstraintSet$Constraint,androidx.constraintlayout.widget.ConstraintHelper,int,androidx.constraintlayout.widget.Constraints$LayoutParams)
@@ -38458,31 +38454,31 @@ io.reactivex.rxjava3.core.Emitter
 com.google.android.material.transformation.ExpandableBehavior:
     public static synthetic int access$000(com.google.android.material.transformation.ExpandableBehavior)
     public com.google.android.material.expandable.ExpandableWidget findExpandableWidget(androidx.coordinatorlayout.widget.CoordinatorLayout,android.view.View)
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
-androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
-androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
-androidx.emoji2.text.-$$Lambda$aVrkOgYvqGr2lZJFFK92kv_FgWg
-androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
-androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
-androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
-androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
-androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
-androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
-androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
-androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
-androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
+androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
+androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
 androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
+androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
+androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
+androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
+androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
+androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
+androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
 okhttp3.internal.-$$Lambda$Util$op7DGXdKtbPW5S_UsqHTJ0nOJEU:
     public final okhttp3.EventListener create(okhttp3.Call)
-androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
-androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
 androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
-androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
-androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
-androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
+androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
+androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
+androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
 androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$nxTh-dd7Fq8SYc_P9xauAw60ygY
-androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
+androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
+androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
+androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
+androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
+androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
+androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
+androidx.emoji2.text.-$$Lambda$aVrkOgYvqGr2lZJFFK92kv_FgWg
 com.android.tools.r8.GeneratedOutlineSupport:
     public static java.lang.String outline9(org.xmlpull.v1.XmlPullParser,java.lang.StringBuilder,java.lang.String)
