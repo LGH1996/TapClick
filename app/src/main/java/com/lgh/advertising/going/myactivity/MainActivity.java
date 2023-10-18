@@ -151,6 +151,9 @@ public class MainActivity extends BaseActivity {
         }
 
         handleImportRule(getIntent());
+
+        // 触发允许读取应用列表授权弹窗
+        getPackageManager().getInstalledPackages(PackageManager.GET_META_DATA);
     }
 
     @Override
