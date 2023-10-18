@@ -190,6 +190,8 @@ public class SettingActivity extends BaseActivity {
                 Intent openChat = new Intent(Intent.ACTION_VIEW, Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3Dw3oVSTyApiatRQNpBpZbdxWYVdK5f-08"));
                 if (openChat.resolveActivity(getPackageManager()) != null) {
                     startActivity(openChat);
+                } else {
+                    Toast.makeText(context, "未安装QQ或TIM", Toast.LENGTH_SHORT).show();
                 }
             }
         });
