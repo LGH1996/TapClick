@@ -279,8 +279,9 @@ public class MainFunction {
                 if (activityName == null) {
                     break;
                 }
-                if (activityName.startsWith("android.widget.")
+                if (!TextUtils.equals(event.getPackageName(), currentPackage)
                         || activityName.startsWith("android.view.")
+                        || activityName.startsWith("android.widget.")
                         || activityName.equals("android.inputmethodservice.SoftInputWindow")) {
                     break;
                 }
