@@ -2,13 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lgh.advertising.going">
 
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application
         android:name=".myclass.MyApplication"
@@ -102,6 +103,7 @@
             android:name=".myfunction.MyAccessibilityService"
             android:enabled="true"
             android:exported="true"
+            android:foregroundServiceType="specialUse"
             android:label="@string/accessibilityName"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:process=":AccessibilityService">
@@ -117,6 +119,7 @@
             android:name=".myfunction.MyAccessibilityServiceNoGesture"
             android:enabled="true"
             android:exported="true"
+            android:foregroundServiceType="specialUse"
             android:label="@string/accessibilityNameNoGesture"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:process=":AccessibilityService">
