@@ -528,7 +528,7 @@ public class MainFunction {
                     listB.add(node.getChild(n));
                 }
             }
-            if (index == count) {
+            if (index >= count) {
                 listA.clear();
                 listA.addAll(listB);
                 listB.clear();
@@ -543,7 +543,7 @@ public class MainFunction {
      * 的控件
      */
     private ArrayList<AccessibilityNodeInfo> findAllNode(AccessibilityNodeInfo root) {
-        ArrayList<AccessibilityNodeInfo> listR = new ArrayList<>();
+        HashSet<AccessibilityNodeInfo> setR = new HashSet<>();
         ArrayList<AccessibilityNodeInfo> listA = new ArrayList<>();
         ArrayList<AccessibilityNodeInfo> listB = new ArrayList<>();
         listA.add(root);
@@ -555,13 +555,13 @@ public class MainFunction {
                 Rect rect = new Rect();
                 node.getBoundsInScreen(rect);
                 if (rect.width() > 0 && rect.height() > 0) {
-                    listR.add(node);
+                    setR.add(node);
                     for (int n = 0; n < node.getChildCount(); n++) {
                         listB.add(node.getChild(n));
                     }
                 }
             }
-            if (index == count) {
+            if (index >= count) {
                 listA.clear();
                 listA.addAll(listB);
                 listB.clear();
@@ -569,6 +569,7 @@ public class MainFunction {
                 count = listA.size();
             }
         }
+        ArrayList<AccessibilityNodeInfo> listR = new ArrayList<>(setR);
         listR.sort(new Comparator<AccessibilityNodeInfo>() {
             @Override
             public int compare(AccessibilityNodeInfo a, AccessibilityNodeInfo b) {
