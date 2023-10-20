@@ -300,17 +300,22 @@ public class ListDataActivity extends BaseActivity {
                         return Collator.getInstance(Locale.CHINESE).compare(o1.appName, o2.appName);
                     }
                 });
+                List<AppDescribeItem> onList = new ArrayList<>();
+                List<AppDescribeItem> offList = new ArrayList<>();
                 ListIterator<AppDescribe> iterator = appDescribeList.listIterator();
                 while (iterator.hasNext()) {
                     try {
-                        AppDescribe e = iterator.next();
-                        Drawable icon = packageManager.getApplicationIcon(e.appPackage);
-                        appDescribeItemList.add(new AppDescribeItem(e, icon));
+                        AppDescribe appDescribe = iterator.next();
+                        Drawable icon = packageManager.getApplicationIcon(appDescribe.appPackage);
+                        AppDescribeItem appDescribeItem = new AppDescribeItem(appDescribe, icon);
+                        boolean b = appDescribe.onOff ? onList.add(appDescribeItem) : offList.add(appDescribeItem);
                     } catch (PackageManager.NameNotFoundException e) {
                         iterator.remove();
                         // e.printStackTrace();
                     }
                 }
+                appDescribeItemList.addAll(onList);
+                appDescribeItemList.addAll(offList);
                 appDescribeItemFilterList.addAll(appDescribeItemList);
                 emitter.onComplete();
             }
@@ -342,11 +347,6 @@ public class ListDataActivity extends BaseActivity {
                 listDataBinding.progress.setVisibility(View.INVISIBLE);
             }
         });
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
     }
 
     @Override
