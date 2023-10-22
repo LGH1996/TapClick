@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.accessibility.AccessibilityWindowInfo;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -187,9 +188,23 @@ public class MainFunction {
     @SuppressLint("SwitchIntDef")
     public void onAccessibilityEvent(AccessibilityEvent event) {
         switch (event.getEventType()) {
-            case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                AccessibilityNodeInfo root = service.getRootInActiveWindow();
-                String packageName = root != null ? root.getPackageName().toString() : null;
+            case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED: {
+                List<AccessibilityWindowInfo> windowInfoList = service.getWindows();
+                if (windowInfoList.isEmpty()) {
+                    break;
+                }
+                AccessibilityNodeInfo root = windowInfoList.get(windowInfoList.size() - 1).getRoot();
+                if (root == null) {
+                    break;
+                }
+                List<AccessibilityNodeInfo> nodeInfoList = new ArrayList<>();
+                for (AccessibilityWindowInfo windowInfo : windowInfoList) {
+                    AccessibilityNodeInfo nodeInfo = windowInfo.getRoot();
+                    if (nodeInfo != null && TextUtils.equals(nodeInfo.getPackageName(), root.getPackageName())) {
+                        nodeInfoList.add(nodeInfo);
+                    }
+                }
+                String packageName = root.getPackageName() != null ? root.getPackageName().toString() : null;
                 String activityName = event.getClassName() != null ? event.getClassName().toString() : null;
 
                 if (packageName == null) {
@@ -283,7 +298,11 @@ public class MainFunction {
                         || activityName.startsWith("android.view.")
                         || activityName.startsWith("android.widget.")
                         || activityName.equals("android.inputmethodservice.SoftInputWindow")) {
-                    break;
+                    if (event.getSource() != null) {
+                        activityName = currentActivity;
+                    } else {
+                        break;
+                    }
                 }
                 if (!activityName.equals(currentActivity)) {
                     currentActivity = activityName;
@@ -341,7 +360,7 @@ public class MainFunction {
                     executorServiceMain.execute(new Runnable() {
                         @Override
                         public void run() {
-                            findButtonByText(root, appDescribe.autoFinder);
+                            findButtonByText(nodeInfoList, appDescribe.autoFinder);
                         }
                     });
                 }
@@ -349,12 +368,13 @@ public class MainFunction {
                     executorServiceMain.execute(new Runnable() {
                         @Override
                         public void run() {
-                            findButtonByWidget(root, widgetSet);
+                            findButtonByWidget(nodeInfoList, widgetSet);
                         }
                     });
                 }
                 break;
-            case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
+            }
+            case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED: {
                 if (!TextUtils.equals(event.getPackageName(), currentPackageSub)) {
                     break;
                 }
@@ -366,7 +386,7 @@ public class MainFunction {
                     executorServiceMain.execute(new Runnable() {
                         @Override
                         public void run() {
-                            findButtonByText(source, appDescribe.autoFinder);
+                            findButtonByText(Collections.singletonList(source), appDescribe.autoFinder);
                         }
                     });
                 }
@@ -374,11 +394,12 @@ public class MainFunction {
                     executorServiceMain.execute(new Runnable() {
                         @Override
                         public void run() {
-                            findButtonByWidget(source, widgetSet);
+                            findButtonByWidget(Collections.singletonList(source), widgetSet);
                         }
                     });
                 }
                 break;
+            }
         }
     }
 
@@ -423,43 +444,68 @@ public class MainFunction {
      * 自动查找启动广告的
      * “跳过”的控件
      */
-    private void findButtonByText(AccessibilityNodeInfo nodeInfo, final AutoFinder autoFinder) {
-        for (int n = 0; n < autoFinder.keywordList.size(); n++) {
-            final List<AccessibilityNodeInfo> list = nodeInfo.findAccessibilityNodeInfosByText(autoFinder.keywordList.get(n));
-            if (!list.isEmpty()) {
-                executorServiceSub.schedule(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (autoFinder.clickOnly) {
-                            for (AccessibilityNodeInfo e : list) {
-                                if (e.refresh()) {
+    private void findButtonByText(List<AccessibilityNodeInfo> nodeInfoList, final AutoFinder autoFinder) {
+        ArrayList<AccessibilityNodeInfo> listA = new ArrayList<>(nodeInfoList);
+        ArrayList<AccessibilityNodeInfo> listB = new ArrayList<>();
+        int count = listA.size();
+        int index = 0;
+        while (index < count) {
+            final AccessibilityNodeInfo node = listA.get(index++);
+            if (node != null) {
+                boolean isFind = false;
+                CharSequence cDescribe = node.getContentDescription();
+                CharSequence cText = node.getText();
+                for (String keyword : autoFinder.keywordList) {
+                    if (cDescribe != null && cDescribe.toString().contains(keyword)) {
+                        isFind = true;
+                        break;
+                    }
+                    if (cText != null && cText.toString().contains(keyword)) {
+                        isFind = true;
+                        break;
+                    }
+                }
+                if (isFind) {
+                    executorServiceSub.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (autoFinder.clickOnly) {
+                                if (node.refresh()) {
                                     Rect rect = new Rect();
-                                    e.getBoundsInScreen(rect);
+                                    node.getBoundsInScreen(rect);
                                     click(rect.centerX(), rect.centerY());
                                 }
-                            }
-                        } else {
-                            for (AccessibilityNodeInfo e : list) {
-                                if (e.refresh()) {
-                                    if (!e.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                        if (!e.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                            } else {
+                                if (node.refresh()) {
+                                    if (!node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                                        if (!node.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
                                             Rect rect = new Rect();
-                                            e.getBoundsInScreen(rect);
+                                            node.getBoundsInScreen(rect);
                                             click(rect.centerX(), rect.centerY());
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                }, autoFinder.clickDelay, TimeUnit.MILLISECONDS);
-                if (++autoRetrieveNumber >= autoFinder.retrieveNumber) {
-                    onOffAutoFinder = false;
-                    if (!onOffWidgetSub) {
-                        serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                        service.setServiceInfo(serviceInfo);
+                    }, autoFinder.clickDelay, TimeUnit.MILLISECONDS);
+                    if (++autoRetrieveNumber >= autoFinder.retrieveNumber) {
+                        onOffAutoFinder = false;
+                        if (!onOffWidgetSub) {
+                            serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                            service.setServiceInfo(serviceInfo);
+                        }
                     }
                 }
+                for (int n = 0; n < node.getChildCount(); n++) {
+                    listB.add(node.getChild(n));
+                }
+            }
+            if (index >= count) {
+                listA.clear();
+                listA.addAll(listB);
+                listB.clear();
+                count = listA.size();
+                index = 0;
             }
         }
     }
@@ -469,12 +515,11 @@ public class MainFunction {
      * Widget
      * 定义的控件
      */
-    private void findButtonByWidget(AccessibilityNodeInfo root, Set<Widget> widgetSet) {
-        ArrayList<AccessibilityNodeInfo> listA = new ArrayList<>();
+    private void findButtonByWidget(List<AccessibilityNodeInfo> nodeInfoList, Set<Widget> widgetSet) {
+        ArrayList<AccessibilityNodeInfo> listA = new ArrayList<>(nodeInfoList);
         ArrayList<AccessibilityNodeInfo> listB = new ArrayList<>();
-        listA.add(root);
-        int index = 0;
         int count = listA.size();
+        int index = 0;
         while (index < count) {
             final AccessibilityNodeInfo node = listA.get(index++);
             if (node != null) {
@@ -532,8 +577,8 @@ public class MainFunction {
                 listA.clear();
                 listA.addAll(listB);
                 listB.clear();
-                index = 0;
                 count = listA.size();
+                index = 0;
             }
         }
     }
@@ -542,11 +587,10 @@ public class MainFunction {
      * 查找所有
      * 的控件
      */
-    private ArrayList<AccessibilityNodeInfo> findAllNode(AccessibilityNodeInfo root) {
+    private ArrayList<AccessibilityNodeInfo> findAllNode(List<AccessibilityNodeInfo> root) {
         HashSet<AccessibilityNodeInfo> setR = new HashSet<>();
-        ArrayList<AccessibilityNodeInfo> listA = new ArrayList<>();
         ArrayList<AccessibilityNodeInfo> listB = new ArrayList<>();
-        listA.add(root);
+        ArrayList<AccessibilityNodeInfo> listA = new ArrayList<>(root);
         int index = 0;
         int count = listA.size();
         while (index < count) {
@@ -587,9 +631,9 @@ public class MainFunction {
      * 模拟
      * 点击
      */
-    private boolean click(int X, int Y) {
+    private boolean click(int x, int y) {
         Path path = new Path();
-        path.moveTo(X, Y);
+        path.moveTo(x, y);
         GestureDescription.Builder builder = new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path, 0, 50));
         return service.dispatchGesture(builder.build(), null, null);
     }
@@ -859,8 +903,19 @@ public class MainFunction {
                     executorServiceMain.execute(new Runnable() {
                         @Override
                         public void run() {
-                            AccessibilityNodeInfo root = service.getRootInActiveWindow();
-                            ArrayList<AccessibilityNodeInfo> nodeList = findAllNode(root);
+                            List<AccessibilityWindowInfo> windowInfoList = service.getWindows();
+                            if (windowInfoList.isEmpty()) {
+                                return;
+                            }
+                            List<AccessibilityNodeInfo> nodeInfoList = new ArrayList<>();
+                            AccessibilityNodeInfo root = windowInfoList.get(windowInfoList.size() - 1).getRoot();
+                            for (AccessibilityWindowInfo windowInfo : windowInfoList) {
+                                AccessibilityNodeInfo nodeInfo = windowInfo.getRoot();
+                                if (TextUtils.equals(nodeInfo.getPackageName(), root.getPackageName())) {
+                                    nodeInfoList.add(nodeInfo);
+                                }
+                            }
+                            ArrayList<AccessibilityNodeInfo> nodeList = findAllNode(nodeInfoList);
                             if (nodeList.isEmpty()) {
                                 return;
                             }
