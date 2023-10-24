@@ -466,28 +466,6 @@ public class MainFunction {
                     }
                 }
                 if (isFind) {
-                    executorServiceSub.schedule(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (autoFinder.clickOnly) {
-                                if (node.refresh()) {
-                                    Rect rect = new Rect();
-                                    node.getBoundsInScreen(rect);
-                                    click(rect.centerX(), rect.centerY());
-                                }
-                            } else {
-                                if (node.refresh()) {
-                                    if (!node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                        if (!node.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                            Rect rect = new Rect();
-                                            node.getBoundsInScreen(rect);
-                                            click(rect.centerX(), rect.centerY());
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }, autoFinder.clickDelay, TimeUnit.MILLISECONDS);
                     if (++autoRetrieveNumber >= autoFinder.retrieveNumber) {
                         onOffAutoFinder = false;
                         if (!onOffWidgetSub) {
@@ -495,6 +473,23 @@ public class MainFunction {
                             service.setServiceInfo(serviceInfo);
                         }
                     }
+                    executorServiceSub.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!node.refresh()) {
+                                return;
+                            }
+                            if (autoFinder.clickOnly) {
+                                Rect rect = new Rect();
+                                node.getBoundsInScreen(rect);
+                                click(rect.centerX(), rect.centerY());
+                            } else if (!node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                                Rect rect = new Rect();
+                                node.getBoundsInScreen(rect);
+                                click(rect.centerX(), rect.centerY());
+                            }
+                        }
+                    }, autoFinder.clickDelay, TimeUnit.MILLISECONDS);
                 }
                 for (int n = 0; n < node.getChildCount(); n++) {
                     listB.add(node.getChild(n));
@@ -540,24 +535,7 @@ public class MainFunction {
                         isFind = true;
                     }
                     if (isFind) {
-                        if (!e.noRepeat || !alreadyClickSet.contains(e)) {
-                            alreadyClickSet.add(e);
-                            executorServiceSub.schedule(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (node.refresh()) {
-                                        if (e.clickOnly) {
-                                            click(temRect.centerX(), temRect.centerY());
-                                        } else {
-                                            if (!node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                                if (!node.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                                    click(temRect.centerX(), temRect.centerY());
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }, e.clickDelay, TimeUnit.MILLISECONDS);
+                        if (!e.noRepeat || alreadyClickSet.add(e)) {
                             if (widgetAllNoRepeat && alreadyClickSet.size() >= widgetSet.size()) {
                                 onOffWidgetSub = false;
                                 if (!onOffAutoFinder) {
@@ -565,6 +543,19 @@ public class MainFunction {
                                     service.setServiceInfo(serviceInfo);
                                 }
                             }
+                            executorServiceSub.schedule(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (!node.refresh()) {
+                                        return;
+                                    }
+                                    if (e.clickOnly) {
+                                        click(temRect.centerX(), temRect.centerY());
+                                    } else if (!node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                                        click(temRect.centerX(), temRect.centerY());
+                                    }
+                                }
+                            }, e.clickDelay, TimeUnit.MILLISECONDS);
                         }
                         break;
                     }
@@ -588,9 +579,9 @@ public class MainFunction {
      * 的控件
      */
     private ArrayList<AccessibilityNodeInfo> findAllNode(List<AccessibilityNodeInfo> root) {
-        HashSet<AccessibilityNodeInfo> setR = new HashSet<>();
-        ArrayList<AccessibilityNodeInfo> listB = new ArrayList<>();
         ArrayList<AccessibilityNodeInfo> listA = new ArrayList<>(root);
+        ArrayList<AccessibilityNodeInfo> listB = new ArrayList<>();
+        HashSet<AccessibilityNodeInfo> setR = new HashSet<>();
         int index = 0;
         int count = listA.size();
         while (index < count) {
@@ -609,8 +600,8 @@ public class MainFunction {
                 listA.clear();
                 listA.addAll(listB);
                 listB.clear();
-                index = 0;
                 count = listA.size();
+                index = 0;
             }
         }
         ArrayList<AccessibilityNodeInfo> listR = new ArrayList<>(setR);
