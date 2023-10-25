@@ -356,22 +356,17 @@ public class MainFunction {
                         }
                     }
                 }
-                if (onOffAutoFinder && appDescribe != null) {
-                    executorServiceMain.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            findButtonByText(nodeInfoList, appDescribe.autoFinder);
-                        }
-                    });
+                AutoFinder autoFinder = onOffAutoFinder && appDescribe != null ? appDescribe.autoFinder : null;
+                Set<Widget> widgets = onOffWidgetSub && widgetSet != null ? widgetSet : null;
+                if (autoFinder == null && widgets == null) {
+                    break;
                 }
-                if (onOffWidgetSub && widgetSet != null) {
-                    executorServiceMain.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            findButtonByWidget(nodeInfoList, widgetSet);
-                        }
-                    });
-                }
+                executorServiceMain.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        findAndClickView(nodeInfoList, autoFinder, widgets);
+                    }
+                });
                 break;
             }
             case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED: {
@@ -382,22 +377,17 @@ public class MainFunction {
                 if (source == null) {
                     break;
                 }
-                if (onOffAutoFinder && appDescribe != null) {
-                    executorServiceMain.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            findButtonByText(Collections.singletonList(source), appDescribe.autoFinder);
-                        }
-                    });
+                AutoFinder autoFinder = onOffAutoFinder && appDescribe != null ? appDescribe.autoFinder : null;
+                Set<Widget> widgets = onOffWidgetSub && widgetSet != null ? widgetSet : null;
+                if (autoFinder == null && widgets == null) {
+                    break;
                 }
-                if (onOffWidgetSub && widgetSet != null) {
-                    executorServiceMain.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            findButtonByWidget(Collections.singletonList(source), widgetSet);
-                        }
-                    });
-                }
+                executorServiceMain.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        findAndClickView(Collections.singletonList(source), autoFinder, widgets);
+                    }
+                });
                 break;
             }
         }
@@ -441,58 +431,24 @@ public class MainFunction {
     }
 
     /**
-     * 自动查找启动广告的
-     * “跳过”的控件
+     * 查找并点击View
      */
-    private void findButtonByText(List<AccessibilityNodeInfo> nodeInfoList, final AutoFinder autoFinder) {
+    private void findAndClickView(List<AccessibilityNodeInfo> nodeInfoList, AutoFinder autoFinder, Set<Widget> widgets) {
         ArrayList<AccessibilityNodeInfo> listA = new ArrayList<>(nodeInfoList);
         ArrayList<AccessibilityNodeInfo> listB = new ArrayList<>();
         int count = listA.size();
         int index = 0;
         while (index < count) {
-            final AccessibilityNodeInfo node = listA.get(index++);
-            if (node != null) {
-                boolean isFind = false;
-                CharSequence cDescribe = node.getContentDescription();
-                CharSequence cText = node.getText();
-                for (String keyword : autoFinder.keywordList) {
-                    if (cDescribe != null && cDescribe.toString().contains(keyword)) {
-                        isFind = true;
-                        break;
-                    }
-                    if (cText != null && cText.toString().contains(keyword)) {
-                        isFind = true;
-                        break;
-                    }
+            final AccessibilityNodeInfo nodeInfo = listA.get(index++);
+            if (nodeInfo != null) {
+                if (autoFinder != null) {
+                    clickByText(nodeInfo, autoFinder);
                 }
-                if (isFind) {
-                    if (++autoRetrieveNumber >= autoFinder.retrieveNumber) {
-                        onOffAutoFinder = false;
-                        if (!onOffWidgetSub) {
-                            serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                            service.setServiceInfo(serviceInfo);
-                        }
-                    }
-                    executorServiceSub.schedule(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (!node.refresh()) {
-                                return;
-                            }
-                            if (autoFinder.clickOnly) {
-                                Rect rect = new Rect();
-                                node.getBoundsInScreen(rect);
-                                click(rect.centerX(), rect.centerY());
-                            } else if (!node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                Rect rect = new Rect();
-                                node.getBoundsInScreen(rect);
-                                click(rect.centerX(), rect.centerY());
-                            }
-                        }
-                    }, autoFinder.clickDelay, TimeUnit.MILLISECONDS);
+                if (widgets != null) {
+                    clickByWidget(nodeInfo, widgets);
                 }
-                for (int n = 0; n < node.getChildCount(); n++) {
-                    listB.add(node.getChild(n));
+                for (int n = 0; n < nodeInfo.getChildCount(); n++) {
+                    listB.add(nodeInfo.getChild(n));
                 }
             }
             if (index >= count) {
@@ -505,72 +461,93 @@ public class MainFunction {
         }
     }
 
-    /**
-     * 查找并点击由
-     * Widget
-     * 定义的控件
-     */
-    private void findButtonByWidget(List<AccessibilityNodeInfo> nodeInfoList, Set<Widget> widgetSet) {
-        ArrayList<AccessibilityNodeInfo> listA = new ArrayList<>(nodeInfoList);
-        ArrayList<AccessibilityNodeInfo> listB = new ArrayList<>();
-        int count = listA.size();
-        int index = 0;
-        while (index < count) {
-            final AccessibilityNodeInfo node = listA.get(index++);
-            if (node != null) {
-                final Rect temRect = new Rect();
-                node.getBoundsInScreen(temRect);
-                CharSequence cId = node.getViewIdResourceName();
-                CharSequence cDescribe = node.getContentDescription();
-                CharSequence cText = node.getText();
-                for (Widget e : widgetSet) {
-                    boolean isFind = false;
-                    if (temRect.equals(e.widgetRect)) {
-                        isFind = true;
-                    } else if (cId != null && !e.widgetId.isEmpty() && cId.toString().equals(e.widgetId)) {
-                        isFind = true;
-                    } else if (cDescribe != null && !e.widgetDescribe.isEmpty() && cDescribe.toString().contains(e.widgetDescribe)) {
-                        isFind = true;
-                    } else if (cText != null && !e.widgetText.isEmpty() && cText.toString().contains(e.widgetText)) {
-                        isFind = true;
-                    }
-                    if (isFind) {
-                        if (!e.noRepeat || alreadyClickSet.add(e)) {
-                            if (widgetAllNoRepeat && alreadyClickSet.size() >= widgetSet.size()) {
-                                onOffWidgetSub = false;
-                                if (!onOffAutoFinder) {
-                                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                    service.setServiceInfo(serviceInfo);
-                                }
-                            }
-                            executorServiceSub.schedule(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (!node.refresh()) {
-                                        return;
-                                    }
-                                    if (e.clickOnly) {
-                                        click(temRect.centerX(), temRect.centerY());
-                                    } else if (!node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                        click(temRect.centerX(), temRect.centerY());
-                                    }
-                                }
-                            }, e.clickDelay, TimeUnit.MILLISECONDS);
+    private void clickByText(AccessibilityNodeInfo nodeInfo, AutoFinder autoFinder) {
+        boolean isFind = false;
+        CharSequence cDescribe = nodeInfo.getContentDescription();
+        CharSequence cText = nodeInfo.getText();
+        for (String keyword : autoFinder.keywordList) {
+            if (cDescribe != null && !keyword.isEmpty() && cDescribe.toString().contains(keyword)) {
+                isFind = true;
+                break;
+            }
+            if (cText != null && !keyword.isEmpty() && cText.toString().contains(keyword)) {
+                isFind = true;
+                break;
+            }
+        }
+        if (!isFind) {
+            return;
+        }
+        executorServiceSub.schedule(new Runnable() {
+            @Override
+            public void run() {
+                if (!nodeInfo.refresh()) {
+                    return;
+                }
+                if (autoFinder.clickOnly) {
+                    Rect rect = new Rect();
+                    nodeInfo.getBoundsInScreen(rect);
+                    click(rect.centerX(), rect.centerY());
+                } else if (!nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                    Rect rect = new Rect();
+                    nodeInfo.getBoundsInScreen(rect);
+                    click(rect.centerX(), rect.centerY());
+                }
+            }
+        }, autoFinder.clickDelay, TimeUnit.MILLISECONDS);
+
+        if (++autoRetrieveNumber >= autoFinder.retrieveNumber) {
+            onOffAutoFinder = false;
+            if (!onOffWidgetSub) {
+                serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                service.setServiceInfo(serviceInfo);
+            }
+        }
+    }
+
+    private void clickByWidget(AccessibilityNodeInfo nodeInfo, Set<Widget> widgets) {
+        final Rect temRect = new Rect();
+        nodeInfo.getBoundsInScreen(temRect);
+        CharSequence cId = nodeInfo.getViewIdResourceName();
+        CharSequence cDescribe = nodeInfo.getContentDescription();
+        CharSequence cText = nodeInfo.getText();
+        for (Widget e : widgets) {
+            boolean isFind = false;
+            if (temRect.equals(e.widgetRect)) {
+                isFind = true;
+            } else if (cId != null && !e.widgetId.isEmpty() && cId.toString().equals(e.widgetId)) {
+                isFind = true;
+            } else if (cDescribe != null && !e.widgetDescribe.isEmpty() && cDescribe.toString().contains(e.widgetDescribe)) {
+                isFind = true;
+            } else if (cText != null && !e.widgetText.isEmpty() && cText.toString().contains(e.widgetText)) {
+                isFind = true;
+            }
+            if (!isFind) {
+                continue;
+            }
+            if (!e.noRepeat || alreadyClickSet.add(e)) {
+                executorServiceSub.schedule(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!nodeInfo.refresh()) {
+                            return;
                         }
-                        break;
+                        if (e.clickOnly) {
+                            click(temRect.centerX(), temRect.centerY());
+                        } else if (!nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                            click(temRect.centerX(), temRect.centerY());
+                        }
                     }
-                }
-                for (int n = 0; n < node.getChildCount(); n++) {
-                    listB.add(node.getChild(n));
+                }, e.clickDelay, TimeUnit.MILLISECONDS);
+            }
+            if (widgetAllNoRepeat && alreadyClickSet.size() >= widgets.size()) {
+                onOffWidgetSub = false;
+                if (!onOffAutoFinder) {
+                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                    service.setServiceInfo(serviceInfo);
                 }
             }
-            if (index >= count) {
-                listA.clear();
-                listA.addAll(listB);
-                listB.clear();
-                count = listA.size();
-                index = 0;
-            }
+            break;
         }
     }
 
