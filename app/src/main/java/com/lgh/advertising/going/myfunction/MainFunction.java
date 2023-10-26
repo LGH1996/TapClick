@@ -438,10 +438,13 @@ public class MainFunction {
         while (index < count) {
             final AccessibilityNodeInfo nodeInfo = listA.get(index++);
             if (nodeInfo != null) {
-                if (autoFinder != null) {
+                if (!onOffAutoFinder && !onOffWidgetSub) {
+                    break;
+                }
+                if (autoFinder != null && onOffAutoFinder) {
                     clickByText(nodeInfo, autoFinder);
                 }
-                if (widgets != null) {
+                if (widgets != null && onOffWidgetSub) {
                     clickByWidget(nodeInfo, widgets);
                 }
                 for (int n = 0; n < nodeInfo.getChildCount(); n++) {
