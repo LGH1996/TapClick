@@ -189,26 +189,25 @@ public class MainFunction {
     public void onAccessibilityEvent(AccessibilityEvent event) {
         switch (event.getEventType()) {
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED: {
-                List<AccessibilityWindowInfo> windowInfoList = service.getWindows();
-                if (windowInfoList.isEmpty()) {
+                AccessibilityNodeInfo root = service.getRootInActiveWindow();
+                if (root == null) {
                     break;
                 }
-                AccessibilityNodeInfo root = windowInfoList.get(windowInfoList.size() - 1).getRoot();
-                if (root == null) {
+                String packageName = root.getPackageName() != null ? root.getPackageName().toString() : null;
+                String activityName = event.getClassName() != null ? event.getClassName().toString() : null;
+                if (packageName == null) {
+                    break;
+                }
+                List<AccessibilityWindowInfo> windowInfoList = service.getWindows();
+                if (windowInfoList.isEmpty()) {
                     break;
                 }
                 List<AccessibilityNodeInfo> nodeInfoList = new ArrayList<>();
                 for (AccessibilityWindowInfo windowInfo : windowInfoList) {
                     AccessibilityNodeInfo nodeInfo = windowInfo.getRoot();
-                    if (nodeInfo != null && TextUtils.equals(nodeInfo.getPackageName(), root.getPackageName())) {
+                    if (nodeInfo != null && TextUtils.equals(nodeInfo.getPackageName(), packageName)) {
                         nodeInfoList.add(nodeInfo);
                     }
-                }
-                String packageName = root.getPackageName() != null ? root.getPackageName().toString() : null;
-                String activityName = event.getClassName() != null ? event.getClassName().toString() : null;
-
-                if (packageName == null) {
-                    break;
                 }
                 if (!packageName.equals(currentPackage)) {
                     currentPackage = packageName;
@@ -294,17 +293,12 @@ public class MainFunction {
                 if (activityName == null) {
                     break;
                 }
-                if (!TextUtils.equals(event.getPackageName(), currentPackage)
-                        || activityName.startsWith("android.view.")
-                        || activityName.startsWith("android.widget.")
-                        || activityName.equals("android.inputmethodservice.SoftInputWindow")) {
-                    if (event.getSource() != null) {
-                        activityName = currentActivity;
-                    } else {
-                        break;
-                    }
+                if (!TextUtils.equals(event.getPackageName(), currentPackage)) {
+                    break;
                 }
-                if (!activityName.equals(currentActivity)) {
+                if (!activityName.equals(currentActivity)
+                        && !activityName.startsWith("android.view.")
+                        && !activityName.startsWith("android.widget.")) {
                     currentActivity = activityName;
                     alreadyClickSet = new HashSet<>();
                     onOffWidgetSub = false;
@@ -355,6 +349,9 @@ public class MainFunction {
                             }, coordinate.clickDelay, coordinate.clickInterval, TimeUnit.MILLISECONDS);
                         }
                     }
+                }
+                if (event.getSource() == null || nodeInfoList.isEmpty()) {
+                    break;
                 }
                 AutoFinder autoFinder = onOffAutoFinder && appDescribe != null ? appDescribe.autoFinder : null;
                 Set<Widget> widgets = onOffWidgetSub && widgetSet != null ? widgetSet : null;
@@ -871,12 +868,15 @@ public class MainFunction {
                     executorServiceMain.execute(new Runnable() {
                         @Override
                         public void run() {
+                            AccessibilityNodeInfo root = service.getRootInActiveWindow();
+                            if (root == null) {
+                                return;
+                            }
                             List<AccessibilityWindowInfo> windowInfoList = service.getWindows();
                             if (windowInfoList.isEmpty()) {
                                 return;
                             }
                             List<AccessibilityNodeInfo> nodeInfoList = new ArrayList<>();
-                            AccessibilityNodeInfo root = windowInfoList.get(windowInfoList.size() - 1).getRoot();
                             for (AccessibilityWindowInfo windowInfo : windowInfoList) {
                                 AccessibilityNodeInfo nodeInfo = windowInfo.getRoot();
                                 if (TextUtils.equals(nodeInfo.getPackageName(), root.getPackageName())) {
