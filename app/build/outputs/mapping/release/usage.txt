@@ -30612,34 +30612,35 @@ com.lgh.advertising.going.myfunction.MainFunction:
     public static synthetic com.lgh.advertising.going.mybean.Coordinate access$800(com.lgh.advertising.going.myfunction.MainFunction)
     public static synthetic boolean access$700(com.lgh.advertising.going.myfunction.MainFunction)
     public static synthetic java.lang.String access$900(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.util.concurrent.ScheduledExecutorService access$1200(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.view.WindowManager$LayoutParams access$1300(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic com.lgh.advertising.going.databinding.ViewAddDataBinding access$1400(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.util.Map access$1500(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.view.WindowManager access$1600(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.view.WindowManager$LayoutParams access$1700(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.lang.String access$1800(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.widget.ImageView access$1900(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.view.WindowManager$LayoutParams access$2000(com.lgh.advertising.going.myfunction.MainFunction)
-    public static java.util.ArrayList access$2100(com.lgh.advertising.going.myfunction.MainFunction,java.util.List)
-    public static synthetic com.lgh.advertising.going.databinding.ViewWidgetSelectBinding access$2200(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.util.concurrent.ScheduledExecutorService access$2300(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic com.lgh.advertising.going.myclass.DataDao access$2400(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.util.Set access$2500(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.util.Set access$2502(com.lgh.advertising.going.myfunction.MainFunction,java.util.Set)
-    public static synthetic com.lgh.advertising.going.databinding.ViewWidgetSelectBinding access$2202(com.lgh.advertising.going.myfunction.MainFunction,com.lgh.advertising.going.databinding.ViewWidgetSelectBinding)
-    public static synthetic com.lgh.advertising.going.databinding.ViewAddDataBinding access$1402(com.lgh.advertising.going.myfunction.MainFunction,com.lgh.advertising.going.databinding.ViewAddDataBinding)
-    public static synthetic android.widget.ImageView access$1902(com.lgh.advertising.going.myfunction.MainFunction,android.widget.ImageView)
-    public static synthetic android.view.WindowManager$LayoutParams access$1302(com.lgh.advertising.going.myfunction.MainFunction,android.view.WindowManager$LayoutParams)
-    public static synthetic android.view.WindowManager$LayoutParams access$2002(com.lgh.advertising.going.myfunction.MainFunction,android.view.WindowManager$LayoutParams)
-    public static synthetic android.view.WindowManager$LayoutParams access$1702(com.lgh.advertising.going.myfunction.MainFunction,android.view.WindowManager$LayoutParams)
-    public static synthetic java.lang.String access$1802(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
+    public static synthetic java.util.Set access$1200(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.concurrent.ScheduledExecutorService access$1300(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.concurrent.ScheduledExecutorService access$1400(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.view.WindowManager$LayoutParams access$1500(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic com.lgh.advertising.going.databinding.ViewAddDataBinding access$1600(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.Map access$1700(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.view.WindowManager access$1800(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.view.WindowManager$LayoutParams access$1900(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.lang.String access$2000(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.widget.ImageView access$2100(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.view.WindowManager$LayoutParams access$2200(com.lgh.advertising.going.myfunction.MainFunction)
+    public static java.util.ArrayList access$2300(com.lgh.advertising.going.myfunction.MainFunction,java.util.List)
+    public static synthetic com.lgh.advertising.going.databinding.ViewWidgetSelectBinding access$2400(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic com.lgh.advertising.going.myclass.DataDao access$2500(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.Set access$2600(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.util.Set access$2602(com.lgh.advertising.going.myfunction.MainFunction,java.util.Set)
+    public static synthetic com.lgh.advertising.going.databinding.ViewWidgetSelectBinding access$2402(com.lgh.advertising.going.myfunction.MainFunction,com.lgh.advertising.going.databinding.ViewWidgetSelectBinding)
+    public static synthetic com.lgh.advertising.going.databinding.ViewAddDataBinding access$1602(com.lgh.advertising.going.myfunction.MainFunction,com.lgh.advertising.going.databinding.ViewAddDataBinding)
+    public static synthetic android.widget.ImageView access$2102(com.lgh.advertising.going.myfunction.MainFunction,android.widget.ImageView)
+    public static synthetic android.view.WindowManager$LayoutParams access$1502(com.lgh.advertising.going.myfunction.MainFunction,android.view.WindowManager$LayoutParams)
+    public static synthetic android.view.WindowManager$LayoutParams access$2202(com.lgh.advertising.going.myfunction.MainFunction,android.view.WindowManager$LayoutParams)
+    public static synthetic android.view.WindowManager$LayoutParams access$1902(com.lgh.advertising.going.myfunction.MainFunction,android.view.WindowManager$LayoutParams)
+    public static synthetic java.lang.String access$2002(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
     public static synthetic java.lang.String access$902(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
-    public static synthetic android.view.WindowManager$LayoutParams access$2700(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.view.View access$2800(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic java.lang.String access$2902(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
-    public static synthetic android.content.pm.PackageManager access$3000(com.lgh.advertising.going.myfunction.MainFunction)
-    public static synthetic android.view.inputmethod.InputMethodManager access$3100(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.view.WindowManager$LayoutParams access$2800(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.view.View access$2900(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic java.lang.String access$3002(com.lgh.advertising.going.myfunction.MainFunction,java.lang.String)
+    public static synthetic android.content.pm.PackageManager access$3100(com.lgh.advertising.going.myfunction.MainFunction)
+    public static synthetic android.view.inputmethod.InputMethodManager access$3200(com.lgh.advertising.going.myfunction.MainFunction)
     public final void findAndClickView(java.util.List,com.lgh.advertising.going.mybean.AutoFinder,java.util.Set)
     public final void clickByText(android.view.accessibility.AccessibilityNodeInfo,com.lgh.advertising.going.mybean.AutoFinder)
     public final void clickByWidget(android.view.accessibility.AccessibilityNodeInfo,java.util.Set)
@@ -31868,6 +31869,8 @@ okhttp3.internal.http2.Http2Reader$ContinuationSource:
 com.google.android.material.internal.StaticLayoutBuilderCompat$StaticLayoutBuilderCompatException:
     public void <init>(java.lang.Throwable)
 okio.Utf8
+com.lgh.advertising.going.myclass.MyApplication$5:
+    public final synthetic com.lgh.advertising.going.myclass.MyApplication this$0
 androidx.constraintlayout.core.widgets.Helper:
     public abstract void add(androidx.constraintlayout.core.widgets.ConstraintWidget)
     public abstract void removeAllIds()
@@ -33890,8 +33893,8 @@ androidx.room.RoomDatabase:
     public void endTransaction()
     public java.util.concurrent.Executor getQueryExecutor()
     public void internalInitInvalidationTracker(androidx.sqlite.db.SupportSQLiteDatabase)
-    public synthetic java.lang.Object lambda$beginTransaction$0$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public synthetic java.lang.Object lambda$endTransaction$1$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
+    public synthetic java.lang.Object lambda$beginTransaction$0$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public java.util.concurrent.Executor mTransactionExecutor
     public boolean mWriteAheadLoggingEnabled
     public final java.util.Map mBackingFieldMap
@@ -35914,8 +35917,8 @@ okhttp3.internal.Util:
     public static final void addIfAbsent(java.util.List,java.lang.Object)
     public static final java.lang.Thread threadFactory$lambda-1(java.lang.String,boolean,java.lang.Runnable)
     public static final okhttp3.EventListener asFactory$lambda-8(okhttp3.EventListener,okhttp3.Call)
-    public static java.lang.Thread lambda$TFmLugqSOE7yNjbs-8gncc5DTI4(java.lang.String,boolean,java.lang.Runnable)
     public static okhttp3.EventListener lambda$op7DGXdKtbPW5S_UsqHTJ0nOJEU(okhttp3.EventListener,okhttp3.Call)
+    public static java.lang.Thread lambda$TFmLugqSOE7yNjbs-8gncc5DTI4(java.lang.String,boolean,java.lang.Runnable)
     public static final okhttp3.RequestBody EMPTY_REQUEST
     public static final boolean assertionsEnabled
 com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$5:
@@ -38453,31 +38456,31 @@ io.reactivex.rxjava3.core.Emitter
 com.google.android.material.transformation.ExpandableBehavior:
     public static synthetic int access$000(com.google.android.material.transformation.ExpandableBehavior)
     public com.google.android.material.expandable.ExpandableWidget findExpandableWidget(androidx.coordinatorlayout.widget.CoordinatorLayout,android.view.View)
-androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
-androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
-androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
 androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
-androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
-androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
-androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
-androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
-androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$nxTh-dd7Fq8SYc_P9xauAw60ygY
-androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
+androidx.emoji2.text.-$$Lambda$aVrkOgYvqGr2lZJFFK92kv_FgWg
+androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
+androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
 okhttp3.internal.-$$Lambda$Util$op7DGXdKtbPW5S_UsqHTJ0nOJEU:
     public final okhttp3.EventListener create(okhttp3.Call)
-androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
-androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
-androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
-androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
-androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
-androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
+androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
+androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
+androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
+androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
+androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
+androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
 androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
+androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
+androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
+androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
+androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
 androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
-androidx.emoji2.text.-$$Lambda$aVrkOgYvqGr2lZJFFK92kv_FgWg
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$nxTh-dd7Fq8SYc_P9xauAw60ygY
+androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
+androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
+androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
+androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
 com.android.tools.r8.GeneratedOutlineSupport:
     public static java.lang.String outline9(org.xmlpull.v1.XmlPullParser,java.lang.StringBuilder,java.lang.String)

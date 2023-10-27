@@ -33,10 +33,10 @@ Referenced Strings:
   00
   0000ffff
   0123456789abcdef
+  08f370336602c8cb08a1491adcba9fcb
   0x%02x
   0x%08x
   1
-  1d923031f3df62ff16999b807dd355cd
   200
   204
   206
@@ -44,7 +44,6 @@ Referenced Strings:
   400
   404
   500
-  72ed46734e418c8d699f270da843123a
   :authority
   :id/
   :memory:
@@ -638,9 +637,11 @@ Referenced Strings:
   WindowInsetsCompat
   WrongCall
   WrongConstant
-  X坐标超出屏幕寸
+  X轴坐标不能为空
+  X轴坐标超出屏幕寸
   YEAR
-  Y坐标超出屏幕寸
+  Y轴坐标不能为空
+  Y轴坐标超出屏幕寸
   Z
   ZZ
   _
@@ -652,6 +653,7 @@ Referenced Strings:
   a
   a.u.d
   abortCreation
+  acc1b1cc6cc4420159bf48927c95c658
   accelerate
   accept
   accessibility
@@ -940,6 +942,7 @@ Referenced Strings:
   dbClickPositionLeft
   dbClickPositionRight
   dbClickPositionTop
+  debounceDelay
   debugData
   decelerate
   default
@@ -1499,13 +1502,13 @@ Referenced Strings:
   中
   使用说明
   保存
-  关键词格式填写错误
-  内容不能为空
   出现错误
   分享
   创建规则
   发生异常
   取消
+  坐标检索持续时间不能为空
+  字词检索持续时间不能为空
   导入成功
   导出
   已关闭
@@ -1516,6 +1519,7 @@ Referenced Strings:
   当前已是最新版本
   忽略电池优化权限已开启
   授权管理
+  控件检索持续时间不能为空
   无效的规则
   无障碍服务已开启
   无障碍服务未开启
@@ -1524,6 +1528,12 @@ Referenced Strings:
   暂时不支持分享
   未安装QQ或TIM
   查询新版本时出现错误
+  检索字词格式错误
+  检索次数不能为空
+  检索次数不能小于1
+  点击次数不能为空
+  点击次数不能小于1
+  点击间隔不能为空
   生成分享文件时发生错误
   生成规则文件时发生错误
   确定
@@ -1539,6 +1549,7 @@ Referenced Strings:
   请选择要导入的规则
   请重新刷新布局
   跳过
+  防抖延迟不能为空
   隐藏准星
   隐藏布局
 Marking id:left:2131231021 used because its prefix matches string pool constant left
@@ -3377,30 +3388,31 @@ Marking id:widget_clickOnly:2131231316 used because its prefix matches string po
 Marking id:widget_clickable:2131231317 used because its prefix matches string pool constant w
 Marking id:widget_comment:2131231318 used because its prefix matches string pool constant w
 Marking id:widget_createTime:2131231319 used because its prefix matches string pool constant w
-Marking id:widget_delete:2131231320 used because its prefix matches string pool constant w
-Marking id:widget_describe:2131231321 used because its prefix matches string pool constant w
-Marking id:widget_id:2131231322 used because its prefix matches string pool constant w
-Marking id:widget_img:2131231323 used because its prefix matches string pool constant w
-Marking id:widget_layout:2131231324 used because its prefix matches string pool constant w
-Marking id:widget_modify:2131231325 used because its prefix matches string pool constant w
-Marking id:widget_noRepeat:2131231326 used because its prefix matches string pool constant w
-Marking id:widget_on_off_layout:2131231327 used because its prefix matches string pool constant w
-Marking id:widget_rect:2131231328 used because its prefix matches string pool constant w
-Marking id:widget_retrieveAllTime:2131231329 used because its prefix matches string pool constant w
-Marking id:widget_share:2131231330 used because its prefix matches string pool constant w
-Marking id:widget_sustainTime:2131231331 used because its prefix matches string pool constant w
-Marking id:widget_sustain_layout:2131231332 used because its prefix matches string pool constant w
-Marking id:widget_switch:2131231333 used because its prefix matches string pool constant w
-Marking id:widget_text:2131231334 used because its prefix matches string pool constant w
-Marking id:widget_time_layout:2131231335 used because its prefix matches string pool constant w
-Marking id:withText:2131231336 used because its prefix matches string pool constant w
-Marking id:withinBounds:2131231337 used because its prefix matches string pool constant w
-Marking id:wrap:2131231338 used because its prefix matches string pool constant w
-Marking id:wrap_content:2131231339 used because its prefix matches string pool constant w
-Marking id:wrap_content_constrained:2131231340 used because its prefix matches string pool constant w
-Marking id:x_left:2131231341 used because its prefix matches string pool constant x
-Marking id:x_right:2131231342 used because its prefix matches string pool constant x
-Marking id:xy:2131231343 used because its prefix matches string pool constant x
+Marking id:widget_debounceDelay:2131231320 used because its prefix matches string pool constant w
+Marking id:widget_delete:2131231321 used because its prefix matches string pool constant w
+Marking id:widget_describe:2131231322 used because its prefix matches string pool constant w
+Marking id:widget_id:2131231323 used because its prefix matches string pool constant w
+Marking id:widget_img:2131231324 used because its prefix matches string pool constant w
+Marking id:widget_layout:2131231325 used because its prefix matches string pool constant w
+Marking id:widget_modify:2131231326 used because its prefix matches string pool constant w
+Marking id:widget_noRepeat:2131231327 used because its prefix matches string pool constant w
+Marking id:widget_on_off_layout:2131231328 used because its prefix matches string pool constant w
+Marking id:widget_rect:2131231329 used because its prefix matches string pool constant w
+Marking id:widget_retrieveAllTime:2131231330 used because its prefix matches string pool constant w
+Marking id:widget_share:2131231331 used because its prefix matches string pool constant w
+Marking id:widget_sustainTime:2131231332 used because its prefix matches string pool constant w
+Marking id:widget_sustain_layout:2131231333 used because its prefix matches string pool constant w
+Marking id:widget_switch:2131231334 used because its prefix matches string pool constant w
+Marking id:widget_text:2131231335 used because its prefix matches string pool constant w
+Marking id:widget_time_layout:2131231336 used because its prefix matches string pool constant w
+Marking id:withText:2131231337 used because its prefix matches string pool constant w
+Marking id:withinBounds:2131231338 used because its prefix matches string pool constant w
+Marking id:wrap:2131231339 used because its prefix matches string pool constant w
+Marking id:wrap_content:2131231340 used because its prefix matches string pool constant w
+Marking id:wrap_content_constrained:2131231341 used because its prefix matches string pool constant w
+Marking id:x_left:2131231342 used because its prefix matches string pool constant x
+Marking id:x_right:2131231343 used because its prefix matches string pool constant x
+Marking id:xy:2131231344 used because its prefix matches string pool constant x
 Marking id:standard:2131231221 used because its prefix matches string pool constant standard
 Marking attr:drawableLeftCompat:2130903381 used because its prefix matches string pool constant drawableLeft
 Marking attr:listChoiceBackgroundIndicator:2130903664 used because its prefix matches string pool constant list
@@ -5323,7 +5335,7 @@ layout:abc_select_dialog_material:2131427354 => [attr:listDividerAlertDialog:213
 layout:abc_tooltip:2131427355 => [attr:tooltipFrameBackground:2130904080, dimen:tooltip_margin:2131100225, dimen:tooltip_vertical_padding:2131100228, dimen:tooltip_horizontal_padding:2131100224, style:TextAppearance_AppCompat_Tooltip:2131689873, attr:tooltipForegroundColor:2130904079]
 layout:activity_add_data:2131427356 => [color:background:2131034141, id:ll_bottom:2131231030, color:text_color:2131034704, drawable:check_select:2131165286, drawable:button_selector:2131165285, layout:view_no_vip:2131427464]
 layout:activity_authorization:2131427357 => [color:background:2131034141, drawable:item_bg_ripple:2131165309, id:accessibility_on_off_img:2131230770, id:accessibility_forward:2131230768, color:text_color:2131034704, drawable:forward:2131165295, id:device_admin_on_off_img:2131230928, id:device_admin_forward:2131230926, id:system_alert_on_off_img:2131231241, id:system_alert_forward:2131231239, id:batteryIgnore_on_off_img:2131230828, id:batteryIgnore_forward:2131230826, id:notification_on_off_img:2131231113, id:notification_forward:2131231109, id:floating_window_on_off_img:2131230973, id:floating_window_forward:2131230971, string:authorizationQuestion:2131623969, layout:view_no_vip:2131427464]
-layout:activity_edit_data:2131427358 => [drawable:bg_radius:2131165276, drawable:retrieve_setting:2131165356, id:base_setting_img:2131230822, color:text_color:2131034704, id:tv_base_setting:2131231293, color:divide_line:2131034202, drawable:auto_finder:2131165273, id:auto_finder_img:2131230811, id:tv_auto_finder:2131231292, drawable:coordinate:2131165287, id:coordinate_img:2131230891, drawable:widget:2131165374, id:widget_img:2131231323, layout:view_no_vip:2131427464]
+layout:activity_edit_data:2131427358 => [drawable:bg_radius:2131165276, drawable:retrieve_setting:2131165356, id:base_setting_img:2131230822, color:text_color:2131034704, id:tv_base_setting:2131231293, color:divide_line:2131034202, drawable:auto_finder:2131165273, id:auto_finder_img:2131230811, id:tv_auto_finder:2131231292, drawable:coordinate:2131165287, id:coordinate_img:2131230891, drawable:widget:2131165374, id:widget_img:2131231324, layout:view_no_vip:2131427464]
 layout:activity_exception_report:2131427359 => [id:export:2131230960, drawable:button_selector:2131165285]
 layout:activity_list_data:2131427360 => [color:background:2131034141, drawable:search_box:2131165357, drawable:search_popup_bg:2131165358, drawable:edit_cursor:2131165293, id:searchBox:2131231170, drawable:check_select:2131165286, drawable:button_selector:2131165285, layout:view_no_vip:2131427464]
 layout:activity_main:2131427361 => [color:background:2131034141, layout:view_no_vip:2131427464]
@@ -5411,7 +5423,7 @@ layout:text_view_with_theme_line_height:2131427451 => [style:TestStyleWithThemeL
 layout:view_add_data:2131427453 => [drawable:add_data_background:2131165270, id:layout_act:2131231016, color:text_color:2131034704, id:layout_widget:2131231019, id:layout_pac:2131231018, id:layout_xy:2131231020, id:layout_button:2131231017, drawable:button_selector:2131165285, id:switch_wid:2131231238, id:save_wid:2131231161, id:quit:2131231142, id:switch_aim:2131231237, id:save_aim:2131231158]
 layout:view_add_warning:2131427454 => [color:text_color:2131034704]
 layout:view_auto_finder:2131427455 => [color:text_color:2131034704, drawable:check_select:2131165286]
-layout:view_base_setting:2131427456 => [id:auto_finder_on_off_layout:2131230814, color:text_color:2131034704, drawable:switch_custom_thumb_selector:2131165365, drawable:switch_custom_track_selector:2131165368, id:auto_finder_time_layout:2131230819, id:base_on_off_layout:2131230821, id:coordinate_on_off_layout:2131230894, id:coordinate_time_layout:2131230900, id:auto_finder_sustain_layout:2131230817, id:ll_app_name:2131231029, id:coordinate_sustain_layout:2131230898, drawable:check_select:2131165286, id:widget_on_off_layout:2131231327, id:widget_time_layout:2131231335, id:widget_sustain_layout:2131231332]
+layout:view_base_setting:2131427456 => [id:auto_finder_on_off_layout:2131230814, color:text_color:2131034704, drawable:switch_custom_thumb_selector:2131165365, drawable:switch_custom_track_selector:2131165368, id:auto_finder_time_layout:2131230819, id:base_on_off_layout:2131230821, id:coordinate_on_off_layout:2131230894, id:coordinate_time_layout:2131230900, id:auto_finder_sustain_layout:2131230817, id:ll_app_name:2131231029, id:coordinate_sustain_layout:2131230898, drawable:check_select:2131165286, id:widget_on_off_layout:2131231328, id:widget_time_layout:2131231336, id:widget_sustain_layout:2131231333]
 layout:view_coordinate:2131427457 => [color:text_color:2131034704, id:coordinate_clickDelay_layout:2131230883, id:coordinate_clickInterval_layout:2131230885, id:coordinate_clickNumber_layout:2131230887, id:coordinate_share:2131230896, id:coordinate_delete:2131230890, drawable:text_click_color:2131165371]
 layout:view_item_app:2131427460 => [drawable:item_bg_ripple:2131165309, drawable:app:2131165271, id:img:2131230999, id:cb_select:2131230848, string:app_name:2131623967, color:text_color:2131034704, drawable:check_select:2131165286, id:on_off:2131231117, id:img_forward:2131231000, drawable:switch_custom_thumb_selector:2131165365, drawable:switch_custom_track_selector:2131165368, drawable:forward:2131165295, color:divide_line:2131034202]
 layout:view_item_import:2131427461 => [drawable:item_bg_ripple:2131165309, id:cb_select:2131230848, string:app_name:2131623967, color:text_color:2131034704, drawable:check_select:2131165286, color:divide_line:2131034202]
@@ -5420,7 +5432,7 @@ layout:view_new_rule:2131427463 => [string:new_rule:2131624067, id:button:213123
 layout:view_no_vip:2131427464 => [drawable:no_vip_circle:2131165339]
 layout:view_on_off_warning:2131427465 => [color:text_color:2131034704]
 layout:view_privacy_agreement:2131427466 => [id:button:2131230841, id:title:2131231277, color:divide_line:2131034202, drawable:item_bg_ripple:2131165309, id:deviLineMid:2131230924, id:deviLineTop:2131230925, id:sure:2131231236, id:cancel:2131230845]
-layout:view_widget:2131427467 => [color:text_color:2131034704, drawable:check_select:2131165286, id:widget_share:2131231330, id:widget_delete:2131231320, drawable:text_click_color:2131165371]
+layout:view_widget:2131427467 => [color:text_color:2131034704, drawable:check_select:2131165286, id:widget_share:2131231331, id:widget_delete:2131231321, drawable:text_click_color:2131165371]
 style:AlertDialog_AppCompat:2131689472 => [style:Base_AlertDialog_AppCompat:2131689482]
 style:AlertDialog_AppCompat_Light:2131689473 => [style:Base_AlertDialog_AppCompat_Light:2131689483]
 style:Animation_AppCompat_Dialog:2131689475 => [style:Base_Animation_AppCompat_Dialog:2131689484]
@@ -8002,30 +8014,31 @@ anim:abc_fade_in:2130771968,
    id:widget_clickable:2131231317,
    id:widget_comment:2131231318,
    id:widget_createTime:2131231319,
-   id:widget_delete:2131231320,
-   id:widget_describe:2131231321,
-   id:widget_id:2131231322,
-   id:widget_img:2131231323,
-   id:widget_layout:2131231324,
-   id:widget_modify:2131231325,
-   id:widget_noRepeat:2131231326,
-   id:widget_on_off_layout:2131231327,
-   id:widget_rect:2131231328,
-   id:widget_retrieveAllTime:2131231329,
-   id:widget_share:2131231330,
-   id:widget_sustainTime:2131231331,
-   id:widget_sustain_layout:2131231332,
-   id:widget_switch:2131231333,
-   id:widget_text:2131231334,
-   id:widget_time_layout:2131231335,
-   id:withText:2131231336,
-   id:withinBounds:2131231337,
-   id:wrap:2131231338,
-   id:wrap_content:2131231339,
-   id:wrap_content_constrained:2131231340,
-   id:x_left:2131231341,
-   id:x_right:2131231342,
-   id:xy:2131231343,
+   id:widget_debounceDelay:2131231320,
+   id:widget_delete:2131231321,
+   id:widget_describe:2131231322,
+   id:widget_id:2131231323,
+   id:widget_img:2131231324,
+   id:widget_layout:2131231325,
+   id:widget_modify:2131231326,
+   id:widget_noRepeat:2131231327,
+   id:widget_on_off_layout:2131231328,
+   id:widget_rect:2131231329,
+   id:widget_retrieveAllTime:2131231330,
+   id:widget_share:2131231331,
+   id:widget_sustainTime:2131231332,
+   id:widget_sustain_layout:2131231333,
+   id:widget_switch:2131231334,
+   id:widget_text:2131231335,
+   id:widget_time_layout:2131231336,
+   id:withText:2131231337,
+   id:withinBounds:2131231338,
+   id:wrap:2131231339,
+   id:wrap_content:2131231340,
+   id:wrap_content_constrained:2131231341,
+   id:x_left:2131231342,
+   id:x_right:2131231343,
+   id:xy:2131231344,
    integer:abc_config_activityDefaultDur:2131296256,
    integer:abc_config_activityShortDur:2131296257,
    integer:app_bar_elevation_anim_duration:2131296258,
