@@ -91,6 +91,8 @@ public class MainFunction {
     private final Map<String, AppDescribe> appDescribeMap;
     private final ScheduledExecutorService executorServiceMain;
     private final ScheduledExecutorService executorServiceSub;
+    private final Set<Widget> alreadyClickSet;
+    private final Set<Widget> debounceSet;
     private volatile AppDescribe appDescribe;
     private volatile String currentPackage;
     private volatile String currentPackageSub;
@@ -106,7 +108,6 @@ public class MainFunction {
     private volatile ScheduledFuture<?> futureWidget;
     private volatile ScheduledFuture<?> futureCoordinate;
     private volatile Set<Widget> widgetSet;
-    private volatile Set<Widget> alreadyClickSet;
     private volatile Map<String, Coordinate> coordinateMap;
     private volatile List<String> keywordList;
     private volatile Map<String, Set<Widget>> widgetSetMap;
@@ -131,7 +132,9 @@ public class MainFunction {
         inputMethodManager = accessibilityService.getSystemService(InputMethodManager.class);
         executorServiceMain = Executors.newSingleThreadScheduledExecutor();
         executorServiceSub = Executors.newSingleThreadScheduledExecutor();
+        debounceSet = new HashSet<>();
         appDescribeMap = new HashMap<>();
+        alreadyClickSet = new HashSet<>();
         dataDao = MyApplication.dataDao;
         currentPackage = "Initialize CurrentPackage";
         currentActivity = "Initialize CurrentActivity";
@@ -229,6 +232,7 @@ public class MainFunction {
                     futureCoordinate.cancel(false);
                     serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                     service.setServiceInfo(serviceInfo);
+                    debounceSet.clear();
                     onOffAutoFinder = false;
                     onOffWidget = false;
                     onOffCoordinate = false;
@@ -300,7 +304,7 @@ public class MainFunction {
                         && !activityName.startsWith("android.view.")
                         && !activityName.startsWith("android.widget.")) {
                     currentActivity = activityName;
-                    alreadyClickSet = new HashSet<>();
+                    alreadyClickSet.clear();
                     onOffWidgetSub = false;
                     onOffCoordinateSub = false;
                     widgetAllNoRepeat = true;
@@ -529,6 +533,16 @@ public class MainFunction {
                 executorServiceSub.schedule(new Runnable() {
                     @Override
                     public void run() {
+                        if (!debounceSet.add(e)) {
+                            return;
+                        }
+                        executorServiceMain.schedule(new Runnable() {
+                            @Override
+                            public void run() {
+                                debounceSet.remove(e);
+                            }
+                        }, e.debounceDelay, TimeUnit.MILLISECONDS);
+
                         if (!nodeInfo.refresh()) {
                             return;
                         }

@@ -52,7 +52,13 @@ public class MyApplication extends Application {
                     database.execSQL("ALTER TABLE 'AppDescribe' RENAME 'on_off' to 'onOff'");
                 }
             };
-            dataDao = Room.databaseBuilder(base, MyDatabase.class, "applicationData.db").addMigrations(migration_1_2, migration_2_3, migration_3_4, migration_4_5).allowMainThreadQueries().build().dataDao();
+            Migration migration_5_6 = new Migration(5, 6) {
+                @Override
+                public void migrate(@NonNull SupportSQLiteDatabase database) {
+                    database.execSQL("ALTER TABLE 'Widget' ADD 'debounceDelay' INTEGER NOT NULL DEFAULT 0");
+                }
+            };
+            dataDao = Room.databaseBuilder(base, MyDatabase.class, "applicationData.db").addMigrations(migration_1_2, migration_2_3, migration_3_4, migration_4_5, migration_5_6).allowMainThreadQueries().build().dataDao();
         }
 
         if (myAppConfig == null) {

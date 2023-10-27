@@ -175,8 +175,16 @@ public class EditDataActivity extends BaseActivity {
                 String coordinateTime = baseSettingBinding.coordinateSustainTime.getText().toString();
                 String widgetTime = baseSettingBinding.widgetSustainTime.getText().toString();
                 editDataBinding.baseSettingModify.setTextColor(0xffff0000);
-                if (autoFinderTime.isEmpty() || coordinateTime.isEmpty() || widgetTime.isEmpty()) {
-                    editDataBinding.baseSettingModify.setText("内容不能为空");
+                if (autoFinderTime.isEmpty()) {
+                    editDataBinding.baseSettingModify.setText("字词检索持续时间不能为空");
+                    return;
+                }
+                if (coordinateTime.isEmpty()) {
+                    editDataBinding.baseSettingModify.setText("坐标检索持续时间不能为空");
+                    return;
+                }
+                if (widgetTime.isEmpty()) {
+                    editDataBinding.baseSettingModify.setText("控件检索持续时间不能为空");
                     return;
                 }
                 appDescribe.onOff = baseSettingBinding.onOffSwitch.isChecked();
@@ -290,24 +298,25 @@ public class EditDataActivity extends BaseActivity {
                     temKeyword = new Gson().fromJson(keywordList.isEmpty() || keywordList.equalsIgnoreCase("null") ? "[]" : keywordList, new TypeToken<List<String>>() {
                     }.getType());
                 } catch (JsonSyntaxException jse) {
-                    editDataBinding.autoFinderModify.setText("关键词格式填写错误");
+                    editDataBinding.autoFinderModify.setText("检索字词格式错误");
                     return;
                 }
-                if (retrieveNumber.isEmpty() || clickDelay.isEmpty()) {
-                    editDataBinding.autoFinderModify.setText("内容不能为空");
+                if (retrieveNumber.isEmpty()) {
+                    editDataBinding.autoFinderModify.setText("检索次数不能为空");
                     return;
-                } else if (Integer.parseInt(retrieveNumber) < 1 || Integer.parseInt(retrieveNumber) > 100) {
-                    editDataBinding.autoFinderModify.setText("检索次数应为1~100次之间");
-                    return;
-                } else if (Integer.parseInt(clickDelay) > 8000) {
-                    editDataBinding.autoFinderModify.setText("点击延迟应为0~8000(ms)之间");
-                    return;
-                } else {
-                    appDescribe.autoFinder.keywordList = temKeyword;
-                    appDescribe.autoFinder.retrieveNumber = Integer.parseInt(retrieveNumber);
-                    appDescribe.autoFinder.clickDelay = Integer.parseInt(clickDelay);
-                    appDescribe.autoFinder.clickOnly = autoFinderBinding.clickOnly.isChecked();
                 }
+                if (Integer.parseInt(retrieveNumber) < 1) {
+                    editDataBinding.autoFinderModify.setText("检索次数不能小于1");
+                    return;
+                }
+                if (clickDelay.isEmpty()) {
+                    editDataBinding.autoFinderModify.setText("延迟点击不能为空");
+                    return;
+                }
+                appDescribe.autoFinder.keywordList = temKeyword;
+                appDescribe.autoFinder.retrieveNumber = Integer.parseInt(retrieveNumber);
+                appDescribe.autoFinder.clickDelay = Integer.parseInt(clickDelay);
+                appDescribe.autoFinder.clickOnly = autoFinderBinding.clickOnly.isChecked();
                 dataDao.updateAutoFinder(appDescribe.autoFinder);
                 editDataBinding.autoFinderModify.setTextColor(0xff000000);
                 editDataBinding.autoFinderModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
@@ -377,32 +386,44 @@ public class EditDataActivity extends BaseActivity {
                     String sNumber = coordinateBinding.coordinateClickNumber.getText().toString();
                     String sComment = coordinateBinding.coordinateComment.getText().toString().trim();
                     coordinateBinding.coordinateModify.setTextColor(0xffff0000);
-                    if (sX.isEmpty() || sY.isEmpty() || sDelay.isEmpty() || sInterval.isEmpty() || sNumber.isEmpty()) {
-                        coordinateBinding.coordinateModify.setText("内容不能为空");
+                    if (sX.isEmpty()) {
+                        coordinateBinding.coordinateModify.setText("X轴坐标不能为空");
                         return;
-                    } else if (Integer.parseInt(sX) > metrics.widthPixels) {
-                        coordinateBinding.coordinateModify.setText("X坐标超出屏幕寸");
-                        return;
-                    } else if (Integer.parseInt(sY) > metrics.heightPixels) {
-                        coordinateBinding.coordinateModify.setText("Y坐标超出屏幕寸");
-                        return;
-                    } else if (Integer.parseInt(sDelay) > 8000) {
-                        coordinateBinding.coordinateModify.setText("点击延迟应为0~8000(ms)之间");
-                        return;
-                    } else if (Integer.parseInt(sInterval) < 100 || Integer.parseInt(sInterval) > 2000) {
-                        coordinateBinding.coordinateModify.setText("点击间隔应为100~2000(ms)之间");
-                        return;
-                    } else if (Integer.parseInt(sNumber) < 1 || Integer.parseInt(sNumber) > 20) {
-                        coordinateBinding.coordinateModify.setText("点击次数应为1~20次之间");
-                        return;
-                    } else {
-                        e.xPosition = Integer.parseInt(sX);
-                        e.yPosition = Integer.parseInt(sY);
-                        e.clickDelay = Integer.parseInt(sDelay);
-                        e.clickInterval = Integer.parseInt(sInterval);
-                        e.clickNumber = Integer.parseInt(sNumber);
-                        e.comment = sComment;
                     }
+                    if (Integer.parseInt(sX) > metrics.widthPixels) {
+                        coordinateBinding.coordinateModify.setText("X轴坐标超出屏幕寸");
+                        return;
+                    }
+                    if (sY.isEmpty()) {
+                        coordinateBinding.coordinateModify.setText("Y轴坐标不能为空");
+                        return;
+                    }
+                    if (Integer.parseInt(sY) > metrics.heightPixels) {
+                        coordinateBinding.coordinateModify.setText("Y轴坐标超出屏幕寸");
+                        return;
+                    }
+                    if (sDelay.isEmpty()) {
+                        coordinateBinding.coordinateModify.setText("延迟点击不能为空");
+                        return;
+                    }
+                    if (sInterval.isEmpty()) {
+                        coordinateBinding.coordinateModify.setText("点击间隔不能为空");
+                        return;
+                    }
+                    if (sNumber.isEmpty()) {
+                        coordinateBinding.coordinateModify.setText("点击次数不能为空");
+                        return;
+                    }
+                    if (Integer.parseInt(sNumber) < 1) {
+                        coordinateBinding.coordinateModify.setText("点击次数不能小于1");
+                        return;
+                    }
+                    e.xPosition = Integer.parseInt(sX);
+                    e.yPosition = Integer.parseInt(sY);
+                    e.clickDelay = Integer.parseInt(sDelay);
+                    e.clickInterval = Integer.parseInt(sInterval);
+                    e.clickNumber = Integer.parseInt(sNumber);
+                    e.comment = sComment;
                     dataDao.updateCoordinate(e);
                     coordinateBinding.coordinateModify.setTextColor(0xff000000);
                     coordinateBinding.coordinateModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
@@ -501,6 +522,7 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetDescribe.setText(e.widgetDescribe);
             widgetBinding.widgetText.setText(e.widgetText);
             widgetBinding.widgetClickDelay.setText(String.valueOf(e.clickDelay));
+            widgetBinding.widgetDebounceDelay.setText(String.valueOf(e.debounceDelay));
             widgetBinding.widgetNoRepeat.setChecked(e.noRepeat);
             widgetBinding.widgetClickOnly.setChecked(e.clickOnly);
             widgetBinding.widgetComment.setText(e.comment);
@@ -510,18 +532,21 @@ public class EditDataActivity extends BaseActivity {
                 @Override
                 public void run() {
                     String clickDelay = widgetBinding.widgetClickDelay.getText().toString();
+                    String debounceDelay = widgetBinding.widgetDebounceDelay.getText().toString();
                     widgetBinding.widgetModify.setTextColor(0xffff0000);
                     if (clickDelay.isEmpty()) {
                         widgetBinding.widgetModify.setText("延迟点击不能为空");
                         return;
-                    } else if (Integer.parseInt(clickDelay) > 8000) {
-                        widgetBinding.widgetModify.setText("点击延迟应为0~8000(ms)之间");
+                    }
+                    if (debounceDelay.isEmpty()) {
+                        widgetBinding.widgetModify.setText("防抖延迟不能为空");
                         return;
                     }
                     e.widgetId = widgetBinding.widgetId.getText().toString().trim();
                     e.widgetDescribe = widgetBinding.widgetDescribe.getText().toString().trim();
                     e.widgetText = widgetBinding.widgetText.getText().toString().trim();
                     e.clickDelay = Integer.parseInt(clickDelay);
+                    e.debounceDelay = Integer.parseInt(debounceDelay);
                     e.noRepeat = widgetBinding.widgetNoRepeat.isChecked();
                     e.clickOnly = widgetBinding.widgetClickOnly.isChecked();
                     e.comment = widgetBinding.widgetComment.getText().toString().trim();
@@ -552,6 +577,7 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetDescribe.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetText.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetClickDelay.addTextChangedListener(widgetTextWatcher);
+            widgetBinding.widgetDebounceDelay.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetComment.addTextChangedListener(widgetTextWatcher);
 
             View.OnClickListener widgetClickListener = new View.OnClickListener() {
