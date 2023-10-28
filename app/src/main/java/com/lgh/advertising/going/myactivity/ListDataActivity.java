@@ -84,7 +84,7 @@ public class ListDataActivity extends BaseActivity {
     private Context context;
     private DataDao dataDao;
     private PackageManager packageManager;
-    private int curPosition;
+    private AppDescribeItem curAppDescribeItem;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -103,12 +103,15 @@ public class ListDataActivity extends BaseActivity {
                 if (result.getData() == null || result.getResultCode() != Activity.RESULT_OK) {
                     return;
                 }
+                if (curAppDescribeItem == null) {
+                    return;
+                }
                 String packageName = result.getData().getStringExtra("packageName");
                 AppDescribe appDescribe = dataDao.getAppDescribeByPackage(packageName);
                 if (appDescribe != null) {
                     appDescribe.getOtherFieldsFromDatabase(dataDao);
-                    appDescribeItemFilterList.get(curPosition).appDescribe.copy(appDescribe);
-                    myAdapter.notifyItemChanged(curPosition);
+                    curAppDescribeItem.appDescribe.copy(appDescribe);
+                    myAdapter.notifyItemChanged(appDescribeItemFilterList.indexOf(curAppDescribeItem));
                 }
             }
         });
@@ -473,11 +476,10 @@ public class ListDataActivity extends BaseActivity {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AppDescribeItem item = appDescribeItemFilterList.get(getAdapterPosition());
+                        curAppDescribeItem = appDescribeItemFilterList.get(getAdapterPosition());
                         Intent intent = new Intent(context, EditDataActivity.class);
-                        intent.putExtra("packageName", item.appDescribe.appPackage);
+                        intent.putExtra("packageName", curAppDescribeItem.appDescribe.appPackage);
                         itemResultLauncher.launch(intent);
-                        curPosition = getAdapterPosition();
                     }
                 });
 
