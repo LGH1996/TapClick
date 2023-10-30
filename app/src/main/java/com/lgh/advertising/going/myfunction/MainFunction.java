@@ -415,6 +415,14 @@ public class MainFunction {
             widgetSelectBinding.frame.addView(text, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT, Gravity.CENTER));
             windowManager.updateViewLayout(widgetSelectBinding.frame, bParams);
         }
+        if (dbClickView != null) {
+            Rect rect = MyUtils.getDbClickPosition();
+            dbClickLp.x = rect.left;
+            dbClickLp.y = rect.top;
+            dbClickLp.width = rect.width();
+            dbClickLp.height = rect.height();
+            windowManager.updateViewLayout(dbClickView, dbClickLp);
+        }
     }
 
     public boolean onUnbind(Intent intent) {
@@ -1070,9 +1078,6 @@ public class MainFunction {
                 widgetSelectBinding = null;
                 addDataBinding = null;
                 viewClickPosition = null;
-                aParams = null;
-                bParams = null;
-                cParams = null;
             }
         });
         windowManager.addView(widgetSelectBinding.getRoot(), bParams);
