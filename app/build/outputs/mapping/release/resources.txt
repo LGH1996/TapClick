@@ -937,11 +937,11 @@ Referenced Strings:
   data
   date
   dayOfMonth
+  dbClickBottomPercent
   dbClickEnable
-  dbClickPositionBottom
-  dbClickPositionLeft
-  dbClickPositionRight
-  dbClickPositionTop
+  dbClickLeftPercent
+  dbClickRightPercent
+  dbClickTopPercent
   debounceDelay
   debugData
   decelerate
