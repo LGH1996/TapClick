@@ -354,7 +354,7 @@ public class MainFunction {
                         }
                     }
                 }
-                if (event.getSource() == null || nodeInfoList.isEmpty()) {
+                if (nodeInfoList.isEmpty()) {
                     break;
                 }
                 AutoFinder autoFinder = onOffAutoFinder && appDescribe != null ? appDescribe.autoFinder : null;
