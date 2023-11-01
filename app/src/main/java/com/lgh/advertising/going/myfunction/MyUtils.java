@@ -1,5 +1,6 @@
 package com.lgh.advertising.going.myfunction;
 
+import android.app.ActivityManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -173,5 +174,10 @@ public class MyUtils {
     public static void setIsFirstStart(boolean isFirstStart) {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
         sharedPreferences.edit().putBoolean("isFirstStart", isFirstStart).apply();
+    }
+
+    public static void setExcludeFromRecents(boolean exclude) {
+        ActivityManager activityManager = mContext.getSystemService(ActivityManager.class);
+        activityManager.getAppTasks().forEach(e -> e.setExcludeFromRecents(exclude));
     }
 }

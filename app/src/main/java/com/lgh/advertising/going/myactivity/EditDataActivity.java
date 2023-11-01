@@ -128,6 +128,10 @@ public class EditDataActivity extends BaseActivity {
                 return false;
             }
         });
+
+        if (MyApplication.myAppConfig.autoHideOnTaskList) {
+            MyUtils.setExcludeFromRecents(false);
+        }
     }
 
     @Override
@@ -642,6 +646,14 @@ public class EditDataActivity extends BaseActivity {
         MyUtils.requestUpdateAutoFinder(appDescribe.appPackage);
         MyUtils.requestUpdateCoordinate(appDescribe.appPackage);
         MyUtils.requestUpdateWidget(appDescribe.appPackage);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (MyApplication.myAppConfig.autoHideOnTaskList) {
+            MyUtils.setExcludeFromRecents(true);
+        }
     }
 
     @Override

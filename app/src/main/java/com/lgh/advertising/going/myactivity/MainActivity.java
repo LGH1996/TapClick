@@ -31,7 +31,6 @@ import com.lgh.advertising.going.databinding.ViewPrivacyAgreementBinding;
 import com.lgh.advertising.going.mybean.AppDescribe;
 import com.lgh.advertising.going.mybean.CoordinateShare;
 import com.lgh.advertising.going.mybean.LatestMessage;
-import com.lgh.advertising.going.mybean.MyAppConfig;
 import com.lgh.advertising.going.mybean.Regulation;
 import com.lgh.advertising.going.mybean.RegulationExport;
 import com.lgh.advertising.going.mybean.WidgetShare;
@@ -61,11 +60,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class MainActivity extends BaseActivity {
 
     private Context context;
-    private MyAppConfig myAppConfig;
     private DataDao dataDao;
     private LayoutInflater inflater;
     private ActivityMainBinding mainBinding;
-    private boolean autoHideOnTaskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +71,6 @@ public class MainActivity extends BaseActivity {
         setContentView(mainBinding.getRoot());
         context = getApplicationContext();
         dataDao = MyApplication.dataDao;
-        myAppConfig = MyApplication.myAppConfig;
 
         final List<Resource> source = new ArrayList<>();
         source.add(new Resource("授权管理", R.drawable.authorization));
@@ -111,7 +107,6 @@ public class MainActivity extends BaseActivity {
         mainBinding.mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                autoHideOnTaskList = false;
                 switch (position) {
                     case 0: {
                         startActivity(new Intent(context, AuthorizationActivity.class));
@@ -140,18 +135,18 @@ public class MainActivity extends BaseActivity {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH", Locale.getDefault());
         String forUpdate = dateFormat.format(new Date());
-        if (!forUpdate.equals(myAppConfig.forUpdate)) {
-            myAppConfig.forUpdate = forUpdate;
-            dataDao.updateMyAppConfig(myAppConfig);
+        if (!forUpdate.equals(MyApplication.myAppConfig.forUpdate)) {
+            MyApplication.myAppConfig.forUpdate = forUpdate;
+            dataDao.updateMyAppConfig(MyApplication.myAppConfig);
             showUpdateInfo();
         }
-
+        if (MyApplication.myAppConfig.autoHideOnTaskList) {
+            MyUtils.setExcludeFromRecents(true);
+        }
         if (MyUtils.getIsFirstStart()) {
             showPrivacyAgreement();
         }
-
         handleImportRule(getIntent());
-
         // 触发允许读取应用列表授权弹窗
         getPackageManager().getInstalledPackages(PackageManager.GET_META_DATA);
     }
@@ -160,15 +155,12 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         refreshAccessibilityServiceStatus();
-        autoHideOnTaskList = true;
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        if (myAppConfig.autoHideOnTaskList && autoHideOnTaskList) {
-            finishAndRemoveTask();
-        }
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAndRemoveTask();
     }
 
     private void refreshAccessibilityServiceStatus() {
@@ -348,7 +340,6 @@ public class MainActivity extends BaseActivity {
                         Toast.makeText(context, "导入成功", Toast.LENGTH_SHORT).show();
                         AppDescribe appDescribe = dataDao.getAppDescribeByPackage(widgetShare.widget.appPackage);
                         if (appDescribe != null) {
-                            autoHideOnTaskList = false;
                             Intent intent = new Intent(context, EditDataActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intent.putExtra("packageName", appDescribe.appPackage);
@@ -412,7 +403,6 @@ public class MainActivity extends BaseActivity {
                         Toast.makeText(context, "导入成功", Toast.LENGTH_SHORT).show();
                         AppDescribe appDescribe = dataDao.getAppDescribeByPackage(coordinateShare.coordinate.appPackage);
                         if (appDescribe != null) {
-                            autoHideOnTaskList = false;
                             Intent intent = new Intent(context, EditDataActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intent.putExtra("packageName", appDescribe.appPackage);
@@ -464,7 +454,6 @@ public class MainActivity extends BaseActivity {
                     public void onClick(View v) {
                         alertDialog.dismiss();
                         RegulationImportActivity.regulationList = regulationExport.regulationList;
-                        autoHideOnTaskList = false;
                         Intent intent = new Intent(MainActivity.this, RegulationImportActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

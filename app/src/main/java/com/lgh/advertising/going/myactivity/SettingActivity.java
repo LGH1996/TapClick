@@ -16,9 +16,9 @@ import com.lgh.advertising.going.BuildConfig;
 import com.lgh.advertising.going.R;
 import com.lgh.advertising.going.databinding.ActivitySettingBinding;
 import com.lgh.advertising.going.mybean.LatestMessage;
-import com.lgh.advertising.going.mybean.MyAppConfig;
 import com.lgh.advertising.going.myclass.DataDao;
 import com.lgh.advertising.going.myclass.MyApplication;
+import com.lgh.advertising.going.myfunction.MyUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,10 +31,8 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SettingActivity extends BaseActivity {
-
     private Context context;
     private DataDao dataDao;
-    private MyAppConfig myAppConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +41,8 @@ public class SettingActivity extends BaseActivity {
         setContentView(settingBinding.getRoot());
         context = getApplicationContext();
         dataDao = MyApplication.dataDao;
-        myAppConfig = MyApplication.myAppConfig;
 
-        settingBinding.settingAutoHideOnTaskList.setChecked(myAppConfig.autoHideOnTaskList);
+        settingBinding.settingAutoHideOnTaskList.setChecked(MyApplication.myAppConfig.autoHideOnTaskList);
 
         settingBinding.settingOpen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,8 +164,9 @@ public class SettingActivity extends BaseActivity {
         settingBinding.settingAutoHideOnTaskList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myAppConfig.autoHideOnTaskList = settingBinding.settingAutoHideOnTaskList.isChecked();
-                dataDao.updateMyAppConfig(myAppConfig);
+                MyApplication.myAppConfig.autoHideOnTaskList = settingBinding.settingAutoHideOnTaskList.isChecked();
+                MyUtils.setExcludeFromRecents(MyApplication.myAppConfig.autoHideOnTaskList);
+                dataDao.updateMyAppConfig(MyApplication.myAppConfig);
             }
         });
 
