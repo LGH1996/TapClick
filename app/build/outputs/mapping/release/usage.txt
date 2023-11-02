@@ -5201,6 +5201,15 @@ androidx.constraintlayout.motion.widget.MotionScene$Transition:
     static final int TRANSITION_FLAG_FIRST_DRAW
     static final int TRANSITION_FLAG_INTRA_AUTO
     static final int TRANSITION_FLAG_INTERCEPT_TOUCH
+    public static final int INTERPOLATE_REFERENCE_ID
+    public static final int INTERPOLATE_SPLINE_STRING
+    public static final int INTERPOLATE_EASE_IN_OUT
+    public static final int INTERPOLATE_EASE_IN
+    public static final int INTERPOLATE_EASE_OUT
+    public static final int INTERPOLATE_LINEAR
+    public static final int INTERPOLATE_BOUNCE
+    public static final int INTERPOLATE_OVERSHOOT
+    public static final int INTERPOLATE_ANTICIPATE
 com.google.android.material.transition.platform.MaterialContainerTransform$TransitionDrawable$2
 androidx.room.ForeignKey$Action
 io.reactivex.rxjava3.internal.operators.single.SingleDoOnDispose
@@ -10439,6 +10448,8 @@ androidx.constraintlayout.core.widgets.ConstraintWidget:
     public boolean isHeightWrapContent()
     public java.lang.String getType()
     public void setType(java.lang.String)
+    public void setAnimated(boolean)
+    public boolean isAnimated()
     public void setDebugSolverName(androidx.constraintlayout.core.LinearSystem,java.lang.String)
     public int getOptimizerWrapWidth()
     public int getOptimizerWrapHeight()
@@ -14168,13 +14179,13 @@ com.google.android.material.bottomappbar.BottomAppBarTopEdgeTreatment:
     private static final int ANGLE_UP
     private static final int ANGLE_LEFT
     private static final float ROUNDED_CORNER_FAB_OFFSET
-androidx.constraintlayout.core.motion.utils.Schlick:
-    double eps
-    private static final boolean DEBUG
 androidx.constraintlayout.core.widgets.Chain:
     public void <init>()
     private static final boolean DEBUG
     public static final boolean USE_CHAIN_OPTIMIZATION
+androidx.constraintlayout.core.motion.utils.Schlick:
+    double eps
+    private static final boolean DEBUG
 org.apache.commons.codec.language.DaitchMokotoffSoundex$Rule
 androidx.core.view.DisplayCompat$Api17Impl
 com.google.android.material.slider.RangeSlider$1
@@ -28884,6 +28895,8 @@ okhttp3.ConnectionSpec$Builder:
     public final void setCipherSuites$okhttp(java.lang.String[])
     public final void setTlsVersions$okhttp(java.lang.String[])
     public final void setSupportsTlsExtensions$okhttp(boolean)
+androidx.constraintlayout.motion.widget.MotionLayout$TransitionState:
+    public static synthetic androidx.constraintlayout.motion.widget.MotionLayout$TransitionState[] $values()
 androidx.core.util.Pair:
     public void <init>(java.lang.Object,java.lang.Object)
 androidx.constraintlayout.core.widgets.analyzer.WidgetGroup:
@@ -30014,8 +30027,7 @@ com.google.gson.internal.ConstructorConstructor$9:
     public final synthetic com.google.gson.internal.ConstructorConstructor this$0
 com.lgh.advertising.going.myactivity.SettingActivity:
     public static synthetic android.content.Context access$000(com.lgh.advertising.going.myactivity.SettingActivity)
-    public static synthetic com.lgh.advertising.going.mybean.MyAppConfig access$100(com.lgh.advertising.going.myactivity.SettingActivity)
-    public static synthetic com.lgh.advertising.going.myclass.DataDao access$200(com.lgh.advertising.going.myactivity.SettingActivity)
+    public static synthetic com.lgh.advertising.going.myclass.DataDao access$100(com.lgh.advertising.going.myactivity.SettingActivity)
 com.lgh.advertising.going.databinding.ActivitySettingBinding:
     public static com.lgh.advertising.going.databinding.ActivitySettingBinding inflate(android.view.LayoutInflater)
     public static com.lgh.advertising.going.databinding.ActivitySettingBinding inflate(android.view.LayoutInflater,android.view.ViewGroup,boolean)
@@ -30718,6 +30730,7 @@ com.google.android.material.R$style:
     public static boolean setDbClickPosition(android.graphics.Rect)
     public static boolean getIsFirstStart()
     public static void setIsFirstStart(boolean)
+    public static synthetic void lambda$setExcludeFromRecents$0(boolean,android.app.ActivityManager$AppTask)
     public static io.reactivex.rxjava3.core.Scheduler initMainThreadScheduler(java.util.concurrent.Callable)
     public static io.reactivex.rxjava3.core.Scheduler onMainThreadScheduler(io.reactivex.rxjava3.core.Scheduler)
     public static io.reactivex.rxjava3.core.Scheduler callRequireNonNull(java.util.concurrent.Callable)
@@ -31071,6 +31084,7 @@ androidx.constraintlayout.core.widgets.ConstraintWidget:
     public int mOffsetX
     public int mOffsetY
     public int mContainerItemSkip
+    public boolean mAnimated
     public java.lang.String mType
     public boolean mHorizontalWrapVisited
     public boolean mVerticalWrapVisited
@@ -32318,8 +32332,8 @@ com.google.android.material.bottomappbar.BottomAppBarTopEdgeTreatment:
     public float getFabCornerRadius()
     public void setFabCornerSize(float)
     public float fabDiameter
-androidx.constraintlayout.core.motion.utils.Schlick
 androidx.constraintlayout.core.widgets.Chain
+androidx.constraintlayout.core.motion.utils.Schlick
 com.google.gson.internal.bind.TypeAdapters$10:
     public java.util.concurrent.atomic.AtomicIntegerArray read(com.google.gson.stream.JsonReader)
     public void write(com.google.gson.stream.JsonWriter,java.util.concurrent.atomic.AtomicIntegerArray)
@@ -33889,8 +33903,8 @@ androidx.room.RoomDatabase:
     public void endTransaction()
     public java.util.concurrent.Executor getQueryExecutor()
     public void internalInitInvalidationTracker(androidx.sqlite.db.SupportSQLiteDatabase)
-    public synthetic java.lang.Object lambda$beginTransaction$0$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public synthetic java.lang.Object lambda$endTransaction$1$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
+    public synthetic java.lang.Object lambda$beginTransaction$0$RoomDatabase(androidx.sqlite.db.SupportSQLiteDatabase)
     public java.util.concurrent.Executor mTransactionExecutor
     public boolean mWriteAheadLoggingEnabled
     public final java.util.Map mBackingFieldMap
@@ -34115,9 +34129,8 @@ androidx.cardview.widget.CardView:
     public static final int[] COLOR_BACKGROUND_ATTR
 com.lgh.advertising.going.myactivity.MainActivity:
     public static synthetic android.view.LayoutInflater access$000(com.lgh.advertising.going.myactivity.MainActivity)
-    public static synthetic boolean access$102(com.lgh.advertising.going.myactivity.MainActivity,boolean)
-    public static synthetic android.content.Context access$200(com.lgh.advertising.going.myactivity.MainActivity)
-    public static synthetic com.lgh.advertising.going.myclass.DataDao access$300(com.lgh.advertising.going.myactivity.MainActivity)
+    public static synthetic android.content.Context access$100(com.lgh.advertising.going.myactivity.MainActivity)
+    public static synthetic com.lgh.advertising.going.myclass.DataDao access$200(com.lgh.advertising.going.myactivity.MainActivity)
     public final void refreshAccessibilityServiceStatus()
     public final void showUpdateInfo()
     public final void showPrivacyAgreement()
@@ -35913,8 +35926,8 @@ okhttp3.internal.Util:
     public static final void addIfAbsent(java.util.List,java.lang.Object)
     public static final java.lang.Thread threadFactory$lambda-1(java.lang.String,boolean,java.lang.Runnable)
     public static final okhttp3.EventListener asFactory$lambda-8(okhttp3.EventListener,okhttp3.Call)
-    public static java.lang.Thread lambda$TFmLugqSOE7yNjbs-8gncc5DTI4(java.lang.String,boolean,java.lang.Runnable)
     public static okhttp3.EventListener lambda$op7DGXdKtbPW5S_UsqHTJ0nOJEU(okhttp3.EventListener,okhttp3.Call)
+    public static java.lang.Thread lambda$TFmLugqSOE7yNjbs-8gncc5DTI4(java.lang.String,boolean,java.lang.Runnable)
     public static final okhttp3.RequestBody EMPTY_REQUEST
     public static final boolean assertionsEnabled
 com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$5:
@@ -36058,6 +36071,8 @@ androidx.appcompat.view.WindowCallbackWrapper:
     public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode$Callback,int)
     public void onProvideKeyboardShortcuts(java.util.List,android.view.Menu,int)
     public final android.view.Window$Callback getWrapped()
+androidx.constraintlayout.widget.ConstraintAttribute$AttributeType:
+    public static synthetic androidx.constraintlayout.widget.ConstraintAttribute$AttributeType[] $values()
 org.apache.commons.io.Charsets:
     public static final java.util.SortedMap STANDARD_CHARSET_MAP
     public static final java.nio.charset.Charset ISO_8859_1
@@ -38452,31 +38467,31 @@ io.reactivex.rxjava3.core.Emitter
 com.google.android.material.transformation.ExpandableBehavior:
     public static synthetic int access$000(com.google.android.material.transformation.ExpandableBehavior)
     public com.google.android.material.expandable.ExpandableWidget findExpandableWidget(androidx.coordinatorlayout.widget.CoordinatorLayout,android.view.View)
-androidx.emoji2.text.-$$Lambda$aVrkOgYvqGr2lZJFFK92kv_FgWg
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
-androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
-androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
-androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
+androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
+androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
 androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
 androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$nxTh-dd7Fq8SYc_P9xauAw60ygY
-androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
-androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
+androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
+androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
+androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
 okhttp3.internal.-$$Lambda$Util$op7DGXdKtbPW5S_UsqHTJ0nOJEU:
     public final okhttp3.EventListener create(okhttp3.Call)
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
-androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
+androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
+androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
 androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
-androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
 androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
 androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
-androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
 androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
-androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
 androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
 androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
+androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
+androidx.emoji2.text.-$$Lambda$aVrkOgYvqGr2lZJFFK92kv_FgWg
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
+androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
 androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
+androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
+androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
 com.android.tools.r8.GeneratedOutlineSupport:
     public static java.lang.String outline9(org.xmlpull.v1.XmlPullParser,java.lang.StringBuilder,java.lang.String)
