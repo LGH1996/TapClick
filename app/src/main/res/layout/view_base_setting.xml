@@ -17,10 +17,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/auto_finder_on_off_layout"
-            app:layout_constraintEnd_toEndOf="@+id/auto_finder_on_off_layout"
+            app:layout_constraintBottom_toTopOf="@+id/coordinate_on_off_layout"
+            app:layout_constraintEnd_toEndOf="@+id/coordinate_on_off_layout"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="@id/auto_finder_on_off_layout"
+            app:layout_constraintStart_toStartOf="@id/coordinate_on_off_layout"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -46,11 +46,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/auto_finder_time_layout"
-            app:layout_constraintEnd_toEndOf="@+id/auto_finder_time_layout"
+            app:layout_constraintBottom_toTopOf="@+id/coordinate_time_layout"
+            app:layout_constraintEnd_toEndOf="@+id/coordinate_time_layout"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/base_on_off_layout"
-            app:layout_constraintStart_toStartOf="@+id/auto_finder_time_layout"
+            app:layout_constraintStart_toStartOf="@+id/coordinate_time_layout"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -75,101 +75,6 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/auto_finder_on_off_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/coordinate_on_off_layout"
-            app:layout_constraintEnd_toStartOf="@+id/auto_finder_time_layout"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/base_on_off_layout">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="字词检索:"
-                android:textColor="@color/text_color"
-                android:textSize="12sp" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/auto_finder_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:thumb="@drawable/switch_custom_thumb_selector"
-                app:track="@drawable/switch_custom_track_selector" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/auto_finder_time_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/coordinate_time_layout"
-            app:layout_constraintEnd_toStartOf="@+id/auto_finder_sustain_layout"
-            app:layout_constraintStart_toEndOf="@+id/auto_finder_on_off_layout"
-            app:layout_constraintTop_toBottomOf="@+id/ll_app_name">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="持续毫秒:"
-                android:textColor="@color/text_color"
-                android:textSize="12sp" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/auto_finder_sustainTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:background="@null"
-                android:baselineAligned="false"
-                android:ems="3"
-                android:gravity="center_vertical"
-                android:inputType="number"
-                android:maxLength="6"
-                android:singleLine="true"
-                android:textColor="@color/text_color"
-                android:textSize="12sp" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/auto_finder_sustain_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/coordinate_sustain_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/auto_finder_time_layout"
-            app:layout_constraintTop_toBottomOf="@+id/ll_app_name">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="保持:"
-                android:textColor="@color/text_color"
-                android:textSize="12sp" />
-
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/auto_finder_retrieveAllTime"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/check_select"
-                android:button="@null"
-                android:gravity="center" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/coordinate_on_off_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -179,7 +84,7 @@
             app:layout_constraintEnd_toStartOf="@+id/coordinate_time_layout"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/auto_finder_on_off_layout">
+            app:layout_constraintTop_toBottomOf="@+id/base_on_off_layout">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -207,7 +112,7 @@
             app:layout_constraintBottom_toTopOf="@+id/widget_time_layout"
             app:layout_constraintEnd_toStartOf="@+id/coordinate_sustain_layout"
             app:layout_constraintStart_toEndOf="@+id/coordinate_on_off_layout"
-            app:layout_constraintTop_toBottomOf="@+id/auto_finder_time_layout">
+            app:layout_constraintTop_toBottomOf="@+id/ll_app_name">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -241,7 +146,7 @@
             app:layout_constraintBottom_toTopOf="@+id/widget_sustain_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/coordinate_time_layout"
-            app:layout_constraintTop_toBottomOf="@+id/auto_finder_sustain_layout">
+            app:layout_constraintTop_toBottomOf="@+id/ll_app_name">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"

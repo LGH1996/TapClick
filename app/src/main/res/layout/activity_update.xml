@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".myactivity.UpdateActivity">
+    tools:context="com.lgh.tapclick.myactivity.UpdateActivity">
 
     <WebView
         android:id="@+id/webView_update"

@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 34
     defaultConfig {
-        applicationId "com.lgh.advertising.going"
+        applicationId "com.lgh.tapclick"
         minSdkVersion 24
         targetSdkVersion 34
         versionCode 74

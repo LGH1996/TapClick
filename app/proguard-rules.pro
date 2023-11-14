@@ -20,16 +20,15 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.lgh.advertising.going.mybean.LatestMessage {*;}
--keep class com.lgh.advertising.going.mybean.LatestMessage$Asset {*;}
--keep class com.lgh.advertising.going.mybean.LatestMessage$Author {*;}
--keep class com.lgh.advertising.going.mybean.LatestMessage$Uploader {*;}
--keep class com.lgh.advertising.going.mybean.AppDescribe {*;}
--keep class com.lgh.advertising.going.mybean.AutoFinder {*;}
--keep class com.lgh.advertising.going.mybean.Widget {*;}
--keep class com.lgh.advertising.going.mybean.Coordinate {*;}
--keep class com.lgh.advertising.going.mybean.BasicContent {*;}
--keep class com.lgh.advertising.going.mybean.CoordinateShare {*;}
--keep class com.lgh.advertising.going.mybean.WidgetShare {*;}
--keep class com.lgh.advertising.going.mybean.Regulation {*;}
--keep class com.lgh.advertising.going.mybean.RegulationExport {*;}
+-keep class com.lgh.tapclick.mybean.LatestMessage {*;}
+-keep class com.lgh.tapclick.mybean.LatestMessage$Asset {*;}
+-keep class com.lgh.tapclick.mybean.LatestMessage$Author {*;}
+-keep class com.lgh.tapclick.mybean.LatestMessage$Uploader {*;}
+-keep class com.lgh.tapclick.mybean.AppDescribe {*;}
+-keep class com.lgh.tapclick.mybean.Widget {*;}
+-keep class com.lgh.tapclick.mybean.Coordinate {*;}
+-keep class com.lgh.tapclick.mybean.BasicContent {*;}
+-keep class com.lgh.tapclick.mybean.CoordinateShare {*;}
+-keep class com.lgh.tapclick.mybean.WidgetShare {*;}
+-keep class com.lgh.tapclick.mybean.Regulation {*;}
+-keep class com.lgh.tapclick.mybean.RegulationExport {*;}

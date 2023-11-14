@@ -9,7 +9,7 @@
         tools:targetApi="n_mr1">
         <intent
             android:action="com.lgh.action.addData"
-            android:targetClass="com.lgh.advertising.going.myactivity.ShortCutActivity"
-            android:targetPackage="com.lgh.advertising.going" />
+            android:targetClass="com.lgh.tapclick.myactivity.ShortCutActivity"
+            android:targetPackage="com.lgh.advertising.tapclick" />
     </shortcut>
 </shortcuts>
