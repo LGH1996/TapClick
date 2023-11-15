@@ -9,7 +9,7 @@ import com.lgh.tapclick.mybean.Coordinate;
 import com.lgh.tapclick.mybean.MyAppConfig;
 import com.lgh.tapclick.mybean.Widget;
 
-@Database(version = 1, entities = {AppDescribe.class, Coordinate.class, Widget.class, MyAppConfig.class}, exportSchema = false)
+@Database(version = 2, entities = {AppDescribe.class, Coordinate.class, Widget.class, MyAppConfig.class}, exportSchema = false)
 @TypeConverters(MyTypeConverter.class)
 public abstract class MyDatabase extends RoomDatabase {
     abstract DataDao dataDao();

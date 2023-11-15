@@ -25,6 +25,8 @@ public class Widget {
     public String widgetDescribe;
     public String widgetText;
     public String comment;
+    public long lastClickTime;
+    public int clickCount;
 
     public Widget() {
         this.appPackage = "";
@@ -40,6 +42,8 @@ public class Widget {
         this.widgetText = "";
         this.createTime = System.currentTimeMillis();
         this.comment = "";
+        this.lastClickTime = 0;
+        this.clickCount = 0;
     }
 
     public Widget(Widget widget) {
@@ -56,6 +60,8 @@ public class Widget {
         this.widgetDescribe = widget.widgetDescribe;
         this.widgetText = widget.widgetText;
         this.comment = widget.comment;
+        this.lastClickTime = widget.lastClickTime;
+        this.clickCount = widget.clickCount;
     }
 
 
@@ -81,6 +87,7 @@ public class Widget {
                 ", appPackage='" + appPackage + '\'' +
                 ", appActivity='" + appActivity + '\'' +
                 ", clickDelay=" + clickDelay +
+                ", debounceDelay=" + debounceDelay +
                 ", noRepeat=" + noRepeat +
                 ", clickOnly=" + clickOnly +
                 ", widgetClickable=" + widgetClickable +
@@ -89,6 +96,8 @@ public class Widget {
                 ", widgetDescribe='" + widgetDescribe + '\'' +
                 ", widgetText='" + widgetText + '\'' +
                 ", comment='" + comment + '\'' +
+                ", lastClickTime=" + lastClickTime +
+                ", clickCount=" + clickCount +
                 '}';
     }
 }
