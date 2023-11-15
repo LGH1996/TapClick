@@ -282,6 +282,8 @@ public class EditDataActivity extends BaseActivity {
             coordinateBinding.coordinateClickNumber.setText(String.valueOf(e.clickNumber));
             coordinateBinding.coordinateComment.setText(e.comment);
             coordinateBinding.coordinateCreateTime.setText(dateFormatCreate.format(new Date(e.createTime)));
+            coordinateBinding.coordinateLastClickTime.setText(dateFormatCreate.format(e.lastClickTime));
+            coordinateBinding.coordinateClickCount.setText(String.valueOf(e.clickCount));
 
             Runnable coordinateSaveRun = new Runnable() {
                 @Override
@@ -434,6 +436,8 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetClickOnly.setChecked(e.clickOnly);
             widgetBinding.widgetComment.setText(e.comment);
             widgetBinding.widgetCreateTime.setText(dateFormatCreate.format(new Date(e.createTime)));
+            widgetBinding.widgetLastClickTime.setText(dateFormatCreate.format(e.lastClickTime));
+            widgetBinding.widgetClickCount.setText(String.valueOf(e.clickCount));
 
             Runnable widgetSaveRun = new Runnable() {
                 @Override

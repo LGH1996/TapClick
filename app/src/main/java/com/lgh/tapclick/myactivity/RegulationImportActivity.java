@@ -123,6 +123,15 @@ public class RegulationImportActivity extends BaseActivity {
                                 List<Coordinate> coordinates = new ArrayList<>();
                                 List<Widget> widgets = new ArrayList<>();
                                 for (Regulation e : importList) {
+                                    for (Coordinate coordinate : e.coordinateList) {
+                                        coordinate.lastClickTime = 0;
+                                        coordinate.clickCount = 0;
+                                    }
+                                    for (Widget widget : e.widgetList) {
+                                        widget.lastClickTime = 0;
+                                        widget.clickCount = 0;
+                                        widgets.add(widget);
+                                    }
                                     appDescribes.add(e.appDescribe);
                                     coordinates.addAll(e.coordinateList);
                                     widgets.addAll(e.widgetList);

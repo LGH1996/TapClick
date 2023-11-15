@@ -337,6 +337,8 @@ public class MainActivity extends BaseActivity {
                 newRuleBinding.sure.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        widgetShare.widget.lastClickTime = 0;
+                        widgetShare.widget.clickCount = 0;
                         dataDao.insertWidget(widgetShare.widget);
                         MyUtils.requestUpdateWidget(widgetShare.widget.appPackage);
                         alertDialog.dismiss();
@@ -400,6 +402,8 @@ public class MainActivity extends BaseActivity {
                 newRuleBinding.sure.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        coordinateShare.coordinate.lastClickTime = 0;
+                        coordinateShare.coordinate.clickCount = 0;
                         dataDao.insertCoordinate(coordinateShare.coordinate);
                         MyUtils.requestUpdateWidget(coordinateShare.coordinate.appPackage);
                         alertDialog.dismiss();

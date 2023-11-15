@@ -219,7 +219,7 @@ public class MainFunction {
                     }
                 }
                 if (!packageName.equals(currentPackage)) {
-                    addLog("Package: " + packageName);
+                    addLog("打开应用：" + packageName);
                     currentPackage = packageName;
                     appDescribe = appDescribeMap.get(packageName);
                 }
@@ -284,7 +284,7 @@ public class MainFunction {
                 if (!activityName.equals(currentActivity)
                         && !activityName.startsWith("android.view.")
                         && !activityName.startsWith("android.widget.")) {
-                    addLog("Activity: " + activityName);
+                    addLog("进入页面：" + activityName);
                     currentActivity = activityName;
                     alreadyClickSet.clear();
                     onOffWidgetSub = false;
@@ -316,7 +316,10 @@ public class MainFunction {
                                 public void run() {
                                     if (onOffCoordinateSub && ++num <= coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity)) {
                                         click(coordinateSub.xPosition, coordinateSub.yPosition);
-                                        addLog("ClickCoordinate: " + gson.toJson(coordinateSub));
+                                        coordinateSub.clickCount += 1;
+                                        coordinateSub.lastClickTime = System.currentTimeMillis();
+                                        dataDao.updateCoordinate(coordinateSub);
+                                        addLog("点击坐标：" + gson.toJson(coordinateSub));
                                     } else {
                                         throw new RuntimeException();
                                     }
@@ -432,11 +435,11 @@ public class MainFunction {
             boolean isFind = false;
             if (temRect.equals(e.widgetRect)) {
                 isFind = true;
-            } else if (cId != null && !e.widgetId.isEmpty() && cId.equals(e.widgetId)) {
+            } else if (cId != null && !e.widgetId.isEmpty() && cId.toString().equals(e.widgetId)) {
                 isFind = true;
-            } else if (cDescribe != null && !e.widgetDescribe.isEmpty() && cDescribe.equals(e.widgetDescribe)) {
+            } else if (cDescribe != null && !e.widgetDescribe.isEmpty() && cDescribe.toString().matches(e.widgetDescribe)) {
                 isFind = true;
-            } else if (cText != null && !e.widgetText.isEmpty() && cText.equals(e.widgetText)) {
+            } else if (cText != null && !e.widgetText.isEmpty() && cText.toString().matches(e.widgetText)) {
                 isFind = true;
             }
             if (!isFind) {
@@ -456,7 +459,7 @@ public class MainFunction {
                             }
                         }, e.debounceDelay, TimeUnit.MILLISECONDS);
 
-                        if (!nodeInfo.refresh()) {
+                        if (!onOffWidgetSub || !nodeInfo.refresh()) {
                             return;
                         }
                         if (e.clickOnly) {
@@ -464,7 +467,10 @@ public class MainFunction {
                         } else if (!nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
                             click(temRect.centerX(), temRect.centerY());
                         }
-                        addLog("ClickWidget: " + gson.toJson(e));
+                        e.clickCount += 1;
+                        e.lastClickTime = System.currentTimeMillis();
+                        dataDao.updateWidget(e);
+                        addLog("点击控件：" + gson.toJson(e));
                     }
                 }, e.clickDelay, TimeUnit.MILLISECONDS);
             }

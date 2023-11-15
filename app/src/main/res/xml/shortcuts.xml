@@ -10,6 +10,6 @@
         <intent
             android:action="com.lgh.action.addData"
             android:targetClass="com.lgh.tapclick.myactivity.ShortCutActivity"
-            android:targetPackage="com.lgh.advertising.tapclick" />
+            android:targetPackage="com.lgh.tapclick" />
     </shortcut>
 </shortcuts>

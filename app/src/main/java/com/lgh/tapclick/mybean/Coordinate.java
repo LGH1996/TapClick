@@ -19,6 +19,8 @@ public class Coordinate {
     public int clickInterval;
     public int clickNumber;
     public String comment;
+    public long lastClickTime;
+    public int clickCount;
 
     public Coordinate() {
         this.appPackage = "";
@@ -30,6 +32,8 @@ public class Coordinate {
         this.clickNumber = 1;
         this.createTime = System.currentTimeMillis();
         this.comment = "";
+        this.lastClickTime = 0;
+        this.clickCount = 0;
     }
 
     public Coordinate(Coordinate coordinate) {
@@ -42,6 +46,8 @@ public class Coordinate {
         this.clickInterval = coordinate.clickInterval;
         this.clickNumber = coordinate.clickNumber;
         this.comment = coordinate.comment;
+        this.lastClickTime = coordinate.lastClickTime;
+        this.clickCount = coordinate.clickCount;
     }
 
     @Override
@@ -71,6 +77,8 @@ public class Coordinate {
                 ", clickInterval=" + clickInterval +
                 ", clickNumber=" + clickNumber +
                 ", comment='" + comment + '\'' +
+                ", lastClickTime=" + lastClickTime +
+                ", clickCount=" + clickCount +
                 '}';
     }
 }

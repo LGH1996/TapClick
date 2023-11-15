@@ -27,7 +27,16 @@ public class MyApplication extends Application {
         super.attachBaseContext(base);
 
         if (dataDao == null) {
-            dataDao = Room.databaseBuilder(base, MyDatabase.class, "applicationData.db").allowMainThreadQueries().build().dataDao();
+            Migration migration_1_2 = new Migration(1, 2) {
+                @Override
+                public void migrate(@NonNull SupportSQLiteDatabase database) {
+                    database.execSQL("ALTER TABLE 'Widget' ADD COLUMN 'lastClickTime' INTEGER NOT NULL DEFAULT 0");
+                    database.execSQL("ALTER TABLE 'Widget' ADD COLUMN 'clickCount' INTEGER NOT NULL DEFAULT 0");
+                    database.execSQL("ALTER TABLE 'Coordinate' ADD COLUMN 'lastClickTime' INTEGER NOT NULL DEFAULT 0");
+                    database.execSQL("ALTER TABLE 'Coordinate' ADD COLUMN 'clickCount' INTEGER NOT NULL DEFAULT 0");
+                }
+            };
+            dataDao = Room.databaseBuilder(base, MyDatabase.class, "applicationData.db").addMigrations(migration_1_2).allowMainThreadQueries().build().dataDao();
         }
 
         if (myAppConfig == null) {
