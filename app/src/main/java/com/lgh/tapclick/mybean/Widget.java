@@ -71,7 +71,9 @@ public class Widget {
         if (this == obj) return true;
         if (!(obj instanceof Widget)) return false;
         Widget widget = (Widget) obj;
-        return this.appPackage.equals(widget.appPackage) && this.appActivity.equals(widget.appActivity) && this.widgetRect.equals(widget.widgetRect);
+        return Objects.equals(this.appPackage, widget.appPackage)
+                && Objects.equals(this.appActivity, widget.appActivity)
+                && Objects.equals(this.widgetRect, widget.widgetRect);
     }
 
     @Override

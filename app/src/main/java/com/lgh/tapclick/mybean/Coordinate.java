@@ -56,7 +56,8 @@ public class Coordinate {
         if (this == obj) return true;
         if (!(obj instanceof Coordinate)) return false;
         Coordinate coordinate = (Coordinate) obj;
-        return this.appPackage.equals(coordinate.appPackage) && this.appActivity.equals(coordinate.appActivity);
+        return Objects.equals(this.appPackage, coordinate.appPackage)
+                && Objects.equals(this.appActivity, coordinate.appActivity);
     }
 
     @Override

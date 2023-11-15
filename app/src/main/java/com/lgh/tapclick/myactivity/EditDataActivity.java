@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import androidx.core.content.FileProvider;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.lgh.advertising.tapclick.BuildConfig;
 import com.lgh.advertising.tapclick.databinding.ActivityEditDataBinding;
 import com.lgh.advertising.tapclick.databinding.ViewBaseSettingBinding;
@@ -70,6 +72,7 @@ public class EditDataActivity extends BaseActivity {
     private ViewBaseSettingBinding baseSettingBinding;
     private Set<String> pkgSuggestNotOnList;
     private String packageName;
+    private Gson gson;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -81,6 +84,7 @@ public class EditDataActivity extends BaseActivity {
 
         dataDao = MyApplication.dataDao;
         context = getApplicationContext();
+        gson = new GsonBuilder().create();
         dateFormatModify = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         metrics = new DisplayMetrics();
@@ -426,7 +430,7 @@ public class EditDataActivity extends BaseActivity {
             final ViewWidgetBinding widgetBinding = ViewWidgetBinding.inflate(inflater);
             widgetBinding.widgetActivity.setText(e.appActivity);
             widgetBinding.widgetClickable.setText(String.valueOf(e.widgetClickable));
-            widgetBinding.widgetRect.setText(e.widgetRect.toShortString());
+            widgetBinding.widgetRect.setText(e.widgetRect != null ? gson.toJson(e.widgetRect) : null);
             widgetBinding.widgetId.setText(e.widgetId);
             widgetBinding.widgetDescribe.setText(e.widgetDescribe);
             widgetBinding.widgetText.setText(e.widgetText);
@@ -451,6 +455,12 @@ public class EditDataActivity extends BaseActivity {
                     }
                     if (debounceDelay.isEmpty()) {
                         widgetBinding.widgetModify.setText("防抖延迟不能为空");
+                        return;
+                    }
+                    try {
+                        e.widgetRect = gson.fromJson(widgetBinding.widgetRect.getText().toString().trim(), Rect.class);
+                    } catch (JsonSyntaxException jsonSyntaxException) {
+                        widgetBinding.widgetModify.setText("Bouns格式错误");
                         return;
                     }
                     e.widgetId = widgetBinding.widgetId.getText().toString().trim();
@@ -484,6 +494,7 @@ public class EditDataActivity extends BaseActivity {
                 }
             };
 
+            widgetBinding.widgetRect.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetId.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetDescribe.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetText.addTextChangedListener(widgetTextWatcher);
