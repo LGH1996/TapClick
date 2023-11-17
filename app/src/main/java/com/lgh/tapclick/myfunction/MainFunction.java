@@ -471,13 +471,14 @@ public class MainFunction {
                         e.lastClickTime = System.currentTimeMillis();
                         dataDao.updateWidget(e);
                         addLog("点击控件：" + gson.toJson(e));
+
+                        if (alreadyClickSet.size() >= widgets.size()) {
+                            onOffWidgetSub = false;
+                            serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                            service.setServiceInfo(serviceInfo);
+                        }
                     }
                 }, e.clickDelay, TimeUnit.MILLISECONDS);
-            }
-            if (alreadyClickSet.size() >= widgets.size()) {
-                onOffWidgetSub = false;
-                serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                service.setServiceInfo(serviceInfo);
             }
             break;
         }
