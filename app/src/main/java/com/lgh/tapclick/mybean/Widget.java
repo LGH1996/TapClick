@@ -27,10 +27,14 @@ public class Widget {
     public String comment;
     public long lastClickTime;
     public int clickCount;
+    public int clickInterval;
+    public int clickNumber;
 
     public Widget() {
         this.appPackage = "";
         this.appActivity = "";
+        this.clickNumber = 1;
+        this.clickInterval = 500;
         this.clickDelay = 0;
         this.debounceDelay = 0;
         this.noRepeat = false;
@@ -50,6 +54,8 @@ public class Widget {
         this.createTime = widget.createTime;
         this.appPackage = widget.appPackage;
         this.appActivity = widget.appActivity;
+        this.clickNumber = widget.clickNumber;
+        this.clickInterval = widget.clickInterval;
         this.clickDelay = widget.clickDelay;
         this.debounceDelay = widget.debounceDelay;
         this.noRepeat = widget.noRepeat;
@@ -100,6 +106,8 @@ public class Widget {
                 ", comment='" + comment + '\'' +
                 ", lastClickTime=" + lastClickTime +
                 ", clickCount=" + clickCount +
+                ", clickInterval=" + clickInterval +
+                ", clickNumber=" + clickNumber +
                 '}';
     }
 }
