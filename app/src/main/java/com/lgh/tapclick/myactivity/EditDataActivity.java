@@ -442,13 +442,25 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetCreateTime.setText(dateFormatCreate.format(new Date(e.createTime)));
             widgetBinding.widgetLastClickTime.setText(dateFormatCreate.format(e.lastClickTime));
             widgetBinding.widgetClickCount.setText(String.valueOf(e.clickCount));
+            widgetBinding.widgetClickNumber.setText(String.valueOf(e.clickNumber));
+            widgetBinding.widgetClickInterval.setText(String.valueOf(e.clickInterval));
 
             Runnable widgetSaveRun = new Runnable() {
                 @Override
                 public void run() {
+                    String clickNumber = widgetBinding.widgetClickNumber.getText().toString();
+                    String clickInterval = widgetBinding.widgetClickInterval.getText().toString();
                     String clickDelay = widgetBinding.widgetClickDelay.getText().toString();
                     String debounceDelay = widgetBinding.widgetDebounceDelay.getText().toString();
                     widgetBinding.widgetModify.setTextColor(0xffff0000);
+                    if (clickNumber.isEmpty()) {
+                        widgetBinding.widgetModify.setText("连续点击次数不能为空");
+                        return;
+                    }
+                    if (clickInterval.isEmpty()) {
+                        widgetBinding.widgetModify.setText("连续点击间隔不能为空");
+                        return;
+                    }
                     if (clickDelay.isEmpty()) {
                         widgetBinding.widgetModify.setText("延迟点击不能为空");
                         return;
@@ -466,6 +478,8 @@ public class EditDataActivity extends BaseActivity {
                     e.widgetId = widgetBinding.widgetId.getText().toString().trim();
                     e.widgetDescribe = widgetBinding.widgetDescribe.getText().toString().trim();
                     e.widgetText = widgetBinding.widgetText.getText().toString().trim();
+                    e.clickNumber = Integer.parseInt(clickNumber);
+                    e.clickInterval = Integer.parseInt(clickInterval);
                     e.clickDelay = Integer.parseInt(clickDelay);
                     e.debounceDelay = Integer.parseInt(debounceDelay);
                     e.noRepeat = widgetBinding.widgetNoRepeat.isChecked();
@@ -498,6 +512,8 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetId.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetDescribe.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetText.addTextChangedListener(widgetTextWatcher);
+            widgetBinding.widgetClickNumber.addTextChangedListener(widgetTextWatcher);
+            widgetBinding.widgetClickInterval.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetClickDelay.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetDebounceDelay.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetComment.addTextChangedListener(widgetTextWatcher);

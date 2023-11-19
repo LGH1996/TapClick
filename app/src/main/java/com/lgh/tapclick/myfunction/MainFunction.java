@@ -452,21 +452,32 @@ public class MainFunction {
                         if (!debounceSet.add(e)) {
                             return;
                         }
-                        executorServiceMain.schedule(new Runnable() {
+                        executorServiceSub.schedule(new Runnable() {
                             @Override
                             public void run() {
                                 debounceSet.remove(e);
                             }
                         }, e.debounceDelay, TimeUnit.MILLISECONDS);
 
-                        if (!onOffWidgetSub || !nodeInfo.refresh()) {
-                            return;
-                        }
-                        if (e.clickOnly) {
-                            click(temRect.centerX(), temRect.centerY());
-                        } else if (!nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                            click(temRect.centerX(), temRect.centerY());
-                        }
+                        executorServiceSub.scheduleWithFixedDelay(new Runnable() {
+                            private int clickNumber = 0;
+
+                            @Override
+                            public void run() {
+                                if (!onOffWidgetSub || !nodeInfo.refresh()) {
+                                    throw new RuntimeException();
+                                }
+                                if (e.clickOnly) {
+                                    click(temRect.centerX(), temRect.centerY());
+                                } else if (!nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                                    click(temRect.centerX(), temRect.centerY());
+                                }
+                                if (++clickNumber >= e.clickNumber) {
+                                    throw new RuntimeException();
+                                }
+                            }
+                        }, 0, e.clickInterval, TimeUnit.MILLISECONDS);
+
                         e.clickCount += 1;
                         e.lastClickTime = System.currentTimeMillis();
                         dataDao.updateWidget(e);
