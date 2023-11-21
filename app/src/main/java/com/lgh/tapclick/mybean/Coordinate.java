@@ -27,7 +27,7 @@ public class Coordinate {
         this.appActivity = "";
         this.xPosition = 0;
         this.yPosition = 0;
-        this.clickDelay = 2000;
+        this.clickDelay = 1000;
         this.clickInterval = 500;
         this.clickNumber = 1;
         this.createTime = System.currentTimeMillis();

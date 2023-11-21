@@ -804,17 +804,17 @@ public class MainFunction {
                                 return;
                             }
                             List<AccessibilityWindowInfo> windowInfoList = service.getWindows();
+                            Collections.reverse(windowInfoList);
                             if (windowInfoList.isEmpty()) {
                                 return;
                             }
-                            List<AccessibilityNodeInfo> nodeInfoList = new ArrayList<>();
+                            ArrayList<AccessibilityNodeInfo> nodeList = new ArrayList<>();
                             for (AccessibilityWindowInfo windowInfo : windowInfoList) {
                                 AccessibilityNodeInfo nodeInfo = windowInfo.getRoot();
                                 if (TextUtils.equals(nodeInfo.getPackageName(), root.getPackageName())) {
-                                    nodeInfoList.add(nodeInfo);
+                                    nodeList.addAll(findAllNode(Collections.singletonList(nodeInfo)));
                                 }
                             }
-                            ArrayList<AccessibilityNodeInfo> nodeList = findAllNode(nodeInfoList);
                             if (nodeList.isEmpty()) {
                                 return;
                             }
