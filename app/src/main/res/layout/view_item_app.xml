@@ -15,14 +15,14 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="80dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/img"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/app" />
@@ -46,7 +46,7 @@
                     android:singleLine="true"
                     android:text="@string/app_name"
                     android:textColor="@color/text_color"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/pkg"
@@ -57,7 +57,19 @@
                     android:singleLine="true"
                     android:text="com.lgh.advertising.going"
                     android:textColor="@color/text_color"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:gravity="center_vertical|start"
+                    android:paddingTop="1dp"
+                    android:singleLine="true"
+                    android:text="0个控件，0个坐标"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatCheckBox

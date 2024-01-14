@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -39,8 +40,10 @@ import com.lgh.advertising.tapclick.databinding.ViewEditFileNameBinding;
 import com.lgh.advertising.tapclick.databinding.ViewItemAppBinding;
 import com.lgh.advertising.tapclick.databinding.ViewOnOffWarningBinding;
 import com.lgh.tapclick.mybean.AppDescribe;
+import com.lgh.tapclick.mybean.Coordinate;
 import com.lgh.tapclick.mybean.Regulation;
 import com.lgh.tapclick.mybean.RegulationExport;
+import com.lgh.tapclick.mybean.Widget;
 import com.lgh.tapclick.myclass.DataDao;
 import com.lgh.tapclick.myclass.MyApplication;
 import com.lgh.tapclick.myfunction.MyUtils;
@@ -110,6 +113,7 @@ public class ListDataActivity extends BaseActivity {
                 if (appDescribe != null) {
                     appDescribe.getOtherFieldsFromDatabase(dataDao);
                     curAppDescribeItem.appDescribe.copy(appDescribe);
+                    curAppDescribeItem.refreshExistLongNoTrigger();
                     myAdapter.notifyItemChanged(appDescribeItemFilterList.indexOf(curAppDescribeItem));
                 }
             }
@@ -397,10 +401,30 @@ public class ListDataActivity extends BaseActivity {
         AppDescribe appDescribe;
         Drawable icon;
         boolean isSelected;
+        int longNoTriggerCount;
 
         public AppDescribeItem(AppDescribe appDescribe, Drawable icon) {
             this.appDescribe = appDescribe;
             this.icon = icon;
+            this.refreshExistLongNoTrigger();
+        }
+
+        public void refreshExistLongNoTrigger() {
+            longNoTriggerCount = 0;
+            for (Coordinate e : appDescribe.coordinateList) {
+                long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
+                long day2 = (System.currentTimeMillis() - e.lastClickTime) / (24 * 60 * 60 * 1000);
+                if (day1 >= 30 && day2 >= 30) {
+                    longNoTriggerCount++;
+                }
+            }
+            for (Widget e : appDescribe.widgetList) {
+                long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
+                long day2 = (System.currentTimeMillis() - e.lastClickTime) / (24 * 60 * 60 * 1000);
+                if (day1 >= 30 && day2 >= 30) {
+                    longNoTriggerCount++;
+                }
+            }
         }
     }
 
@@ -422,6 +446,8 @@ public class ListDataActivity extends BaseActivity {
             holder.itemAppBinding.onOff.setChecked(item.appDescribe.onOff);
             holder.itemAppBinding.cbSelect.setChecked(item.isSelected);
             holder.itemAppBinding.cbSelect.setVisibility(listDataBinding.llSelect.getVisibility());
+            holder.itemAppBinding.desc.setText(String.format("%s个坐标，%s个控件", item.appDescribe.coordinateList.size(), item.appDescribe.widgetList.size()) + (item.longNoTriggerCount > 0 ? String.format("，%s个疑似无效规则", item.longNoTriggerCount) : ""));
+            holder.itemAppBinding.desc.setTextColor(item.longNoTriggerCount > 0 ? Color.RED : holder.itemAppBinding.name.getCurrentTextColor());
         }
 
         @Override

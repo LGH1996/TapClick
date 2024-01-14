@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
@@ -67,7 +68,7 @@ public class EditDataActivity extends BaseActivity {
     private DataDao dataDao;
     private DisplayMetrics metrics;
     private SimpleDateFormat dateFormatModify;
-    private SimpleDateFormat dateFormatCreate;
+    private SimpleDateFormat dateFormat;
     private ActivityEditDataBinding editDataBinding;
     private ViewBaseSettingBinding baseSettingBinding;
     private Set<String> pkgSuggestNotOnList;
@@ -86,7 +87,7 @@ public class EditDataActivity extends BaseActivity {
         context = getApplicationContext();
         gson = new GsonBuilder().create();
         dateFormatModify = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        dateFormatCreate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
 
@@ -285,9 +286,16 @@ public class EditDataActivity extends BaseActivity {
             coordinateBinding.coordinateClickInterval.setText(String.valueOf(e.clickInterval));
             coordinateBinding.coordinateClickNumber.setText(String.valueOf(e.clickNumber));
             coordinateBinding.coordinateComment.setText(e.comment);
-            coordinateBinding.coordinateCreateTime.setText(dateFormatCreate.format(new Date(e.createTime)));
-            coordinateBinding.coordinateLastClickTime.setText(dateFormatCreate.format(e.lastClickTime));
             coordinateBinding.coordinateClickCount.setText(String.valueOf(e.clickCount));
+            long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
+            long day2 = (System.currentTimeMillis() - e.lastClickTime) / (24 * 60 * 60 * 1000);
+            coordinateBinding.coordinateCreateTime.setText(String.format("%s (%s天前)", dateFormat.format(new Date(e.createTime)), day1));
+            coordinateBinding.coordinateLastClickTime.setTextColor(day1 >= 30 && day2 >= 30 ? Color.RED : coordinateBinding.coordinateLastClickTime.getCurrentTextColor());
+            if (e.lastClickTime <= 0) {
+                coordinateBinding.coordinateLastClickTime.setText("无触发记录");
+            } else {
+                coordinateBinding.coordinateLastClickTime.setText(String.format("%s (%s天前)", dateFormat.format(e.lastClickTime), day2));
+            }
 
             Runnable coordinateSaveRun = new Runnable() {
                 @Override
@@ -439,12 +447,18 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetNoRepeat.setChecked(e.noRepeat);
             widgetBinding.widgetClickOnly.setChecked(e.clickOnly);
             widgetBinding.widgetComment.setText(e.comment);
-            widgetBinding.widgetCreateTime.setText(dateFormatCreate.format(new Date(e.createTime)));
-            widgetBinding.widgetLastClickTime.setText(dateFormatCreate.format(e.lastClickTime));
-            widgetBinding.widgetClickCount.setText(String.valueOf(e.clickCount));
             widgetBinding.widgetClickNumber.setText(String.valueOf(e.clickNumber));
             widgetBinding.widgetClickInterval.setText(String.valueOf(e.clickInterval));
-
+            widgetBinding.widgetClickCount.setText(String.valueOf(e.clickCount));
+            long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
+            long day2 = (System.currentTimeMillis() - e.lastClickTime) / (24 * 60 * 60 * 1000);
+            widgetBinding.widgetCreateTime.setText(String.format("%s (%s天前)", dateFormat.format(new Date(e.createTime)), day1));
+            widgetBinding.widgetLastClickTime.setTextColor(day1 >= 30 && day2 >= 30 ? Color.RED : widgetBinding.widgetLastClickTime.getCurrentTextColor());
+            if (e.lastClickTime <= 0) {
+                widgetBinding.widgetLastClickTime.setText("无触发记录");
+            } else {
+                widgetBinding.widgetLastClickTime.setText(String.format("%s (%s天前)", dateFormat.format(e.lastClickTime), day2));
+            }
             Runnable widgetSaveRun = new Runnable() {
                 @Override
                 public void run() {
