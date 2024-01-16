@@ -432,64 +432,73 @@ public class MainFunction {
         CharSequence cDescribe = nodeInfo.getContentDescription();
         CharSequence cText = nodeInfo.getText();
         for (Widget e : widgets) {
-            boolean isFind = false;
-            if (temRect.equals(e.widgetRect)) {
-                isFind = true;
-            } else if (cId != null && !e.widgetId.isEmpty() && cId.toString().equals(e.widgetId)) {
-                isFind = true;
-            } else if (cDescribe != null && !e.widgetDescribe.isEmpty() && cDescribe.toString().matches(e.widgetDescribe)) {
-                isFind = true;
-            } else if (cText != null && !e.widgetText.isEmpty() && cText.toString().matches(e.widgetText)) {
-                isFind = true;
-            }
-            if (!isFind) {
+            if (!temRect.equals(e.widgetRect)
+                    && !(cId != null && !e.widgetId.isEmpty() && cId.toString().equals(e.widgetId))
+                    && !(cDescribe != null && !e.widgetDescribe.isEmpty() && cDescribe.toString().matches(e.widgetDescribe))
+                    && !(cText != null && !e.widgetText.isEmpty() && cText.toString().matches(e.widgetText))) {
                 continue;
             }
-            if (!e.noRepeat || alreadyClickSet.add(e)) {
-                executorServiceSub.schedule(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!debounceSet.add(e)) {
-                            return;
+            if (e.action == Widget.ACTION_CLICK) {
+                if (!e.noRepeat || alreadyClickSet.add(e)) {
+                    executorServiceSub.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!debounceSet.add(e)) {
+                                return;
+                            }
+                            executorServiceSub.schedule(new Runnable() {
+                                @Override
+                                public void run() {
+                                    debounceSet.remove(e);
+                                }
+                            }, e.debounceDelay, TimeUnit.MILLISECONDS);
+
+                            executorServiceSub.scheduleWithFixedDelay(new Runnable() {
+                                private int clickNumber = 0;
+
+                                @Override
+                                public void run() {
+                                    if (!onOffWidgetSub || !nodeInfo.refresh()) {
+                                        throw new RuntimeException();
+                                    }
+                                    if (clickNumber++ >= e.clickNumber) {
+                                        throw new RuntimeException();
+                                    }
+                                    if (e.clickOnly) {
+                                        click(temRect.centerX(), temRect.centerY());
+                                    } else if (!nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                                        click(temRect.centerX(), temRect.centerY());
+                                    }
+                                    if (clickNumber == 1) {
+                                        e.clickCount += 1;
+                                        e.lastClickTime = System.currentTimeMillis();
+                                        dataDao.updateWidget(e);
+                                        addLog("点击控件：" + gson.toJson(e));
+                                        if (alreadyClickSet.size() >= widgets.size()) {
+                                            serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                            service.setServiceInfo(serviceInfo);
+                                        }
+                                    }
+                                }
+                            }, 0, e.clickInterval, TimeUnit.MILLISECONDS);
                         }
-                        executorServiceSub.schedule(new Runnable() {
-                            @Override
-                            public void run() {
-                                debounceSet.remove(e);
-                            }
-                        }, e.debounceDelay, TimeUnit.MILLISECONDS);
-
-                        executorServiceSub.scheduleWithFixedDelay(new Runnable() {
-                            private int clickNumber = 0;
-
-                            @Override
-                            public void run() {
-                                if (!onOffWidgetSub || !nodeInfo.refresh()) {
-                                    throw new RuntimeException();
-                                }
-                                if (e.clickOnly) {
-                                    click(temRect.centerX(), temRect.centerY());
-                                } else if (!nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                    click(temRect.centerX(), temRect.centerY());
-                                }
-                                if (++clickNumber >= e.clickNumber) {
-                                    throw new RuntimeException();
-                                }
-                            }
-                        }, 0, e.clickInterval, TimeUnit.MILLISECONDS);
-
+                    }, e.clickDelay, TimeUnit.MILLISECONDS);
+                }
+            }
+            if (e.action == Widget.ACTION_BACK) {
+                if (alreadyClickSet.add(e)) {
+                    if (onOffWidgetSub && nodeInfo.refresh()) {
+                        service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
                         e.clickCount += 1;
                         e.lastClickTime = System.currentTimeMillis();
                         dataDao.updateWidget(e);
-                        addLog("点击控件：" + gson.toJson(e));
-
+                        addLog("触发返回：" + gson.toJson(e));
                         if (alreadyClickSet.size() >= widgets.size()) {
-                            onOffWidgetSub = false;
                             serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                             service.setServiceInfo(serviceInfo);
                         }
                     }
-                }, e.clickDelay, TimeUnit.MILLISECONDS);
+                }
             }
             break;
         }

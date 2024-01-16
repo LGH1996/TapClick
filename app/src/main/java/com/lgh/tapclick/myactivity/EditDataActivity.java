@@ -450,6 +450,11 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetClickNumber.setText(String.valueOf(e.clickNumber));
             widgetBinding.widgetClickInterval.setText(String.valueOf(e.clickInterval));
             widgetBinding.widgetClickCount.setText(String.valueOf(e.clickCount));
+            widgetBinding.widgetActionClick.setChecked(e.action == Widget.ACTION_CLICK);
+            widgetBinding.widgetActionBack.setChecked(e.action == Widget.ACTION_BACK);
+            widgetBinding.widgetActionClick.setEnabled(e.action != Widget.ACTION_CLICK);
+            widgetBinding.widgetActionBack.setEnabled(e.action != Widget.ACTION_BACK);
+            widgetBinding.llClickProp.setVisibility(e.action == Widget.ACTION_CLICK ? View.VISIBLE : View.GONE);
             long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
             long day2 = (System.currentTimeMillis() - e.lastClickTime) / (24 * 60 * 60 * 1000);
             widgetBinding.widgetCreateTime.setText(String.format("%s (%s天前)", dateFormat.format(new Date(e.createTime)), day1));
@@ -535,11 +540,21 @@ public class EditDataActivity extends BaseActivity {
             View.OnClickListener widgetClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (v == widgetBinding.widgetActionClick || v == widgetBinding.widgetActionBack) {
+                        e.action = Integer.parseInt((String) v.getTag());
+                        widgetBinding.widgetActionClick.setChecked(e.action == Widget.ACTION_CLICK);
+                        widgetBinding.widgetActionBack.setChecked(e.action == Widget.ACTION_BACK);
+                        widgetBinding.widgetActionClick.setEnabled(e.action != Widget.ACTION_CLICK);
+                        widgetBinding.widgetActionBack.setEnabled(e.action != Widget.ACTION_BACK);
+                        widgetBinding.llClickProp.setVisibility(e.action == Widget.ACTION_CLICK ? View.VISIBLE : View.GONE);
+                    }
                     widgetSaveRun.run();
                 }
             };
             widgetBinding.widgetNoRepeat.setOnClickListener(widgetClickListener);
             widgetBinding.widgetClickOnly.setOnClickListener(widgetClickListener);
+            widgetBinding.widgetActionClick.setOnClickListener(widgetClickListener);
+            widgetBinding.widgetActionBack.setOnClickListener(widgetClickListener);
 
             widgetBinding.widgetShare.setOnClickListener(new View.OnClickListener() {
                 @Override

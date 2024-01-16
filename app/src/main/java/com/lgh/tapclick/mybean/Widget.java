@@ -10,6 +10,9 @@ import java.util.Objects;
 
 @Entity(indices = @Index(value = {"appPackage", "appActivity", "widgetRect"}, unique = true))
 public class Widget {
+    public static final int ACTION_CLICK = 0;
+    public static final int ACTION_BACK = 1;
+
     @PrimaryKey(autoGenerate = true)
     public Integer id;
     public long createTime;
@@ -29,6 +32,7 @@ public class Widget {
     public int clickCount;
     public int clickInterval;
     public int clickNumber;
+    public int action;
 
     public Widget() {
         this.appPackage = "";
@@ -48,6 +52,7 @@ public class Widget {
         this.comment = "";
         this.lastClickTime = 0;
         this.clickCount = 0;
+        this.action = 0;
     }
 
     public Widget(Widget widget) {
@@ -68,6 +73,7 @@ public class Widget {
         this.comment = widget.comment;
         this.lastClickTime = widget.lastClickTime;
         this.clickCount = widget.clickCount;
+        this.action = widget.action;
     }
 
 
@@ -108,6 +114,7 @@ public class Widget {
                 ", clickCount=" + clickCount +
                 ", clickInterval=" + clickInterval +
                 ", clickNumber=" + clickNumber +
+                ", action=" + action +
                 '}';
     }
 }
