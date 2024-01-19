@@ -14469,15 +14469,7 @@ com.google.android.material.appbar.AppBarLayout$CompressChildScrollEffect:
 kotlin.streams.jdk8.StreamsKt$asSequence$$inlined$Sequence$3
 androidx.constraintlayout.core.motion.CustomAttribute$AttributeType
 kotlinx.coroutines.flow.FlowKt__BuildersKt$flowOf$$inlined$unsafeFlow$2
-androidx.core.widget.AutoSizeableTextView:
-    public abstract void setAutoSizeTextTypeWithDefaults(int)
-    public abstract void setAutoSizeTextTypeUniformWithConfiguration(int,int,int,int)
-    public abstract void setAutoSizeTextTypeUniformWithPresetSizes(int[],int)
-    public abstract int getAutoSizeTextType()
-    public abstract int getAutoSizeStepGranularity()
-    public abstract int getAutoSizeMinTextSize()
-    public abstract int getAutoSizeMaxTextSize()
-    public abstract int[] getAutoSizeTextAvailableSizes()
+androidx.core.widget.AutoSizeableTextView
 kotlinx.coroutines.channels.ConflatedBroadcastChannel$State
 com.google.android.material.snackbar.BaseTransientBottomBar$4
 androidx.appcompat.widget.Toolbar$ExpandedActionViewMenuPresenter:
@@ -32457,6 +32449,8 @@ androidx.core.app.ActivityOptionsCompat:
     public android.os.Bundle toBundle()
 retrofit2.ParameterHandler$PartMap:
     public void apply(retrofit2.RequestBuilder,java.util.Map)
+com.lgh.tapclick.myclass.MyApplication$4:
+    public final synthetic com.lgh.tapclick.myclass.MyApplication this$0
 androidx.fragment.app.SpecialEffectsControllerFactory:
     public abstract androidx.fragment.app.SpecialEffectsController createController(android.view.ViewGroup)
 com.lgh.tapclick.myactivity.MainActivity$4:
@@ -34521,7 +34515,6 @@ okhttp3.internal.http.RetryAndFollowUpInterceptor:
 com.google.android.material.appbar.AppBarLayout$CompressChildScrollEffect:
     public static void updateRelativeRect(android.graphics.Rect,com.google.android.material.appbar.AppBarLayout,android.view.View)
     public void onOffsetChanged(com.google.android.material.appbar.AppBarLayout,android.view.View,float)
-androidx.core.widget.AutoSizeableTextView
 androidx.appcompat.graphics.drawable.StateListDrawableCompat
 kotlin.jvm.internal.PropertyReference0Impl:
     private void constructor$kotlin$jvm$internal$PropertyReference0(java.lang.Object,java.lang.Class,java.lang.String,java.lang.String,int)
@@ -37135,8 +37128,8 @@ androidx.activity.ComponentActivity:
     public void invalidateMenu()
     public final androidx.activity.result.ActivityResultLauncher registerForActivityResult(androidx.activity.result.contract.ActivityResultContract,androidx.activity.result.ActivityResultRegistry,androidx.activity.result.ActivityResultCallback)
     public final androidx.activity.result.ActivityResultLauncher registerForActivityResult(androidx.activity.result.contract.ActivityResultContract,androidx.activity.result.ActivityResultCallback)
-    public void lambda$new$1$ComponentActivity(android.content.Context)
     public android.os.Bundle lambda$new$0$ComponentActivity()
+    public void lambda$new$1$ComponentActivity(android.content.Context)
     public int mContentLayoutId
 androidx.room.InvalidationTracker$ObserverWrapper:
     public void <init>(androidx.room.InvalidationTracker$Observer,int[],java.lang.String[])
@@ -38844,8 +38837,8 @@ okhttp3.internal.Util:
     public static final void addIfAbsent(java.util.List,java.lang.Object)
     public static final java.lang.Thread threadFactory$lambda-1(java.lang.String,boolean,java.lang.Runnable)
     public static final okhttp3.EventListener asFactory$lambda-8(okhttp3.EventListener,okhttp3.Call)
-    public static okhttp3.EventListener lambda$op7DGXdKtbPW5S_UsqHTJ0nOJEU(okhttp3.EventListener,okhttp3.Call)
     public static java.lang.Thread lambda$TFmLugqSOE7yNjbs-8gncc5DTI4(java.lang.String,boolean,java.lang.Runnable)
+    public static okhttp3.EventListener lambda$op7DGXdKtbPW5S_UsqHTJ0nOJEU(okhttp3.EventListener,okhttp3.Call)
     public static final okhttp3.RequestBody EMPTY_REQUEST
     public static final boolean assertionsEnabled
 kotlinx.coroutines.internal.ExceptionsConstructorKt$createSafeConstructor$$inlined$safeCtor$4
@@ -41187,8 +41180,8 @@ androidx.transition.ViewUtils$1:
 retrofit2.DefaultCallAdapterFactory$ExecutorCallbackCall$1:
     private synthetic void lambda$onFailure$1(retrofit2.Callback,java.lang.Throwable)
     private synthetic void lambda$onResponse$0(retrofit2.Callback,retrofit2.Response)
-    public synthetic void lambda$onResponse$0$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,retrofit2.Response)
     public synthetic void lambda$onFailure$1$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,java.lang.Throwable)
+    public synthetic void lambda$onResponse$0$DefaultCallAdapterFactory$ExecutorCallbackCall$1(retrofit2.Callback,retrofit2.Response)
 com.lgh.tapclick.myactivity.ListDataActivity$MyAdapter$ViewHolder$2:
     public final synthetic com.lgh.tapclick.myactivity.ListDataActivity$MyAdapter val$this$1
 androidx.lifecycle.viewmodel.InitializerViewModelFactoryBuilder
@@ -41558,31 +41551,31 @@ io.reactivex.rxjava3.core.Emitter
 com.google.android.material.transformation.ExpandableBehavior:
     public static synthetic int access$000(com.google.android.material.transformation.ExpandableBehavior)
     public com.google.android.material.expandable.ExpandableWidget findExpandableWidget(androidx.coordinatorlayout.widget.CoordinatorLayout,android.view.View)
-androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
-androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
-androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
-androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
-androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
-androidx.emoji2.text.-$$Lambda$aVrkOgYvqGr2lZJFFK92kv_FgWg
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
+androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
+androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
 androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$nxTh-dd7Fq8SYc_P9xauAw60ygY
+androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
+androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
+androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
+androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
+androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
+androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
+androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
+androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
 okhttp3.internal.-$$Lambda$Util$op7DGXdKtbPW5S_UsqHTJ0nOJEU:
     public final okhttp3.EventListener create(okhttp3.Call)
-androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
-androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
-androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
-androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
-androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
-androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
-androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
-androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
+androidx.emoji2.text.-$$Lambda$aVrkOgYvqGr2lZJFFK92kv_FgWg
+androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
 androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
-androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
+androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
 androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
-androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
+androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$nxTh-dd7Fq8SYc_P9xauAw60ygY
+androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
+androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
+androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
 com.android.tools.r8.GeneratedOutlineSupport:
     public static java.lang.String outline10(org.xmlpull.v1.XmlPullParser,java.lang.StringBuilder,java.lang.String)
