@@ -470,8 +470,8 @@ public class MainFunction {
                                         click(temRect.centerX(), temRect.centerY());
                                     }
                                     if (clickNumber == 1) {
-                                        e.clickCount += 1;
-                                        e.lastClickTime = System.currentTimeMillis();
+                                        e.triggerCount += 1;
+                                        e.lastTriggerTime = System.currentTimeMillis();
                                         dataDao.updateWidget(e);
                                         addLog("点击控件：" + gson.toJson(e));
                                         if (alreadyClickSet.size() >= widgets.size()) {
@@ -489,8 +489,8 @@ public class MainFunction {
                 if (alreadyClickSet.add(e)) {
                     if (onOffWidgetSub && nodeInfo.refresh()) {
                         service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
-                        e.clickCount += 1;
-                        e.lastClickTime = System.currentTimeMillis();
+                        e.triggerCount += 1;
+                        e.lastTriggerTime = System.currentTimeMillis();
                         dataDao.updateWidget(e);
                         addLog("触发返回：" + gson.toJson(e));
                         if (alreadyClickSet.size() >= widgets.size()) {
@@ -521,10 +521,10 @@ public class MainFunction {
             if (rect.width() <= 0 || rect.height() <= 0) {
                 continue;
             }
-            setR.add(node);
             for (int n = 0; n < node.getChildCount(); n++) {
                 listA.add(node.getChild(n));
             }
+            setR.add(node);
         }
         ArrayList<AccessibilityNodeInfo> listR = new ArrayList<>(setR);
         listR.sort(new Comparator<AccessibilityNodeInfo>() {

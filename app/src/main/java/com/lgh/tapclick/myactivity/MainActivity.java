@@ -337,8 +337,8 @@ public class MainActivity extends BaseActivity {
                 newRuleBinding.sure.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        widgetShare.widget.lastClickTime = 0;
-                        widgetShare.widget.clickCount = 0;
+                        widgetShare.widget.lastTriggerTime = 0;
+                        widgetShare.widget.triggerCount = 0;
                         dataDao.insertWidget(widgetShare.widget);
                         MyUtils.requestUpdateWidget(widgetShare.widget.appPackage);
                         alertDialog.dismiss();

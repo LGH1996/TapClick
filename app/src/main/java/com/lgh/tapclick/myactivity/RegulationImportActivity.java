@@ -128,8 +128,8 @@ public class RegulationImportActivity extends BaseActivity {
                                         coordinate.clickCount = 0;
                                     }
                                     for (Widget widget : e.widgetList) {
-                                        widget.lastClickTime = 0;
-                                        widget.clickCount = 0;
+                                        widget.lastTriggerTime = 0;
+                                        widget.triggerCount = 0;
                                         widgets.add(widget);
                                     }
                                     appDescribes.add(e.appDescribe);

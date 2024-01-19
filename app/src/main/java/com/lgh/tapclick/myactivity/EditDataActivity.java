@@ -449,20 +449,20 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetComment.setText(e.comment);
             widgetBinding.widgetClickNumber.setText(String.valueOf(e.clickNumber));
             widgetBinding.widgetClickInterval.setText(String.valueOf(e.clickInterval));
-            widgetBinding.widgetClickCount.setText(String.valueOf(e.clickCount));
+            widgetBinding.widgetClickCount.setText(String.valueOf(e.triggerCount));
             widgetBinding.widgetActionClick.setChecked(e.action == Widget.ACTION_CLICK);
             widgetBinding.widgetActionBack.setChecked(e.action == Widget.ACTION_BACK);
             widgetBinding.widgetActionClick.setEnabled(e.action != Widget.ACTION_CLICK);
             widgetBinding.widgetActionBack.setEnabled(e.action != Widget.ACTION_BACK);
             widgetBinding.llClickProp.setVisibility(e.action == Widget.ACTION_CLICK ? View.VISIBLE : View.GONE);
             long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
-            long day2 = (System.currentTimeMillis() - e.lastClickTime) / (24 * 60 * 60 * 1000);
+            long day2 = (System.currentTimeMillis() - e.lastTriggerTime) / (24 * 60 * 60 * 1000);
             widgetBinding.widgetCreateTime.setText(String.format("%s (%s天前)", dateFormat.format(new Date(e.createTime)), day1));
             widgetBinding.widgetLastClickTime.setTextColor(day1 >= 30 && day2 >= 30 ? Color.RED : widgetBinding.widgetLastClickTime.getCurrentTextColor());
-            if (e.lastClickTime <= 0) {
+            if (e.lastTriggerTime <= 0) {
                 widgetBinding.widgetLastClickTime.setText("无触发记录");
             } else {
-                widgetBinding.widgetLastClickTime.setText(String.format("%s (%s天前)", dateFormat.format(e.lastClickTime), day2));
+                widgetBinding.widgetLastClickTime.setText(String.format("%s (%s天前)", dateFormat.format(e.lastTriggerTime), day2));
             }
             Runnable widgetSaveRun = new Runnable() {
                 @Override
@@ -491,7 +491,7 @@ public class EditDataActivity extends BaseActivity {
                     try {
                         e.widgetRect = gson.fromJson(widgetBinding.widgetRect.getText().toString().trim(), Rect.class);
                     } catch (JsonSyntaxException jsonSyntaxException) {
-                        widgetBinding.widgetModify.setText("Bouns格式错误");
+                        widgetBinding.widgetModify.setText("Bonus格式错误");
                         return;
                     }
                     e.widgetId = widgetBinding.widgetId.getText().toString().trim();

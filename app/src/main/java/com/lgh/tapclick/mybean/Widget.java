@@ -28,8 +28,8 @@ public class Widget {
     public String widgetDescribe;
     public String widgetText;
     public String comment;
-    public long lastClickTime;
-    public int clickCount;
+    public long lastTriggerTime;
+    public int triggerCount;
     public int clickInterval;
     public int clickNumber;
     public int action;
@@ -50,8 +50,8 @@ public class Widget {
         this.widgetText = "";
         this.createTime = System.currentTimeMillis();
         this.comment = "";
-        this.lastClickTime = 0;
-        this.clickCount = 0;
+        this.lastTriggerTime = 0;
+        this.triggerCount = 0;
         this.action = 0;
     }
 
@@ -71,8 +71,8 @@ public class Widget {
         this.widgetDescribe = widget.widgetDescribe;
         this.widgetText = widget.widgetText;
         this.comment = widget.comment;
-        this.lastClickTime = widget.lastClickTime;
-        this.clickCount = widget.clickCount;
+        this.lastTriggerTime = widget.lastTriggerTime;
+        this.triggerCount = widget.triggerCount;
         this.action = widget.action;
     }
 
@@ -110,8 +110,8 @@ public class Widget {
                 ", widgetDescribe='" + widgetDescribe + '\'' +
                 ", widgetText='" + widgetText + '\'' +
                 ", comment='" + comment + '\'' +
-                ", lastClickTime=" + lastClickTime +
-                ", clickCount=" + clickCount +
+                ", lastActionTime=" + lastTriggerTime +
+                ", actionCount=" + triggerCount +
                 ", clickInterval=" + clickInterval +
                 ", clickNumber=" + clickNumber +
                 ", action=" + action +

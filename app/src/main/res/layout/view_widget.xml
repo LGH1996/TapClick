@@ -160,7 +160,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="触发动作(仅点击):"
                 android:textColor="@color/text_color"
@@ -184,7 +184,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="触发动作(仅返回):"
                 android:textColor="@color/text_color"
