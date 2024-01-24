@@ -413,7 +413,7 @@ public class ListDataActivity extends BaseActivity {
             longNoTriggerCount = 0;
             for (Coordinate e : appDescribe.coordinateList) {
                 long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
-                long day2 = (System.currentTimeMillis() - e.lastClickTime) / (24 * 60 * 60 * 1000);
+                long day2 = (System.currentTimeMillis() - e.lastTriggerTime) / (24 * 60 * 60 * 1000);
                 if (day1 >= 30 && day2 >= 30) {
                     longNoTriggerCount++;
                 }

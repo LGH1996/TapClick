@@ -402,8 +402,8 @@ public class MainActivity extends BaseActivity {
                 newRuleBinding.sure.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        coordinateShare.coordinate.lastClickTime = 0;
-                        coordinateShare.coordinate.clickCount = 0;
+                        coordinateShare.coordinate.lastTriggerTime = 0;
+                        coordinateShare.coordinate.triggerCount = 0;
                         dataDao.insertCoordinate(coordinateShare.coordinate);
                         MyUtils.requestUpdateWidget(coordinateShare.coordinate.appPackage);
                         alertDialog.dismiss();

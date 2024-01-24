@@ -314,14 +314,16 @@ public class MainFunction {
 
                                 @Override
                                 public void run() {
-                                    if (onOffCoordinateSub && ++num <= coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity)) {
+                                    if (onOffCoordinateSub && num++ < coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity)) {
                                         click(coordinateSub.xPosition, coordinateSub.yPosition);
-                                        coordinateSub.clickCount += 1;
-                                        coordinateSub.lastClickTime = System.currentTimeMillis();
-                                        dataDao.updateCoordinate(coordinateSub);
-                                        addLog("点击坐标：" + gson.toJson(coordinateSub));
                                     } else {
                                         throw new RuntimeException();
+                                    }
+                                    if (num == 1) {
+                                        coordinateSub.triggerCount += 1;
+                                        coordinateSub.lastTriggerTime = System.currentTimeMillis();
+                                        dataDao.updateCoordinate(coordinateSub);
+                                        addLog("点击坐标：" + gson.toJson(coordinateSub));
                                     }
                                 }
                             }, coordinate.clickDelay, coordinate.clickInterval, TimeUnit.MILLISECONDS);

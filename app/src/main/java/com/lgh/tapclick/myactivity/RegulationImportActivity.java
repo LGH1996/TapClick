@@ -124,8 +124,8 @@ public class RegulationImportActivity extends BaseActivity {
                                 List<Widget> widgets = new ArrayList<>();
                                 for (Regulation e : importList) {
                                     for (Coordinate coordinate : e.coordinateList) {
-                                        coordinate.lastClickTime = 0;
-                                        coordinate.clickCount = 0;
+                                        coordinate.lastTriggerTime = 0;
+                                        coordinate.triggerCount = 0;
                                     }
                                     for (Widget widget : e.widgetList) {
                                         widget.lastTriggerTime = 0;

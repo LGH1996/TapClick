@@ -286,15 +286,15 @@ public class EditDataActivity extends BaseActivity {
             coordinateBinding.coordinateClickInterval.setText(String.valueOf(e.clickInterval));
             coordinateBinding.coordinateClickNumber.setText(String.valueOf(e.clickNumber));
             coordinateBinding.coordinateComment.setText(e.comment);
-            coordinateBinding.coordinateClickCount.setText(String.valueOf(e.clickCount));
+            coordinateBinding.coordinateClickCount.setText(String.valueOf(e.triggerCount));
             long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
-            long day2 = (System.currentTimeMillis() - e.lastClickTime) / (24 * 60 * 60 * 1000);
+            long day2 = (System.currentTimeMillis() - e.lastTriggerTime) / (24 * 60 * 60 * 1000);
             coordinateBinding.coordinateCreateTime.setText(String.format("%s (%s天前)", dateFormat.format(new Date(e.createTime)), day1));
             coordinateBinding.coordinateLastClickTime.setTextColor(day1 >= 30 && day2 >= 30 ? Color.RED : coordinateBinding.coordinateLastClickTime.getCurrentTextColor());
-            if (e.lastClickTime <= 0) {
+            if (e.lastTriggerTime <= 0) {
                 coordinateBinding.coordinateLastClickTime.setText("无触发记录");
             } else {
-                coordinateBinding.coordinateLastClickTime.setText(String.format("%s (%s天前)", dateFormat.format(e.lastClickTime), day2));
+                coordinateBinding.coordinateLastClickTime.setText(String.format("%s (%s天前)", dateFormat.format(e.lastTriggerTime), day2));
             }
 
             Runnable coordinateSaveRun = new Runnable() {
@@ -333,10 +333,6 @@ public class EditDataActivity extends BaseActivity {
                     }
                     if (sNumber.isEmpty()) {
                         coordinateBinding.coordinateModify.setText("点击次数不能为空");
-                        return;
-                    }
-                    if (Integer.parseInt(sNumber) < 1) {
-                        coordinateBinding.coordinateModify.setText("点击次数不能小于1");
                         return;
                     }
                     e.xPosition = Integer.parseInt(sX);
@@ -473,11 +469,11 @@ public class EditDataActivity extends BaseActivity {
                     String debounceDelay = widgetBinding.widgetDebounceDelay.getText().toString();
                     widgetBinding.widgetModify.setTextColor(0xffff0000);
                     if (clickNumber.isEmpty()) {
-                        widgetBinding.widgetModify.setText("连续点击次数不能为空");
+                        widgetBinding.widgetModify.setText("点击次数不能为空");
                         return;
                     }
                     if (clickInterval.isEmpty()) {
-                        widgetBinding.widgetModify.setText("连续点击间隔不能为空");
+                        widgetBinding.widgetModify.setText("点击间隔不能为空");
                         return;
                     }
                     if (clickDelay.isEmpty()) {
