@@ -79,11 +79,11 @@ import java.util.stream.Collectors;
 
 /**
  * adb shell pm grant com.lgh.advertising.going android.permission.WRITE_SECURE_SETTINGS
- * adb shell settings put secure enabled_accessibility_services com.lgh.advertising.going/com.lgh.advertising.going.myfunction.MyAccessibilityService
+ * adb shell settings put secure enabled_accessibility_services com.lgh.tapclick/com.lgh.tapclick.myfunction.MyAccessibilityService
  * adb shell settings put secure accessibility_enabled 1
  * <p>
- * Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, getPackageName()+"/"+MyAccessibilityService.class.getName());
- * Settings.Secure.putString(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED, "1");
+ * Settings.Secure.putString(getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, getPackageName() + "/" + MyAccessibilityService.class.getName());
+ * Settings.Secure.putString(getContentResolver(), Settings.Secure.ACCESSIBILITY_ENABLED, "1");
  */
 
 public class MainFunction {
@@ -100,6 +100,7 @@ public class MainFunction {
     private final Set<Widget> debounceSet;
     private final LinkedList<String> logList;
     private final Gson gson;
+    private final Gson gsonNoPretty;
     private final SimpleDateFormat simpleDateFormat;
     private volatile AppDescribe appDescribe;
     private volatile String currentPackage;
@@ -137,6 +138,7 @@ public class MainFunction {
         executorServiceSub = Executors.newSingleThreadScheduledExecutor();
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT);
         gson = new GsonBuilder().setPrettyPrinting().create();
+        gsonNoPretty = new GsonBuilder().create();
         alreadyClickSet = new HashSet<>();
         appDescribeMap = new HashMap<>();
         debounceSet = new HashSet<>();
@@ -434,10 +436,15 @@ public class MainFunction {
         CharSequence cDescribe = nodeInfo.getContentDescription();
         CharSequence cText = nodeInfo.getText();
         for (Widget e : widgets) {
-            if (!temRect.equals(e.widgetRect)
-                    && !(cId != null && !e.widgetId.isEmpty() && cId.toString().equals(e.widgetId))
-                    && !(cDescribe != null && !e.widgetDescribe.isEmpty() && cDescribe.toString().matches(e.widgetDescribe))
-                    && !(cText != null && !e.widgetText.isEmpty() && cText.toString().matches(e.widgetText))) {
+            if (temRect.equals(e.widgetRect)) {
+                addLog(String.format("找到控件：Bonus, %s", gsonNoPretty.toJson(e.widgetRect)));
+            } else if (cId != null && !e.widgetId.isEmpty() && cId.toString().equals(e.widgetId)) {
+                addLog(String.format("找到控件：Id, %s", e.widgetId));
+            } else if (cDescribe != null && !e.widgetDescribe.isEmpty() && cDescribe.toString().matches(e.widgetDescribe)) {
+                addLog(String.format("找到控件：Describe, %s", e.widgetDescribe));
+            } else if (cText != null && !e.widgetText.isEmpty() && cText.toString().matches(e.widgetText)) {
+                addLog(String.format("找到控件：Text, %s", e.widgetText));
+            } else {
                 continue;
             }
             if (e.action == Widget.ACTION_CLICK) {
@@ -494,7 +501,7 @@ public class MainFunction {
                         e.triggerCount += 1;
                         e.lastTriggerTime = System.currentTimeMillis();
                         dataDao.updateWidget(e);
-                        addLog("触发返回：" + gson.toJson(e));
+                        addLog("执行返回：" + gson.toJson(e));
                         if (alreadyClickSet.size() >= widgets.size()) {
                             serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                             service.setServiceInfo(serviceInfo);
