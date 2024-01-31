@@ -401,11 +401,11 @@
 -dontwarn org.openjsse.**
 
 # End of content from C:\Users\Lenovo\.gradle\caches\transforms-2\files-2.1\868e032cd194f87b3eba7c2c63a21d55\rules\lib\META-INF\proguard\okhttp3.pro
-# The proguard configuration file for the following section is C:\Users\Lenovo\.gradle\caches\transforms-2\files-2.1\8773cc4ee2fc49fa8eb0cd39300b2522\room-runtime-2.4.2\proguard.txt
+# The proguard configuration file for the following section is C:\Users\Lenovo\.gradle\caches\transforms-2\files-2.1\4cc3953718b339a842da7b8a203cfe4a\room-runtime-2.5.1\proguard.txt
 -keep class * extends androidx.room.RoomDatabase
 -dontwarn androidx.room.paging.**
 
-# End of content from C:\Users\Lenovo\.gradle\caches\transforms-2\files-2.1\8773cc4ee2fc49fa8eb0cd39300b2522\room-runtime-2.4.2\proguard.txt
+# End of content from C:\Users\Lenovo\.gradle\caches\transforms-2\files-2.1\4cc3953718b339a842da7b8a203cfe4a\room-runtime-2.5.1\proguard.txt
 # The proguard configuration file for the following section is C:\Users\Lenovo\.gradle\caches\transforms-2\files-2.1\bfea592dc349d79ea7cc733983a7649b\rules\lib\META-INF\proguard\rxjava3.pro
 -dontwarn java.util.concurrent.Flow*
 # End of content from C:\Users\Lenovo\.gradle\caches\transforms-2\files-2.1\bfea592dc349d79ea7cc733983a7649b\rules\lib\META-INF\proguard\rxjava3.pro
