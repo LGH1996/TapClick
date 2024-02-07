@@ -27,3 +27,5 @@ https://github.com/LGH1996/TapClick/assets/49404827/584aa62e-2213-486f-bcff-4ebb
 https://github.com/LGH1996/TapClick/assets/49404827/899bb4a7-90fb-4581-bc7a-982c07510fac
 
 https://github.com/LGH1996/TapClick/assets/49404827/f56f0623-c27d-46d7-add2-9f31a109ca03
+
+https://github.com/LGH1996/TapClick/assets/49404827/f69230a8-ed3e-4851-a606-eafd9477a04a
