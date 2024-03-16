@@ -110,6 +110,7 @@ public class MainFunction {
     private volatile boolean onOffWidgetSub;
     private volatile boolean onOffCoordinate;
     private volatile boolean onOffCoordinateSub;
+    private volatile boolean needChangeActivity;
     private volatile ScheduledFuture<?> futureWidget;
     private volatile ScheduledFuture<?> futureCoordinate;
     private volatile Set<Widget> widgetSet;
@@ -235,6 +236,7 @@ public class MainFunction {
                     break;
                 }
                 if (!packageName.equals(currentPackageSub)) {
+                    needChangeActivity = true;
                     currentPackageSub = packageName;
                     futureWidget.cancel(false);
                     futureCoordinate.cancel(false);
@@ -283,10 +285,13 @@ public class MainFunction {
                 if (!TextUtils.equals(event.getPackageName(), currentPackage)) {
                     break;
                 }
-                if (!activityName.equals(currentActivity)
+                if ((!activityName.equals(currentActivity)
                         && !activityName.startsWith("android.view.")
-                        && !activityName.startsWith("android.widget.")) {
+                        && !activityName.startsWith("android.widget."))
+                        || (activityName.equals("android.widget.FrameLayout")
+                        && needChangeActivity)) {
                     addLog("进入页面：" + activityName);
+                    needChangeActivity = false;
                     currentActivity = activityName;
                     alreadyClickSet.clear();
                     onOffWidgetSub = false;

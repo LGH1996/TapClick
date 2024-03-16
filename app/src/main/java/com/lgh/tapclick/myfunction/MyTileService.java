@@ -14,7 +14,7 @@ public class MyTileService extends TileService {
         } else {
             Intent intentAccessibility = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
             intentAccessibility.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityAndCollapse(intentAccessibility);
+            startActivity(intentAccessibility);
             Toast.makeText(getApplicationContext(), "请先开启无障碍服务", Toast.LENGTH_SHORT).show();
         }
     }
