@@ -132,7 +132,7 @@
                     android:ems="2"
                     android:gravity="center_vertical"
                     android:inputType="number"
-                    android:maxLength="4"
+                    android:maxLength="5"
                     android:singleLine="true"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
@@ -163,7 +163,7 @@
                     android:ems="2"
                     android:gravity="center_vertical"
                     android:inputType="number"
-                    android:maxLength="4"
+                    android:maxLength="5"
                     android:singleLine="true"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
