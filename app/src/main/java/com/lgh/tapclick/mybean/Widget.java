@@ -12,6 +12,8 @@ import java.util.Objects;
 public class Widget {
     public static final int ACTION_CLICK = 0;
     public static final int ACTION_BACK = 1;
+    public static final int CONDITION_OR = 0;
+    public static final int CONDITION_AND = 1;
 
     @PrimaryKey(autoGenerate = true)
     public Integer id;
@@ -27,12 +29,14 @@ public class Widget {
     public String widgetId;
     public String widgetDescribe;
     public String widgetText;
+    public String toast;
     public String comment;
     public long lastTriggerTime;
     public int triggerCount;
     public int clickInterval;
     public int clickNumber;
     public int action;
+    public int condition;
 
     public Widget() {
         this.appPackage = "";
@@ -48,11 +52,13 @@ public class Widget {
         this.widgetId = "";
         this.widgetDescribe = "";
         this.widgetText = "";
-        this.createTime = System.currentTimeMillis();
+        this.toast = "";
         this.comment = "";
         this.lastTriggerTime = 0;
         this.triggerCount = 0;
         this.action = 0;
+        this.condition = 0;
+        this.createTime = System.currentTimeMillis();
     }
 
     public Widget(Widget widget) {
@@ -70,12 +76,13 @@ public class Widget {
         this.widgetId = widget.widgetId;
         this.widgetDescribe = widget.widgetDescribe;
         this.widgetText = widget.widgetText;
+        this.toast = widget.toast;
         this.comment = widget.comment;
         this.lastTriggerTime = widget.lastTriggerTime;
         this.triggerCount = widget.triggerCount;
         this.action = widget.action;
+        this.condition = widget.condition;
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -109,12 +116,14 @@ public class Widget {
                 ", widgetId='" + widgetId + '\'' +
                 ", widgetDescribe='" + widgetDescribe + '\'' +
                 ", widgetText='" + widgetText + '\'' +
+                ", toast='" + toast + '\'' +
                 ", comment='" + comment + '\'' +
-                ", lastActionTime=" + lastTriggerTime +
-                ", actionCount=" + triggerCount +
+                ", lastTriggerTime=" + lastTriggerTime +
+                ", triggerCount=" + triggerCount +
                 ", clickInterval=" + clickInterval +
                 ", clickNumber=" + clickNumber +
                 ", action=" + action +
+                ", condition=" + condition +
                 '}';
     }
 }

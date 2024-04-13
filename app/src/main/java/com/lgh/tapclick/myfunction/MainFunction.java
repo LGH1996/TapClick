@@ -23,6 +23,8 @@ import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -41,6 +43,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -92,6 +95,7 @@ public class MainFunction {
     private final WindowManager windowManager;
     private final PackageManager packageManager;
     private final InputMethodManager inputMethodManager;
+    private final Handler handler;
     private final DataDao dataDao;
     private final Map<String, AppDescribe> appDescribeMap;
     private final ScheduledExecutorService executorServiceMain;
@@ -137,6 +141,7 @@ public class MainFunction {
         packageManager = accessibilityService.getPackageManager();
         executorServiceMain = Executors.newSingleThreadScheduledExecutor();
         executorServiceSub = Executors.newSingleThreadScheduledExecutor();
+        handler = new Handler(Looper.getMainLooper());
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT);
         gson = new GsonBuilder().setPrettyPrinting().create();
         gsonNoPretty = new GsonBuilder().create();
@@ -330,6 +335,7 @@ public class MainFunction {
                                         coordinateSub.triggerCount += 1;
                                         coordinateSub.lastTriggerTime = System.currentTimeMillis();
                                         dataDao.updateCoordinate(coordinateSub);
+                                        showToast(coordinateSub.toast);
                                         addLog("点击坐标：" + gson.toJson(coordinateSub));
                                     }
                                 }
@@ -441,14 +447,55 @@ public class MainFunction {
         CharSequence cDescribe = nodeInfo.getContentDescription();
         CharSequence cText = nodeInfo.getText();
         for (Widget e : widgets) {
-            if (temRect.equals(e.widgetRect)) {
-                addLog(String.format("找到控件：Bonus, %s", gsonNoPretty.toJson(e.widgetRect)));
-            } else if (cId != null && !e.widgetId.isEmpty() && cId.toString().equals(e.widgetId)) {
-                addLog(String.format("找到控件：Id, %s", e.widgetId));
-            } else if (cDescribe != null && !e.widgetDescribe.isEmpty() && cDescribe.toString().matches(e.widgetDescribe)) {
-                addLog(String.format("找到控件：Describe, %s", e.widgetDescribe));
-            } else if (cText != null && !e.widgetText.isEmpty() && cText.toString().matches(e.widgetText)) {
-                addLog(String.format("找到控件：Text, %s", e.widgetText));
+            if (e.condition == Widget.CONDITION_OR) {
+                if (temRect.equals(e.widgetRect)) {
+                    addLog(String.format("找到控件：Bonus[%s]", gsonNoPretty.toJson(e.widgetRect)));
+                } else if (cId != null && !e.widgetId.isEmpty() && cId.toString().equals(e.widgetId)) {
+                    addLog(String.format("找到控件：Id[%s]", e.widgetId));
+                } else if (cDescribe != null && !e.widgetDescribe.isEmpty() && cDescribe.toString().matches(e.widgetDescribe)) {
+                    addLog(String.format("找到控件：Describe[%s]", e.widgetDescribe));
+                } else if (cText != null && !e.widgetText.isEmpty() && cText.toString().matches(e.widgetText)) {
+                    addLog(String.format("找到控件：Text[%s]", e.widgetText));
+                } else {
+                    continue;
+                }
+            } else if (e.condition == Widget.CONDITION_AND) {
+                StringBuilder stringBuilder = new StringBuilder();
+                if (e.widgetRect != null) {
+                    if (!temRect.equals(e.widgetRect)) {
+                        continue;
+                    } else {
+                        stringBuilder.append(String.format(", Bonus[%s]", gsonNoPretty.toJson(e.widgetRect)));
+                    }
+                }
+                if (cId != null && !e.widgetId.isEmpty()) {
+                    if (!cId.toString().equals(e.widgetId)) {
+                        continue;
+                    } else {
+                        stringBuilder.append(String.format(", Id[%s]", e.widgetId));
+                    }
+                }
+                if (cDescribe != null && !e.widgetDescribe.isEmpty()) {
+                    if (!cDescribe.toString().matches(e.widgetDescribe)) {
+                        continue;
+                    } else {
+                        stringBuilder.append(String.format(", Describe[%s]", e.widgetDescribe));
+                    }
+                }
+                if (cText != null && !e.widgetText.isEmpty()) {
+                    if (!cText.toString().matches(e.widgetText)) {
+                        continue;
+                    } else {
+                        stringBuilder.append(String.format(", Text[%s]", e.widgetText));
+                    }
+                }
+                if (e.widgetRect == null
+                        && (cId == null || e.widgetId.isEmpty())
+                        && (cDescribe == null || e.widgetDescribe.isEmpty())
+                        && (cText == null || e.widgetText.isEmpty())) {
+                    continue;
+                }
+                addLog(String.format("找到控件：%s", stringBuilder.substring(2)));
             } else {
                 continue;
             }
@@ -487,6 +534,7 @@ public class MainFunction {
                                         e.triggerCount += 1;
                                         e.lastTriggerTime = System.currentTimeMillis();
                                         dataDao.updateWidget(e);
+                                        showToast(e.toast);
                                         addLog("点击控件：" + gson.toJson(e));
                                         if (alreadyClickSet.size() >= widgets.size()) {
                                             serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
@@ -498,14 +546,14 @@ public class MainFunction {
                         }
                     }, e.clickDelay, TimeUnit.MILLISECONDS);
                 }
-            }
-            if (e.action == Widget.ACTION_BACK) {
+            } else if (e.action == Widget.ACTION_BACK) {
                 if (alreadyClickSet.add(e)) {
                     if (onOffWidgetSub && nodeInfo.refresh()) {
                         service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
                         e.triggerCount += 1;
                         e.lastTriggerTime = System.currentTimeMillis();
                         dataDao.updateWidget(e);
+                        showToast(e.toast);
                         addLog("执行返回：" + gson.toJson(e));
                         if (alreadyClickSet.size() >= widgets.size()) {
                             serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
@@ -1279,5 +1327,17 @@ public class MainFunction {
                 }
             }
         }
+    }
+
+    private void showToast(String content) {
+        if (TextUtils.isEmpty(content)) {
+            return;
+        }
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(service, content, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

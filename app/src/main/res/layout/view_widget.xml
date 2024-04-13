@@ -162,6 +162,54 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
+                android:text="触发条件(或):"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/widget_condition_or"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/check_select"
+                android:button="@null"
+                android:gravity="center"
+                android:tag="0" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="触发条件(与):"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/widget_condition_and"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/check_select"
+                android:button="@null"
+                android:gravity="center"
+                android:tag="1" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
                 android:text="触发动作(仅点击):"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -357,6 +405,30 @@
                     android:button="@null"
                     android:gravity="center" />
             </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="Toast提示:"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/widget_toast"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="内容为空时无提示"
+                android:singleLine="true"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat

@@ -287,6 +287,7 @@ public class EditDataActivity extends BaseActivity {
             coordinateBinding.coordinateClickNumber.setText(String.valueOf(e.clickNumber));
             coordinateBinding.coordinateComment.setText(e.comment);
             coordinateBinding.coordinateClickCount.setText(String.valueOf(e.triggerCount));
+            coordinateBinding.coordinateToast.setText(e.toast);
             long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
             long day2 = (System.currentTimeMillis() - e.lastTriggerTime) / (24 * 60 * 60 * 1000);
             coordinateBinding.coordinateCreateTime.setText(String.format("%s (%s天前)", dateFormat.format(new Date(e.createTime)), day1));
@@ -305,7 +306,6 @@ public class EditDataActivity extends BaseActivity {
                     String sDelay = coordinateBinding.coordinateClickDelay.getText().toString();
                     String sInterval = coordinateBinding.coordinateClickInterval.getText().toString();
                     String sNumber = coordinateBinding.coordinateClickNumber.getText().toString();
-                    String sComment = coordinateBinding.coordinateComment.getText().toString().trim();
                     coordinateBinding.coordinateModify.setTextColor(0xffff0000);
                     if (sX.isEmpty()) {
                         coordinateBinding.coordinateModify.setText("X轴坐标不能为空");
@@ -340,7 +340,8 @@ public class EditDataActivity extends BaseActivity {
                     e.clickDelay = Integer.parseInt(sDelay);
                     e.clickInterval = Integer.parseInt(sInterval);
                     e.clickNumber = Integer.parseInt(sNumber);
-                    e.comment = sComment;
+                    e.comment = coordinateBinding.coordinateComment.getText().toString().trim();
+                    e.toast = coordinateBinding.coordinateToast.getText().toString().trim();
                     dataDao.updateCoordinate(e);
                     coordinateBinding.coordinateModify.setTextColor(0xff000000);
                     coordinateBinding.coordinateModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
@@ -370,6 +371,7 @@ public class EditDataActivity extends BaseActivity {
             coordinateBinding.coordinateClickInterval.addTextChangedListener(coordinateTextWatcher);
             coordinateBinding.coordinateClickNumber.addTextChangedListener(coordinateTextWatcher);
             coordinateBinding.coordinateComment.addTextChangedListener(coordinateTextWatcher);
+            coordinateBinding.coordinateToast.addTextChangedListener(coordinateTextWatcher);
 
             coordinateBinding.coordinateShare.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -451,6 +453,11 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetActionClick.setEnabled(e.action != Widget.ACTION_CLICK);
             widgetBinding.widgetActionBack.setEnabled(e.action != Widget.ACTION_BACK);
             widgetBinding.llClickProp.setVisibility(e.action == Widget.ACTION_CLICK ? View.VISIBLE : View.GONE);
+            widgetBinding.widgetConditionOr.setChecked(e.condition == Widget.CONDITION_OR);
+            widgetBinding.widgetConditionAnd.setChecked(e.condition == Widget.CONDITION_AND);
+            widgetBinding.widgetConditionOr.setEnabled(e.condition != Widget.CONDITION_OR);
+            widgetBinding.widgetConditionAnd.setEnabled(e.condition != Widget.CONDITION_AND);
+            widgetBinding.widgetToast.setText(e.toast);
             long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
             long day2 = (System.currentTimeMillis() - e.lastTriggerTime) / (24 * 60 * 60 * 1000);
             widgetBinding.widgetCreateTime.setText(String.format("%s (%s天前)", dateFormat.format(new Date(e.createTime)), day1));
@@ -500,6 +507,7 @@ public class EditDataActivity extends BaseActivity {
                     e.noRepeat = widgetBinding.widgetNoRepeat.isChecked();
                     e.clickOnly = widgetBinding.widgetClickOnly.isChecked();
                     e.comment = widgetBinding.widgetComment.getText().toString().trim();
+                    e.toast = widgetBinding.widgetToast.getText().toString().trim();
                     dataDao.updateWidget(e);
                     widgetBinding.widgetModify.setTextColor(0xff000000);
                     widgetBinding.widgetModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
@@ -532,6 +540,7 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetClickDelay.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetDebounceDelay.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetComment.addTextChangedListener(widgetTextWatcher);
+            widgetBinding.widgetToast.addTextChangedListener(widgetTextWatcher);
 
             View.OnClickListener widgetClickListener = new View.OnClickListener() {
                 @Override
@@ -544,6 +553,13 @@ public class EditDataActivity extends BaseActivity {
                         widgetBinding.widgetActionBack.setEnabled(e.action != Widget.ACTION_BACK);
                         widgetBinding.llClickProp.setVisibility(e.action == Widget.ACTION_CLICK ? View.VISIBLE : View.GONE);
                     }
+                    if (v == widgetBinding.widgetConditionOr || v == widgetBinding.widgetConditionAnd) {
+                        e.condition = Integer.parseInt((String) v.getTag());
+                        widgetBinding.widgetConditionOr.setChecked(e.condition == Widget.CONDITION_OR);
+                        widgetBinding.widgetConditionAnd.setChecked(e.condition == Widget.CONDITION_AND);
+                        widgetBinding.widgetConditionOr.setEnabled(e.condition != Widget.CONDITION_OR);
+                        widgetBinding.widgetConditionAnd.setEnabled(e.condition != Widget.CONDITION_AND);
+                    }
                     widgetSaveRun.run();
                 }
             };
@@ -551,6 +567,8 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetClickOnly.setOnClickListener(widgetClickListener);
             widgetBinding.widgetActionClick.setOnClickListener(widgetClickListener);
             widgetBinding.widgetActionBack.setOnClickListener(widgetClickListener);
+            widgetBinding.widgetConditionOr.setOnClickListener(widgetClickListener);
+            widgetBinding.widgetConditionAnd.setOnClickListener(widgetClickListener);
 
             widgetBinding.widgetShare.setOnClickListener(new View.OnClickListener() {
                 @Override
