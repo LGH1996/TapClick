@@ -18,6 +18,7 @@ public class Coordinate {
     public int clickDelay;
     public int clickInterval;
     public int clickNumber;
+    public String toast;
     public String comment;
     public long lastTriggerTime;
     public int triggerCount;
@@ -30,10 +31,11 @@ public class Coordinate {
         this.clickDelay = 1000;
         this.clickInterval = 500;
         this.clickNumber = 1;
-        this.createTime = System.currentTimeMillis();
+        this.toast = "";
         this.comment = "";
         this.lastTriggerTime = 0;
         this.triggerCount = 0;
+        this.createTime = System.currentTimeMillis();
     }
 
     public Coordinate(Coordinate coordinate) {
@@ -45,6 +47,7 @@ public class Coordinate {
         this.clickDelay = coordinate.clickDelay;
         this.clickInterval = coordinate.clickInterval;
         this.clickNumber = coordinate.clickNumber;
+        this.toast = coordinate.toast;
         this.comment = coordinate.comment;
         this.lastTriggerTime = coordinate.lastTriggerTime;
         this.triggerCount = coordinate.triggerCount;
@@ -77,9 +80,10 @@ public class Coordinate {
                 ", clickDelay=" + clickDelay +
                 ", clickInterval=" + clickInterval +
                 ", clickNumber=" + clickNumber +
+                ", toast='" + toast + '\'' +
                 ", comment='" + comment + '\'' +
-                ", lastClickTime=" + lastTriggerTime +
-                ", clickCount=" + triggerCount +
+                ", lastTriggerTime=" + lastTriggerTime +
+                ", triggerCount=" + triggerCount +
                 '}';
     }
 }
