@@ -716,9 +716,9 @@ androidx.appcompat.widget.DrawableUtils:
     private void <init>()
 kotlin.jvm.internal.ArrayIntIterator
 androidx.core.view.ScrollingView
+io.reactivex.rxjava3.internal.operators.flowable.FlowableReplay$SizeAndTimeBoundReplayBuffer
 androidx.room.AutoClosingRoomOpenHelper:
     androidx.sqlite.db.SupportSQLiteDatabase getAutoClosingDb()
-io.reactivex.rxjava3.internal.operators.flowable.FlowableReplay$SizeAndTimeBoundReplayBuffer
 androidx.core.graphics.BlendModeUtils$1
 org.reactivestreams.FlowAdapters$ReactiveToFlowSubscription
 io.reactivex.rxjava3.internal.operators.mixed.ObservableConcatMapMaybe
@@ -28616,6 +28616,7 @@ kotlinx.coroutines.channels.AbstractSendChannel$TryOfferDesc
 kotlin.UByteKt
 com.google.android.material.badge.BadgeDrawable$1
 kotlinx.coroutines.test.TimedRunnableObsolete
+androidx.legacy.coreutils.R$string
 com.google.android.material.R$dimen:
     private void <init>()
     public static final int abc_action_bar_content_inset_material
@@ -29158,7 +29159,6 @@ com.google.android.material.R$dimen:
     public static final int tooltip_vertical_padding
     public static final int tooltip_y_offset_non_touch
     public static final int tooltip_y_offset_touch
-androidx.legacy.coreutils.R$string
 androidx.core.view.WindowInsetsControllerCompat:
     private void <init>(android.view.WindowInsetsController)
     public static androidx.core.view.WindowInsetsControllerCompat toWindowInsetsControllerCompat(android.view.WindowInsetsController)
@@ -30826,8 +30826,8 @@ androidx.coordinatorlayout.R$styleable:
 androidx.core.content.res.ResourcesCompat$FontCallback:
     private synthetic void lambda$callbackFailAsync$1(int)
     private synthetic void lambda$callbackSuccessAsync$0(android.graphics.Typeface)
-    public synthetic void lambda$callbackFailAsync$1$ResourcesCompat$FontCallback(int)
     public synthetic void lambda$callbackSuccessAsync$0$ResourcesCompat$FontCallback(android.graphics.Typeface)
+    public synthetic void lambda$callbackFailAsync$1$ResourcesCompat$FontCallback(int)
 kotlin.random.Random$Default:
     public void <init>()
     public int nextBits(int)
@@ -31155,6 +31155,8 @@ kotlin.coroutines.jvm.internal.ContinuationImpl:
     public final kotlin.coroutines.Continuation intercepted()
 androidx.room.EntityInsertionAdapter:
     public final void insert(java.lang.Object)
+com.lgh.tapclick.myclass.MyApplication$6:
+    public final synthetic com.lgh.tapclick.myclass.MyApplication this$0
 com.lgh.advertising.tapclick.databinding.ActivityMoreMessageBinding:
     public static com.lgh.advertising.tapclick.databinding.ActivityMoreMessageBinding inflate(android.view.LayoutInflater)
     public static com.lgh.advertising.tapclick.databinding.ActivityMoreMessageBinding inflate(android.view.LayoutInflater,android.view.ViewGroup,boolean)
@@ -32739,42 +32741,44 @@ com.lgh.tapclick.myfunction.MainFunction:
     public static synthetic boolean access$600(com.lgh.tapclick.myfunction.MainFunction)
     public static synthetic java.lang.String access$800(com.lgh.tapclick.myfunction.MainFunction)
     public static synthetic com.lgh.tapclick.myclass.DataDao access$1000(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic com.google.gson.Gson access$1100(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic void access$1200(com.lgh.tapclick.myfunction.MainFunction,java.lang.String)
-    public static synthetic java.util.Set access$1300(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic java.util.Set access$1500(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic java.util.concurrent.ScheduledExecutorService access$1600(com.lgh.tapclick.myfunction.MainFunction)
+    public static void access$1100(com.lgh.tapclick.myfunction.MainFunction,java.lang.String)
+    public static synthetic com.google.gson.Gson access$1200(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic void access$1300(com.lgh.tapclick.myfunction.MainFunction,java.lang.String)
+    public static synthetic java.util.Set access$1400(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic java.util.Set access$1600(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic java.util.concurrent.ScheduledExecutorService access$1700(com.lgh.tapclick.myfunction.MainFunction)
     public static synthetic boolean access$200(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic java.util.Set access$1700(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic android.view.WindowManager$LayoutParams access$1800(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic com.lgh.advertising.tapclick.databinding.ViewAddDataBinding access$1900(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic java.util.Map access$2000(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic android.view.WindowManager access$2100(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic android.view.WindowManager$LayoutParams access$2200(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic java.lang.String access$2300(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic android.widget.ImageView access$2400(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic android.view.WindowManager$LayoutParams access$2500(com.lgh.tapclick.myfunction.MainFunction)
-    public static java.util.ArrayList access$2600(com.lgh.tapclick.myfunction.MainFunction,java.util.List)
-    public static synthetic com.lgh.advertising.tapclick.databinding.ViewWidgetSelectBinding access$2700(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic java.util.concurrent.ScheduledExecutorService access$2800(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic java.util.Set access$2900(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic java.util.Set access$2902(com.lgh.tapclick.myfunction.MainFunction,java.util.Set)
-    public static synthetic com.lgh.advertising.tapclick.databinding.ViewWidgetSelectBinding access$2702(com.lgh.tapclick.myfunction.MainFunction,com.lgh.advertising.tapclick.databinding.ViewWidgetSelectBinding)
-    public static synthetic com.lgh.advertising.tapclick.databinding.ViewAddDataBinding access$1902(com.lgh.tapclick.myfunction.MainFunction,com.lgh.advertising.tapclick.databinding.ViewAddDataBinding)
-    public static synthetic android.widget.ImageView access$2402(com.lgh.tapclick.myfunction.MainFunction,android.widget.ImageView)
-    public static synthetic java.lang.String access$2302(com.lgh.tapclick.myfunction.MainFunction,java.lang.String)
+    public static synthetic java.util.Set access$1800(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic android.view.WindowManager$LayoutParams access$1900(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic com.lgh.advertising.tapclick.databinding.ViewAddDataBinding access$2000(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic java.util.Map access$2100(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic android.view.WindowManager access$2200(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic android.view.WindowManager$LayoutParams access$2300(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic java.lang.String access$2400(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic android.widget.ImageView access$2500(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic android.view.WindowManager$LayoutParams access$2600(com.lgh.tapclick.myfunction.MainFunction)
+    public static java.util.ArrayList access$2700(com.lgh.tapclick.myfunction.MainFunction,java.util.List)
+    public static synthetic com.lgh.advertising.tapclick.databinding.ViewWidgetSelectBinding access$2800(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic java.util.concurrent.ScheduledExecutorService access$2900(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic java.util.Set access$3000(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic java.util.Set access$3002(com.lgh.tapclick.myfunction.MainFunction,java.util.Set)
+    public static synthetic com.lgh.advertising.tapclick.databinding.ViewWidgetSelectBinding access$2802(com.lgh.tapclick.myfunction.MainFunction,com.lgh.advertising.tapclick.databinding.ViewWidgetSelectBinding)
+    public static synthetic com.lgh.advertising.tapclick.databinding.ViewAddDataBinding access$2002(com.lgh.tapclick.myfunction.MainFunction,com.lgh.advertising.tapclick.databinding.ViewAddDataBinding)
+    public static synthetic android.widget.ImageView access$2502(com.lgh.tapclick.myfunction.MainFunction,android.widget.ImageView)
+    public static synthetic java.lang.String access$2402(com.lgh.tapclick.myfunction.MainFunction,java.lang.String)
     public static synthetic java.lang.String access$802(com.lgh.tapclick.myfunction.MainFunction,java.lang.String)
-    public static synthetic android.view.WindowManager$LayoutParams access$3100(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic android.view.View access$3200(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic java.lang.String access$3302(com.lgh.tapclick.myfunction.MainFunction,java.lang.String)
-    public static synthetic android.content.pm.PackageManager access$3400(com.lgh.tapclick.myfunction.MainFunction)
-    public static synthetic android.view.inputmethod.InputMethodManager access$3500(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic android.view.WindowManager$LayoutParams access$3200(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic android.view.View access$3300(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic java.lang.String access$3402(com.lgh.tapclick.myfunction.MainFunction,java.lang.String)
+    public static synthetic android.content.pm.PackageManager access$3500(com.lgh.tapclick.myfunction.MainFunction)
+    public static synthetic android.view.inputmethod.InputMethodManager access$3600(com.lgh.tapclick.myfunction.MainFunction)
     public final void findAndClickView(java.util.List,java.util.Set)
     public final void clickByWidget(android.view.accessibility.AccessibilityNodeInfo,java.util.Set)
     public final java.util.ArrayList findAllNode(java.util.List)
     public final boolean click(int,int)
     public final void getRunningData()
     public final void showAddWarningDialog(java.lang.Runnable)
+    public final void showToast(java.lang.String)
     public boolean onUnbind()
     public java.util.Map getAppDescribeMap()
     public void closeService()
@@ -37167,8 +37171,8 @@ androidx.activity.ComponentActivity:
     public void invalidateMenu()
     public final androidx.activity.result.ActivityResultLauncher registerForActivityResult(androidx.activity.result.contract.ActivityResultContract,androidx.activity.result.ActivityResultRegistry,androidx.activity.result.ActivityResultCallback)
     public final androidx.activity.result.ActivityResultLauncher registerForActivityResult(androidx.activity.result.contract.ActivityResultContract,androidx.activity.result.ActivityResultCallback)
-    public android.os.Bundle lambda$new$0$ComponentActivity()
     public void lambda$new$1$ComponentActivity(android.content.Context)
+    public android.os.Bundle lambda$new$0$ComponentActivity()
     public int mContentLayoutId
 androidx.room.InvalidationTracker$ObserverWrapper:
     public void <init>(androidx.room.InvalidationTracker$Observer,int[],java.lang.String[])
@@ -38883,8 +38887,8 @@ okhttp3.internal.Util:
     public static final void addIfAbsent(java.util.List,java.lang.Object)
     public static final java.lang.Thread threadFactory$lambda-1(java.lang.String,boolean,java.lang.Runnable)
     public static final okhttp3.EventListener asFactory$lambda-8(okhttp3.EventListener,okhttp3.Call)
-    public static java.lang.Thread lambda$TFmLugqSOE7yNjbs-8gncc5DTI4(java.lang.String,boolean,java.lang.Runnable)
     public static okhttp3.EventListener lambda$op7DGXdKtbPW5S_UsqHTJ0nOJEU(okhttp3.EventListener,okhttp3.Call)
+    public static java.lang.Thread lambda$TFmLugqSOE7yNjbs-8gncc5DTI4(java.lang.String,boolean,java.lang.Runnable)
     public static final okhttp3.RequestBody EMPTY_REQUEST
     public static final boolean assertionsEnabled
 kotlinx.coroutines.internal.ExceptionsConstructorKt$createSafeConstructor$$inlined$safeCtor$4
@@ -41586,31 +41590,31 @@ io.reactivex.rxjava3.core.Emitter
 com.google.android.material.transformation.ExpandableBehavior:
     public static synthetic int access$000(com.google.android.material.transformation.ExpandableBehavior)
     public com.google.android.material.expandable.ExpandableWidget findExpandableWidget(androidx.coordinatorlayout.widget.CoordinatorLayout,android.view.View)
-androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
-androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
-androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
-androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
-androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
-androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
 androidx.room.-$$Lambda$suwK2nhHii_mmyBI6WBF2vxnuZI
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$b-KdzNDeRaI1t9yiwJWyXV5j2Yw
 androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$nxTh-dd7Fq8SYc_P9xauAw60ygY
+androidx.room.-$$Lambda$QueryInterceptorDatabase$QtTq_CaWbFOQiMXA3IbTenmcZT4
 androidx.room.-$$Lambda$QueryInterceptorDatabase$2Bw1_mcYTrjaNcvAFu88RWoC1zc
-androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
+androidx.room.-$$Lambda$s5txClRPQBekob9pkePxBQ8StEc
 okhttp3.internal.-$$Lambda$Util$op7DGXdKtbPW5S_UsqHTJ0nOJEU:
     public final okhttp3.EventListener create(okhttp3.Call)
-androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
-androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
-androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
+androidx.room.-$$Lambda$QueryInterceptorStatement$ELQNFMDGOEjhRlX6Wq4FB-kg4Dc
 androidx.emoji2.text.-$$Lambda$aVrkOgYvqGr2lZJFFK92kv_FgWg
-androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
+androidx.room.-$$Lambda$QueryInterceptorDatabase$-r0VJIb-SXaJpWgpFKDtPpC-YbQ
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$JmCZFgYqN8IAleNUA8VAUt1bG9c
+androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
+androidx.room.-$$Lambda$9psQePVjRowsgzqM7zav0SnxIuM
+androidx.room.-$$Lambda$QueryInterceptorDatabase$j065LbIvTXep5D6SsMORdy7nCZ0
+androidx.room.-$$Lambda$i4cXFreMvUyhhGstASkBGKwh21o
 androidx.room.-$$Lambda$yCt91-p62_J5dp-_omdbDa867iU
-androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
+androidx.room.-$$Lambda$QueryInterceptorDatabase$e_yUx2RhE4gIbG0uPZ5dgwePTvg
 androidx.room.-$$Lambda$RoomDatabase$lM9aNaGxIIMhUsr4XoMGXDUymWg
 androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSqliteStatement$BOH_ZFMRPQcgvS_zTZRrOdsODxg
-androidx.room.-$$Lambda$QueryInterceptorDatabase$mdMz2KzBtUSdwrthK9_RXFoyu08
 androidx.room.-$$Lambda$RoomDatabase$GuFQL6oa4rRatJAY4ELbKosygs8
+androidx.room.-$$Lambda$OXfnp_C5bscCOg9K3v5hKMB-lik
+androidx.room.-$$Lambda$QueryInterceptorDatabase$NA95bwzl6ypPQuOg6ufJ2Y9ai7Y
+androidx.room.-$$Lambda$QueryInterceptorDatabase$G2uMRw08CD8CZIEmWPamLQZm-YY
+androidx.room.-$$Lambda$QueryInterceptorStatement$Fav2IvQ8S4czZpFSCDm5mZmIxKE
+androidx.room.-$$Lambda$AutoClosingRoomOpenHelper$AutoClosingSupportSQLiteDatabase$hug7CM9bxDvNgNDT4597Gsa-NPA
 com.android.tools.r8.GeneratedOutlineSupport:
     public static java.lang.String outline10(org.xmlpull.v1.XmlPullParser,java.lang.StringBuilder,java.lang.String)
