@@ -29,9 +29,11 @@ public class MyUtils {
 
     public static boolean isServiceRunning() {
         try (Cursor cursor = mContext.getContentResolver().query(Uri.parse(contentProviderAuthority), null, "isServiceRunning", null, null)) {
-            cursor.moveToFirst();
-            int index = cursor.getColumnIndex("isServiceRunning");
-            return cursor.getInt(index) == 1;
+            if (cursor != null && cursor.moveToFirst()) {
+                int index = cursor.getColumnIndex("isServiceRunning");
+                return cursor.getInt(index) == 1;
+            }
+            return false;
         }
     }
 
@@ -174,9 +176,11 @@ public class MyUtils {
 
     public static String getLog() {
         try (Cursor cursor = mContext.getContentResolver().query(Uri.parse(contentProviderAuthority), null, "log", null, null);) {
-            cursor.moveToFirst();
-            int index = cursor.getColumnIndex("log");
-            return cursor.getString(index);
+            if (cursor != null && cursor.moveToFirst()) {
+                int index = cursor.getColumnIndex("log");
+                return cursor.getString(index);
+            }
+            return null;
         }
     }
 }

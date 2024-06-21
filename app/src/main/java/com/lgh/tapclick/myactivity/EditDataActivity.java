@@ -159,11 +159,11 @@ public class EditDataActivity extends BaseActivity {
         baseSettingBinding.onOffSwitch.setChecked(appDescribe.onOff);
 
         baseSettingBinding.coordinateSwitch.setChecked(appDescribe.coordinateOnOff);
-        baseSettingBinding.coordinateSustainTime.setText(String.valueOf(appDescribe.coordinateRetrieveTime));
+        baseSettingBinding.coordinateSustainTime.setText(appDescribe.coordinateRetrieveAllTime ? "∞" : String.valueOf(appDescribe.coordinateRetrieveTime));
         baseSettingBinding.coordinateRetrieveAllTime.setChecked(appDescribe.coordinateRetrieveAllTime);
 
         baseSettingBinding.widgetSwitch.setChecked(appDescribe.widgetOnOff);
-        baseSettingBinding.widgetSustainTime.setText(String.valueOf(appDescribe.widgetRetrieveTime));
+        baseSettingBinding.widgetSustainTime.setText(appDescribe.widgetRetrieveAllTime ? "∞" : String.valueOf(appDescribe.widgetRetrieveTime));
         baseSettingBinding.widgetRetrieveAllTime.setChecked(appDescribe.widgetRetrieveAllTime);
 
         Runnable baseSettingSaveRun = new Runnable() {
@@ -182,10 +182,10 @@ public class EditDataActivity extends BaseActivity {
                 }
                 appDescribe.onOff = baseSettingBinding.onOffSwitch.isChecked();
                 appDescribe.coordinateOnOff = baseSettingBinding.coordinateSwitch.isChecked();
-                appDescribe.coordinateRetrieveTime = Integer.parseInt(coordinateTime);
+                appDescribe.coordinateRetrieveTime = coordinateTime.equals("∞") ? appDescribe.coordinateRetrieveTime : Integer.parseInt(coordinateTime);
                 appDescribe.coordinateRetrieveAllTime = baseSettingBinding.coordinateRetrieveAllTime.isChecked();
                 appDescribe.widgetOnOff = baseSettingBinding.widgetSwitch.isChecked();
-                appDescribe.widgetRetrieveTime = Integer.parseInt(widgetTime);
+                appDescribe.widgetRetrieveTime = widgetTime.equals("∞") ? appDescribe.widgetRetrieveTime : Integer.parseInt(widgetTime);
                 appDescribe.widgetRetrieveAllTime = baseSettingBinding.widgetRetrieveAllTime.isChecked();
                 dataDao.updateAppDescribe(appDescribe);
                 editDataBinding.baseSettingModify.setTextColor(0xff000000);
@@ -257,6 +257,8 @@ public class EditDataActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 baseSettingSaveRun.run();
+                baseSettingBinding.coordinateSustainTime.setText(appDescribe.coordinateRetrieveAllTime ? "∞" : String.valueOf(appDescribe.coordinateRetrieveTime));
+                baseSettingBinding.widgetSustainTime.setText(appDescribe.widgetRetrieveAllTime ? "∞" : String.valueOf(appDescribe.widgetRetrieveTime));
             }
         };
         baseSettingBinding.widgetRetrieveAllTime.setOnClickListener(allTimeClickListener);

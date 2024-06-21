@@ -1,6 +1,5 @@
 package com.lgh.tapclick.mybean;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Index;
@@ -42,9 +41,9 @@ public class AppDescribe {
         this.appPackage = "";
         this.onOff = true;
         this.coordinateRetrieveTime = 20000;
-        this.coordinateRetrieveAllTime = false;
+        this.coordinateRetrieveAllTime = true;
         this.widgetRetrieveTime = 20000;
-        this.widgetRetrieveAllTime = false;
+        this.widgetRetrieveAllTime = true;
         this.coordinateOnOff = true;
         this.widgetOnOff = true;
         this.coordinateMap = new HashMap<>();
