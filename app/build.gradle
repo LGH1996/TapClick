@@ -13,12 +13,14 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "BUILD_TIME", "\"" + new Date().toString() + "\"")
         }
         debug {
+            minifyEnabled false
+            shrinkResources false
             buildConfigField("String", "BUILD_TIME", "\"" + new Date().toString() + "\"")
         }
     }
@@ -69,4 +71,7 @@ dependencies {
     implementation 'me.codeboy.android:align-text-view:2.3.2'
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'commons-codec:commons-codec:1.16.0'
+    implementation 'com.umeng.umsdk:common:9.7.3'
+    implementation 'com.umeng.umsdk:asms:1.8.3'
+    implementation 'com.umeng.umsdk:apm:1.9.5'
 }

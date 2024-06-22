@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name="com.lgh.tapclick.myclass.MyApplication"
@@ -30,23 +32,18 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data
                     android:mimeType="text/plain"
                     android:scheme="content" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:mimeType="text/plain" />
             </intent-filter>
 
@@ -152,7 +149,6 @@
             <meta-data
                 android:name="android.app.device_admin"
                 android:resource="@xml/configure_device_admin" />
-
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>

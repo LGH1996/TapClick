@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import com.lgh.advertising.tapclick.BuildConfig;
 import com.lgh.advertising.tapclick.R;
 import com.lgh.tapclick.myactivity.ExceptionReportActivity;
+import com.umeng.umcrash.UMCrash;
 
 import org.apache.commons.io.FileUtils;
 
@@ -49,6 +50,7 @@ public class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandl
                 Looper.loop();
             } catch (Throwable e) {
                 createExceptionNotification(e);
+                UMCrash.generateCustomLog(e, e.getClass().getSimpleName());
                 e.printStackTrace();
             }
         }
@@ -57,6 +59,7 @@ public class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandl
     @Override
     public void uncaughtException(@NonNull Thread thread, @NonNull Throwable e) {
         createExceptionNotification(e);
+        UMCrash.generateCustomLog(e, e.getClass().getSimpleName());
         e.printStackTrace();
     }
 
