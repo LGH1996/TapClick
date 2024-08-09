@@ -71,7 +71,4 @@ dependencies {
     implementation 'me.codeboy.android:align-text-view:2.3.2'
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'commons-codec:commons-codec:1.16.0'
-    implementation 'com.umeng.umsdk:common:9.7.3'
-    implementation 'com.umeng.umsdk:asms:1.8.3'
-    implementation 'com.umeng.umsdk:apm:1.9.5'
 }

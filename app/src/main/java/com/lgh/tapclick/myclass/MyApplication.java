@@ -10,7 +10,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.lgh.tapclick.mybean.MyAppConfig;
 import com.lgh.tapclick.myfunction.MyUtils;
-import com.umeng.commonsdk.UMConfigure;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
@@ -94,7 +93,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        UMConfigure.init(this, "66759868940d5a4c4974c5b2", "github", UMConfigure.DEVICE_TYPE_PHONE, null);
         MyUncaughtExceptionHandler.getInstance(this).run();
     }
 }
