@@ -39,13 +39,13 @@ public class AppDescribe {
     public AppDescribe() {
         this.appName = "";
         this.appPackage = "";
-        this.onOff = true;
+        this.onOff = false;
         this.coordinateRetrieveTime = 20000;
         this.coordinateRetrieveAllTime = true;
         this.widgetRetrieveTime = 20000;
         this.widgetRetrieveAllTime = true;
-        this.coordinateOnOff = true;
-        this.widgetOnOff = true;
+        this.coordinateOnOff = false;
+        this.widgetOnOff = false;
         this.coordinateMap = new HashMap<>();
         this.widgetSetMap = new HashMap<>();
         this.coordinateList = new ArrayList<>();

@@ -667,9 +667,9 @@ public class MainFunction {
                     appDescribe.widgetOnOff = false;
                 }
                 if (pkgOnSet.contains(info.packageName)) {
-                    appDescribe.onOff = true;
-                    appDescribe.coordinateOnOff = true;
-                    appDescribe.widgetOnOff = true;
+                    appDescribe.onOff = false;
+                    appDescribe.coordinateOnOff = false;
+                    appDescribe.widgetOnOff = false;
                 }
                 appDescribeList.add(appDescribe);
             } catch (PackageManager.NameNotFoundException exception) {
