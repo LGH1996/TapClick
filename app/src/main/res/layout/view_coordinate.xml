@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="15dp">
@@ -35,171 +34,140 @@
                 android:textSize="12sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/coordinate_clickDelay_layout"
-                app:layout_constraintEnd_toEndOf="@+id/coordinate_clickDelay_layout"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="@+id/coordinate_clickDelay_layout"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:text="X轴坐标:"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="5dp"
-                    android:text="X轴坐标:"
-                    android:textColor="@color/text_color"
-                    android:textSize="12sp" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/coordinate_xPosition"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:inputType="number"
+                android:maxLength="5"
+                android:singleLine="true"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/coordinate_xPosition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:ems="3"
-                    android:gravity="center_vertical"
-                    android:inputType="number"
-                    android:maxLength="4"
-                    android:singleLine="true"
-                    android:textColor="@color/text_color"
-                    android:textSize="12sp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/coordinate_clickInterval_layout"
-                app:layout_constraintEnd_toEndOf="@+id/coordinate_clickInterval_layout"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="@+id/coordinate_clickInterval_layout"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:text="Y轴坐标:"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="5dp"
-                    android:text="Y轴坐标:"
-                    android:textColor="@color/text_color"
-                    android:textSize="12sp" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/coordinate_yPosition"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:inputType="number"
+                android:maxLength="5"
+                android:singleLine="true"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/coordinate_yPosition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:ems="3"
-                    android:gravity="center_vertical"
-                    android:inputType="number"
-                    android:maxLength="4"
-                    android:singleLine="true"
-                    android:textColor="@color/text_color"
-                    android:textSize="12sp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/coordinate_clickDelay_layout"
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/coordinate_clickInterval_layout"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent">
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:text="延迟点击(ms):"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="5dp"
-                    android:text="延迟点击(ms):"
-                    android:textColor="@color/text_color"
-                    android:textSize="12sp" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/coordinate_clickDelay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:inputType="number"
+                android:maxLength="5"
+                android:singleLine="true"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/coordinate_clickDelay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:ems="2"
-                    android:gravity="center_vertical"
-                    android:inputType="number"
-                    android:maxLength="4"
-                    android:singleLine="true"
-                    android:textColor="@color/text_color"
-                    android:textSize="12sp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/coordinate_clickInterval_layout"
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/coordinate_clickNumber_layout"
-                app:layout_constraintStart_toEndOf="@+id/coordinate_clickDelay_layout">
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:text="点击间隔(ms):"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="5dp"
-                    android:text="点击间隔(ms):"
-                    android:textColor="@color/text_color"
-                    android:textSize="12sp" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/coordinate_clickInterval"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:inputType="number"
+                android:maxLength="5"
+                android:singleLine="true"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/coordinate_clickInterval"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:ems="2"
-                    android:gravity="center_vertical"
-                    android:inputType="number"
-                    android:maxLength="4"
-                    android:singleLine="true"
-                    android:textColor="@color/text_color"
-                    android:textSize="12sp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/coordinate_clickNumber_layout"
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/coordinate_clickInterval_layout">
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:text="点击次数:"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="5dp"
-                    android:text="点击次数:"
-                    android:textColor="@color/text_color"
-                    android:textSize="12sp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/coordinate_clickNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:ems="2"
-                    android:gravity="center_vertical"
-                    android:inputType="number"
-                    android:maxLength="4"
-                    android:singleLine="true"
-                    android:textColor="@color/text_color"
-                    android:textSize="12sp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/coordinate_clickNumber"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:inputType="number"
+                android:maxLength="5"
+                android:singleLine="true"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
