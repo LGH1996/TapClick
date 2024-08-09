@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|start"
                     android:singleLine="true"
-                    android:text="@string/app_name"
+                    android:text="@string/appName"
                     android:textColor="@color/text_color"
                     android:textSize="14sp" />
 

@@ -1,9 +1,9 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">TapClick</string>
+    <string name="appName">TapClick</string>
     <string name="accessibilityName">TapClick(支持坐标点击)</string>
     <string name="accessibilityNameNoGesture">TapClick(不支持坐标点击)</string>
-    <string name="add_data_short">创建规则</string>
-    <string name="new_rule">发现规则</string>
+    <string name="addDataShort">创建规则</string>
+    <string name="newRule">发现规则</string>
     <string name="description">
         该服务支持坐标点击，但某些机型可能因此出现卡顿掉帧的情况，如果出现上述情况，请关闭此服务，开启另一个不支持坐标点击的服务。\n\n
         注意：不能同时开启两个服务，否则会因为冲突而产生异常。在开启该服务后，请确保另一个不支持坐标点击的服务已关闭。\n\n
@@ -17,6 +17,15 @@
     </string>
     <string name="authorizationQuestion">
        以下权限需自行开启：\n允许读取应用列表\n允许后台运行\n允许自启动\n允许关联启动\n锁定后台\n关闭省电模式
+    </string>
+    <string name="addWarning">
+        该应用可能为以下类型的应用：系统应用、输入法应用、桌面应用，这类应用开启后可能会频繁触发页面的检索，引起没必要的卡顿，请确认是否为其创建规则？
+    </string>
+    <string name="coordinateOffWarning">
+        当前应用坐标检索功能未开启，是否开启？
+    </string>
+    <string name="widgetOffWarning">
+        当前应用控件检索功能未开启，是否开启？
     </string>
     <string name="nodeInfo" />
     <string name="rect" />

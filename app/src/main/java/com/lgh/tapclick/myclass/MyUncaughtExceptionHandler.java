@@ -83,11 +83,11 @@ public class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandl
                 .setContentIntent(PendingIntent.getActivity(mContext, 0x01, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT))
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.app)
-                .setContentTitle(mContext.getText(R.string.app_name) + "发生异常")
+                .setContentTitle(mContext.getText(R.string.appName) + "发生异常")
                 .setContentText(throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             builder.setChannelId(mContext.getPackageName());
-            NotificationChannel channel = new NotificationChannel(mContext.getPackageName(), mContext.getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(mContext.getPackageName(), mContext.getString(R.string.appName), NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }
         notificationManager.notify(mContext.getPackageName(), 0x01, builder.build());

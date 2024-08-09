@@ -293,7 +293,7 @@ public class EditDataActivity extends BaseActivity {
             long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
             long day2 = (System.currentTimeMillis() - e.lastTriggerTime) / (24 * 60 * 60 * 1000);
             coordinateBinding.coordinateCreateTime.setText(String.format("%s (%s天前)", dateFormat.format(new Date(e.createTime)), day1));
-            coordinateBinding.coordinateLastClickTime.setTextColor(day1 >= 30 && day2 >= 30 ? Color.RED : coordinateBinding.coordinateLastClickTime.getCurrentTextColor());
+            coordinateBinding.coordinateLastClickTime.setTextColor(day1 >= 60 && day2 >= 60 ? Color.RED : coordinateBinding.coordinateLastClickTime.getCurrentTextColor());
             if (e.lastTriggerTime <= 0) {
                 coordinateBinding.coordinateLastClickTime.setText("无触发记录");
             } else {
@@ -463,7 +463,7 @@ public class EditDataActivity extends BaseActivity {
             long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
             long day2 = (System.currentTimeMillis() - e.lastTriggerTime) / (24 * 60 * 60 * 1000);
             widgetBinding.widgetCreateTime.setText(String.format("%s (%s天前)", dateFormat.format(new Date(e.createTime)), day1));
-            widgetBinding.widgetLastClickTime.setTextColor(day1 >= 30 && day2 >= 30 ? Color.RED : widgetBinding.widgetLastClickTime.getCurrentTextColor());
+            widgetBinding.widgetLastClickTime.setTextColor(day1 >= 60 && day2 >= 60 ? Color.RED : widgetBinding.widgetLastClickTime.getCurrentTextColor());
             if (e.lastTriggerTime <= 0) {
                 widgetBinding.widgetLastClickTime.setText("无触发记录");
             } else {

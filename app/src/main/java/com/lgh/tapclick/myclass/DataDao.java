@@ -58,6 +58,7 @@ public interface DataDao {
 
     @Update
     void updateWidget(Widget... widgets);
+
     @Update
     void updateAppDescribe(AppDescribe... appDescribe);
 

@@ -49,8 +49,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lgh.advertising.tapclick.R;
 import com.lgh.advertising.tapclick.databinding.ViewAddDataBinding;
-import com.lgh.advertising.tapclick.databinding.ViewAddWarningBinding;
 import com.lgh.advertising.tapclick.databinding.ViewDbClickSettingBinding;
+import com.lgh.advertising.tapclick.databinding.ViewDialogWarningBinding;
 import com.lgh.advertising.tapclick.databinding.ViewWidgetSelectBinding;
 import com.lgh.tapclick.myactivity.EditDataActivity;
 import com.lgh.tapclick.myactivity.MainActivity;
@@ -1012,11 +1012,21 @@ public class MainFunction {
                             addDataBinding.saveWid.setEnabled(false);
                             addDataBinding.pacName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
                             temAppDescribe.getWidgetFromDatabase(dataDao);
+                            if (!temAppDescribe.onOff || !temAppDescribe.widgetOnOff) {
+                                showWarningDialog(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        temAppDescribe.onOff = true;
+                                        temAppDescribe.widgetOnOff = true;
+                                        dataDao.updateAppDescribe(temAppDescribe);
+                                    }
+                                }, service.getString(R.string.widgetOffWarning));
+                            }
                         }
                     }
                 };
                 if (pkgSuggestNotOnList.contains(widgetSelect.appPackage)) {
-                    showAddWarningDialog(runnable);
+                    showWarningDialog(runnable, service.getString(R.string.addWarning));
                 } else {
                     runnable.run();
                 }
@@ -1036,11 +1046,21 @@ public class MainFunction {
                             addDataBinding.saveAim.setEnabled(false);
                             addDataBinding.pacName.setText(coordinateSelect.appPackage + " (以下坐标数据已保存)");
                             temAppDescribe.getCoordinateFromDatabase(dataDao);
+                            if (!temAppDescribe.onOff || !temAppDescribe.coordinateOnOff) {
+                                showWarningDialog(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        temAppDescribe.onOff = true;
+                                        temAppDescribe.coordinateOnOff = true;
+                                        dataDao.updateAppDescribe(temAppDescribe);
+                                    }
+                                }, service.getString(R.string.coordinateOffWarning));
+                            }
                         }
                     }
                 };
                 if (pkgSuggestNotOnList.contains(coordinateSelect.appPackage)) {
-                    showAddWarningDialog(runnable);
+                    showWarningDialog(runnable, service.getString(R.string.addWarning));
                 } else {
                     runnable.run();
                 }
@@ -1067,12 +1087,13 @@ public class MainFunction {
         }
     }
 
-    private void showAddWarningDialog(Runnable onSureRun) {
+    private void showWarningDialog(Runnable onSureRun, String message) {
         String prePackage = currentPackage;
         String preActivity = currentActivity;
-        View view = ViewAddWarningBinding.inflate(LayoutInflater.from(service)).getRoot();
+        ViewDialogWarningBinding binding = ViewDialogWarningBinding.inflate(LayoutInflater.from(service));
+        binding.message.setText(message);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(service);
-        alertDialogBuilder.setView(view);
+        alertDialogBuilder.setView(binding.getRoot());
         alertDialogBuilder.setNegativeButton("取消", null);
         alertDialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
@@ -1100,11 +1121,12 @@ public class MainFunction {
             builder.setOngoing(true);
             builder.setAutoCancel(false);
             builder.setSmallIcon(R.drawable.app);
-            builder.setContentTitle(service.getText(R.string.app_name));
+            builder.setContentTitle(service.getText(R.string.appName));
+            builder.setContentText("运行中");
             builder.setContentIntent(PendingIntent.getActivity(service, 0x01, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 builder.setChannelId(service.getPackageName());
-                NotificationChannel channel = new NotificationChannel(service.getPackageName(), service.getString(R.string.app_name), NotificationManager.IMPORTANCE_HIGH);
+                NotificationChannel channel = new NotificationChannel(service.getPackageName(), service.getString(R.string.appName), NotificationManager.IMPORTANCE_HIGH);
                 notificationManager.createNotificationChannel(channel);
             }
             service.startForeground(0x01, builder.build());
