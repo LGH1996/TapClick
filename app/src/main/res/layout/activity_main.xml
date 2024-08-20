@@ -15,7 +15,8 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:layout_marginTop="25dp" />
+            android:layout_marginTop="25dp"
+            android:src="@drawable/ic_error" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/status_tip"
@@ -25,6 +26,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="25dp"
             android:gravity="center"
+            android:text="无障碍服务未开启"
             android:textSize="18sp" />
 
         <ListView

@@ -21,10 +21,15 @@ public class MyUtils {
     }
 
     public static boolean requestShowAddDataWindow() {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("updateScope", "showAddDataWindow");
-        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
-        return re > 0;
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("updateScope", "showAddDataWindow");
+            int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+            return re > 0;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static boolean isServiceRunning() {
@@ -33,48 +38,75 @@ public class MyUtils {
                 int index = cursor.getColumnIndex("isServiceRunning");
                 return cursor.getInt(index) == 1;
             }
-            return false;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
     public static boolean requestUpdateAppDescribe(String packageName) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("updateScope", "updateAppDescribe");
-        contentValues.put("packageName", packageName);
-        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
-        return re > 0;
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("updateScope", "updateAppDescribe");
+            contentValues.put("packageName", packageName);
+            int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+            return re > 0;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static boolean requestUpdateWidget(String packageName) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("updateScope", "updateWidget");
-        contentValues.put("packageName", packageName);
-        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
-        return re > 0;
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("updateScope", "updateWidget");
+            contentValues.put("packageName", packageName);
+            int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+            return re > 0;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static boolean requestUpdateCoordinate(String packageName) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("updateScope", "updateCoordinate");
-        contentValues.put("packageName", packageName);
-        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
-        return re > 0;
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("updateScope", "updateCoordinate");
+            contentValues.put("packageName", packageName);
+            int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+            return re > 0;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static boolean requestUpdateKeepAliveByNotification(boolean enable) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("updateScope", "keepAliveByNotification");
-        contentValues.put("value", enable);
-        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
-        return re > 0;
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("updateScope", "keepAliveByNotification");
+            contentValues.put("value", enable);
+            int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+            return re > 0;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static boolean requestUpdateKeepAliveByFloatingWindow(boolean enable) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("updateScope", "keepAliveByFloatingWindow");
-        contentValues.put("value", enable);
-        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
-        return re > 0;
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("updateScope", "keepAliveByFloatingWindow");
+            contentValues.put("value", enable);
+            int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+            return re > 0;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static boolean getKeepAliveByNotification() {
@@ -100,25 +132,40 @@ public class MyUtils {
     }
 
     public static boolean requestUpdateAllDate() {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("updateScope", "allDate");
-        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
-        return re > 0;
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("updateScope", "allDate");
+            int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+            return re > 0;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static boolean requestShowDbClickSetting() {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("updateScope", "showDbClickSetting");
-        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
-        return re > 0;
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("updateScope", "showDbClickSetting");
+            int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+            return re > 0;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static boolean requestUpdateShowDbClickFloating(boolean enable) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("updateScope", "showDbClickFloating");
-        contentValues.put("value", enable);
-        int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
-        return re > 0;
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("updateScope", "showDbClickFloating");
+            contentValues.put("value", enable);
+            int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
+            return re > 0;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static boolean getDbClickEnable() {
@@ -180,7 +227,9 @@ public class MyUtils {
                 int index = cursor.getColumnIndex("log");
                 return cursor.getString(index);
             }
-            return null;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 }
