@@ -25,6 +25,7 @@ import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.FileProvider;
 
 import com.google.gson.Gson;
@@ -229,6 +230,11 @@ public class EditDataActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 baseSettingSaveRun.run();
+                if (!appDescribe.onOff && ((SwitchCompat) v).isChecked()) {
+                    appDescribe.onOff = true;
+                    baseSettingBinding.onOffSwitch.setChecked(true);
+                    dataDao.updateAppDescribe(appDescribe);
+                }
             }
         };
         baseSettingBinding.widgetSwitch.setOnClickListener(onOffClickListener);
@@ -412,6 +418,15 @@ public class EditDataActivity extends BaseActivity {
                                     editDataBinding.coordinateLayout.removeView(coordinateBinding.getRoot());
                                     if (appDescribe.coordinateList.isEmpty()) {
                                         editDataBinding.coordinateLayout.setVisibility(View.GONE);
+                                        appDescribe.coordinateOnOff = false;
+                                        baseSettingBinding.coordinateSwitch.setChecked(false);
+                                        if (appDescribe.widgetList.isEmpty()) {
+                                            appDescribe.onOff = false;
+                                            appDescribe.widgetOnOff = false;
+                                            baseSettingBinding.onOffSwitch.setChecked(false);
+                                            baseSettingBinding.widgetSwitch.setChecked(false);
+                                        }
+                                        dataDao.updateAppDescribe(appDescribe);
                                     }
                                 }
                             }).create().show();
@@ -609,6 +624,15 @@ public class EditDataActivity extends BaseActivity {
                                     editDataBinding.widgetLayout.removeView(widgetBinding.getRoot());
                                     if (appDescribe.widgetList.isEmpty()) {
                                         editDataBinding.widgetLayout.setVisibility(View.GONE);
+                                        appDescribe.widgetOnOff = false;
+                                        baseSettingBinding.widgetSwitch.setChecked(false);
+                                        if (appDescribe.coordinateList.isEmpty()) {
+                                            appDescribe.onOff = false;
+                                            appDescribe.coordinateOnOff = false;
+                                            baseSettingBinding.onOffSwitch.setChecked(false);
+                                            baseSettingBinding.coordinateSwitch.setChecked(false);
+                                        }
+                                        dataDao.updateAppDescribe(appDescribe);
                                     }
                                 }
                             }).create().show();
