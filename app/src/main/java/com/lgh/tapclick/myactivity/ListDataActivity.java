@@ -168,14 +168,14 @@ public class ListDataActivity extends BaseActivity {
                 switch (constraint) {
                     case "@开启":
                         for (AppDescribeItem e : appDescribeItemList) {
-                            if (e.appDescribe.onOff) {
+                            if (e.appDescribe.coordinateOnOff || e.appDescribe.widgetOnOff) {
                                 listTemp.add(e);
                             }
                         }
                         break;
                     case "@关闭":
                         for (AppDescribeItem e : appDescribeItemList) {
-                            if (!e.appDescribe.onOff) {
+                            if (!e.appDescribe.coordinateOnOff && !e.appDescribe.widgetOnOff) {
                                 listTemp.add(e);
                             }
                         }
@@ -313,7 +313,7 @@ public class ListDataActivity extends BaseActivity {
                         AppDescribe appDescribe = iterator.next();
                         Drawable icon = packageManager.getApplicationIcon(appDescribe.appPackage);
                         AppDescribeItem appDescribeItem = new AppDescribeItem(appDescribe, icon);
-                        boolean b = appDescribe.onOff ? onList.add(appDescribeItem) : offList.add(appDescribeItem);
+                        boolean b = appDescribe.coordinateOnOff || appDescribe.widgetOnOff ? onList.add(appDescribeItem) : offList.add(appDescribeItem);
                     } catch (PackageManager.NameNotFoundException e) {
                         iterator.remove();
                         // e.printStackTrace();
@@ -443,7 +443,7 @@ public class ListDataActivity extends BaseActivity {
             holder.itemAppBinding.name.setText(item.appDescribe.appName);
             holder.itemAppBinding.pkg.setText(item.appDescribe.appPackage);
             holder.itemAppBinding.img.setImageDrawable(item.icon);
-            holder.itemAppBinding.onOff.setChecked(item.appDescribe.onOff);
+            holder.itemAppBinding.onOff.setChecked(item.appDescribe.coordinateOnOff || item.appDescribe.widgetOnOff);
             holder.itemAppBinding.cbSelect.setChecked(item.isSelected);
             holder.itemAppBinding.cbSelect.setVisibility(listDataBinding.llSelect.getVisibility());
             holder.itemAppBinding.desc.setText(String.format("%s个坐标，%s个控件", item.appDescribe.coordinateList.size(), item.appDescribe.widgetList.size()) + (item.longNoTriggerCount > 0 ? String.format("，%s个疑似无效规则", item.longNoTriggerCount) : ""));
@@ -469,7 +469,6 @@ public class ListDataActivity extends BaseActivity {
                         Runnable runnable = new Runnable() {
                             @Override
                             public void run() {
-                                item.appDescribe.onOff = isChecked;
                                 item.appDescribe.widgetOnOff = isChecked;
                                 item.appDescribe.coordinateOnOff = isChecked;
                                 dataDao.updateAppDescribe(item.appDescribe);

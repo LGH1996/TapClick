@@ -236,7 +236,8 @@ public class MainFunction {
                     break;
                 }
                 if (!event.isFullScreen()
-                        && !appDescribe.onOff
+                        && !appDescribe.coordinateOnOff
+                        && !appDescribe.widgetOnOff
                         && !currentPackageSub.equals(isScreenOffPre)
                         && !currentActivity.equals(isScreenOffPre)) {
                     break;
@@ -249,39 +250,33 @@ public class MainFunction {
                     serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
                     service.setServiceInfo(serviceInfo);
                     debounceSet.clear();
-                    onOffWidget = false;
-                    onOffCoordinate = false;
                     onOffWidgetSub = false;
                     onOffCoordinateSub = false;
-                    widgetSetMap = null;
-                    coordinateMap = null;
-                    if (appDescribe != null && appDescribe.onOff) {
-                        widgetSetMap = appDescribe.widgetSetMap;
-                        coordinateMap = appDescribe.coordinateMap;
-                        onOffWidget = appDescribe.widgetOnOff && !widgetSetMap.isEmpty();
-                        onOffCoordinate = appDescribe.coordinateOnOff && !coordinateMap.isEmpty();
+                    widgetSetMap = appDescribe.widgetSetMap;
+                    coordinateMap = appDescribe.coordinateMap;
+                    onOffWidget = appDescribe.widgetOnOff && !widgetSetMap.isEmpty();
+                    onOffCoordinate = appDescribe.coordinateOnOff && !coordinateMap.isEmpty();
 
-                        if (onOffWidget && !appDescribe.widgetRetrieveAllTime) {
-                            futureWidget = executorServiceSub.schedule(new Runnable() {
-                                @Override
-                                public void run() {
-                                    onOffWidget = false;
-                                    onOffWidgetSub = false;
-                                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                    service.setServiceInfo(serviceInfo);
-                                }
-                            }, appDescribe.widgetRetrieveTime, TimeUnit.MILLISECONDS);
-                        }
+                    if (onOffWidget && !appDescribe.widgetRetrieveAllTime) {
+                        futureWidget = executorServiceSub.schedule(new Runnable() {
+                            @Override
+                            public void run() {
+                                onOffWidget = false;
+                                onOffWidgetSub = false;
+                                serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                service.setServiceInfo(serviceInfo);
+                            }
+                        }, appDescribe.widgetRetrieveTime, TimeUnit.MILLISECONDS);
+                    }
 
-                        if (onOffCoordinate && !appDescribe.coordinateRetrieveAllTime) {
-                            futureCoordinate = executorServiceSub.schedule(new Runnable() {
-                                @Override
-                                public void run() {
-                                    onOffCoordinate = false;
-                                    onOffCoordinateSub = false;
-                                }
-                            }, appDescribe.coordinateRetrieveTime, TimeUnit.MILLISECONDS);
-                        }
+                    if (onOffCoordinate && !appDescribe.coordinateRetrieveAllTime) {
+                        futureCoordinate = executorServiceSub.schedule(new Runnable() {
+                            @Override
+                            public void run() {
+                                onOffCoordinate = false;
+                                onOffCoordinateSub = false;
+                            }
+                        }, appDescribe.coordinateRetrieveTime, TimeUnit.MILLISECONDS);
                     }
                 }
 
@@ -297,57 +292,49 @@ public class MainFunction {
                         || (activityName.equals("android.widget.FrameLayout")
                         && needChangeActivity)) {
                     addLog("进入页面：" + activityName);
+                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                    service.setServiceInfo(serviceInfo);
                     needChangeActivity = false;
                     currentActivity = activityName;
                     alreadyClickSet.clear();
-                    onOffWidgetSub = false;
-                    onOffCoordinateSub = false;
-                    widgetSet = null;
-                    coordinate = null;
+                    coordinate = coordinateMap != null ? coordinateMap.get(activityName) : null;
+                    widgetSet = widgetSetMap != null ? widgetSetMap.get(activityName) : null;
+                    onOffCoordinateSub = onOffCoordinate && coordinate != null;
+                    onOffWidgetSub = onOffWidget && widgetSet != null;
 
-                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                    service.setServiceInfo(serviceInfo);
+                    if (onOffWidgetSub) {
+                        serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                        service.setServiceInfo(serviceInfo);
+                    }
 
-                    if (appDescribe != null) {
-                        coordinate = coordinateMap != null ? coordinateMap.get(activityName) : null;
-                        widgetSet = widgetSetMap != null ? widgetSetMap.get(activityName) : null;
-                        onOffCoordinateSub = onOffCoordinate && coordinate != null;
-                        onOffWidgetSub = onOffWidget && widgetSet != null;
+                    if (onOffCoordinateSub) {
+                        futureCoordinateClick.cancel(false);
+                        futureCoordinateClick = executorServiceSub.scheduleWithFixedDelay(new Runnable() {
+                            private final Coordinate coordinateSub = coordinate;
+                            private int num = 0;
 
-                        if (onOffWidgetSub) {
-                            serviceInfo.eventTypes |= AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                            service.setServiceInfo(serviceInfo);
-                        }
-
-                        if (onOffCoordinateSub) {
-                            futureCoordinateClick.cancel(false);
-                            futureCoordinateClick = executorServiceSub.scheduleWithFixedDelay(new Runnable() {
-                                private final Coordinate coordinateSub = coordinate;
-                                private int num = 0;
-
-                                @Override
-                                public void run() {
-                                    if (onOffCoordinateSub && num++ < coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity)) {
-                                        click(coordinateSub.xPosition, coordinateSub.yPosition);
-                                    } else {
-                                        throw new RuntimeException();
-                                    }
-                                    if (num == 1) {
-                                        coordinateSub.triggerCount += 1;
-                                        coordinateSub.lastTriggerTime = System.currentTimeMillis();
-                                        dataDao.updateCoordinate(coordinateSub);
-                                        showToast(coordinateSub, coordinateSub.toast);
-                                        addLog("点击坐标：" + gson.toJson(coordinateSub));
-                                    }
+                            @Override
+                            public void run() {
+                                if (onOffCoordinateSub && num++ < coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity)) {
+                                    click(coordinateSub.xPosition, coordinateSub.yPosition);
+                                } else {
+                                    throw new RuntimeException();
                                 }
-                            }, coordinate.clickDelay, coordinate.clickInterval, TimeUnit.MILLISECONDS);
-                        }
+                                if (num == 1) {
+                                    coordinateSub.triggerCount += 1;
+                                    coordinateSub.lastTriggerTime = System.currentTimeMillis();
+                                    dataDao.updateCoordinate(coordinateSub);
+                                    showToast(coordinateSub, coordinateSub.toast);
+                                    addLog("点击坐标：" + gson.toJson(coordinateSub));
+                                }
+                            }
+                        }, coordinate.clickDelay, coordinate.clickInterval, TimeUnit.MILLISECONDS);
                     }
                 }
                 if (nodeInfoList.isEmpty()) {
                     break;
                 }
-                if (!onOffWidgetSub || widgetSet == null) {
+                if (!onOffWidgetSub) {
                     break;
                 }
                 executorServiceMain.execute(new Runnable() {
@@ -366,7 +353,7 @@ public class MainFunction {
                 if (source == null) {
                     break;
                 }
-                if (!onOffWidgetSub || widgetSet == null) {
+                if (!onOffWidgetSub) {
                     break;
                 }
                 executorServiceMain.execute(new Runnable() {
@@ -662,12 +649,10 @@ public class MainFunction {
                 appDescribe.appName = packageManager.getApplicationLabel(info).toString();
                 appDescribe.appPackage = info.packageName;
                 if ((info.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM || pkgOffSet.contains(info.packageName)) {
-                    appDescribe.onOff = false;
                     appDescribe.coordinateOnOff = false;
                     appDescribe.widgetOnOff = false;
                 }
                 if (pkgOnSet.contains(info.packageName)) {
-                    appDescribe.onOff = false;
                     appDescribe.coordinateOnOff = false;
                     appDescribe.widgetOnOff = false;
                 }
@@ -1012,11 +997,10 @@ public class MainFunction {
                             addDataBinding.saveWid.setEnabled(false);
                             addDataBinding.pacName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
                             temAppDescribe.getWidgetFromDatabase(dataDao);
-                            if (!temAppDescribe.onOff || !temAppDescribe.widgetOnOff) {
+                            if (!temAppDescribe.widgetOnOff) {
                                 showWarningDialog(new Runnable() {
                                     @Override
                                     public void run() {
-                                        temAppDescribe.onOff = true;
                                         temAppDescribe.widgetOnOff = true;
                                         dataDao.updateAppDescribe(temAppDescribe);
                                     }
@@ -1046,11 +1030,10 @@ public class MainFunction {
                             addDataBinding.saveAim.setEnabled(false);
                             addDataBinding.pacName.setText(coordinateSelect.appPackage + " (以下坐标数据已保存)");
                             temAppDescribe.getCoordinateFromDatabase(dataDao);
-                            if (!temAppDescribe.onOff || !temAppDescribe.coordinateOnOff) {
+                            if (!temAppDescribe.coordinateOnOff) {
                                 showWarningDialog(new Runnable() {
                                     @Override
                                     public void run() {
-                                        temAppDescribe.onOff = true;
                                         temAppDescribe.coordinateOnOff = true;
                                         dataDao.updateAppDescribe(temAppDescribe);
                                     }
@@ -1199,7 +1182,7 @@ public class MainFunction {
     }
 
     public void showDbClickSetting() {
-        if (dbClickView == null) {
+        if (dbClickView == null || dbClickLp == null) {
             return;
         }
         ViewDbClickSettingBinding dbClickSettingBinding = ViewDbClickSettingBinding.inflate(LayoutInflater.from(service));
@@ -1319,7 +1302,6 @@ public class MainFunction {
                                 List<ResolveInfo> homeLaunchList = packageManager.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL);
                                 for (ResolveInfo e : homeLaunchList) {
                                     if (packageName.equals(e.activityInfo.packageName)) {
-                                        appDescribe.onOff = false;
                                         appDescribe.widgetOnOff = false;
                                         appDescribe.coordinateOnOff = false;
                                         break;
@@ -1328,7 +1310,6 @@ public class MainFunction {
                                 List<InputMethodInfo> inputMethodInfoList = inputMethodManager.getInputMethodList();
                                 for (InputMethodInfo e : inputMethodInfoList) {
                                     if (packageName.equals(e.getPackageName())) {
-                                        appDescribe.onOff = false;
                                         appDescribe.widgetOnOff = false;
                                         appDescribe.coordinateOnOff = false;
                                         break;

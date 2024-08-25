@@ -20,7 +20,6 @@ public class AppDescribe {
     public Integer id;
     public String appName;
     public String appPackage;
-    public boolean onOff;
     public int coordinateRetrieveTime;
     public boolean coordinateRetrieveAllTime;
     public int widgetRetrieveTime;
@@ -39,7 +38,6 @@ public class AppDescribe {
     public AppDescribe() {
         this.appName = "";
         this.appPackage = "";
-        this.onOff = false;
         this.coordinateRetrieveTime = 20000;
         this.coordinateRetrieveAllTime = true;
         this.widgetRetrieveTime = 20000;
@@ -55,7 +53,6 @@ public class AppDescribe {
     public void copy(AppDescribe appDescribe) {
         this.appName = appDescribe.appName;
         this.appPackage = appDescribe.appPackage;
-        this.onOff = appDescribe.onOff;
         this.coordinateRetrieveTime = appDescribe.coordinateRetrieveTime;
         this.coordinateRetrieveAllTime = appDescribe.coordinateRetrieveAllTime;
         this.widgetRetrieveTime = appDescribe.widgetRetrieveTime;
@@ -90,11 +87,9 @@ public class AppDescribe {
             Set<Widget> widgetSet = this.widgetSetMap.get(w.appActivity);
             if (widgetSet == null) {
                 widgetSet = new HashSet<>();
-                widgetSet.add(w);
                 widgetSetMap.put(w.appActivity, widgetSet);
-            } else {
-                widgetSet.add(w);
             }
+            widgetSet.add(w);
         }
     }
 
@@ -104,7 +99,6 @@ public class AppDescribe {
                 "id=" + id +
                 ", appName='" + appName + '\'' +
                 ", appPackage='" + appPackage + '\'' +
-                ", onOff=" + onOff +
                 ", coordinateRetrieveTime=" + coordinateRetrieveTime +
                 ", coordinateRetrieveAllTime=" + coordinateRetrieveAllTime +
                 ", widgetRetrieveTime=" + widgetRetrieveTime +

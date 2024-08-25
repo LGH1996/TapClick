@@ -156,8 +156,8 @@ public class EditDataActivity extends BaseActivity {
             editDataBinding.baseSettingLayout.removeView(baseSettingBinding.getRoot());
         }
         baseSettingBinding = ViewBaseSettingBinding.inflate(inflater);
-        baseSettingBinding.onOffName.setText(appDescribe.appName);
-        baseSettingBinding.onOffSwitch.setChecked(appDescribe.onOff);
+        baseSettingBinding.appName.setText(appDescribe.appName);
+        baseSettingBinding.appPackage.setText(appDescribe.appPackage);
 
         baseSettingBinding.coordinateSwitch.setChecked(appDescribe.coordinateOnOff);
         baseSettingBinding.coordinateSustainTime.setText(appDescribe.coordinateRetrieveAllTime ? "∞" : String.valueOf(appDescribe.coordinateRetrieveTime));
@@ -181,7 +181,6 @@ public class EditDataActivity extends BaseActivity {
                     editDataBinding.baseSettingModify.setText("控件检索持续时间不能为空");
                     return;
                 }
-                appDescribe.onOff = baseSettingBinding.onOffSwitch.isChecked();
                 appDescribe.coordinateOnOff = baseSettingBinding.coordinateSwitch.isChecked();
                 appDescribe.coordinateRetrieveTime = coordinateTime.equals("∞") ? appDescribe.coordinateRetrieveTime : Integer.parseInt(coordinateTime);
                 appDescribe.coordinateRetrieveAllTime = baseSettingBinding.coordinateRetrieveAllTime.isChecked();
@@ -193,21 +192,13 @@ public class EditDataActivity extends BaseActivity {
                 editDataBinding.baseSettingModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
             }
         };
-        baseSettingBinding.onOffSwitch.setOnClickListener(new View.OnClickListener() {
+
+        View.OnClickListener onOffClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isChecked = baseSettingBinding.onOffSwitch.isChecked();
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        baseSettingBinding.onOffSwitch.setChecked(isChecked);
-                        baseSettingBinding.widgetSwitch.setChecked(isChecked);
-                        baseSettingBinding.coordinateSwitch.setChecked(isChecked);
-                        baseSettingSaveRun.run();
-                    }
-                };
-                if (isChecked && pkgSuggestNotOnList.contains(appDescribe.appPackage)) {
-                    baseSettingBinding.onOffSwitch.setChecked(false);
+                SwitchCompat switchCompat = (SwitchCompat) v;
+                if (switchCompat.isChecked() && pkgSuggestNotOnList.contains(appDescribe.appPackage)) {
+                    switchCompat.setChecked(false);
                     View view = ViewOnOffWarningBinding.inflate(getLayoutInflater()).getRoot();
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditDataActivity.this);
                     alertDialogBuilder.setView(view);
@@ -215,25 +206,13 @@ public class EditDataActivity extends BaseActivity {
                     alertDialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            runnable.run();
+                            baseSettingSaveRun.run();
                         }
                     });
                     AlertDialog dialog = alertDialogBuilder.create();
                     dialog.show();
                 } else {
-                    runnable.run();
-                }
-
-            }
-        });
-        View.OnClickListener onOffClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                baseSettingSaveRun.run();
-                if (!appDescribe.onOff && ((SwitchCompat) v).isChecked()) {
-                    appDescribe.onOff = true;
-                    baseSettingBinding.onOffSwitch.setChecked(true);
-                    dataDao.updateAppDescribe(appDescribe);
+                    baseSettingSaveRun.run();
                 }
             }
         };
@@ -418,15 +397,11 @@ public class EditDataActivity extends BaseActivity {
                                     editDataBinding.coordinateLayout.removeView(coordinateBinding.getRoot());
                                     if (appDescribe.coordinateList.isEmpty()) {
                                         editDataBinding.coordinateLayout.setVisibility(View.GONE);
-                                        appDescribe.coordinateOnOff = false;
                                         baseSettingBinding.coordinateSwitch.setChecked(false);
                                         if (appDescribe.widgetList.isEmpty()) {
-                                            appDescribe.onOff = false;
-                                            appDescribe.widgetOnOff = false;
-                                            baseSettingBinding.onOffSwitch.setChecked(false);
                                             baseSettingBinding.widgetSwitch.setChecked(false);
                                         }
-                                        dataDao.updateAppDescribe(appDescribe);
+                                        baseSettingSaveRun.run();
                                     }
                                 }
                             }).create().show();
@@ -624,15 +599,11 @@ public class EditDataActivity extends BaseActivity {
                                     editDataBinding.widgetLayout.removeView(widgetBinding.getRoot());
                                     if (appDescribe.widgetList.isEmpty()) {
                                         editDataBinding.widgetLayout.setVisibility(View.GONE);
-                                        appDescribe.widgetOnOff = false;
                                         baseSettingBinding.widgetSwitch.setChecked(false);
                                         if (appDescribe.coordinateList.isEmpty()) {
-                                            appDescribe.onOff = false;
-                                            appDescribe.coordinateOnOff = false;
-                                            baseSettingBinding.onOffSwitch.setChecked(false);
                                             baseSettingBinding.coordinateSwitch.setChecked(false);
                                         }
-                                        dataDao.updateAppDescribe(appDescribe);
+                                        baseSettingSaveRun.run();
                                     }
                                 }
                             }).create().show();

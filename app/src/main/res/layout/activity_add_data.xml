@@ -93,33 +93,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:animateLayoutChanges="true"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/dbClick"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
                 android:layout_marginBottom="20dp"
-                android:gravity="center_vertical">
-
-                <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/dbClick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:button="@drawable/check_select"
-                    android:paddingHorizontal="5dp"
-                    android:paddingVertical="10dp"
-                    android:text="双击屏幕捕获控件 (默认右上角)" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/dbClick_setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:paddingVertical="10dp"
-                    android:text="调整触发区域"
-                    android:textColor="#0000ff" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                android:button="@drawable/check_select"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="10dp"
+                android:text="双击屏幕捕获控件 (默认右上角)" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/start"
@@ -130,6 +116,17 @@
                 android:background="@drawable/button_selector"
                 android:gravity="center"
                 android:text="创建规则"
+                android:textColor="@android:color/white" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/dbClick_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_selector"
+                android:gravity="center"
+                android:text="调整触发区域"
                 android:textColor="@android:color/white" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
