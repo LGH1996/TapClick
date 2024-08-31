@@ -85,7 +85,7 @@
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/on_off"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/img_forward"
                 android:gravity="center_vertical"

@@ -80,7 +80,7 @@ public class ListDataActivity extends BaseActivity {
     private final List<AppDescribeItem> appDescribeItemList = new ArrayList<>();
     private final List<AppDescribeItem> appDescribeItemFilterList = new ArrayList<>();
     private final Set<String> pkgSuggestNotOnList = new HashSet<>();
-    private final List<AppDescribe> regulationExportList = new ArrayList<>();
+    private final Set<AppDescribe> regulationExportList = new HashSet<>();
     private ActivityResultLauncher<Intent> itemResultLauncher;
     private ActivityListDataBinding listDataBinding;
     private Context context;
@@ -151,6 +151,7 @@ public class ListDataActivity extends BaseActivity {
         searchKeyword.add("@系统应用");
         searchKeyword.add("@非系统应用");
         searchKeyword.add("@非必要不开启应用");
+        searchKeyword.add("@已选中选项");
         listDataBinding.searchBox.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, searchKeyword));
         listDataBinding.searchBox.addTextChangedListener(new TextWatcher() {
             @Override
@@ -223,6 +224,13 @@ public class ListDataActivity extends BaseActivity {
                             }
                         }
                         break;
+                    case "@已选中选项":
+                        for (AppDescribeItem e : appDescribeItemList) {
+                            if (e.isSelected) {
+                                listTemp.add(e);
+                            }
+                        }
+                        break;
                     default:
                         for (AppDescribeItem e : appDescribeItemList) {
                             String str = constraint.toLowerCase();
@@ -234,6 +242,7 @@ public class ListDataActivity extends BaseActivity {
                 }
                 appDescribeItemFilterList.clear();
                 appDescribeItemFilterList.addAll(listTemp);
+                listDataBinding.cbSelectAll.setChecked(false);
                 myAdapter.notifyDataSetChanged();
             }
         });
@@ -282,8 +291,10 @@ public class ListDataActivity extends BaseActivity {
         listDataBinding.cbSelectAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                regulationExportList.clear();
-                for (AppDescribeItem e : appDescribeItemList) {
+                if (!listDataBinding.cbSelectAll.isChecked()) {
+                    regulationExportList.clear();
+                }
+                for (AppDescribeItem e : appDescribeItemFilterList) {
                     e.isSelected = listDataBinding.cbSelectAll.isChecked();
                     boolean b = e.isSelected && regulationExportList.add(e.appDescribe);
                 }
