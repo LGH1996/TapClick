@@ -16,7 +16,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
                 android:text="活动名:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -25,6 +24,7 @@
                 android:id="@+id/coordinate_activity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:ellipsize="end"
                 android:enabled="false"
@@ -43,7 +43,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
                 android:text="X轴坐标:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -52,6 +51,7 @@
                 android:id="@+id/coordinate_xPosition"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:inputType="number"
@@ -70,7 +70,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
                 android:text="Y轴坐标:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -79,6 +78,7 @@
                 android:id="@+id/coordinate_yPosition"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:inputType="number"
@@ -97,7 +97,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
                 android:text="延迟点击(ms):"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -106,6 +105,7 @@
                 android:id="@+id/coordinate_clickDelay"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:inputType="number"
@@ -124,7 +124,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
                 android:text="点击间隔(ms):"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -133,6 +132,7 @@
                 android:id="@+id/coordinate_clickInterval"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:inputType="number"
@@ -151,7 +151,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
                 android:text="点击次数:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -160,6 +159,7 @@
                 android:id="@+id/coordinate_clickNumber"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:inputType="number"
@@ -177,7 +177,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
                 android:text="Toast提示:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -186,6 +185,7 @@
                 android:id="@+id/coordinate_toast"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="内容为空时无提示"
@@ -202,7 +202,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
                 android:text="备注:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -211,6 +210,7 @@
                 android:id="@+id/coordinate_comment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="请输入该坐标的备注内容"
@@ -227,7 +227,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
                 android:text="创建时间:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -236,6 +235,7 @@
                 android:id="@+id/coordinate_createTime"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:ellipsize="end"
                 android:enabled="false"
@@ -253,7 +253,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
                 android:text="最近触发时间:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -262,6 +261,7 @@
                 android:id="@+id/coordinate_last_click_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:enabled="false"
                 android:gravity="center_vertical"
@@ -279,7 +279,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
                 android:text="触发次数:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -288,6 +287,7 @@
                 android:id="@+id/coordinate_click_count"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:enabled="false"
                 android:gravity="center_vertical"
@@ -309,7 +309,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="25dp"
                 android:layout_toStartOf="@+id/coordinate_share"
                 android:ellipsize="end"
                 android:singleLine="true"
@@ -320,9 +319,10 @@
                 android:id="@+id/coordinate_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="25dp"
                 android:layout_toStartOf="@+id/coordinate_delete"
                 android:paddingVertical="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
                 android:text="分享"
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
@@ -333,6 +333,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:paddingVertical="10dp"
+                android:paddingStart="10dp"
                 android:text="删除"
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />

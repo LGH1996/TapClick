@@ -16,7 +16,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="活动名:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -25,6 +24,7 @@
                 android:id="@+id/widget_activity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:ellipsize="end"
                 android:enabled="false"
@@ -41,7 +41,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="Clickable:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -50,6 +49,7 @@
                 android:id="@+id/widget_clickable"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:enabled="false"
                 android:singleLine="true"
@@ -65,7 +65,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="Bonus:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -74,6 +73,7 @@
                 android:id="@+id/widget_rect"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:hint="该属性不存在"
                 android:singleLine="true"
@@ -89,7 +89,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="Id:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -98,6 +97,7 @@
                 android:id="@+id/widget_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:hint="该属性不存在"
                 android:singleLine="true"
@@ -113,7 +113,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="Describe:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -122,6 +121,7 @@
                 android:id="@+id/widget_describe"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:hint="该属性不存在"
                 android:singleLine="true"
@@ -137,7 +137,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="Text:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -146,6 +145,7 @@
                 android:id="@+id/widget_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:hint="该属性不存在"
                 android:singleLine="true"
@@ -161,7 +161,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="触发条件(或):"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -171,6 +170,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
                 android:background="@drawable/check_select"
                 android:button="@null"
                 android:gravity="center"
@@ -185,7 +185,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="触发条件(与):"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -195,6 +194,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
                 android:background="@drawable/check_select"
                 android:button="@null"
                 android:gravity="center"
@@ -209,7 +209,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="触发动作(仅点击):"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -219,6 +218,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
                 android:background="@drawable/check_select"
                 android:button="@null"
                 android:gravity="center"
@@ -233,7 +233,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="触发动作(仅返回):"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -243,6 +242,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
                 android:background="@drawable/check_select"
                 android:button="@null"
                 android:gravity="center"
@@ -264,7 +264,6 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
                     android:text="点击次数:"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
@@ -273,6 +272,7 @@
                     android:id="@+id/widget_click_number"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
                     android:background="@null"
                     android:inputType="number"
                     android:maxLength="5"
@@ -289,7 +289,6 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
                     android:text="点击间隔(ms):"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
@@ -298,6 +297,7 @@
                     android:id="@+id/widget_click_interval"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
                     android:background="@null"
                     android:inputType="number"
                     android:maxLength="5"
@@ -314,7 +314,6 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
                     android:text="延迟点击(ms):"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
@@ -323,6 +322,7 @@
                     android:id="@+id/widget_clickDelay"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
                     android:background="@null"
                     android:inputType="number"
                     android:maxLength="5"
@@ -339,7 +339,6 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
                     android:text="防抖延迟(ms):"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
@@ -348,6 +347,7 @@
                     android:id="@+id/widget_debounceDelay"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
                     android:background="@null"
                     android:inputType="number"
                     android:maxLength="5"
@@ -364,7 +364,6 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
                     android:text="仅模拟坐标点击:"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
@@ -374,6 +373,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
                     android:background="@drawable/check_select"
                     android:button="@null"
                     android:gravity="center" />
@@ -387,7 +387,6 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
                     android:text="不允许重复触发:"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
@@ -397,6 +396,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
                     android:background="@drawable/check_select"
                     android:button="@null"
                     android:gravity="center" />
@@ -411,7 +411,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="Toast提示:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -420,6 +419,7 @@
                 android:id="@+id/widget_toast"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:hint="内容为空时无提示"
                 android:singleLine="true"
@@ -435,7 +435,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="备注:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -444,6 +443,7 @@
                 android:id="@+id/widget_comment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:hint="请输入该控件的备注内容"
                 android:singleLine="true"
@@ -459,7 +459,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="创建时间:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -468,6 +467,7 @@
                 android:id="@+id/widget_createTime"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:ellipsize="end"
                 android:enabled="false"
@@ -484,7 +484,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="最近触发时间:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -493,6 +492,7 @@
                 android:id="@+id/widget_last_click_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:enabled="false"
                 android:hint="0"
@@ -509,7 +509,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="触发次数:"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -518,6 +517,7 @@
                 android:id="@+id/widget_click_count"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:background="@null"
                 android:enabled="false"
                 android:hint="0"
@@ -538,7 +538,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="20dp"
                 android:layout_toStartOf="@+id/widget_share"
                 android:ellipsize="end"
                 android:singleLine="true"
@@ -549,10 +548,11 @@
                 android:id="@+id/widget_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
                 android:layout_toStartOf="@+id/widget_delete"
                 android:paddingHorizontal="5dp"
                 android:paddingVertical="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
                 android:text="分享"
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
@@ -563,7 +563,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:paddingVertical="10dp"
-                android:paddingStart="5dp"
+                android:paddingStart="10dp"
                 android:text="删除"
                 android:textColor="@drawable/text_click_color"
                 android:textSize="12sp" />
