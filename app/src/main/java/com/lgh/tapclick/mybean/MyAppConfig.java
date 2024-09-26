@@ -16,6 +16,6 @@ public class MyAppConfig {
         this.id = 0;
         this.autoHideOnTaskList = true;
         this.forUpdate = "";
-        this.isVip = false;
+        this.isVip = true;
     }
 }

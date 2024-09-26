@@ -14,4 +14,7 @@ public interface MyHttpRequest {
 
     @HTTP(method = "GET", path = "https://gitee.com/lingh1996/TapClick/raw/master/privacyAgreement")
     Observable<String> getPrivacyAgreement();
+
+    @HTTP(method = "GET", path = "https://gitee.com/lingh1996/TapClick/raw/master/accessibilityStatement")
+    Observable<String> getAccessibilityStatement();
 }
