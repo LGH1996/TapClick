@@ -27,6 +27,7 @@ import com.google.gson.GsonBuilder;
 import com.lgh.advertising.tapclick.BuildConfig;
 import com.lgh.advertising.tapclick.R;
 import com.lgh.advertising.tapclick.databinding.ActivityMainBinding;
+import com.lgh.advertising.tapclick.databinding.ViewAccessibilityStatementBinding;
 import com.lgh.advertising.tapclick.databinding.ViewMainItemBinding;
 import com.lgh.advertising.tapclick.databinding.ViewNewRuleBinding;
 import com.lgh.advertising.tapclick.databinding.ViewPrivacyAgreementBinding;
@@ -239,8 +240,8 @@ public class MainActivity extends BaseActivity {
                 privacyAgreementBinding.sure.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MyUtils.setIsFirstStart(false);
                         alertDialog.dismiss();
+                        showAccessibilityStatement();
                     }
                 });
                 privacyAgreementBinding.cancel.setOnClickListener(new View.OnClickListener() {
@@ -263,7 +264,55 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onError(@NonNull Throwable e) {
-                // e.printStackTrace();
+                onNext(getString(R.string.privacyAgreement));
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        });
+    }
+
+    private void showAccessibilityStatement() {
+        Observable<String> observable = MyApplication.myHttpRequest.getAccessibilityStatement();
+        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+            }
+
+            @Override
+            public void onNext(@NonNull String str) {
+                ViewAccessibilityStatementBinding accessibilityStatementBinding = ViewAccessibilityStatementBinding.inflate(getLayoutInflater());
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setCancelable(false).setView(accessibilityStatementBinding.getRoot()).create();
+                accessibilityStatementBinding.content.setText(str);
+                accessibilityStatementBinding.sure.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MyUtils.setIsFirstStart(false);
+                        alertDialog.dismiss();
+                    }
+                });
+                accessibilityStatementBinding.cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                        finishAndRemoveTask();
+                    }
+                });
+                Window window = alertDialog.getWindow();
+                window.setBackgroundDrawableResource(R.drawable.add_data_background);
+                alertDialog.show();
+                WindowManager.LayoutParams lp = window.getAttributes();
+                DisplayMetrics metrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+                lp.width = metrics.widthPixels / 5 * 4;
+                lp.height = metrics.heightPixels / 5 * 2;
+                window.setAttributes(lp);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                onNext(getString(R.string.accessibilityStatement));
             }
 
             @Override

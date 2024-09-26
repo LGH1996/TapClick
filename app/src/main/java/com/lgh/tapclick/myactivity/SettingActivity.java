@@ -137,8 +137,8 @@ public class SettingActivity extends BaseActivity {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Toast.makeText(context, "获取分享内容时出现错误", Toast.LENGTH_SHORT).show();
                         waitDialog.dismiss();
+                        onNext(getString(R.string.shareContent));
                     }
 
                     @Override
