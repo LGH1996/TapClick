@@ -17,26 +17,27 @@ public class Widget {
 
     @PrimaryKey(autoGenerate = true)
     public Integer id;
-    public long createTime;
+    public Long createTime;
     public String appPackage;
     public String appActivity;
-    public int clickDelay;
-    public int debounceDelay;
-    public boolean noRepeat;
-    public boolean clickOnly;
-    public boolean widgetClickable;
+    public Integer clickDelay;
+    public Integer debounceDelay;
+    public Boolean noRepeat;
+    public Boolean clickOnly;
+    public Boolean widgetClickable;
     public Rect widgetRect;
-    public String widgetId;
+    public Long widgetNodeId;
+    public String widgetViewId;
     public String widgetDescribe;
     public String widgetText;
     public String toast;
     public String comment;
-    public long lastTriggerTime;
-    public int triggerCount;
-    public int clickInterval;
-    public int clickNumber;
-    public int action;
-    public int condition;
+    public Long lastTriggerTime;
+    public Integer triggerCount;
+    public Integer clickInterval;
+    public Integer clickNumber;
+    public Integer action;
+    public Integer condition;
 
     public Widget() {
         this.appPackage = "";
@@ -49,15 +50,16 @@ public class Widget {
         this.clickOnly = false;
         this.widgetClickable = false;
         this.widgetRect = null;
-        this.widgetId = "";
+        this.widgetViewId = "";
         this.widgetDescribe = "";
         this.widgetText = "";
         this.toast = "";
         this.comment = "";
-        this.lastTriggerTime = 0;
+        this.lastTriggerTime = 0L;
         this.triggerCount = 0;
-        this.action = 0;
-        this.condition = 0;
+        this.action = ACTION_CLICK;
+        this.condition = CONDITION_OR;
+        this.widgetNodeId = 0L;
         this.createTime = System.currentTimeMillis();
     }
 
@@ -73,7 +75,7 @@ public class Widget {
         this.clickOnly = widget.clickOnly;
         this.widgetClickable = widget.widgetClickable;
         this.widgetRect = widget.widgetRect;
-        this.widgetId = widget.widgetId;
+        this.widgetViewId = widget.widgetViewId;
         this.widgetDescribe = widget.widgetDescribe;
         this.widgetText = widget.widgetText;
         this.toast = widget.toast;
@@ -82,6 +84,7 @@ public class Widget {
         this.triggerCount = widget.triggerCount;
         this.action = widget.action;
         this.condition = widget.condition;
+        this.widgetNodeId = widget.widgetNodeId;
     }
 
     @Override
@@ -113,7 +116,8 @@ public class Widget {
                 ", clickOnly=" + clickOnly +
                 ", widgetClickable=" + widgetClickable +
                 ", widgetRect=" + widgetRect +
-                ", widgetId='" + widgetId + '\'' +
+                ", widgetNodeId=" + widgetNodeId +
+                ", widgetViewId='" + widgetViewId + '\'' +
                 ", widgetDescribe='" + widgetDescribe + '\'' +
                 ", widgetText='" + widgetText + '\'' +
                 ", toast='" + toast + '\'' +

@@ -60,6 +60,7 @@ import com.lgh.tapclick.mybean.Widget;
 import com.lgh.tapclick.myclass.DataDao;
 import com.lgh.tapclick.myclass.MyApplication;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -124,6 +125,7 @@ public class MainFunction {
     private volatile ScheduledFuture<?> futureCoordinateClick;
     private volatile AccessibilityServiceInfo serviceInfo;
     private volatile Object preTrigger;
+    private volatile Field sourceNodeIdField;
     private MyBroadcastReceiver myBroadcastReceiver;
     private MyPackageReceiver myPackageReceiver;
     private WindowManager.LayoutParams aParams, bParams, cParams;
@@ -135,6 +137,7 @@ public class MainFunction {
     private WindowManager.LayoutParams dbClickLp;
     private View dbClickView;
 
+    @SuppressLint("DiscouragedPrivateApi")
     public MainFunction(AccessibilityService accessibilityService) {
         service = accessibilityService;
         inputMethodManager = accessibilityService.getSystemService(InputMethodManager.class);
@@ -153,6 +156,12 @@ public class MainFunction {
         dataDao = MyApplication.dataDao;
         currentPackage = "Initialize CurrentPackage";
         currentActivity = "Initialize CurrentActivity";
+        try {
+            sourceNodeIdField = AccessibilityNodeInfo.class.getDeclaredField("mSourceNodeId");
+            sourceNodeIdField.setAccessible(true);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void onServiceConnected() {
@@ -434,12 +443,20 @@ public class MainFunction {
         CharSequence cId = nodeInfo.getViewIdResourceName();
         CharSequence cDescribe = nodeInfo.getContentDescription();
         CharSequence cText = nodeInfo.getText();
+        Long lNodeId;
+        try {
+            lNodeId = sourceNodeIdField.getLong(nodeInfo);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
         for (Widget e : widgets) {
             if (e.condition == Widget.CONDITION_OR) {
                 if (temRect.equals(e.widgetRect)) {
                     addLog(String.format("找到控件：Bonus[%s]", gsonNoPretty.toJson(e.widgetRect)));
-                } else if (cId != null && !e.widgetId.isEmpty() && cId.toString().equals(e.widgetId)) {
-                    addLog(String.format("找到控件：Id[%s]", e.widgetId));
+                } else if (cId != null && !e.widgetViewId.isEmpty() && cId.toString().equals(e.widgetViewId)) {
+                    addLog(String.format("找到控件：ViewId[%s]", e.widgetViewId));
+                } else if (lNodeId.equals(e.widgetNodeId)) {
+                    addLog(String.format("找到控件：NodeId[%s]", e.widgetNodeId));
                 } else if (cDescribe != null && !e.widgetDescribe.isEmpty() && cDescribe.toString().matches(e.widgetDescribe)) {
                     addLog(String.format("找到控件：Describe[%s]", e.widgetDescribe));
                 } else if (cText != null && !e.widgetText.isEmpty() && cText.toString().matches(e.widgetText)) {
@@ -456,11 +473,18 @@ public class MainFunction {
                         stringBuilder.append(String.format(", Bonus[%s]", gsonNoPretty.toJson(e.widgetRect)));
                     }
                 }
-                if (cId != null && !e.widgetId.isEmpty()) {
-                    if (!cId.toString().equals(e.widgetId)) {
+                if (e.widgetNodeId != null) {
+                    if (!lNodeId.equals(e.widgetNodeId)) {
                         continue;
                     } else {
-                        stringBuilder.append(String.format(", Id[%s]", e.widgetId));
+                        stringBuilder.append(String.format(", NodeId[%s]", e.widgetNodeId));
+                    }
+                }
+                if (cId != null && !e.widgetViewId.isEmpty()) {
+                    if (!cId.toString().equals(e.widgetViewId)) {
+                        continue;
+                    } else {
+                        stringBuilder.append(String.format(", ViewId[%s]", e.widgetViewId));
                     }
                 }
                 if (cDescribe != null && !e.widgetDescribe.isEmpty()) {
@@ -478,7 +502,8 @@ public class MainFunction {
                     }
                 }
                 if (e.widgetRect == null
-                        && (cId == null || e.widgetId.isEmpty())
+                        && e.widgetNodeId == null
+                        && (cId == null || e.widgetViewId.isEmpty())
                         && (cDescribe == null || e.widgetDescribe.isEmpty())
                         && (cText == null || e.widgetText.isEmpty())) {
                     continue;
@@ -890,23 +915,29 @@ public class MainFunction {
                                             if (hasFocus) {
                                                 AccessibilityNodeInfo nodeInfo = (AccessibilityNodeInfo) v.getTag(R.string.nodeInfo);
                                                 Rect rect = (Rect) v.getTag(R.string.rect);
+                                                CharSequence cId = nodeInfo.getViewIdResourceName();
+                                                CharSequence cDesc = nodeInfo.getContentDescription();
+                                                CharSequence cText = nodeInfo.getText();
                                                 widgetSelect.widgetRect = rect;
                                                 widgetSelect.widgetClickable = nodeInfo.isClickable();
-                                                CharSequence cId = nodeInfo.getViewIdResourceName();
-                                                widgetSelect.widgetId = cId == null ? "" : cId.toString();
-                                                CharSequence cDesc = nodeInfo.getContentDescription();
+                                                widgetSelect.widgetViewId = cId == null ? "" : cId.toString();
                                                 widgetSelect.widgetDescribe = cDesc == null ? "" : cDesc.toString();
-                                                CharSequence cText = nodeInfo.getText();
                                                 widgetSelect.widgetText = cText == null ? "" : cText.toString();
+                                                try {
+                                                    widgetSelect.widgetNodeId = sourceNodeIdField.getLong(nodeInfo);
+                                                } catch (IllegalAccessException e) {
+                                                    throw new RuntimeException(e);
+                                                }
                                                 addDataBinding.saveWid.setEnabled(appDescribeMap.containsKey(currentPackage));
                                                 addDataBinding.pacName.setText(widgetSelect.appPackage);
                                                 addDataBinding.actName.setText(widgetSelect.appActivity);
-                                                String click = nodeInfo.isClickable() ? "true" : "false";
-                                                String bonus = rect.toShortString();
-                                                String id = cId == null || !cId.toString().contains(":id/") ? "" : cId.toString().substring(cId.toString().indexOf(":id/") + 4);
-                                                String desc = cDesc == null ? "" : cDesc.toString();
-                                                String text = cText == null ? "" : cText.toString();
-                                                addDataBinding.widget.setText("click:" + click + " " + "bonus:" + bonus + (id.isEmpty() ? "" : " " + "id:" + id) + (desc.isEmpty() ? "" : " " + "desc:" + desc) + (text.isEmpty() ? "" : " " + "text:" + text));
+                                                String clickable = "clickable:" + widgetSelect.widgetClickable;
+                                                String bonus = "bonus:" + widgetSelect.widgetRect;
+                                                String nodeId = "nodeId:" + widgetSelect.widgetNodeId;
+                                                String viewId = widgetSelect.widgetViewId.isEmpty() ? "" : widgetSelect.widgetViewId.contains(":id/") ? "viewId:" + widgetSelect.widgetViewId.substring(widgetSelect.widgetViewId.indexOf(":id/") + 4) : "";
+                                                String desc = widgetSelect.widgetDescribe.isEmpty() ? "" : "desc:" + widgetSelect.widgetDescribe;
+                                                String text = widgetSelect.widgetText.isEmpty() ? "" : "text:" + widgetSelect.widgetText;
+                                                addDataBinding.widget.setText(clickable + " " + bonus + " " + nodeId + (viewId.isEmpty() ? "" : " " + viewId) + (desc.isEmpty() ? "" : " " + desc) + (text.isEmpty() ? "" : " " + text));
                                                 v.setBackgroundResource(R.drawable.node_focus);
                                             } else {
                                                 v.setBackgroundResource(R.drawable.node);

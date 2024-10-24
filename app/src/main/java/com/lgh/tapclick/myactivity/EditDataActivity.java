@@ -429,7 +429,8 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetActivity.setText(e.appActivity);
             widgetBinding.widgetClickable.setText(String.valueOf(e.widgetClickable));
             widgetBinding.widgetRect.setText(e.widgetRect != null ? gson.toJson(e.widgetRect) : null);
-            widgetBinding.widgetId.setText(e.widgetId);
+            widgetBinding.widgetNodeId.setText(e.widgetNodeId != null ? String.valueOf(e.widgetNodeId) : null);
+            widgetBinding.widgetViewId.setText(e.widgetViewId);
             widgetBinding.widgetDescribe.setText(e.widgetDescribe);
             widgetBinding.widgetText.setText(e.widgetText);
             widgetBinding.widgetClickDelay.setText(String.valueOf(e.clickDelay));
@@ -462,10 +463,10 @@ public class EditDataActivity extends BaseActivity {
             Runnable widgetSaveRun = new Runnable() {
                 @Override
                 public void run() {
-                    String clickNumber = widgetBinding.widgetClickNumber.getText().toString();
-                    String clickInterval = widgetBinding.widgetClickInterval.getText().toString();
-                    String clickDelay = widgetBinding.widgetClickDelay.getText().toString();
-                    String debounceDelay = widgetBinding.widgetDebounceDelay.getText().toString();
+                    String clickNumber = widgetBinding.widgetClickNumber.getText().toString().trim();
+                    String clickInterval = widgetBinding.widgetClickInterval.getText().toString().trim();
+                    String clickDelay = widgetBinding.widgetClickDelay.getText().toString().trim();
+                    String debounceDelay = widgetBinding.widgetDebounceDelay.getText().toString().trim();
                     widgetBinding.widgetModify.setTextColor(0xffff0000);
                     if (clickNumber.isEmpty()) {
                         widgetBinding.widgetModify.setText("点击次数不能为空");
@@ -489,7 +490,12 @@ public class EditDataActivity extends BaseActivity {
                         widgetBinding.widgetModify.setText("Bonus格式错误");
                         return;
                     }
-                    e.widgetId = widgetBinding.widgetId.getText().toString().trim();
+                    try {
+                        e.widgetNodeId = Long.valueOf(widgetBinding.widgetNodeId.getText().toString().trim());
+                    } catch (NumberFormatException numberFormatException) {
+                        e.widgetNodeId = null;
+                    }
+                    e.widgetViewId = widgetBinding.widgetViewId.getText().toString().trim();
                     e.widgetDescribe = widgetBinding.widgetDescribe.getText().toString().trim();
                     e.widgetText = widgetBinding.widgetText.getText().toString().trim();
                     e.toast = widgetBinding.widgetToast.getText().toString().trim();
@@ -524,7 +530,8 @@ public class EditDataActivity extends BaseActivity {
             };
 
             widgetBinding.widgetRect.addTextChangedListener(widgetTextWatcher);
-            widgetBinding.widgetId.addTextChangedListener(widgetTextWatcher);
+            widgetBinding.widgetNodeId.addTextChangedListener(widgetTextWatcher);
+            widgetBinding.widgetViewId.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetDescribe.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetText.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetClickNumber.addTextChangedListener(widgetTextWatcher);

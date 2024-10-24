@@ -10,18 +10,18 @@ import java.util.Objects;
 public class Coordinate {
     @PrimaryKey(autoGenerate = true)
     public Integer id;
-    public long createTime;
+    public Long createTime;
     public String appPackage;
     public String appActivity;
-    public int xPosition;
-    public int yPosition;
-    public int clickDelay;
-    public int clickInterval;
-    public int clickNumber;
+    public Integer xPosition;
+    public Integer yPosition;
+    public Integer clickDelay;
+    public Integer clickInterval;
+    public Integer clickNumber;
     public String toast;
     public String comment;
-    public long lastTriggerTime;
-    public int triggerCount;
+    public Long lastTriggerTime;
+    public Integer triggerCount;
 
     public Coordinate() {
         this.appPackage = "";
@@ -33,7 +33,7 @@ public class Coordinate {
         this.clickNumber = 1;
         this.toast = "";
         this.comment = "";
-        this.lastTriggerTime = 0;
+        this.lastTriggerTime = 0L;
         this.triggerCount = 0;
         this.createTime = System.currentTimeMillis();
     }

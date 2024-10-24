@@ -125,12 +125,12 @@ public class RegulationImportActivity extends BaseActivity {
                                 for (Regulation e : importList) {
                                     for (Coordinate coordinate : e.coordinateList) {
                                         coordinate.createTime = System.currentTimeMillis();
-                                        coordinate.lastTriggerTime = 0;
+                                        coordinate.lastTriggerTime = 0L;
                                         coordinate.triggerCount = 0;
                                     }
                                     for (Widget widget : e.widgetList) {
                                         widget.createTime = System.currentTimeMillis();
-                                        widget.lastTriggerTime = 0;
+                                        widget.lastTriggerTime = 0L;
                                         widget.triggerCount = 0;
                                         widgets.add(widget);
                                     }

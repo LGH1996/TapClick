@@ -396,7 +396,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         widgetShare.widget.createTime = System.currentTimeMillis();
-                        widgetShare.widget.lastTriggerTime = 0;
+                        widgetShare.widget.lastTriggerTime = 0L;
                         widgetShare.widget.triggerCount = 0;
                         dataDao.insertWidget(widgetShare.widget);
                         MyUtils.requestUpdateWidget(widgetShare.widget.appPackage);
@@ -462,7 +462,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         coordinateShare.coordinate.createTime = System.currentTimeMillis();
-                        coordinateShare.coordinate.lastTriggerTime = 0;
+                        coordinateShare.coordinate.lastTriggerTime = 0L;
                         coordinateShare.coordinate.triggerCount = 0;
                         dataDao.insertCoordinate(coordinateShare.coordinate);
                         MyUtils.requestUpdateWidget(coordinateShare.coordinate.appPackage);
