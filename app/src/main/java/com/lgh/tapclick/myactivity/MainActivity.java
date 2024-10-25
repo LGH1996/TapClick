@@ -399,16 +399,18 @@ public class MainActivity extends BaseActivity {
                         widgetShare.widget.lastTriggerTime = 0;
                         widgetShare.widget.triggerCount = 0;
                         dataDao.insertWidget(widgetShare.widget);
-                        MyUtils.requestUpdateWidget(widgetShare.widget.appPackage);
-                        alertDialog.dismiss();
-                        Toast.makeText(context, "导入成功", Toast.LENGTH_SHORT).show();
                         AppDescribe appDescribe = dataDao.getAppDescribeByPackage(widgetShare.widget.appPackage);
                         if (appDescribe != null) {
+                            appDescribe.widgetOnOff = true;
+                            dataDao.updateAppDescribe(appDescribe);
                             Intent intent = new Intent(context, EditDataActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intent.putExtra("packageName", appDescribe.appPackage);
                             startActivity(intent);
                         }
+                        MyUtils.requestUpdateWidget(widgetShare.widget.appPackage);
+                        Toast.makeText(context, "导入成功", Toast.LENGTH_SHORT).show();
+                        alertDialog.dismiss();
                     }
                 });
                 newRuleBinding.cancel.setOnClickListener(new View.OnClickListener() {
@@ -465,16 +467,18 @@ public class MainActivity extends BaseActivity {
                         coordinateShare.coordinate.lastTriggerTime = 0;
                         coordinateShare.coordinate.triggerCount = 0;
                         dataDao.insertCoordinate(coordinateShare.coordinate);
-                        MyUtils.requestUpdateWidget(coordinateShare.coordinate.appPackage);
-                        alertDialog.dismiss();
-                        Toast.makeText(context, "导入成功", Toast.LENGTH_SHORT).show();
                         AppDescribe appDescribe = dataDao.getAppDescribeByPackage(coordinateShare.coordinate.appPackage);
                         if (appDescribe != null) {
+                            appDescribe.coordinateOnOff = true;
+                            dataDao.updateAppDescribe(appDescribe);
                             Intent intent = new Intent(context, EditDataActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intent.putExtra("packageName", appDescribe.appPackage);
                             startActivity(intent);
                         }
+                        MyUtils.requestUpdateWidget(coordinateShare.coordinate.appPackage);
+                        Toast.makeText(context, "导入成功", Toast.LENGTH_SHORT).show();
+                        alertDialog.dismiss();
                     }
                 });
                 newRuleBinding.cancel.setOnClickListener(new View.OnClickListener() {

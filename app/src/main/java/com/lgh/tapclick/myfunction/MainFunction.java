@@ -912,7 +912,7 @@ public class MainFunction {
                                                 String clickable = "clickable:" + widgetSelect.widgetClickable;
                                                 String nodeId = "nodeId:" + widgetSelect.widgetNodeId;
                                                 String viewId = widgetSelect.widgetViewId.isEmpty() ? "" : widgetSelect.widgetViewId.contains(":id/") ? "viewId:" + widgetSelect.widgetViewId.substring(widgetSelect.widgetViewId.indexOf(":id/") + 4) : "";
-                                                String desc = widgetSelect.widgetDescribe.isEmpty() ? "" : "desc:" + widgetSelect.widgetDescribe;
+                                                String desc = widgetSelect.widgetDescribe.isEmpty() ? "" : "describe:" + widgetSelect.widgetDescribe;
                                                 String text = widgetSelect.widgetText.isEmpty() ? "" : "text:" + widgetSelect.widgetText;
                                                 addDataBinding.widget.setText(clickable + " " + nodeId + (viewId.isEmpty() ? "" : " " + viewId) + (desc.isEmpty() ? "" : " " + desc) + (text.isEmpty() ? "" : " " + text));
                                                 v.setBackgroundResource(R.drawable.node_focus);

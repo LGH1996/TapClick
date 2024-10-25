@@ -28,6 +28,7 @@
                 android:background="@null"
                 android:ellipsize="end"
                 android:enabled="false"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -52,6 +53,7 @@
                 android:layout_marginStart="5dp"
                 android:background="@null"
                 android:enabled="false"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -76,6 +78,7 @@
                 android:layout_marginStart="5dp"
                 android:background="@null"
                 android:hint="该属性不存在"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -125,6 +128,7 @@
                 android:layout_marginStart="5dp"
                 android:background="@null"
                 android:hint="该属性不存在"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -149,6 +153,7 @@
                 android:layout_marginStart="5dp"
                 android:background="@null"
                 android:hint="该属性不存在"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -173,6 +178,7 @@
                 android:layout_marginStart="5dp"
                 android:background="@null"
                 android:hint="该属性不存在"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -447,6 +453,7 @@
                 android:layout_marginStart="5dp"
                 android:background="@null"
                 android:hint="内容为空时无提示"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -471,6 +478,7 @@
                 android:layout_marginStart="5dp"
                 android:background="@null"
                 android:hint="请输入该控件的备注内容"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -496,6 +504,7 @@
                 android:background="@null"
                 android:ellipsize="end"
                 android:enabled="false"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -521,6 +530,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="0"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
@@ -546,6 +556,7 @@
                 android:background="@null"
                 android:enabled="false"
                 android:hint="0"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />

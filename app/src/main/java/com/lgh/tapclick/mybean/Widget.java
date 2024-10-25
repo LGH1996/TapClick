@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
-@Entity(indices = @Index(value = {"appPackage", "appActivity", "widgetRect"}, unique = true))
+@Entity(indices = @Index(value = {"appPackage", "appActivity", "widgetRect", "widgetNodeId"}, unique = true))
 public class Widget {
     public static final int ACTION_CLICK = 0;
     public static final int ACTION_BACK = 1;

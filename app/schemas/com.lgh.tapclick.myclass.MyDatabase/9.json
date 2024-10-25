@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 9,
-    "identityHash": "e60d8a4053f00fe02e464e021f40921f",
+    "identityHash": "ad2cc979733255ed2fc7c6c45c34d531",
     "entities": [
       {
         "tableName": "AppDescribe",
@@ -330,15 +330,16 @@
         },
         "indices": [
           {
-            "name": "index_Widget_appPackage_appActivity_widgetRect",
+            "name": "index_Widget_appPackage_appActivity_widgetRect_widgetNodeId",
             "unique": true,
             "columnNames": [
               "appPackage",
               "appActivity",
-              "widgetRect"
+              "widgetRect",
+              "widgetNodeId"
             ],
             "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_Widget_appPackage_appActivity_widgetRect` ON `${TABLE_NAME}` (`appPackage`, `appActivity`, `widgetRect`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_Widget_appPackage_appActivity_widgetRect_widgetNodeId` ON `${TABLE_NAME}` (`appPackage`, `appActivity`, `widgetRect`, `widgetNodeId`)"
           }
         ],
         "foreignKeys": []
@@ -395,7 +396,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e60d8a4053f00fe02e464e021f40921f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ad2cc979733255ed2fc7c6c45c34d531')"
     ]
   }
 }

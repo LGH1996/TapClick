@@ -377,7 +377,7 @@ public class EditDataActivity extends BaseActivity {
                         coordinateShare.basicContent.versionCode = packageInfo.versionCode;
                         coordinateShare.basicContent.versionName = packageInfo.versionName;
                     } catch (PackageManager.NameNotFoundException ex) {
-                        ex.printStackTrace();
+                        // ex.printStackTrace();
                     }
                     Gson gson = new GsonBuilder().setPrettyPrinting().create();
                     String strRule = '"' + CoordinateShare.class.getSimpleName() + '"' + ": " + gson.toJson(coordinateShare);

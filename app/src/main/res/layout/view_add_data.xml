@@ -125,6 +125,7 @@
             android:id="@+id/xy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:hint="显示坐标信息，长按快速打开规则管理页面"
             android:singleLine="true"
             android:textColor="@color/text_color"
