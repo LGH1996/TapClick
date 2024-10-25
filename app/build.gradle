@@ -79,4 +79,18 @@ dependencies {
     implementation 'me.codeboy.android:align-text-view:2.3.2'
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'commons-codec:commons-codec:1.16.0'
+    implementation 'cn.hutool:hutool-core:5.8.32'
+    compileOnly files('libs/classes4-dex2jar.jar')
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile).tap {
+        configureEach {
+            Set<File> fileSet = options.bootstrapClasspath.getFiles()
+            List<File> newFileList = new ArrayList<>()
+            newFileList.add(new File("libs\\classes4-dex2jar.jar"))
+            newFileList.addAll(fileSet)
+            options.bootstrapClasspath = files(newFileList.toArray())
+        }
+    }
 }

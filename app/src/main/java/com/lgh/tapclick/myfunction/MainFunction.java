@@ -80,6 +80,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import cn.hutool.core.util.StrUtil;
+
 /**
  * adb shell pm grant com.lgh.advertising.going android.permission.WRITE_SECURE_SETTINGS
  * adb shell settings put secure enabled_accessibility_services com.lgh.tapclick/com.lgh.tapclick.myfunction.MyAccessibilityService
@@ -429,20 +431,23 @@ public class MainFunction {
     }
 
     private void clickByWidget(AccessibilityNodeInfo nodeInfo, Set<Widget> widgets) {
-        final Rect temRect = new Rect();
-        nodeInfo.getBoundsInScreen(temRect);
-        CharSequence cId = nodeInfo.getViewIdResourceName();
-        CharSequence cDescribe = nodeInfo.getContentDescription();
-        CharSequence cText = nodeInfo.getText();
+        Rect rect = new Rect();
+        nodeInfo.getBoundsInScreen(rect);
+        Long nodeId = nodeInfo.getSourceNodeId();
+        String viewId = StrUtil.emptyToNull(nodeInfo.getViewIdResourceName());
+        String describe = StrUtil.emptyToNull(nodeInfo.getContentDescription());
+        String text = StrUtil.emptyToNull(nodeInfo.getText());
         for (Widget e : widgets) {
             if (e.condition == Widget.CONDITION_OR) {
-                if (temRect.equals(e.widgetRect)) {
+                if (rect.equals(e.widgetRect)) {
                     addLog(String.format("找到控件：Bonus[%s]", gsonNoPretty.toJson(e.widgetRect)));
-                } else if (cId != null && !e.widgetId.isEmpty() && cId.toString().equals(e.widgetId)) {
-                    addLog(String.format("找到控件：Id[%s]", e.widgetId));
-                } else if (cDescribe != null && !e.widgetDescribe.isEmpty() && cDescribe.toString().matches(e.widgetDescribe)) {
+                } else if (nodeId != null && nodeId.equals(e.widgetNodeId)) {
+                    addLog(String.format("找到控件：NodeId[%s]", e.widgetNodeId));
+                } else if (viewId != null && !e.widgetViewId.isEmpty() && viewId.equals(e.widgetViewId)) {
+                    addLog(String.format("找到控件：ViewId[%s]", e.widgetViewId));
+                } else if (describe != null && !e.widgetDescribe.isEmpty() && describe.matches(e.widgetDescribe)) {
                     addLog(String.format("找到控件：Describe[%s]", e.widgetDescribe));
-                } else if (cText != null && !e.widgetText.isEmpty() && cText.toString().matches(e.widgetText)) {
+                } else if (text != null && !e.widgetText.isEmpty() && text.matches(e.widgetText)) {
                     addLog(String.format("找到控件：Text[%s]", e.widgetText));
                 } else {
                     continue;
@@ -450,37 +455,45 @@ public class MainFunction {
             } else if (e.condition == Widget.CONDITION_AND) {
                 StringBuilder stringBuilder = new StringBuilder();
                 if (e.widgetRect != null) {
-                    if (!temRect.equals(e.widgetRect)) {
-                        continue;
-                    } else {
+                    if (rect.equals(e.widgetRect)) {
                         stringBuilder.append(String.format(", Bonus[%s]", gsonNoPretty.toJson(e.widgetRect)));
+                    } else {
+                        continue;
                     }
                 }
-                if (cId != null && !e.widgetId.isEmpty()) {
-                    if (!cId.toString().equals(e.widgetId)) {
-                        continue;
+                if (e.widgetNodeId != null) {
+                    if (nodeId != null && nodeId.equals(e.widgetNodeId)) {
+                        stringBuilder.append(String.format(", NodeId[%s]", e.widgetNodeId));
                     } else {
-                        stringBuilder.append(String.format(", Id[%s]", e.widgetId));
+                        continue;
                     }
                 }
-                if (cDescribe != null && !e.widgetDescribe.isEmpty()) {
-                    if (!cDescribe.toString().matches(e.widgetDescribe)) {
-                        continue;
+                if (!e.widgetViewId.isEmpty()) {
+                    if (viewId != null && viewId.equals(e.widgetViewId)) {
+                        stringBuilder.append(String.format(", ViewId[%s]", e.widgetViewId));
                     } else {
+                        continue;
+                    }
+                }
+                if (!e.widgetDescribe.isEmpty()) {
+                    if (describe != null && describe.matches(e.widgetDescribe)) {
                         stringBuilder.append(String.format(", Describe[%s]", e.widgetDescribe));
+                    } else {
+                        continue;
                     }
                 }
-                if (cText != null && !e.widgetText.isEmpty()) {
-                    if (!cText.toString().matches(e.widgetText)) {
-                        continue;
-                    } else {
+                if (!e.widgetText.isEmpty()) {
+                    if (text != null && text.matches(e.widgetText)) {
                         stringBuilder.append(String.format(", Text[%s]", e.widgetText));
+                    } else {
+                        continue;
                     }
                 }
                 if (e.widgetRect == null
-                        && (cId == null || e.widgetId.isEmpty())
-                        && (cDescribe == null || e.widgetDescribe.isEmpty())
-                        && (cText == null || e.widgetText.isEmpty())) {
+                        && e.widgetNodeId == null
+                        && e.widgetViewId.isEmpty()
+                        && e.widgetDescribe.isEmpty()
+                        && e.widgetText.isEmpty()) {
                     continue;
                 }
                 addLog(String.format("找到控件：%s", stringBuilder.substring(2)));
@@ -514,9 +527,9 @@ public class MainFunction {
                                         throw new RuntimeException();
                                     }
                                     if (e.clickOnly) {
-                                        click(temRect.centerX(), temRect.centerY());
+                                        click(rect.centerX(), rect.centerY());
                                     } else if (!nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                        click(temRect.centerX(), temRect.centerY());
+                                        click(rect.centerX(), rect.centerY());
                                     }
                                     if (clickNumber == 1) {
                                         e.triggerCount += 1;
@@ -558,7 +571,7 @@ public class MainFunction {
      * 查找所有
      * 的控件
      */
-    private ArrayList<AccessibilityNodeInfo> findAllNode(List<AccessibilityNodeInfo> root) {
+    private List<AccessibilityNodeInfo> findAllNode(List<AccessibilityNodeInfo> root) {
         LinkedList<AccessibilityNodeInfo> listA = new LinkedList<>(root);
         HashSet<AccessibilityNodeInfo> setR = new HashSet<>();
         while (!listA.isEmpty()) {
@@ -576,8 +589,7 @@ public class MainFunction {
             }
             setR.add(node);
         }
-        ArrayList<AccessibilityNodeInfo> listR = new ArrayList<>(setR);
-        listR.sort(new Comparator<AccessibilityNodeInfo>() {
+        return setR.stream().sorted(new Comparator<AccessibilityNodeInfo>() {
             @Override
             public int compare(AccessibilityNodeInfo a, AccessibilityNodeInfo b) {
                 Rect rectA = new Rect();
@@ -586,8 +598,7 @@ public class MainFunction {
                 b.getBoundsInScreen(rectB);
                 return rectB.width() * rectB.height() - rectA.width() * rectA.height();
             }
-        });
-        return listR;
+        }).collect(Collectors.toList());
     }
 
     /**
@@ -889,24 +900,21 @@ public class MainFunction {
                                         public void onFocusChange(View v, boolean hasFocus) {
                                             if (hasFocus) {
                                                 AccessibilityNodeInfo nodeInfo = (AccessibilityNodeInfo) v.getTag(R.string.nodeInfo);
-                                                Rect rect = (Rect) v.getTag(R.string.rect);
-                                                widgetSelect.widgetRect = rect;
                                                 widgetSelect.widgetClickable = nodeInfo.isClickable();
-                                                CharSequence cId = nodeInfo.getViewIdResourceName();
-                                                widgetSelect.widgetId = cId == null ? "" : cId.toString();
-                                                CharSequence cDesc = nodeInfo.getContentDescription();
-                                                widgetSelect.widgetDescribe = cDesc == null ? "" : cDesc.toString();
-                                                CharSequence cText = nodeInfo.getText();
-                                                widgetSelect.widgetText = cText == null ? "" : cText.toString();
+                                                widgetSelect.widgetRect = (Rect) v.getTag(R.string.rect);
+                                                widgetSelect.widgetNodeId = nodeInfo.getSourceNodeId();
+                                                widgetSelect.widgetViewId = StrUtil.toStringOrEmpty(nodeInfo.getViewIdResourceName());
+                                                widgetSelect.widgetDescribe = StrUtil.toStringOrEmpty(nodeInfo.getContentDescription());
+                                                widgetSelect.widgetText = StrUtil.toStringOrEmpty(nodeInfo.getText());
                                                 addDataBinding.saveWid.setEnabled(appDescribeMap.containsKey(currentPackage));
                                                 addDataBinding.pacName.setText(widgetSelect.appPackage);
                                                 addDataBinding.actName.setText(widgetSelect.appActivity);
-                                                String click = nodeInfo.isClickable() ? "true" : "false";
-                                                String bonus = rect.toShortString();
-                                                String id = cId == null || !cId.toString().contains(":id/") ? "" : cId.toString().substring(cId.toString().indexOf(":id/") + 4);
-                                                String desc = cDesc == null ? "" : cDesc.toString();
-                                                String text = cText == null ? "" : cText.toString();
-                                                addDataBinding.widget.setText("click:" + click + " " + "bonus:" + bonus + (id.isEmpty() ? "" : " " + "id:" + id) + (desc.isEmpty() ? "" : " " + "desc:" + desc) + (text.isEmpty() ? "" : " " + "text:" + text));
+                                                String clickable = "clickable:" + widgetSelect.widgetClickable;
+                                                String nodeId = "nodeId:" + widgetSelect.widgetNodeId;
+                                                String viewId = widgetSelect.widgetViewId.isEmpty() ? "" : widgetSelect.widgetViewId.contains(":id/") ? "viewId:" + widgetSelect.widgetViewId.substring(widgetSelect.widgetViewId.indexOf(":id/") + 4) : "";
+                                                String desc = widgetSelect.widgetDescribe.isEmpty() ? "" : "desc:" + widgetSelect.widgetDescribe;
+                                                String text = widgetSelect.widgetText.isEmpty() ? "" : "text:" + widgetSelect.widgetText;
+                                                addDataBinding.widget.setText(clickable + " " + nodeId + (viewId.isEmpty() ? "" : " " + viewId) + (desc.isEmpty() ? "" : " " + desc) + (text.isEmpty() ? "" : " " + text));
                                                 v.setBackgroundResource(R.drawable.node_focus);
                                             } else {
                                                 v.setBackgroundResource(R.drawable.node);

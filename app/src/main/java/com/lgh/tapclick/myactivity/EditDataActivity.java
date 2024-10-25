@@ -62,6 +62,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import cn.hutool.core.util.StrUtil;
+
 public class EditDataActivity extends BaseActivity {
     private AppDescribe appDescribe;
     private Context context;
@@ -170,8 +172,8 @@ public class EditDataActivity extends BaseActivity {
         Runnable baseSettingSaveRun = new Runnable() {
             @Override
             public void run() {
-                String coordinateTime = baseSettingBinding.coordinateSustainTime.getText().toString();
-                String widgetTime = baseSettingBinding.widgetSustainTime.getText().toString();
+                String coordinateTime = StrUtil.trimToEmpty(baseSettingBinding.coordinateSustainTime.getText());
+                String widgetTime = StrUtil.trimToEmpty(baseSettingBinding.widgetSustainTime.getText());
                 editDataBinding.baseSettingModify.setTextColor(0xffff0000);
                 if (coordinateTime.isEmpty()) {
                     editDataBinding.baseSettingModify.setText("坐标检索持续时间不能为空");
@@ -288,11 +290,11 @@ public class EditDataActivity extends BaseActivity {
             Runnable coordinateSaveRun = new Runnable() {
                 @Override
                 public void run() {
-                    String sX = coordinateBinding.coordinateXPosition.getText().toString();
-                    String sY = coordinateBinding.coordinateYPosition.getText().toString();
-                    String sDelay = coordinateBinding.coordinateClickDelay.getText().toString();
-                    String sInterval = coordinateBinding.coordinateClickInterval.getText().toString();
-                    String sNumber = coordinateBinding.coordinateClickNumber.getText().toString();
+                    String sX = StrUtil.trimToEmpty(coordinateBinding.coordinateXPosition.getText());
+                    String sY = StrUtil.trimToEmpty(coordinateBinding.coordinateYPosition.getText());
+                    String sDelay = StrUtil.trimToEmpty(coordinateBinding.coordinateClickDelay.getText());
+                    String sInterval = StrUtil.trimToEmpty(coordinateBinding.coordinateClickInterval.getText());
+                    String sNumber = StrUtil.trimToEmpty(coordinateBinding.coordinateClickNumber.getText());
                     coordinateBinding.coordinateModify.setTextColor(0xffff0000);
                     if (sX.isEmpty()) {
                         coordinateBinding.coordinateModify.setText("X轴坐标不能为空");
@@ -327,8 +329,8 @@ public class EditDataActivity extends BaseActivity {
                     e.clickDelay = Integer.parseInt(sDelay);
                     e.clickInterval = Integer.parseInt(sInterval);
                     e.clickNumber = Integer.parseInt(sNumber);
-                    e.toast = coordinateBinding.coordinateToast.getText().toString().trim();
-                    e.comment = coordinateBinding.coordinateComment.getText().toString().trim();
+                    e.toast = StrUtil.trimToEmpty(coordinateBinding.coordinateToast.getText());
+                    e.comment = StrUtil.trimToEmpty(coordinateBinding.coordinateComment.getText());
                     dataDao.updateCoordinate(e);
                     coordinateBinding.coordinateModify.setTextColor(0xff000000);
                     coordinateBinding.coordinateModify.setText(dateFormatModify.format(new Date()) + " (修改成功)");
@@ -429,7 +431,8 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetActivity.setText(e.appActivity);
             widgetBinding.widgetClickable.setText(String.valueOf(e.widgetClickable));
             widgetBinding.widgetRect.setText(e.widgetRect != null ? gson.toJson(e.widgetRect) : null);
-            widgetBinding.widgetId.setText(e.widgetId);
+            widgetBinding.widgetNodeId.setText(e.widgetNodeId != null ? String.valueOf(e.widgetNodeId) : null);
+            widgetBinding.widgetViewId.setText(e.widgetViewId);
             widgetBinding.widgetDescribe.setText(e.widgetDescribe);
             widgetBinding.widgetText.setText(e.widgetText);
             widgetBinding.widgetClickDelay.setText(String.valueOf(e.clickDelay));
@@ -462,10 +465,10 @@ public class EditDataActivity extends BaseActivity {
             Runnable widgetSaveRun = new Runnable() {
                 @Override
                 public void run() {
-                    String clickNumber = widgetBinding.widgetClickNumber.getText().toString();
-                    String clickInterval = widgetBinding.widgetClickInterval.getText().toString();
-                    String clickDelay = widgetBinding.widgetClickDelay.getText().toString();
-                    String debounceDelay = widgetBinding.widgetDebounceDelay.getText().toString();
+                    String clickNumber = StrUtil.trimToEmpty(widgetBinding.widgetClickNumber.getText());
+                    String clickInterval = StrUtil.trimToEmpty(widgetBinding.widgetClickInterval.getText());
+                    String clickDelay = StrUtil.trimToEmpty(widgetBinding.widgetClickDelay.getText());
+                    String debounceDelay = StrUtil.trimToEmpty(widgetBinding.widgetDebounceDelay.getText());
                     widgetBinding.widgetModify.setTextColor(0xffff0000);
                     if (clickNumber.isEmpty()) {
                         widgetBinding.widgetModify.setText("点击次数不能为空");
@@ -484,16 +487,21 @@ public class EditDataActivity extends BaseActivity {
                         return;
                     }
                     try {
-                        e.widgetRect = gson.fromJson(widgetBinding.widgetRect.getText().toString().trim(), Rect.class);
+                        e.widgetRect = gson.fromJson(StrUtil.trimToEmpty(widgetBinding.widgetRect.getText()), Rect.class);
                     } catch (JsonSyntaxException jsonSyntaxException) {
                         widgetBinding.widgetModify.setText("Bonus格式错误");
                         return;
                     }
-                    e.widgetId = widgetBinding.widgetId.getText().toString().trim();
-                    e.widgetDescribe = widgetBinding.widgetDescribe.getText().toString().trim();
-                    e.widgetText = widgetBinding.widgetText.getText().toString().trim();
-                    e.toast = widgetBinding.widgetToast.getText().toString().trim();
-                    e.comment = widgetBinding.widgetComment.getText().toString().trim();
+                    try {
+                        e.widgetNodeId = Long.valueOf(StrUtil.trimToEmpty(widgetBinding.widgetNodeId.getText()));
+                    } catch (NumberFormatException numberFormatException) {
+                        e.widgetNodeId = null;
+                    }
+                    e.widgetViewId = StrUtil.toStringOrEmpty(widgetBinding.widgetViewId.getText());
+                    e.widgetDescribe = StrUtil.toStringOrEmpty(widgetBinding.widgetDescribe.getText());
+                    e.widgetText = StrUtil.toStringOrEmpty(widgetBinding.widgetText.getText());
+                    e.toast = StrUtil.trimToEmpty(widgetBinding.widgetToast.getText());
+                    e.comment = StrUtil.trimToEmpty(widgetBinding.widgetComment.getText());
                     e.clickNumber = Integer.parseInt(clickNumber);
                     e.clickInterval = Integer.parseInt(clickInterval);
                     e.clickDelay = Integer.parseInt(clickDelay);
@@ -524,7 +532,8 @@ public class EditDataActivity extends BaseActivity {
             };
 
             widgetBinding.widgetRect.addTextChangedListener(widgetTextWatcher);
-            widgetBinding.widgetId.addTextChangedListener(widgetTextWatcher);
+            widgetBinding.widgetNodeId.addTextChangedListener(widgetTextWatcher);
+            widgetBinding.widgetViewId.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetDescribe.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetText.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetClickNumber.addTextChangedListener(widgetTextWatcher);
@@ -577,7 +586,7 @@ public class EditDataActivity extends BaseActivity {
                         widgetShare.basicContent.versionCode = packageInfo.versionCode;
                         widgetShare.basicContent.versionName = packageInfo.versionName;
                     } catch (PackageManager.NameNotFoundException ex) {
-                        ex.printStackTrace();
+                        // ex.printStackTrace();
                     }
                     Gson gson = new GsonBuilder().setPrettyPrinting().create();
                     String strRule = '"' + WidgetShare.class.getSimpleName() + '"' + ": " + gson.toJson(widgetShare);
@@ -650,7 +659,7 @@ public class EditDataActivity extends BaseActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         try {
                             FileUtils.cleanDirectory(getCacheDir());
-                            String fileName = binding.fileName.getText().toString();
+                            String fileName = StrUtil.trimToEmpty(binding.fileName.getText());
                             File file = new File(getCacheDir(), (fileName.isEmpty() ? binding.fileName.getHint() : fileName) + ".txt");
                             FileUtils.writeStringToFile(file, strRegulation, StandardCharsets.UTF_8);
                             Intent intent = new Intent(Intent.ACTION_SEND);

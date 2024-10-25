@@ -26,7 +26,8 @@ public class Widget {
     public boolean clickOnly;
     public boolean widgetClickable;
     public Rect widgetRect;
-    public String widgetId;
+    public Long widgetNodeId;
+    public String widgetViewId;
     public String widgetDescribe;
     public String widgetText;
     public String toast;
@@ -49,15 +50,16 @@ public class Widget {
         this.clickOnly = false;
         this.widgetClickable = false;
         this.widgetRect = null;
-        this.widgetId = "";
+        this.widgetNodeId = null;
+        this.widgetViewId = "";
         this.widgetDescribe = "";
         this.widgetText = "";
         this.toast = "";
         this.comment = "";
         this.lastTriggerTime = 0;
         this.triggerCount = 0;
-        this.action = 0;
-        this.condition = 0;
+        this.action = ACTION_CLICK;
+        this.condition = CONDITION_OR;
         this.createTime = System.currentTimeMillis();
     }
 
@@ -73,7 +75,8 @@ public class Widget {
         this.clickOnly = widget.clickOnly;
         this.widgetClickable = widget.widgetClickable;
         this.widgetRect = widget.widgetRect;
-        this.widgetId = widget.widgetId;
+        this.widgetNodeId = widget.widgetNodeId;
+        this.widgetViewId = widget.widgetViewId;
         this.widgetDescribe = widget.widgetDescribe;
         this.widgetText = widget.widgetText;
         this.toast = widget.toast;
@@ -92,12 +95,13 @@ public class Widget {
         Widget widget = (Widget) obj;
         return Objects.equals(this.appPackage, widget.appPackage)
                 && Objects.equals(this.appActivity, widget.appActivity)
-                && Objects.equals(this.widgetRect, widget.widgetRect);
+                && Objects.equals(this.widgetRect, widget.widgetRect)
+                && Objects.equals(this.widgetNodeId, widget.widgetNodeId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.appPackage, this.appActivity, this.widgetRect);
+        return Objects.hash(this.appPackage, this.appActivity, this.widgetRect, this.widgetNodeId);
     }
 
     @Override
@@ -113,7 +117,8 @@ public class Widget {
                 ", clickOnly=" + clickOnly +
                 ", widgetClickable=" + widgetClickable +
                 ", widgetRect=" + widgetRect +
-                ", widgetId='" + widgetId + '\'' +
+                ", widgetNodeId=" + widgetNodeId +
+                ", widgetViewId='" + widgetViewId + '\'' +
                 ", widgetDescribe='" + widgetDescribe + '\'' +
                 ", widgetText='" + widgetText + '\'' +
                 ", toast='" + toast + '\'' +
