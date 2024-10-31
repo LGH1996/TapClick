@@ -330,7 +330,7 @@ public class MainFunction {
                                     addLog("点击坐标：" + gson.toJson(coordinateSub));
                                 }
                             }
-                        }, coordinate.clickDelay, coordinate.clickInterval, TimeUnit.MILLISECONDS);
+                        }, coordinate.clickDelay, coordinate.clickInterval <= 0 ? 10 : coordinate.clickInterval, TimeUnit.MILLISECONDS);
                     }
                 }
                 if (nodeInfoList.isEmpty()) {
@@ -520,7 +520,9 @@ public class MainFunction {
 
                                 @Override
                                 public void run() {
-                                    if (!onOffWidgetSub || !nodeInfo.refresh()) {
+                                    if (!onOffWidgetSub
+                                            || !currentActivity.equals(e.appActivity)
+                                            || !nodeInfo.refresh()) {
                                         throw new RuntimeException();
                                     }
                                     if (clickNumber++ >= e.clickNumber) {
@@ -543,13 +545,15 @@ public class MainFunction {
                                         }
                                     }
                                 }
-                            }, 0, e.clickInterval, TimeUnit.MILLISECONDS);
+                            }, 0, e.clickInterval <= 0 ? 10 : e.clickInterval, TimeUnit.MILLISECONDS);
                         }
                     }, e.clickDelay, TimeUnit.MILLISECONDS);
                 }
             } else if (e.action == Widget.ACTION_BACK) {
                 if (alreadyClickSet.add(e)) {
-                    if (onOffWidgetSub && nodeInfo.refresh()) {
+                    if (onOffWidgetSub
+                            && currentActivity.equals(e.appActivity)
+                            && nodeInfo.refresh()) {
                         service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
                         e.triggerCount += 1;
                         e.lastTriggerTime = System.currentTimeMillis();
