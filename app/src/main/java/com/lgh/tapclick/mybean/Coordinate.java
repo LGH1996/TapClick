@@ -29,7 +29,7 @@ public class Coordinate {
         this.xPosition = 0;
         this.yPosition = 0;
         this.clickDelay = 1000;
-        this.clickInterval = 500;
+        this.clickInterval = 1000;
         this.clickNumber = 1;
         this.toast = "";
         this.comment = "";

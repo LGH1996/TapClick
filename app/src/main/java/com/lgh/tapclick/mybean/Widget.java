@@ -43,7 +43,7 @@ public class Widget {
         this.appPackage = "";
         this.appActivity = "";
         this.clickNumber = 1;
-        this.clickInterval = 500;
+        this.clickInterval = 0;
         this.clickDelay = 0;
         this.debounceDelay = 0;
         this.noRepeat = false;
