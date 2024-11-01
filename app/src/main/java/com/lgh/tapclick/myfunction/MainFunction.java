@@ -502,52 +502,47 @@ public class MainFunction {
             }
             if (e.action == Widget.ACTION_CLICK) {
                 if (!e.noRepeat || alreadyClickSet.add(e)) {
+                    if (!debounceSet.add(e)) {
+                        return;
+                    }
                     executorServiceSub.schedule(new Runnable() {
                         @Override
                         public void run() {
-                            if (!debounceSet.add(e)) {
-                                return;
-                            }
-                            executorServiceSub.schedule(new Runnable() {
-                                @Override
-                                public void run() {
-                                    debounceSet.remove(e);
-                                }
-                            }, e.debounceDelay, TimeUnit.MILLISECONDS);
-
-                            executorServiceSub.scheduleWithFixedDelay(new Runnable() {
-                                private int clickNumber = 0;
-
-                                @Override
-                                public void run() {
-                                    if (!onOffWidgetSub
-                                            || !currentActivity.equals(e.appActivity)
-                                            || !nodeInfo.refresh()) {
-                                        throw new RuntimeException();
-                                    }
-                                    if (clickNumber++ >= e.clickNumber) {
-                                        throw new RuntimeException();
-                                    }
-                                    if (e.clickOnly) {
-                                        click(rect.centerX(), rect.centerY());
-                                    } else if (!nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
-                                        click(rect.centerX(), rect.centerY());
-                                    }
-                                    if (clickNumber == 1) {
-                                        e.triggerCount += 1;
-                                        e.lastTriggerTime = System.currentTimeMillis();
-                                        dataDao.updateWidget(e);
-                                        showToast(e, e.toast);
-                                        addLog("点击控件：" + gson.toJson(e));
-                                        if (alreadyClickSet.size() >= widgets.size()) {
-                                            serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
-                                            service.setServiceInfo(serviceInfo);
-                                        }
-                                    }
-                                }
-                            }, 0, e.clickInterval <= 0 ? 10 : e.clickInterval, TimeUnit.MILLISECONDS);
+                            debounceSet.remove(e);
                         }
-                    }, e.clickDelay, TimeUnit.MILLISECONDS);
+                    }, e.clickDelay + e.debounceDelay, TimeUnit.MILLISECONDS);
+
+                    executorServiceSub.scheduleWithFixedDelay(new Runnable() {
+                        private int clickNumber = 0;
+
+                        @Override
+                        public void run() {
+                            if (!onOffWidgetSub
+                                    || !currentActivity.equals(e.appActivity)
+                                    || !nodeInfo.refresh()) {
+                                throw new RuntimeException();
+                            }
+                            if (clickNumber++ >= e.clickNumber) {
+                                throw new RuntimeException();
+                            }
+                            if (e.clickOnly) {
+                                click(rect.centerX(), rect.centerY());
+                            } else if (!nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                                click(rect.centerX(), rect.centerY());
+                            }
+                            if (clickNumber == 1) {
+                                e.triggerCount += 1;
+                                e.lastTriggerTime = System.currentTimeMillis();
+                                dataDao.updateWidget(e);
+                                showToast(e, e.toast);
+                                addLog("点击控件：" + gson.toJson(e));
+                                if (alreadyClickSet.size() >= widgets.size()) {
+                                    serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+                                    service.setServiceInfo(serviceInfo);
+                                }
+                            }
+                        }
+                    }, e.clickDelay, e.clickInterval <= 0 ? 10 : e.clickInterval, TimeUnit.MILLISECONDS);
                 }
             } else if (e.action == Widget.ACTION_BACK) {
                 if (alreadyClickSet.add(e)) {
