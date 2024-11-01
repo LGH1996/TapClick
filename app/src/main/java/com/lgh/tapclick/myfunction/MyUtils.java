@@ -222,7 +222,7 @@ public class MyUtils {
     }
 
     public static String getLog() {
-        try (Cursor cursor = mContext.getContentResolver().query(Uri.parse(contentProviderAuthority), null, "log", null, null);) {
+        try (Cursor cursor = mContext.getContentResolver().query(Uri.parse(contentProviderAuthority), null, "log", null, null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 int index = cursor.getColumnIndex("log");
                 return cursor.getString(index);
