@@ -10,9 +10,10 @@ import com.lgh.tapclick.mybean.Coordinate;
 import com.lgh.tapclick.mybean.MyAppConfig;
 import com.lgh.tapclick.mybean.Widget;
 
-@Database(version = 9, entities = {AppDescribe.class, Coordinate.class, Widget.class, MyAppConfig.class}, autoMigrations = {
+@Database(version = 10, entities = {AppDescribe.class, Coordinate.class, Widget.class, MyAppConfig.class}, autoMigrations = {
         @AutoMigration(from = 7, to = 8, spec = MyAutoMigrationSpec.From7To8.class),
         @AutoMigration(from = 8, to = 9, spec = MyAutoMigrationSpec.From8To9.class),
+        @AutoMigration(from = 9, to = 10),
 })
 @TypeConverters(MyTypeConverter.class)
 public abstract class MyDatabase extends RoomDatabase {

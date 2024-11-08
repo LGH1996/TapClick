@@ -398,6 +398,7 @@ public class MainActivity extends BaseActivity {
                         widgetShare.widget.createTime = System.currentTimeMillis();
                         widgetShare.widget.lastTriggerTime = 0;
                         widgetShare.widget.triggerCount = 0;
+                        widgetShare.widget.triggerReason = "";
                         dataDao.insertWidget(widgetShare.widget);
                         AppDescribe appDescribe = dataDao.getAppDescribeByPackage(widgetShare.widget.appPackage);
                         if (appDescribe != null) {

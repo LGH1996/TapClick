@@ -132,6 +132,7 @@ public class RegulationImportActivity extends BaseActivity {
                                         widget.createTime = System.currentTimeMillis();
                                         widget.lastTriggerTime = 0;
                                         widget.triggerCount = 0;
+                                        widget.triggerReason = "";
                                         widgets.add(widget);
                                     }
                                     appDescribes.add(e.appDescribe);

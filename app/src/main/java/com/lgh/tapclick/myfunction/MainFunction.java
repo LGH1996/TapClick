@@ -440,51 +440,62 @@ public class MainFunction {
         for (Widget e : widgets) {
             if (e.condition == Widget.CONDITION_OR) {
                 if (rect.equals(e.widgetRect)) {
+                    e.triggerReason = "Bonus 匹配";
                     addLog(String.format("找到控件：Bonus[%s]", gsonNoPretty.toJson(e.widgetRect)));
                 } else if (nodeId != null && nodeId.equals(e.widgetNodeId)) {
+                    e.triggerReason = "NodeId 匹配";
                     addLog(String.format("找到控件：NodeId[%s]", e.widgetNodeId));
                 } else if (viewId != null && !e.widgetViewId.isEmpty() && viewId.equals(e.widgetViewId)) {
+                    e.triggerReason = "ViewId 匹配";
                     addLog(String.format("找到控件：ViewId[%s]", e.widgetViewId));
                 } else if (describe != null && !e.widgetDescribe.isEmpty() && describe.matches(e.widgetDescribe)) {
+                    e.triggerReason = "Describe 匹配";
                     addLog(String.format("找到控件：Describe[%s]", e.widgetDescribe));
                 } else if (text != null && !e.widgetText.isEmpty() && text.matches(e.widgetText)) {
+                    e.triggerReason = "Text 匹配";
                     addLog(String.format("找到控件：Text[%s]", e.widgetText));
                 } else {
                     continue;
                 }
             } else if (e.condition == Widget.CONDITION_AND) {
-                StringBuilder stringBuilder = new StringBuilder();
+                StringBuilder strBuildTrigger = new StringBuilder();
+                StringBuilder strBuildLog = new StringBuilder();
                 if (e.widgetRect != null) {
                     if (rect.equals(e.widgetRect)) {
-                        stringBuilder.append(String.format(", Bonus[%s]", gsonNoPretty.toJson(e.widgetRect)));
+                        strBuildTrigger.append(", Bonus");
+                        strBuildLog.append(String.format(", Bonus[%s]", gsonNoPretty.toJson(e.widgetRect)));
                     } else {
                         continue;
                     }
                 }
                 if (e.widgetNodeId != null) {
                     if (nodeId != null && nodeId.equals(e.widgetNodeId)) {
-                        stringBuilder.append(String.format(", NodeId[%s]", e.widgetNodeId));
+                        strBuildTrigger.append(", NodeId");
+                        strBuildLog.append(String.format(", NodeId[%s]", e.widgetNodeId));
                     } else {
                         continue;
                     }
                 }
                 if (!e.widgetViewId.isEmpty()) {
                     if (viewId != null && viewId.equals(e.widgetViewId)) {
-                        stringBuilder.append(String.format(", ViewId[%s]", e.widgetViewId));
+                        strBuildTrigger.append(", ViewId");
+                        strBuildLog.append(String.format(", ViewId[%s]", e.widgetViewId));
                     } else {
                         continue;
                     }
                 }
                 if (!e.widgetDescribe.isEmpty()) {
                     if (describe != null && describe.matches(e.widgetDescribe)) {
-                        stringBuilder.append(String.format(", Describe[%s]", e.widgetDescribe));
+                        strBuildTrigger.append(", Describe");
+                        strBuildLog.append(String.format(", Describe[%s]", e.widgetDescribe));
                     } else {
                         continue;
                     }
                 }
                 if (!e.widgetText.isEmpty()) {
                     if (text != null && text.matches(e.widgetText)) {
-                        stringBuilder.append(String.format(", Text[%s]", e.widgetText));
+                        strBuildTrigger.append(", Text");
+                        strBuildLog.append(String.format(", Text[%s]", e.widgetText));
                     } else {
                         continue;
                     }
@@ -496,7 +507,8 @@ public class MainFunction {
                         && e.widgetText.isEmpty()) {
                     continue;
                 }
-                addLog(String.format("找到控件：%s", stringBuilder.substring(2)));
+                e.triggerReason = strBuildTrigger.append(" 匹配").substring(2);
+                addLog(String.format("找到控件：%s", strBuildLog.substring(2)));
             } else {
                 continue;
             }

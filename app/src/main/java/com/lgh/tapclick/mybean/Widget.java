@@ -32,6 +32,7 @@ public class Widget {
     public String widgetText;
     public String toast;
     public String comment;
+    public String triggerReason;
     public long lastTriggerTime;
     public int triggerCount;
     public int clickInterval;
@@ -56,6 +57,7 @@ public class Widget {
         this.widgetText = "";
         this.toast = "";
         this.comment = "";
+        this.triggerReason = "";
         this.lastTriggerTime = 0;
         this.triggerCount = 0;
         this.action = ACTION_CLICK;
@@ -85,6 +87,7 @@ public class Widget {
         this.triggerCount = widget.triggerCount;
         this.action = widget.action;
         this.condition = widget.condition;
+        this.triggerReason = widget.triggerReason;
     }
 
     @Override
@@ -123,6 +126,7 @@ public class Widget {
                 ", widgetText='" + widgetText + '\'' +
                 ", toast='" + toast + '\'' +
                 ", comment='" + comment + '\'' +
+                ", triggerReason='" + triggerReason + '\'' +
                 ", lastTriggerTime=" + lastTriggerTime +
                 ", triggerCount=" + triggerCount +
                 ", clickInterval=" + clickInterval +

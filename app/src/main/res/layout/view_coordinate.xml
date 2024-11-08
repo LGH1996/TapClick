@@ -262,7 +262,7 @@
                 android:textSize="12sp" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/coordinate_last_click_time"
+                android:id="@+id/coordinate_last_trigger_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
@@ -289,7 +289,7 @@
                 android:textSize="12sp" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/coordinate_click_count"
+                android:id="@+id/coordinate_trigger_count"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
