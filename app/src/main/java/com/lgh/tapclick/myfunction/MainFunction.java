@@ -586,19 +586,13 @@ public class MainFunction {
         LinkedList<AccessibilityNodeInfo> listA = new LinkedList<>(root);
         HashSet<AccessibilityNodeInfo> setR = new HashSet<>();
         while (!listA.isEmpty()) {
-            final AccessibilityNodeInfo node = listA.poll();
-            if (node == null) {
-                continue;
+            AccessibilityNodeInfo node = listA.poll();
+            if (node != null) {
+                setR.add(node);
+                for (int n = 0; n < node.getChildCount(); n++) {
+                    listA.add(node.getChild(n));
+                }
             }
-            Rect rect = new Rect();
-            node.getBoundsInScreen(rect);
-            if (rect.width() <= 0 || rect.height() <= 0) {
-                continue;
-            }
-            for (int n = 0; n < node.getChildCount(); n++) {
-                listA.add(node.getChild(n));
-            }
-            setR.add(node);
         }
         return setR.stream().sorted(new Comparator<AccessibilityNodeInfo>() {
             @Override
