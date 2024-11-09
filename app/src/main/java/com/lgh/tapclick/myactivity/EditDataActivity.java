@@ -288,7 +288,7 @@ public class EditDataActivity extends BaseActivity {
             } else {
                 coordinateBinding.coordinateLastTriggerTime.setText(String.format("%s (%s天前)", dateFormat.format(coordinate.lastTriggerTime), day2));
             }
-            if (n < appDescribe.coordinateList.size()) {
+            if (n < latestTriggerCoordinateList.size()) {
                 coordinateBinding.coordinateModify.setTextColor(0xff32cd32);
                 if (n == 0) {
                     coordinateBinding.coordinateModify.setText("该坐标为最新触发坐标");
