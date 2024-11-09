@@ -5,7 +5,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.lgh.advertising.tapclick.R;
+import com.lgh.tapclick.R;
 import com.lgh.tapclick.myclass.MyApplication;
 
 public class BaseActivity extends AppCompatActivity {

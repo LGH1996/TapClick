@@ -12,9 +12,9 @@ import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.lgh.advertising.tapclick.BuildConfig;
-import com.lgh.advertising.tapclick.R;
-import com.lgh.advertising.tapclick.databinding.ActivitySettingBinding;
+import com.lgh.tapclick.BuildConfig;
+import com.lgh.tapclick.R;
+import com.lgh.tapclick.databinding.ActivitySettingBinding;
 import com.lgh.tapclick.mybean.LatestMessage;
 import com.lgh.tapclick.myclass.DataDao;
 import com.lgh.tapclick.myclass.MyApplication;

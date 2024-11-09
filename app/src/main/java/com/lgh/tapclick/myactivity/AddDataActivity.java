@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import com.lgh.advertising.tapclick.databinding.ActivityAddDataBinding;
+
+import com.lgh.tapclick.databinding.ActivityAddDataBinding;
 import com.lgh.tapclick.myfunction.MyUtils;
 
 public class AddDataActivity extends BaseActivity {

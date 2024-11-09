@@ -16,8 +16,8 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 
-import com.lgh.advertising.tapclick.R;
-import com.lgh.advertising.tapclick.databinding.ActivityAuthorizationBinding;
+import com.lgh.tapclick.R;
+import com.lgh.tapclick.databinding.ActivityAuthorizationBinding;
 import com.lgh.tapclick.myfunction.MyDeviceAdminReceiver;
 import com.lgh.tapclick.myfunction.MyUtils;
 

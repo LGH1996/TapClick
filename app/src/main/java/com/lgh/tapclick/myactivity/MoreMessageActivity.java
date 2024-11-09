@@ -7,7 +7,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.lgh.advertising.tapclick.databinding.ActivityMoreMessageBinding;
+import com.lgh.tapclick.databinding.ActivityMoreMessageBinding;
 
 public class MoreMessageActivity extends BaseActivity {
     private ActivityMoreMessageBinding binding;

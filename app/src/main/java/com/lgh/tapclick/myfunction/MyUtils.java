@@ -10,7 +10,7 @@ import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
-import com.lgh.advertising.tapclick.BuildConfig;
+import com.lgh.tapclick.BuildConfig;
 
 public class MyUtils {
     private static final String contentProviderAuthority = "content://" + BuildConfig.APPLICATION_ID;

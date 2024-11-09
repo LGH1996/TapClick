@@ -16,8 +16,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lgh.advertising.tapclick.databinding.ActivityRegulationImportBinding;
-import com.lgh.advertising.tapclick.databinding.ViewItemImportBinding;
+import com.lgh.tapclick.databinding.ActivityRegulationImportBinding;
+import com.lgh.tapclick.databinding.ViewItemImportBinding;
 import com.lgh.tapclick.mybean.AppDescribe;
 import com.lgh.tapclick.mybean.Coordinate;
 import com.lgh.tapclick.mybean.Regulation;

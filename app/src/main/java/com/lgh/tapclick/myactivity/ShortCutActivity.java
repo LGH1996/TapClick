@@ -9,12 +9,11 @@ import android.widget.Toast;
 import com.lgh.tapclick.myfunction.MyUtils;
 
 public class ShortCutActivity extends BaseActivity {
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getApplicationContext();
+        Context context = getApplicationContext();
         if (getIntent().getAction().equals("com.lgh.action.addData")) {
             if (MyUtils.isServiceRunning()) {
                 MyUtils.requestShowAddDataWindow();

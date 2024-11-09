@@ -12,8 +12,8 @@ import android.os.Looper;
 
 import androidx.annotation.NonNull;
 
-import com.lgh.advertising.tapclick.BuildConfig;
-import com.lgh.advertising.tapclick.R;
+import com.lgh.tapclick.BuildConfig;
+import com.lgh.tapclick.R;
 import com.lgh.tapclick.myactivity.ExceptionReportActivity;
 
 import org.apache.commons.io.FileUtils;

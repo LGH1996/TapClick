@@ -9,7 +9,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.lgh.advertising.tapclick.databinding.ActivityUpdateBinding;
+import com.lgh.tapclick.databinding.ActivityUpdateBinding;
 
 public class UpdateActivity extends BaseActivity {
 

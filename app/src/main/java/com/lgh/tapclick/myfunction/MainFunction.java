@@ -47,11 +47,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.lgh.advertising.tapclick.R;
-import com.lgh.advertising.tapclick.databinding.ViewAddDataBinding;
-import com.lgh.advertising.tapclick.databinding.ViewDbClickSettingBinding;
-import com.lgh.advertising.tapclick.databinding.ViewDialogWarningBinding;
-import com.lgh.advertising.tapclick.databinding.ViewWidgetSelectBinding;
+import com.lgh.tapclick.R;
+import com.lgh.tapclick.databinding.ViewAddDataBinding;
+import com.lgh.tapclick.databinding.ViewDbClickSettingBinding;
+import com.lgh.tapclick.databinding.ViewDialogWarningBinding;
+import com.lgh.tapclick.databinding.ViewWidgetSelectBinding;
 import com.lgh.tapclick.myactivity.EditDataActivity;
 import com.lgh.tapclick.myactivity.MainActivity;
 import com.lgh.tapclick.mybean.AppDescribe;

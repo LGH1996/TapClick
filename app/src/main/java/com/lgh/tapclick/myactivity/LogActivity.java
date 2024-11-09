@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
-import com.lgh.advertising.tapclick.BuildConfig;
-import com.lgh.advertising.tapclick.databinding.ActivityLogBinding;
+import com.lgh.tapclick.BuildConfig;
+import com.lgh.tapclick.databinding.ActivityLogBinding;
 import com.lgh.tapclick.myfunction.MyUtils;
 
 import org.apache.commons.io.FileUtils;

@@ -34,11 +34,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.lgh.advertising.tapclick.BuildConfig;
-import com.lgh.advertising.tapclick.databinding.ActivityListDataBinding;
-import com.lgh.advertising.tapclick.databinding.ViewEditFileNameBinding;
-import com.lgh.advertising.tapclick.databinding.ViewItemAppBinding;
-import com.lgh.advertising.tapclick.databinding.ViewOnOffWarningBinding;
+import com.lgh.tapclick.BuildConfig;
+import com.lgh.tapclick.databinding.ActivityListDataBinding;
+import com.lgh.tapclick.databinding.ViewEditFileNameBinding;
+import com.lgh.tapclick.databinding.ViewItemAppBinding;
+import com.lgh.tapclick.databinding.ViewOnOffWarningBinding;
 import com.lgh.tapclick.mybean.AppDescribe;
 import com.lgh.tapclick.mybean.Coordinate;
 import com.lgh.tapclick.mybean.Regulation;
