@@ -40,10 +40,8 @@ import com.lgh.tapclick.databinding.ViewEditFileNameBinding;
 import com.lgh.tapclick.databinding.ViewItemAppBinding;
 import com.lgh.tapclick.databinding.ViewOnOffWarningBinding;
 import com.lgh.tapclick.mybean.AppDescribe;
-import com.lgh.tapclick.mybean.Coordinate;
 import com.lgh.tapclick.mybean.Regulation;
 import com.lgh.tapclick.mybean.RegulationExport;
-import com.lgh.tapclick.mybean.Widget;
 import com.lgh.tapclick.myclass.DataDao;
 import com.lgh.tapclick.myclass.MyApplication;
 import com.lgh.tapclick.myfunction.MyUtils;
@@ -412,7 +410,7 @@ public class ListDataActivity extends BaseActivity {
         AppDescribe appDescribe;
         Drawable icon;
         boolean isSelected;
-        int longNoTriggerCount;
+        long longNoTriggerCount;
 
         public AppDescribeItem(AppDescribe appDescribe, Drawable icon) {
             this.appDescribe = appDescribe;
@@ -421,21 +419,14 @@ public class ListDataActivity extends BaseActivity {
         }
 
         public void refreshExistLongNoTrigger() {
-            longNoTriggerCount = 0;
-            for (Coordinate e : appDescribe.coordinateList) {
-                long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
-                long day2 = (System.currentTimeMillis() - e.lastTriggerTime) / (24 * 60 * 60 * 1000);
-                if (day1 >= 60 && day2 >= 60) {
-                    longNoTriggerCount++;
-                }
-            }
-            for (Widget e : appDescribe.widgetList) {
-                long day1 = (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000);
-                long day2 = (System.currentTimeMillis() - e.lastTriggerTime) / (24 * 60 * 60 * 1000);
-                if (day1 >= 60 && day2 >= 60) {
-                    longNoTriggerCount++;
-                }
-            }
+            longNoTriggerCount = appDescribe.coordinateList.stream()
+                    .filter(e -> (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000) >= 60)
+                    .filter(e -> (System.currentTimeMillis() - e.lastTriggerTime) / (24 * 60 * 60 * 1000) >= 60)
+                    .count();
+            longNoTriggerCount += appDescribe.widgetList.stream()
+                    .filter(e -> (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000) >= 60)
+                    .filter(e -> (System.currentTimeMillis() - e.lastTriggerTime) / (24 * 60 * 60 * 1000) >= 60)
+                    .count();
         }
     }
 

@@ -29,7 +29,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:animateLayoutChanges="true"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="30dp">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/base_setting_layout"
@@ -140,7 +141,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="30dp"
                     android:animateLayoutChanges="true"
                     android:background="@drawable/bg_radius"
                     android:orientation="vertical"
