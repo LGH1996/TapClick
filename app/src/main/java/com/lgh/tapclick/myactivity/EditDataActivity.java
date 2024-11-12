@@ -174,7 +174,7 @@ public class EditDataActivity extends BaseActivity {
             public void run() {
                 String coordinateTime = StrUtil.trimToEmpty(baseSettingBinding.coordinateSustainTime.getText());
                 String widgetTime = StrUtil.trimToEmpty(baseSettingBinding.widgetSustainTime.getText());
-                editDataBinding.baseSettingModify.setTextColor(0xffff0000);
+                editDataBinding.baseSettingModify.setTextColor(0xfff20000);
                 if (coordinateTime.isEmpty()) {
                     editDataBinding.baseSettingModify.setText("坐标检索持续时间不能为空");
                     return;
@@ -253,7 +253,7 @@ public class EditDataActivity extends BaseActivity {
         editDataBinding.baseSettingLayout.addView(baseSettingBinding.getRoot());
 
         List<Coordinate> latestTriggerCoordinateList = appDescribe.coordinateList.stream()
-                .filter(e -> e.lastTriggerTime > System.currentTimeMillis() - 1000 * 60)
+                .filter(e -> e.lastTriggerTime > System.currentTimeMillis() - 1000 * 60 * 5)
                 .sorted((e1, e2) -> Long.compare(e2.lastTriggerTime, e1.lastTriggerTime))
                 .collect(Collectors.toList());
         appDescribe.coordinateList.removeAll(latestTriggerCoordinateList);
@@ -279,8 +279,8 @@ public class EditDataActivity extends BaseActivity {
             coordinateBinding.coordinateTriggerCount.setText(String.valueOf(coordinate.triggerCount));
             coordinateBinding.coordinateToast.setText(coordinate.toast);
             coordinateBinding.coordinateComment.setText(coordinate.comment);
-            long day1 = (System.currentTimeMillis() - coordinate.createTime) / (24 * 60 * 60 * 1000);
-            long day2 = (System.currentTimeMillis() - coordinate.lastTriggerTime) / (24 * 60 * 60 * 1000);
+            long day1 = (System.currentTimeMillis() - coordinate.createTime) / (1000 * 60 * 60 * 24);
+            long day2 = (System.currentTimeMillis() - coordinate.lastTriggerTime) / (1000 * 60 * 60 * 24);
             coordinateBinding.coordinateCreateTime.setText(String.format("%s (%s天前)", dateFormat.format(new Date(coordinate.createTime)), day1));
             coordinateBinding.coordinateLastTriggerTime.setTextColor(day1 >= 60 && day2 >= 60 ? Color.RED : coordinateBinding.coordinateLastTriggerTime.getCurrentTextColor());
             if (coordinate.lastTriggerTime <= 0) {
@@ -289,11 +289,11 @@ public class EditDataActivity extends BaseActivity {
                 coordinateBinding.coordinateLastTriggerTime.setText(String.format("%s (%s天前)", dateFormat.format(coordinate.lastTriggerTime), day2));
             }
             if (n < latestTriggerCoordinateList.size()) {
-                coordinateBinding.coordinateModify.setTextColor(0xff32cd32);
+                coordinateBinding.coordinateModify.setTextColor(0xff00c507);
                 if (n == 0) {
                     coordinateBinding.coordinateModify.setText("该坐标为最新触发坐标");
                 } else {
-                    coordinateBinding.coordinateModify.setText("该坐标最近1分钟内有被触发");
+                    coordinateBinding.coordinateModify.setText("该坐标最近5分钟内有被触发");
                 }
             }
             Runnable coordinateSaveRun = new Runnable() {
@@ -304,7 +304,7 @@ public class EditDataActivity extends BaseActivity {
                     String sDelay = StrUtil.trimToEmpty(coordinateBinding.coordinateClickDelay.getText());
                     String sInterval = StrUtil.trimToEmpty(coordinateBinding.coordinateClickInterval.getText());
                     String sNumber = StrUtil.trimToEmpty(coordinateBinding.coordinateClickNumber.getText());
-                    coordinateBinding.coordinateModify.setTextColor(0xffff0000);
+                    coordinateBinding.coordinateModify.setTextColor(0xfff20000);
                     if (sX.isEmpty()) {
                         coordinateBinding.coordinateModify.setText("X轴坐标不能为空");
                         return;
@@ -409,10 +409,12 @@ public class EditDataActivity extends BaseActivity {
                                     if (appDescribe.coordinateList.isEmpty()) {
                                         editDataBinding.coordinateLayout.setVisibility(View.GONE);
                                         baseSettingBinding.coordinateSwitch.setChecked(false);
+                                        appDescribe.coordinateOnOff = false;
                                         if (appDescribe.widgetList.isEmpty()) {
                                             baseSettingBinding.widgetSwitch.setChecked(false);
+                                            appDescribe.widgetOnOff = false;
                                         }
-                                        baseSettingSaveRun.run();
+                                        dataDao.updateAppDescribe(appDescribe);
                                     }
                                 }
                             }).create().show();
@@ -422,7 +424,7 @@ public class EditDataActivity extends BaseActivity {
         }
 
         List<Widget> latestTriggerWidgetList = appDescribe.widgetList.stream()
-                .filter(e -> e.lastTriggerTime > System.currentTimeMillis() - 1000 * 60)
+                .filter(e -> e.lastTriggerTime > System.currentTimeMillis() - 1000 * 60 * 5)
                 .sorted((e1, e2) -> Long.compare(e2.lastTriggerTime, e1.lastTriggerTime))
                 .collect(Collectors.toList());
         appDescribe.widgetList.removeAll(latestTriggerWidgetList);
@@ -465,8 +467,8 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetConditionOr.setEnabled(widget.condition != Widget.CONDITION_OR);
             widgetBinding.widgetConditionAnd.setEnabled(widget.condition != Widget.CONDITION_AND);
             widgetBinding.widgetTriggerReason.setText(StrUtil.blankToDefault(widget.triggerReason, "无触发记录"));
-            long day1 = (System.currentTimeMillis() - widget.createTime) / (24 * 60 * 60 * 1000);
-            long day2 = (System.currentTimeMillis() - widget.lastTriggerTime) / (24 * 60 * 60 * 1000);
+            long day1 = (System.currentTimeMillis() - widget.createTime) / (1000 * 60 * 60 * 24);
+            long day2 = (System.currentTimeMillis() - widget.lastTriggerTime) / (1000 * 60 * 60 * 24);
             widgetBinding.widgetCreateTime.setText(String.format("%s (%s天前)", dateFormat.format(new Date(widget.createTime)), day1));
             widgetBinding.widgetLastTriggerTime.setTextColor(day1 >= 60 && day2 >= 60 ? Color.RED : widgetBinding.widgetLastTriggerTime.getCurrentTextColor());
             if (widget.lastTriggerTime <= 0) {
@@ -475,11 +477,11 @@ public class EditDataActivity extends BaseActivity {
                 widgetBinding.widgetLastTriggerTime.setText(String.format("%s (%s天前)", dateFormat.format(widget.lastTriggerTime), day2));
             }
             if (n < latestTriggerWidgetList.size()) {
-                widgetBinding.widgetModify.setTextColor(0xff32cd32);
+                widgetBinding.widgetModify.setTextColor(0xff00c507);
                 if (n == 0) {
                     widgetBinding.widgetModify.setText("该控件为最新触发控件");
                 } else {
-                    widgetBinding.widgetModify.setText("该控件最近1分钟内有被触发");
+                    widgetBinding.widgetModify.setText("该控件最近5分钟内有被触发");
                 }
             }
             Runnable widgetSaveRun = new Runnable() {
@@ -489,7 +491,7 @@ public class EditDataActivity extends BaseActivity {
                     String clickInterval = StrUtil.trimToEmpty(widgetBinding.widgetClickInterval.getText());
                     String clickDelay = StrUtil.trimToEmpty(widgetBinding.widgetClickDelay.getText());
                     String debounceDelay = StrUtil.trimToEmpty(widgetBinding.widgetDebounceDelay.getText());
-                    widgetBinding.widgetModify.setTextColor(0xffff0000);
+                    widgetBinding.widgetModify.setTextColor(0xfff20000);
                     if (clickNumber.isEmpty()) {
                         widgetBinding.widgetModify.setText("点击次数不能为空");
                         return;
@@ -629,10 +631,12 @@ public class EditDataActivity extends BaseActivity {
                                     if (appDescribe.widgetList.isEmpty()) {
                                         editDataBinding.widgetLayout.setVisibility(View.GONE);
                                         baseSettingBinding.widgetSwitch.setChecked(false);
+                                        appDescribe.widgetOnOff = false;
                                         if (appDescribe.coordinateList.isEmpty()) {
                                             baseSettingBinding.coordinateSwitch.setChecked(false);
+                                            appDescribe.coordinateOnOff = false;
                                         }
-                                        baseSettingSaveRun.run();
+                                        dataDao.updateAppDescribe(appDescribe);
                                     }
                                 }
                             }).create().show();

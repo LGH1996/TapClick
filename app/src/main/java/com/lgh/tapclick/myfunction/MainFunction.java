@@ -768,15 +768,16 @@ public class MainFunction {
 
         addDataBinding.getRoot().setOnTouchListener(new View.OnTouchListener() {
             int startRowX = 0, startRowY = 0, startLpX = 0, startLpY = 0;
-            ScheduledFuture<?> future = executorServiceSub.schedule(new Runnable() {
-                @Override
-                public void run() {
-                }
-            }, 0, TimeUnit.MILLISECONDS);
+            int preRowX = 0, preRowY = 0;
+            long preEventTime = 0;
+            boolean openPageFlag = false;
+            Runnable moveRun = System::currentTimeMillis;
+            final Pattern pattern = Pattern.compile("[A-Za-z0-9_.]+");
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                addDataBinding.getRoot().post(new Runnable() {
+                handler.removeCallbacks(moveRun);
+                moveRun = new Runnable() {
                     @Override
                     public void run() {
                         switch (event.getAction()) {
@@ -785,22 +786,6 @@ public class MainFunction {
                                 startRowY = Math.round(event.getRawY());
                                 startLpX = aParams.x;
                                 startLpY = aParams.y;
-                                future = executorServiceSub.schedule(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (Math.abs(aParams.x - startLpX) < 10 && Math.abs(aParams.y - startLpY) < 10) {
-                                            Matcher matcher = Pattern.compile("(\\w|\\.)+").matcher(addDataBinding.pacName.getText().toString());
-                                            if (matcher.find()) {
-                                                if (appDescribeMap.containsKey(matcher.group())) {
-                                                    Intent intent = new Intent(service, EditDataActivity.class);
-                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                    intent.putExtra("packageName", matcher.group());
-                                                    service.startActivity(intent);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }, 1000, TimeUnit.MILLISECONDS);
                                 break;
                             case MotionEvent.ACTION_MOVE:
                                 aParams.x = startLpX + (Math.round(event.getRawX()) - startRowX);
@@ -815,11 +800,34 @@ public class MainFunction {
                                 aParams.y = Math.max(aParams.y, 0);
                                 aParams.y = Math.min(aParams.y, metrics.heightPixels - aParams.height);
                                 windowManager.updateViewLayout(addDataBinding.getRoot(), aParams);
-                                future.cancel(false);
+                                // 双击打开规则管理页面
+                                if (Math.abs(event.getEventTime() - preEventTime) < 500) {
+                                    if (!openPageFlag
+                                            && Math.abs(event.getRawX() - preRowX) < 100
+                                            && Math.abs(event.getRawY() - preRowY) < 100) {
+                                        openPageFlag = true;
+                                        Matcher matcher = pattern.matcher(addDataBinding.pkgName.getText().toString());
+                                        if (matcher.find() && appDescribeMap.containsKey(matcher.group())) {
+                                            Intent intent = new Intent(service, EditDataActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            intent.putExtra("packageName", matcher.group());
+                                            service.startActivity(intent);
+                                            if (bParams.alpha != 0) {
+                                                addDataBinding.switchWid.callOnClick();
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    openPageFlag = false;
+                                }
+                                preRowX = Math.round(event.getRawX());
+                                preRowY = Math.round(event.getRawY());
+                                preEventTime = event.getEventTime();
                                 break;
                         }
                     }
-                });
+                };
+                handler.post(moveRun);
                 return true;
             }
         });
@@ -827,10 +835,12 @@ public class MainFunction {
             final int width = cParams.width / 2;
             final int height = cParams.height / 2;
             int startRowX = 0, startRowY = 0, startLpX = 0, startLpY = 0;
+            Runnable moveRun = System::currentTimeMillis;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                viewClickPosition.post(new Runnable() {
+                handler.removeCallbacks(moveRun);
+                moveRun = new Runnable() {
                     @Override
                     public void run() {
                         switch (event.getAction()) {
@@ -851,7 +861,7 @@ public class MainFunction {
                                 coordinateSelect.appActivity = currentActivity;
                                 coordinateSelect.xPosition = cParams.x + width;
                                 coordinateSelect.yPosition = cParams.y + height;
-                                addDataBinding.pacName.setText(coordinateSelect.appPackage);
+                                addDataBinding.pkgName.setText(coordinateSelect.appPackage);
                                 addDataBinding.actName.setText(coordinateSelect.appActivity);
                                 addDataBinding.xy.setText("X轴：" + String.format("%-4d", coordinateSelect.xPosition) + "    " + "Y轴：" + String.format("%-4d", coordinateSelect.yPosition));
                                 break;
@@ -861,7 +871,8 @@ public class MainFunction {
                                 break;
                         }
                     }
-                });
+                };
+                handler.post(moveRun);
                 return true;
             }
         });
@@ -912,7 +923,7 @@ public class MainFunction {
                                                 widgetSelect.widgetDescribe = StrUtil.toStringOrEmpty(nodeInfo.getContentDescription());
                                                 widgetSelect.widgetText = StrUtil.toStringOrEmpty(nodeInfo.getText());
                                                 addDataBinding.saveWid.setEnabled(appDescribeMap.containsKey(currentPackage));
-                                                addDataBinding.pacName.setText(widgetSelect.appPackage);
+                                                addDataBinding.pkgName.setText(widgetSelect.appPackage);
                                                 addDataBinding.actName.setText(widgetSelect.appActivity);
                                                 String clickable = "clickable:" + widgetSelect.widgetClickable;
                                                 String nodeId = "nodeId:" + widgetSelect.widgetNodeId;
@@ -949,7 +960,7 @@ public class MainFunction {
                                     windowManager.updateViewLayout(widgetSelectBinding.getRoot(), bParams);
                                     widgetSelect.appPackage = currentPackage;
                                     widgetSelect.appActivity = currentActivity;
-                                    addDataBinding.pacName.setText(widgetSelect.appPackage);
+                                    addDataBinding.pkgName.setText(widgetSelect.appPackage);
                                     addDataBinding.actName.setText(widgetSelect.appActivity);
                                     addDataBinding.switchWid.setText("隐藏布局");
                                 }
@@ -981,7 +992,7 @@ public class MainFunction {
                             | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
                             | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
                     windowManager.updateViewLayout(viewClickPosition, cParams);
-                    addDataBinding.pacName.setText(coordinateSelect.appPackage);
+                    addDataBinding.pkgName.setText(coordinateSelect.appPackage);
                     addDataBinding.actName.setText(coordinateSelect.appActivity);
                     button.setText("隐藏准星");
                 } else {
@@ -1008,7 +1019,7 @@ public class MainFunction {
                             temWidget.createTime = System.currentTimeMillis();
                             dataDao.insertWidget(temWidget);
                             addDataBinding.saveWid.setEnabled(false);
-                            addDataBinding.pacName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
+                            addDataBinding.pkgName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
                             temAppDescribe.getWidgetFromDatabase(dataDao);
                             if (!temAppDescribe.widgetOnOff) {
                                 showWarningDialog(new Runnable() {
@@ -1041,7 +1052,7 @@ public class MainFunction {
                             temCoordinate.createTime = System.currentTimeMillis();
                             dataDao.insertCoordinate(temCoordinate);
                             addDataBinding.saveAim.setEnabled(false);
-                            addDataBinding.pacName.setText(coordinateSelect.appPackage + " (以下坐标数据已保存)");
+                            addDataBinding.pkgName.setText(coordinateSelect.appPackage + " (以下坐标数据已保存)");
                             temAppDescribe.getCoordinateFromDatabase(dataDao);
                             if (!temAppDescribe.coordinateOnOff) {
                                 showWarningDialog(new Runnable() {
@@ -1304,6 +1315,7 @@ public class MainFunction {
                             AppDescribe appDescribe = dataDao.getAppDescribeByPackage(packageName);
                             if (appDescribe == null) {
                                 appDescribe = new AppDescribe();
+                                appDescribe.appPackage = packageName;
                                 try {
                                     ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
                                     appDescribe.appName = packageManager.getApplicationLabel(applicationInfo).toString();
@@ -1311,7 +1323,6 @@ public class MainFunction {
                                     appDescribe.appName = "unknown";
                                     // e.printStackTrace();
                                 }
-                                appDescribe.appPackage = packageName;
                                 List<ResolveInfo> homeLaunchList = packageManager.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL);
                                 for (ResolveInfo e : homeLaunchList) {
                                     if (packageName.equals(e.activityInfo.packageName)) {
