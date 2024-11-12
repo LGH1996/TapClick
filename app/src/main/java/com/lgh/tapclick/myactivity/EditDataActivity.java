@@ -253,7 +253,7 @@ public class EditDataActivity extends BaseActivity {
         editDataBinding.baseSettingLayout.addView(baseSettingBinding.getRoot());
 
         List<Coordinate> latestTriggerCoordinateList = appDescribe.coordinateList.stream()
-                .filter(e -> e.lastTriggerTime > System.currentTimeMillis() - 1000 * 60)
+                .filter(e -> e.lastTriggerTime > System.currentTimeMillis() - 1000 * 60 * 5)
                 .sorted((e1, e2) -> Long.compare(e2.lastTriggerTime, e1.lastTriggerTime))
                 .collect(Collectors.toList());
         appDescribe.coordinateList.removeAll(latestTriggerCoordinateList);
@@ -279,8 +279,8 @@ public class EditDataActivity extends BaseActivity {
             coordinateBinding.coordinateTriggerCount.setText(String.valueOf(coordinate.triggerCount));
             coordinateBinding.coordinateToast.setText(coordinate.toast);
             coordinateBinding.coordinateComment.setText(coordinate.comment);
-            long day1 = (System.currentTimeMillis() - coordinate.createTime) / (24 * 60 * 60 * 1000);
-            long day2 = (System.currentTimeMillis() - coordinate.lastTriggerTime) / (24 * 60 * 60 * 1000);
+            long day1 = (System.currentTimeMillis() - coordinate.createTime) / (1000 * 60 * 60 * 24);
+            long day2 = (System.currentTimeMillis() - coordinate.lastTriggerTime) / (1000 * 60 * 60 * 24);
             coordinateBinding.coordinateCreateTime.setText(String.format("%s (%s天前)", dateFormat.format(new Date(coordinate.createTime)), day1));
             coordinateBinding.coordinateLastTriggerTime.setTextColor(day1 >= 60 && day2 >= 60 ? Color.RED : coordinateBinding.coordinateLastTriggerTime.getCurrentTextColor());
             if (coordinate.lastTriggerTime <= 0) {
@@ -293,7 +293,7 @@ public class EditDataActivity extends BaseActivity {
                 if (n == 0) {
                     coordinateBinding.coordinateModify.setText("该坐标为最新触发坐标");
                 } else {
-                    coordinateBinding.coordinateModify.setText("该坐标最近1分钟内有被触发");
+                    coordinateBinding.coordinateModify.setText("该坐标最近5分钟内有被触发");
                 }
             }
             Runnable coordinateSaveRun = new Runnable() {
@@ -422,7 +422,7 @@ public class EditDataActivity extends BaseActivity {
         }
 
         List<Widget> latestTriggerWidgetList = appDescribe.widgetList.stream()
-                .filter(e -> e.lastTriggerTime > System.currentTimeMillis() - 1000 * 60)
+                .filter(e -> e.lastTriggerTime > System.currentTimeMillis() - 1000 * 60 * 5)
                 .sorted((e1, e2) -> Long.compare(e2.lastTriggerTime, e1.lastTriggerTime))
                 .collect(Collectors.toList());
         appDescribe.widgetList.removeAll(latestTriggerWidgetList);
@@ -465,8 +465,8 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetConditionOr.setEnabled(widget.condition != Widget.CONDITION_OR);
             widgetBinding.widgetConditionAnd.setEnabled(widget.condition != Widget.CONDITION_AND);
             widgetBinding.widgetTriggerReason.setText(StrUtil.blankToDefault(widget.triggerReason, "无触发记录"));
-            long day1 = (System.currentTimeMillis() - widget.createTime) / (24 * 60 * 60 * 1000);
-            long day2 = (System.currentTimeMillis() - widget.lastTriggerTime) / (24 * 60 * 60 * 1000);
+            long day1 = (System.currentTimeMillis() - widget.createTime) / (1000 * 60 * 60 * 24);
+            long day2 = (System.currentTimeMillis() - widget.lastTriggerTime) / (1000 * 60 * 60 * 24);
             widgetBinding.widgetCreateTime.setText(String.format("%s (%s天前)", dateFormat.format(new Date(widget.createTime)), day1));
             widgetBinding.widgetLastTriggerTime.setTextColor(day1 >= 60 && day2 >= 60 ? Color.RED : widgetBinding.widgetLastTriggerTime.getCurrentTextColor());
             if (widget.lastTriggerTime <= 0) {
@@ -479,7 +479,7 @@ public class EditDataActivity extends BaseActivity {
                 if (n == 0) {
                     widgetBinding.widgetModify.setText("该控件为最新触发控件");
                 } else {
-                    widgetBinding.widgetModify.setText("该控件最近1分钟内有被触发");
+                    widgetBinding.widgetModify.setText("该控件最近5分钟内有被触发");
                 }
             }
             Runnable widgetSaveRun = new Runnable() {

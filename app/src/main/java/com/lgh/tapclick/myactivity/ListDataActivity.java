@@ -420,12 +420,12 @@ public class ListDataActivity extends BaseActivity {
 
         public void refreshExistLongNoTrigger() {
             longNoTriggerCount = appDescribe.coordinateList.stream()
-                    .filter(e -> (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000) >= 60)
-                    .filter(e -> (System.currentTimeMillis() - e.lastTriggerTime) / (24 * 60 * 60 * 1000) >= 60)
+                    .filter(e -> (System.currentTimeMillis() - e.createTime) / (1000 * 60 * 60 * 24) >= 60)
+                    .filter(e -> (System.currentTimeMillis() - e.lastTriggerTime) / (1000 * 60 * 60 * 24) >= 60)
                     .count();
             longNoTriggerCount += appDescribe.widgetList.stream()
-                    .filter(e -> (System.currentTimeMillis() - e.createTime) / (24 * 60 * 60 * 1000) >= 60)
-                    .filter(e -> (System.currentTimeMillis() - e.lastTriggerTime) / (24 * 60 * 60 * 1000) >= 60)
+                    .filter(e -> (System.currentTimeMillis() - e.createTime) / (1000 * 60 * 60 * 24) >= 60)
+                    .filter(e -> (System.currentTimeMillis() - e.lastTriggerTime) / (1000 * 60 * 60 * 24) >= 60)
                     .count();
         }
     }
