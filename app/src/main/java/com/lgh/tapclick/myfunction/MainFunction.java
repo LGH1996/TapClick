@@ -809,14 +809,17 @@ public class MainFunction {
                                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             intent.putExtra("packageName", pkgName);
                                             service.startActivity(intent);
+                                            if (bParams.alpha != 0) {
+                                                addDataBinding.switchWid.callOnClick();
+                                            }
                                         }
                                     }
                                 } else {
-                                    preRowX = Math.round(event.getRawX());
-                                    preRowY = Math.round(event.getRawY());
-                                    preEventTime = event.getEventTime();
                                     openPageFlag = false;
                                 }
+                                preRowX = Math.round(event.getRawX());
+                                preRowY = Math.round(event.getRawY());
+                                preEventTime = event.getEventTime();
                                 break;
                         }
                     }
