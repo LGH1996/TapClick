@@ -409,10 +409,12 @@ public class EditDataActivity extends BaseActivity {
                                     if (appDescribe.coordinateList.isEmpty()) {
                                         editDataBinding.coordinateLayout.setVisibility(View.GONE);
                                         baseSettingBinding.coordinateSwitch.setChecked(false);
+                                        appDescribe.coordinateOnOff = false;
                                         if (appDescribe.widgetList.isEmpty()) {
                                             baseSettingBinding.widgetSwitch.setChecked(false);
+                                            appDescribe.widgetOnOff = false;
                                         }
-                                        baseSettingSaveRun.run();
+                                        dataDao.updateAppDescribe(appDescribe);
                                     }
                                 }
                             }).create().show();
@@ -629,10 +631,12 @@ public class EditDataActivity extends BaseActivity {
                                     if (appDescribe.widgetList.isEmpty()) {
                                         editDataBinding.widgetLayout.setVisibility(View.GONE);
                                         baseSettingBinding.widgetSwitch.setChecked(false);
+                                        appDescribe.widgetOnOff = false;
                                         if (appDescribe.coordinateList.isEmpty()) {
                                             baseSettingBinding.coordinateSwitch.setChecked(false);
+                                            appDescribe.coordinateOnOff = false;
                                         }
-                                        baseSettingSaveRun.run();
+                                        dataDao.updateAppDescribe(appDescribe);
                                     }
                                 }
                             }).create().show();

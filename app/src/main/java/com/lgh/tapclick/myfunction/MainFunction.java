@@ -766,12 +766,15 @@ public class MainFunction {
 
         addDataBinding.getRoot().setOnTouchListener(new View.OnTouchListener() {
             int startRowX = 0, startRowY = 0, startLpX = 0, startLpY = 0;
-            boolean openPageFlag;
-            MotionEvent preEvent;
+            int preRowX = 0, preRowY = 0;
+            long preEventTime = 0;
+            boolean openPageFlag = false;
+            Runnable moveRun = System::currentTimeMillis;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                v.post(new Runnable() {
+                handler.removeCallbacks(moveRun);
+                moveRun = new Runnable() {
                     @Override
                     public void run() {
                         switch (event.getAction()) {
@@ -795,10 +798,10 @@ public class MainFunction {
                                 aParams.y = Math.min(aParams.y, metrics.heightPixels - aParams.height);
                                 windowManager.updateViewLayout(addDataBinding.getRoot(), aParams);
                                 // 双击打开规则管理页面
-                                if (preEvent != null && Math.abs(event.getEventTime() - preEvent.getEventTime()) < 500) {
+                                if (Math.abs(event.getEventTime() - preEventTime) < 500) {
                                     if (!openPageFlag
-                                            && Math.abs(event.getRawX() - preEvent.getRawX()) < 100
-                                            && Math.abs(event.getRawY() - preEvent.getRawY()) < 100) {
+                                            && Math.abs(event.getRawX() - preRowX) < 100
+                                            && Math.abs(event.getRawY() - preRowY) < 100) {
                                         openPageFlag = true;
                                         String pkgName = addDataBinding.pkgName.getText().toString();
                                         if (StrUtil.isNotBlank(pkgName) && appDescribeMap.containsKey(pkgName)) {
@@ -809,13 +812,16 @@ public class MainFunction {
                                         }
                                     }
                                 } else {
-                                    preEvent = event;
+                                    preRowX = Math.round(event.getRawX());
+                                    preRowY = Math.round(event.getRawY());
+                                    preEventTime = event.getEventTime();
                                     openPageFlag = false;
                                 }
                                 break;
                         }
                     }
-                });
+                };
+                handler.post(moveRun);
                 return true;
             }
         });
@@ -823,10 +829,12 @@ public class MainFunction {
             final int width = cParams.width / 2;
             final int height = cParams.height / 2;
             int startRowX = 0, startRowY = 0, startLpX = 0, startLpY = 0;
+            Runnable moveRun = System::currentTimeMillis;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                viewClickPosition.post(new Runnable() {
+                handler.removeCallbacks(moveRun);
+                moveRun = new Runnable() {
                     @Override
                     public void run() {
                         switch (event.getAction()) {
@@ -857,7 +865,8 @@ public class MainFunction {
                                 break;
                         }
                     }
-                });
+                };
+                handler.post(moveRun);
                 return true;
             }
         });
@@ -1300,6 +1309,7 @@ public class MainFunction {
                             AppDescribe appDescribe = dataDao.getAppDescribeByPackage(packageName);
                             if (appDescribe == null) {
                                 appDescribe = new AppDescribe();
+                                appDescribe.appPackage = packageName;
                                 try {
                                     ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
                                     appDescribe.appName = packageManager.getApplicationLabel(applicationInfo).toString();
@@ -1307,7 +1317,6 @@ public class MainFunction {
                                     appDescribe.appName = "unknown";
                                     // e.printStackTrace();
                                 }
-                                appDescribe.appPackage = packageName;
                                 List<ResolveInfo> homeLaunchList = packageManager.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL);
                                 for (ResolveInfo e : homeLaunchList) {
                                     if (packageName.equals(e.activityInfo.packageName)) {
