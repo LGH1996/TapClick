@@ -771,13 +771,11 @@ public class MainFunction {
             int preRowX = 0, preRowY = 0;
             long preEventTime = 0;
             boolean openPageFlag = false;
-            Runnable moveRun = System::currentTimeMillis;
             final Pattern pattern = Pattern.compile("[A-Za-z0-9_.]+");
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                handler.removeCallbacks(moveRun);
-                moveRun = new Runnable() {
+                v.post(new Runnable() {
                     @Override
                     public void run() {
                         switch (event.getAction()) {
@@ -800,34 +798,35 @@ public class MainFunction {
                                 aParams.y = Math.max(aParams.y, 0);
                                 aParams.y = Math.min(aParams.y, metrics.heightPixels - aParams.height);
                                 windowManager.updateViewLayout(addDataBinding.getRoot(), aParams);
-                                // 双击打开规则管理页面
-                                if (Math.abs(event.getEventTime() - preEventTime) < 500) {
-                                    if (!openPageFlag
-                                            && Math.abs(event.getRawX() - preRowX) < 100
-                                            && Math.abs(event.getRawY() - preRowY) < 100) {
-                                        openPageFlag = true;
-                                        Matcher matcher = pattern.matcher(addDataBinding.pkgName.getText().toString());
-                                        if (matcher.find() && appDescribeMap.containsKey(matcher.group())) {
-                                            Intent intent = new Intent(service, EditDataActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            intent.putExtra("packageName", matcher.group());
-                                            service.startActivity(intent);
-                                            if (bParams.alpha != 0) {
-                                                addDataBinding.switchWid.callOnClick();
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    openPageFlag = false;
-                                }
-                                preRowX = Math.round(event.getRawX());
-                                preRowY = Math.round(event.getRawY());
-                                preEventTime = event.getEventTime();
                                 break;
                         }
                     }
-                };
-                handler.post(moveRun);
+                });
+                // 双击打开规则管理页面
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (Math.abs(event.getEventTime() - preEventTime) < 500) {
+                        if (!openPageFlag
+                                && Math.abs(event.getRawX() - preRowX) < 100
+                                && Math.abs(event.getRawY() - preRowY) < 100) {
+                            openPageFlag = true;
+                            Matcher matcher = pattern.matcher(addDataBinding.pkgName.getText().toString());
+                            if (matcher.find() && appDescribeMap.containsKey(matcher.group())) {
+                                Intent intent = new Intent(service, EditDataActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.putExtra("packageName", matcher.group());
+                                service.startActivity(intent);
+                                if (bParams.alpha != 0) {
+                                    addDataBinding.switchWid.callOnClick();
+                                }
+                            }
+                        }
+                    } else {
+                        openPageFlag = false;
+                    }
+                    preRowX = Math.round(event.getRawX());
+                    preRowY = Math.round(event.getRawY());
+                    preEventTime = event.getEventTime();
+                }
                 return true;
             }
         });
@@ -835,12 +834,10 @@ public class MainFunction {
             final int width = cParams.width / 2;
             final int height = cParams.height / 2;
             int startRowX = 0, startRowY = 0, startLpX = 0, startLpY = 0;
-            Runnable moveRun = System::currentTimeMillis;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                handler.removeCallbacks(moveRun);
-                moveRun = new Runnable() {
+                v.post(new Runnable() {
                     @Override
                     public void run() {
                         switch (event.getAction()) {
@@ -871,8 +868,7 @@ public class MainFunction {
                                 break;
                         }
                     }
-                };
-                handler.post(moveRun);
+                });
                 return true;
             }
         });
@@ -902,7 +898,7 @@ public class MainFunction {
                             if (nodeList.isEmpty()) {
                                 return;
                             }
-                            addDataBinding.switchWid.post(new Runnable() {
+                            v.post(new Runnable() {
                                 @Override
                                 public void run() {
                                     View.OnClickListener onClickListener = new View.OnClickListener() {
