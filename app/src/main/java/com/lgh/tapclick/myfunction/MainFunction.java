@@ -776,18 +776,22 @@ public class MainFunction {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 v.post(new Runnable() {
+                    final int action = event.getAction();
+                    final int rowX = Math.round(event.getRawX());
+                    final int rowY = Math.round(event.getRawY());
+
                     @Override
                     public void run() {
-                        switch (event.getAction()) {
+                        switch (action) {
                             case MotionEvent.ACTION_DOWN:
-                                startRowX = Math.round(event.getRawX());
-                                startRowY = Math.round(event.getRawY());
+                                startRowX = rowX;
+                                startRowY = rowY;
                                 startLpX = aParams.x;
                                 startLpY = aParams.y;
                                 break;
                             case MotionEvent.ACTION_MOVE:
-                                aParams.x = startLpX + (Math.round(event.getRawX()) - startRowX);
-                                aParams.y = startLpY + (Math.round(event.getRawY()) - startRowY);
+                                aParams.x = startLpX + (rowX - startRowX);
+                                aParams.y = startLpY + (rowY - startRowY);
                                 windowManager.updateViewLayout(addDataBinding.getRoot(), aParams);
                                 break;
                             case MotionEvent.ACTION_UP:
@@ -838,21 +842,25 @@ public class MainFunction {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 v.post(new Runnable() {
+                    final int action = event.getAction();
+                    final int rowX = Math.round(event.getRawX());
+                    final int rowY = Math.round(event.getRawY());
+
                     @Override
                     public void run() {
-                        switch (event.getAction()) {
+                        switch (action) {
                             case MotionEvent.ACTION_DOWN:
                                 addDataBinding.saveAim.setEnabled(appDescribeMap.containsKey(currentPackage));
                                 cParams.alpha = 0.9f;
                                 windowManager.updateViewLayout(viewClickPosition, cParams);
-                                startRowX = Math.round(event.getRawX());
-                                startRowY = Math.round(event.getRawY());
+                                startRowX = rowX;
+                                startRowY = rowY;
                                 startLpX = cParams.x;
                                 startLpY = cParams.y;
                                 break;
                             case MotionEvent.ACTION_MOVE:
-                                cParams.x = startLpX + (Math.round(event.getRawX()) - startRowX);
-                                cParams.y = startLpY + (Math.round(event.getRawY()) - startRowY);
+                                cParams.x = startLpX + (rowX - startRowX);
+                                cParams.y = startLpY + (rowY - startRowY);
                                 windowManager.updateViewLayout(viewClickPosition, cParams);
                                 coordinateSelect.appPackage = currentPackage;
                                 coordinateSelect.appActivity = currentActivity;
