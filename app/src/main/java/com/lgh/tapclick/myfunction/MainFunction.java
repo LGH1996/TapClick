@@ -173,17 +173,10 @@ public class MainFunction {
         keepAliveByNotification(MyUtils.getKeepAliveByNotification());
         keepAliveByFloatingWindow(MyUtils.getKeepAliveByFloatingWindow());
         showDbClickFloating(MyUtils.getDbClickEnable());
-        executorServiceSub.execute(new Runnable() {
-            @Override
-            public void run() {
-                getRunningData();
-            }
-        });
-        futureCoordinate = futureWidget = futureCoordinateClick = executorServiceSub.schedule(new Runnable() {
-            @Override
-            public void run() {
-            }
-        }, 0, TimeUnit.MILLISECONDS);
+        executorServiceSub.execute(this::getRunningData);
+        futureWidget = executorServiceSub.schedule(System::currentTimeMillis, 0, TimeUnit.MILLISECONDS);
+        futureCoordinate = executorServiceSub.schedule(System::currentTimeMillis, 0, TimeUnit.MILLISECONDS);
+        futureCoordinateClick = executorServiceSub.schedule(System::currentTimeMillis, 0, TimeUnit.MILLISECONDS);
 
         /*executorService.schedule(new Runnable() {
             @Override
