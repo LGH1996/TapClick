@@ -18,9 +18,11 @@ import com.lgh.tapclick.mybean.AppDescribe;
 import com.lgh.tapclick.myclass.DataDao;
 import com.lgh.tapclick.myclass.MyApplication;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import cn.hutool.core.collection.ListUtil;
 
 public class MyContentProvider extends ContentProvider {
     private final Handler handler;
@@ -101,26 +103,16 @@ public class MyContentProvider extends ContentProvider {
             return;
         }
         if (TextUtils.equals(updateScope, "updateAppDescribe")) {
-            AppDescribe appDescribe = appDescribeMap.get(packageName);
-            if (appDescribe != null) {
-                AppDescribe appDescribeNew = dataDao.getAppDescribeByPackage(packageName);
-                if (appDescribeNew != null) {
-                    appDescribeNew.widgetSetMap = appDescribe.widgetSetMap;
-                    appDescribeNew.coordinateMap = appDescribe.coordinateMap;
-                    appDescribeMap.put(packageName, appDescribeNew);
-                }
+            AppDescribe newAppDescribe = dataDao.getAppDescribeByPackage(packageName);
+            if (newAppDescribe != null) {
+                newAppDescribe.getOtherFieldsFromDatabase(dataDao);
+                appDescribeMap.put(newAppDescribe.appPackage, newAppDescribe);
             }
         }
-        if (TextUtils.equals(updateScope, "updateWidget")) {
-            AppDescribe appDescribe = appDescribeMap.get(packageName);
-            if (appDescribe != null) {
-                appDescribe.getWidgetFromDatabase(dataDao);
-            }
-        }
-        if (TextUtils.equals(updateScope, "updateCoordinate")) {
-            AppDescribe appDescribe = appDescribeMap.get(packageName);
-            if (appDescribe != null) {
-                appDescribe.getCoordinateFromDatabase(dataDao);
+        if (TextUtils.equals(updateScope, "removeAppDescribe")) {
+            List<String> packages = ListUtil.toList(packageName.split(","));
+            for (String pkg : packages) {
+                appDescribeMap.remove(pkg);
             }
         }
     }
@@ -149,15 +141,12 @@ public class MyContentProvider extends ContentProvider {
         if (!TextUtils.equals(updateScope, "allDate")) {
             return;
         }
-        Map<String, AppDescribe> newAppDescribeMap = new HashMap<>();
-        for (String e : appDescribeMap.keySet()) {
-            AppDescribe appDescribeTmp = dataDao.getAppDescribeByPackage(e);
-            if (appDescribeTmp != null) {
-                appDescribeTmp.getOtherFieldsFromDatabase(dataDao);
-                newAppDescribeMap.put(e, appDescribeTmp);
-            }
+        appDescribeMap.clear();
+        List<AppDescribe> appDescribeList = dataDao.getAllAppDescribes();
+        for (AppDescribe describe : appDescribeList) {
+            describe.getOtherFieldsFromDatabase(dataDao);
+            appDescribeMap.put(describe.appPackage, describe);
         }
-        appDescribeMap.putAll(newAppDescribeMap);
     }
 
     private void showDbClickSetting(MainFunction mainFunction, ContentValues values) {

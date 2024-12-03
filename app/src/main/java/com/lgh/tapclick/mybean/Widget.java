@@ -16,10 +16,10 @@ public class Widget {
     public static final int CONDITION_AND = 1;
 
     @PrimaryKey(autoGenerate = true)
-    public Integer id;
-    public long createTime;
+    public Long id;
     public String appPackage;
     public String appActivity;
+    public long createTime;
     public int clickDelay;
     public int debounceDelay;
     public boolean noRepeat;
@@ -66,9 +66,9 @@ public class Widget {
     }
 
     public Widget(Widget widget) {
-        this.createTime = widget.createTime;
         this.appPackage = widget.appPackage;
         this.appActivity = widget.appActivity;
+        this.createTime = widget.createTime;
         this.clickNumber = widget.clickNumber;
         this.clickInterval = widget.clickInterval;
         this.clickDelay = widget.clickDelay;
@@ -111,9 +111,9 @@ public class Widget {
     public String toString() {
         return "Widget{" +
                 "id=" + id +
-                ", createTime=" + createTime +
                 ", appPackage='" + appPackage + '\'' +
                 ", appActivity='" + appActivity + '\'' +
+                ", createTime=" + createTime +
                 ", clickDelay=" + clickDelay +
                 ", debounceDelay=" + debounceDelay +
                 ", noRepeat=" + noRepeat +

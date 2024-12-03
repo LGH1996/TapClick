@@ -158,7 +158,7 @@ public class EditDataActivity extends BaseActivity {
             editDataBinding.baseSettingLayout.removeView(baseSettingBinding.getRoot());
         }
         baseSettingBinding = ViewBaseSettingBinding.inflate(inflater);
-        baseSettingBinding.appName.setText(appDescribe.appName);
+        baseSettingBinding.appName.setText(StrUtil.blankToDefault(appDescribe.appName, "读取失败，无权限或未安装"));
         baseSettingBinding.appPackage.setText(appDescribe.appPackage);
 
         baseSettingBinding.coordinateSwitch.setChecked(appDescribe.coordinateOnOff);
@@ -650,8 +650,6 @@ public class EditDataActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         MyUtils.requestUpdateAppDescribe(appDescribe.appPackage);
-        MyUtils.requestUpdateCoordinate(appDescribe.appPackage);
-        MyUtils.requestUpdateWidget(appDescribe.appPackage);
     }
 
     @Override

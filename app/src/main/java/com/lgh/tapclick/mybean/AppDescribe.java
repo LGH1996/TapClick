@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity(indices = @Index(value = "appPackage", unique = true))
 public class AppDescribe {
     @PrimaryKey(autoGenerate = true)
-    public Integer id;
+    public Long id;
     public String appName;
     public String appPackage;
     public int coordinateRetrieveTime;

@@ -140,9 +140,9 @@ public class RegulationImportActivity extends BaseActivity {
                                     widgets.addAll(e.widgetList);
                                 }
                                 DataDao dataDao = MyApplication.dataDao;
-                                dataDao.insertAppDescribeForce(appDescribes);
-                                dataDao.insertCoordinateForce(coordinates);
-                                dataDao.insertWidgetForce(widgets);
+                                dataDao.insertAppDescribes(appDescribes);
+                                dataDao.insertCoordinates(coordinates);
+                                dataDao.insertWidgets(widgets);
                                 MyUtils.requestUpdateAllDate();
                                 Toast.makeText(RegulationImportActivity.this, "导入成功", Toast.LENGTH_SHORT).show();
                             }

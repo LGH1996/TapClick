@@ -32,45 +32,51 @@ public interface DataDao {
     @Query("SELECT * FROM MyAppConfig WHERE id = 0")
     MyAppConfig getMyAppConfig();
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertAppDescribe(AppDescribe... appDescribes);
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertAppDescribe(List<AppDescribe> appDescribes);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Long insertAppDescribe(AppDescribe appDescribe);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertCoordinate(Coordinate... coordinates);
+    Long insertCoordinate(Coordinate coordinate);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertWidget(Widget... widgets);
+    Long insertWidget(Widget widget);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertMyAppConfig(MyAppConfig myAppConfig);
+    Long insertMyAppConfig(MyAppConfig myAppConfig);
 
     @Delete
-    void deleteCoordinate(Coordinate... coordinates);
+    void deleteCoordinate(Coordinate coordinate);
 
     @Delete
-    void deleteWidget(Widget... widgets);
+    void deleteWidget(Widget widget);
+
+    @Delete
+    void deleteAppDescribes(List<AppDescribe> appDescribes);
+
+    @Delete
+    void deleteCoordinates(List<Coordinate> coordinates);
+
+    @Delete
+    void deleteWidgets(List<Widget> widgets);
 
     @Update
-    void updateCoordinate(Coordinate... coordinates);
+    void updateAppDescribe(AppDescribe appDescribe);
 
     @Update
-    void updateWidget(Widget... widgets);
+    void updateCoordinate(Coordinate coordinate);
 
     @Update
-    void updateAppDescribe(AppDescribe... appDescribe);
+    void updateWidget(Widget widget);
 
     @Update
     void updateMyAppConfig(MyAppConfig myAppConfig);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAppDescribeForce(List<AppDescribe> appDescribes);
+    void insertAppDescribes(List<AppDescribe> appDescribes);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertCoordinateForce(List<Coordinate> coordinates);
+    void insertCoordinates(List<Coordinate> coordinates);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertWidgetForce(List<Widget> widgets);
+    void insertWidgets(List<Widget> widgets);
 }

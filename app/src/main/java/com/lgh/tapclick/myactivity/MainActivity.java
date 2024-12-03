@@ -363,34 +363,31 @@ public class MainActivity extends BaseActivity {
             if (TextUtils.equals(matcher.group(1), WidgetShare.class.getSimpleName())) {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 WidgetShare widgetShare = gson.fromJson(matcher.group(2), WidgetShare.class);
-
-                StringBuilder stringBuilder = new StringBuilder();
+                PackageInfo packageInfo = null;
+                String appName = "";
                 try {
-                    PackageInfo packageInfo = getPackageManager().getPackageInfo(widgetShare.widget.appPackage, PackageManager.GET_META_DATA);
-                    stringBuilder.append("应用包名：").append(packageInfo.packageName).append("（").append(getPackageManager().getApplicationLabel(packageInfo.applicationInfo)).append("）").append("\n\n");
-                } catch (PackageManager.NameNotFoundException ex) {
-                    stringBuilder.append("应用包名：").append(widgetShare.widget.appPackage).append("（未安装）").append("\n\n");
-                    ex.printStackTrace();
+                    packageInfo = getPackageManager().getPackageInfo(widgetShare.widget.appPackage, PackageManager.GET_META_DATA);
+                    appName = getPackageManager().getApplicationLabel(packageInfo.applicationInfo).toString();
+                } catch (PackageManager.NameNotFoundException e) {
+                    // e.printStackTrace();
                 }
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("应用包名：").append(widgetShare.widget.appPackage).append(!appName.isEmpty() ? String.format("（%s）", appName) : "（无权限或未安装）").append("\n\n");
                 stringBuilder.append("我的系统指纹：").append(Build.FINGERPRINT).append("\n");
                 stringBuilder.append("他的系统指纹：").append(widgetShare.basicContent.fingerPrint).append("\n\n");
                 DisplayMetrics displayMetrics = new DisplayMetrics();
                 getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
                 stringBuilder.append("我的手机屏幕：").append(displayMetrics).append("\n");
                 stringBuilder.append("他的手机屏幕：").append(widgetShare.basicContent.displayMetrics).append("\n\n");
-                try {
-                    PackageInfo packageInfo = getPackageManager().getPackageInfo(widgetShare.widget.appPackage, PackageManager.GET_META_DATA);
-                    stringBuilder.append("我的应用版本名：").append(packageInfo.versionName).append("\n");
-                    stringBuilder.append("他的应用版本名：").append(widgetShare.basicContent.versionName).append("\n\n");
-                    stringBuilder.append("我的应用版本号：").append(packageInfo.versionCode).append("\n");
-                    stringBuilder.append("他的应用版本号：").append(widgetShare.basicContent.versionCode).append("\n\n");
-                } catch (PackageManager.NameNotFoundException ex) {
-                    ex.printStackTrace();
-                }
+                stringBuilder.append("我的应用版本名：").append(packageInfo != null ? packageInfo.versionName : "无权限或未安装").append("\n");
+                stringBuilder.append("他的应用版本名：").append(widgetShare.basicContent.versionName).append("\n\n");
+                stringBuilder.append("我的应用版本号：").append(packageInfo != null ? packageInfo.versionCode : "无权限或未安装").append("\n");
+                stringBuilder.append("他的应用版本号：").append(widgetShare.basicContent.versionCode).append("\n\n");
                 stringBuilder.append("控件内容：").append(gson.toJson(widgetShare.widget));
 
                 ViewNewRuleBinding newRuleBinding = ViewNewRuleBinding.inflate(getLayoutInflater());
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setCancelable(false).setView(newRuleBinding.getRoot()).create();
+                newRuleBinding.sure.setTag(appName);
                 newRuleBinding.content.setText(stringBuilder.toString());
                 newRuleBinding.sure.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -401,15 +398,19 @@ public class MainActivity extends BaseActivity {
                         widgetShare.widget.triggerReason = "";
                         dataDao.insertWidget(widgetShare.widget);
                         AppDescribe appDescribe = dataDao.getAppDescribeByPackage(widgetShare.widget.appPackage);
-                        if (appDescribe != null) {
-                            appDescribe.widgetOnOff = true;
-                            dataDao.updateAppDescribe(appDescribe);
-                            Intent intent = new Intent(context, EditDataActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.putExtra("packageName", appDescribe.appPackage);
-                            startActivity(intent);
+                        if (appDescribe == null) {
+                            appDescribe = new AppDescribe();
+                            appDescribe.appPackage = widgetShare.widget.appPackage;
+                            appDescribe.appName = v.getTag().toString();
+                            appDescribe.id = dataDao.insertAppDescribe(appDescribe);
                         }
-                        MyUtils.requestUpdateWidget(widgetShare.widget.appPackage);
+                        appDescribe.widgetOnOff = true;
+                        dataDao.updateAppDescribe(appDescribe);
+                        MyUtils.requestUpdateAppDescribe(appDescribe.appPackage);
+                        Intent intent = new Intent(context, EditDataActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("packageName", appDescribe.appPackage);
+                        startActivity(intent);
                         Toast.makeText(context, "导入成功", Toast.LENGTH_SHORT).show();
                         alertDialog.dismiss();
                     }
@@ -432,34 +433,31 @@ public class MainActivity extends BaseActivity {
             } else if (TextUtils.equals(matcher.group(1), CoordinateShare.class.getSimpleName())) {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 CoordinateShare coordinateShare = gson.fromJson(matcher.group(2), CoordinateShare.class);
-
-                StringBuilder stringBuilder = new StringBuilder();
+                PackageInfo packageInfo = null;
+                String appName = "";
                 try {
-                    PackageInfo packageInfo = getPackageManager().getPackageInfo(coordinateShare.coordinate.appPackage, PackageManager.GET_META_DATA);
-                    stringBuilder.append("应用包名：").append(packageInfo.packageName).append("（").append(getPackageManager().getApplicationLabel(packageInfo.applicationInfo)).append("）").append("\n\n");
-                } catch (PackageManager.NameNotFoundException ex) {
-                    ex.printStackTrace();
-                    stringBuilder.append("应用包名：").append(coordinateShare.coordinate.appPackage).append("（未安装）").append("\n\n");
+                    packageInfo = getPackageManager().getPackageInfo(coordinateShare.coordinate.appPackage, PackageManager.GET_META_DATA);
+                    appName = getPackageManager().getApplicationLabel(packageInfo.applicationInfo).toString();
+                } catch (PackageManager.NameNotFoundException e) {
+                    // e.printStackTrace();
                 }
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("应用包名：").append(coordinateShare.coordinate.appPackage).append(!appName.isEmpty() ? String.format("（%s）", appName) : "（无权限或未安装）").append("\n\n");
                 stringBuilder.append("我的系统指纹：").append(Build.FINGERPRINT).append("\n");
                 stringBuilder.append("他的系统指纹：").append(coordinateShare.basicContent.fingerPrint).append("\n\n");
                 DisplayMetrics displayMetrics = new DisplayMetrics();
                 getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
                 stringBuilder.append("我的手机屏幕：").append(displayMetrics).append("\n");
                 stringBuilder.append("他的手机屏幕：").append(coordinateShare.basicContent.displayMetrics).append("\n\n");
-                try {
-                    PackageInfo packageInfo = getPackageManager().getPackageInfo(coordinateShare.coordinate.appPackage, PackageManager.GET_META_DATA);
-                    stringBuilder.append("我的应用版本名：").append(packageInfo.versionName).append("\n");
-                    stringBuilder.append("他的应用版本名：").append(coordinateShare.basicContent.versionName).append("\n\n");
-                    stringBuilder.append("我的应用版本号：").append(packageInfo.versionCode).append("\n");
-                    stringBuilder.append("他的应用版本号：").append(coordinateShare.basicContent.versionCode).append("\n\n");
-                } catch (PackageManager.NameNotFoundException ex) {
-                    ex.printStackTrace();
-                }
+                stringBuilder.append("我的应用版本名：").append(packageInfo != null ? packageInfo.versionName : "无权限或未安装").append("\n");
+                stringBuilder.append("他的应用版本名：").append(coordinateShare.basicContent.versionName).append("\n\n");
+                stringBuilder.append("我的应用版本号：").append(packageInfo != null ? packageInfo.versionCode : "无权限或未安装").append("\n");
+                stringBuilder.append("他的应用版本号：").append(coordinateShare.basicContent.versionCode).append("\n\n");
                 stringBuilder.append("坐标内容：").append(gson.toJson(coordinateShare.coordinate));
 
                 ViewNewRuleBinding newRuleBinding = ViewNewRuleBinding.inflate(getLayoutInflater());
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setCancelable(false).setView(newRuleBinding.getRoot()).create();
+                newRuleBinding.sure.setTag(appName);
                 newRuleBinding.content.setText(stringBuilder.toString());
                 newRuleBinding.sure.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -469,15 +467,19 @@ public class MainActivity extends BaseActivity {
                         coordinateShare.coordinate.triggerCount = 0;
                         dataDao.insertCoordinate(coordinateShare.coordinate);
                         AppDescribe appDescribe = dataDao.getAppDescribeByPackage(coordinateShare.coordinate.appPackage);
-                        if (appDescribe != null) {
-                            appDescribe.coordinateOnOff = true;
-                            dataDao.updateAppDescribe(appDescribe);
-                            Intent intent = new Intent(context, EditDataActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.putExtra("packageName", appDescribe.appPackage);
-                            startActivity(intent);
+                        if (appDescribe == null) {
+                            appDescribe = new AppDescribe();
+                            appDescribe.appPackage = coordinateShare.coordinate.appPackage;
+                            appDescribe.appName = v.getTag().toString();
+                            appDescribe.id = dataDao.insertAppDescribe(appDescribe);
                         }
-                        MyUtils.requestUpdateWidget(coordinateShare.coordinate.appPackage);
+                        appDescribe.coordinateOnOff = true;
+                        dataDao.updateAppDescribe(appDescribe);
+                        MyUtils.requestUpdateAppDescribe(appDescribe.appPackage);
+                        Intent intent = new Intent(context, EditDataActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("packageName", appDescribe.appPackage);
+                        startActivity(intent);
                         Toast.makeText(context, "导入成功", Toast.LENGTH_SHORT).show();
                         alertDialog.dismiss();
                     }

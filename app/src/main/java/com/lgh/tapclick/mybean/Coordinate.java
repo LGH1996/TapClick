@@ -9,10 +9,10 @@ import java.util.Objects;
 @Entity(indices = @Index(value = {"appPackage", "appActivity"}, unique = true))
 public class Coordinate {
     @PrimaryKey(autoGenerate = true)
-    public Integer id;
-    public long createTime;
+    public Long id;
     public String appPackage;
     public String appActivity;
+    public long createTime;
     public int xPosition;
     public int yPosition;
     public int clickDelay;
@@ -39,9 +39,9 @@ public class Coordinate {
     }
 
     public Coordinate(Coordinate coordinate) {
-        this.createTime = coordinate.createTime;
         this.appPackage = coordinate.appPackage;
         this.appActivity = coordinate.appActivity;
+        this.createTime = coordinate.createTime;
         this.xPosition = coordinate.xPosition;
         this.yPosition = coordinate.yPosition;
         this.clickDelay = coordinate.clickDelay;
@@ -72,9 +72,9 @@ public class Coordinate {
     public String toString() {
         return "Coordinate{" +
                 "id=" + id +
-                ", createTime=" + createTime +
                 ", appPackage='" + appPackage + '\'' +
                 ", appActivity='" + appActivity + '\'' +
+                ", createTime=" + createTime +
                 ", xPosition=" + xPosition +
                 ", yPosition=" + yPosition +
                 ", clickDelay=" + clickDelay +

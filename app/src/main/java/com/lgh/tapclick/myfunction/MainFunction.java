@@ -14,9 +14,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Path;
@@ -92,7 +91,7 @@ import cn.hutool.core.util.StrUtil;
  */
 
 public class MainFunction {
-    private final String isScreenOffPre = "isScreenOffPre";
+    private final String isScreenOffPre = "息屏值";
     private final AccessibilityService service;
     private final WindowManager windowManager;
     private final PackageManager packageManager;
@@ -127,7 +126,6 @@ public class MainFunction {
     private volatile AccessibilityServiceInfo serviceInfo;
     private volatile Object preTrigger;
     private MyBroadcastReceiver myBroadcastReceiver;
-    private MyPackageReceiver myPackageReceiver;
     private WindowManager.LayoutParams aParams, bParams, cParams;
     private ViewAddDataBinding addDataBinding;
     private ViewWidgetSelectBinding widgetSelectBinding;
@@ -148,13 +146,14 @@ public class MainFunction {
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT);
         gson = new GsonBuilder().setPrettyPrinting().create();
         gsonNoPretty = new GsonBuilder().create();
+        appDescribe = new AppDescribe();
         alreadyClickSet = new HashSet<>();
         appDescribeMap = new HashMap<>();
         debounceSet = new HashSet<>();
         logList = new LinkedList<>();
         dataDao = MyApplication.dataDao;
-        currentPackage = "Initialize CurrentPackage";
-        currentActivity = "Initialize CurrentActivity";
+        currentPackage = "初始值";
+        currentActivity = "初始值";
     }
 
     protected void onServiceConnected() {
@@ -164,19 +163,13 @@ public class MainFunction {
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         myBroadcastReceiver = new MyBroadcastReceiver();
         service.registerReceiver(myBroadcastReceiver, intentFilter);
-        IntentFilter filterPackage = new IntentFilter();
-        filterPackage.addAction(Intent.ACTION_PACKAGE_ADDED);
-        filterPackage.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
-        filterPackage.addDataScheme("package");
-        myPackageReceiver = new MyPackageReceiver();
-        service.registerReceiver(myPackageReceiver, filterPackage);
-        keepAliveByNotification(MyUtils.getKeepAliveByNotification());
-        keepAliveByFloatingWindow(MyUtils.getKeepAliveByFloatingWindow());
-        showDbClickFloating(MyUtils.getDbClickEnable());
         executorServiceSub.execute(this::getRunningData);
         futureWidget = executorServiceSub.schedule(System::currentTimeMillis, 0, TimeUnit.MILLISECONDS);
         futureCoordinate = executorServiceSub.schedule(System::currentTimeMillis, 0, TimeUnit.MILLISECONDS);
         futureCoordinateClick = executorServiceSub.schedule(System::currentTimeMillis, 0, TimeUnit.MILLISECONDS);
+        keepAliveByNotification(MyUtils.getKeepAliveByNotification());
+        keepAliveByFloatingWindow(MyUtils.getKeepAliveByFloatingWindow());
+        showDbClickFloating(MyUtils.getDbClickEnable());
 
         /*executorService.schedule(new Runnable() {
             @Override
@@ -226,9 +219,9 @@ public class MainFunction {
                     addLog("打开应用：" + packageName);
                     currentPackage = packageName;
                     appDescribe = appDescribeMap.get(packageName);
-                }
-                if (appDescribe == null) {
-                    break;
+                    if (appDescribe == null) {
+                        appDescribe = new AppDescribe();
+                    }
                 }
                 if (!event.isFullScreen()
                         && !appDescribe.coordinateOnOff
@@ -395,7 +388,6 @@ public class MainFunction {
 
     public boolean onUnbind(Intent intent) {
         service.unregisterReceiver(myBroadcastReceiver);
-        service.unregisterReceiver(myPackageReceiver);
         return true;
     }
 
@@ -623,58 +615,10 @@ public class MainFunction {
      * 获取运行时需要的数据
      */
     private void getRunningData() {
-        Set<String> pkgNormalSet = new HashSet<>();
-        Set<String> pkgOffSet = new HashSet<>();
-        Set<String> pkgOnSet = new HashSet<>();
-        //所有已安装的应用
-        Set<String> pkgInstalledSet = packageManager
-                .getInstalledPackages(PackageManager.GET_META_DATA)
-                .stream()
-                .map(e -> e.packageName)
-                .collect(Collectors.toSet());
-        pkgNormalSet.addAll(pkgInstalledSet);
-        //输入法、桌面、本应用需要默认关闭
-        Set<String> pkgInputMethodSet = inputMethodManager
-                .getInputMethodList()
-                .stream()
-                .map(InputMethodInfo::getPackageName)
-                .collect(Collectors.toSet());
-        Set<String> pkgHasHomeSet = packageManager
-                .queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL)
-                .stream()
-                .map(e -> e.activityInfo.packageName)
-                .collect(Collectors.toSet());
-        pkgOffSet.addAll(pkgInputMethodSet);
-        pkgOffSet.addAll(pkgHasHomeSet);
-        pkgOffSet.add(service.getPackageName());
-        //MIUI系统自带的广告服务app，需要开启
-        pkgOnSet.add("com.miui.systemAdSolution");
-
-        List<AppDescribe> appDescribeList = new ArrayList<>();
-        for (String e : pkgNormalSet) {
-            try {
-                ApplicationInfo info = packageManager.getApplicationInfo(e, PackageManager.GET_META_DATA);
-                AppDescribe appDescribe = new AppDescribe();
-                appDescribe.appName = packageManager.getApplicationLabel(info).toString();
-                appDescribe.appPackage = info.packageName;
-                if ((info.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM || pkgOffSet.contains(info.packageName)) {
-                    appDescribe.coordinateOnOff = false;
-                    appDescribe.widgetOnOff = false;
-                }
-                if (pkgOnSet.contains(info.packageName)) {
-                    appDescribe.coordinateOnOff = false;
-                    appDescribe.widgetOnOff = false;
-                }
-                appDescribeList.add(appDescribe);
-            } catch (PackageManager.NameNotFoundException exception) {
-                // exception.printStackTrace();
-            }
-        }
-        dataDao.insertAppDescribe(appDescribeList);
-        for (String e : pkgNormalSet) {
-            AppDescribe appDescribeTmp = dataDao.getAppDescribeByPackage(e);
-            appDescribeTmp.getOtherFieldsFromDatabase(dataDao);
-            appDescribeMap.put(e, appDescribeTmp);
+        List<AppDescribe> appDescribeList = dataDao.getAllAppDescribes();
+        for (AppDescribe describe : appDescribeList) {
+            describe.getOtherFieldsFromDatabase(dataDao);
+            appDescribeMap.put(describe.appPackage, describe);
         }
     }
 
@@ -838,12 +782,12 @@ public class MainFunction {
                     final int action = event.getAction();
                     final int rowX = Math.round(event.getRawX());
                     final int rowY = Math.round(event.getRawY());
+                    final Pattern pattern = Pattern.compile("[A-Za-z0-9_.]+");
 
                     @Override
                     public void run() {
                         switch (action) {
                             case MotionEvent.ACTION_DOWN:
-                                addDataBinding.saveAim.setEnabled(appDescribeMap.containsKey(currentPackage));
                                 cParams.alpha = 0.9f;
                                 windowManager.updateViewLayout(viewClickPosition, cParams);
                                 startRowX = rowX;
@@ -861,6 +805,7 @@ public class MainFunction {
                                 coordinateSelect.yPosition = cParams.y + height;
                                 addDataBinding.pkgName.setText(coordinateSelect.appPackage);
                                 addDataBinding.actName.setText(coordinateSelect.appActivity);
+                                addDataBinding.saveAim.setEnabled(pattern.matcher(coordinateSelect.appPackage).matches());
                                 addDataBinding.xy.setText("X轴：" + String.format("%-4d", coordinateSelect.xPosition) + "    " + "Y轴：" + String.format("%-4d", coordinateSelect.yPosition));
                                 break;
                             case MotionEvent.ACTION_UP:
@@ -909,6 +854,8 @@ public class MainFunction {
                                         }
                                     };
                                     View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
+                                        final Pattern pattern = Pattern.compile("[A-Za-z0-9_.]+");
+
                                         @Override
                                         public void onFocusChange(View v, boolean hasFocus) {
                                             if (hasFocus) {
@@ -919,9 +866,9 @@ public class MainFunction {
                                                 widgetSelect.widgetViewId = StrUtil.toStringOrEmpty(nodeInfo.getViewIdResourceName());
                                                 widgetSelect.widgetDescribe = StrUtil.toStringOrEmpty(nodeInfo.getContentDescription());
                                                 widgetSelect.widgetText = StrUtil.toStringOrEmpty(nodeInfo.getText());
-                                                addDataBinding.saveWid.setEnabled(appDescribeMap.containsKey(currentPackage));
                                                 addDataBinding.pkgName.setText(widgetSelect.appPackage);
                                                 addDataBinding.actName.setText(widgetSelect.appActivity);
+                                                addDataBinding.saveWid.setEnabled(pattern.matcher(widgetSelect.appPackage).matches());
                                                 String clickable = "clickable:" + widgetSelect.widgetClickable;
                                                 String nodeId = "nodeId:" + widgetSelect.widgetNodeId;
                                                 String viewId = widgetSelect.widgetViewId.isEmpty() ? "" : widgetSelect.widgetViewId.contains(":id/") ? "viewId:" + widgetSelect.widgetViewId.substring(widgetSelect.widgetViewId.indexOf(":id/") + 4) : "";
@@ -1008,25 +955,37 @@ public class MainFunction {
             @Override
             public void onClick(View v) {
                 Runnable runnable = new Runnable() {
+                    AppDescribe appDescribeTemp;
+
                     @Override
                     public void run() {
-                        AppDescribe temAppDescribe = appDescribeMap.get(widgetSelect.appPackage);
-                        if (temAppDescribe != null) {
-                            Widget temWidget = new Widget(widgetSelect);
-                            temWidget.createTime = System.currentTimeMillis();
-                            dataDao.insertWidget(temWidget);
-                            addDataBinding.saveWid.setEnabled(false);
-                            addDataBinding.pkgName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
-                            temAppDescribe.getWidgetFromDatabase(dataDao);
-                            if (!temAppDescribe.widgetOnOff) {
-                                showWarningDialog(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        temAppDescribe.widgetOnOff = true;
-                                        dataDao.updateAppDescribe(temAppDescribe);
-                                    }
-                                }, service.getString(R.string.widgetOffWarning));
+                        appDescribeTemp = appDescribeMap.get(widgetSelect.appPackage);
+                        if (appDescribeTemp == null) {
+                            appDescribeTemp = new AppDescribe();
+                            appDescribeTemp.appPackage = widgetSelect.appPackage;
+                            try {
+                                PackageInfo packageInfo = packageManager.getPackageInfo(widgetSelect.appPackage, PackageManager.GET_META_DATA);
+                                appDescribeTemp.appName = packageManager.getApplicationLabel(packageInfo.applicationInfo).toString();
+                            } catch (PackageManager.NameNotFoundException e) {
+                                // e.printStackTrace();
                             }
+                            appDescribeTemp.id = dataDao.insertAppDescribe(appDescribeTemp);
+                            appDescribeMap.put(appDescribeTemp.appPackage, appDescribeTemp);
+                        }
+                        Widget temWidget = new Widget(widgetSelect);
+                        temWidget.createTime = System.currentTimeMillis();
+                        dataDao.insertWidget(temWidget);
+                        addDataBinding.saveWid.setEnabled(false);
+                        addDataBinding.pkgName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
+                        appDescribeTemp.getWidgetFromDatabase(dataDao);
+                        if (!appDescribeTemp.widgetOnOff) {
+                            showWarningDialog(new Runnable() {
+                                @Override
+                                public void run() {
+                                    appDescribeTemp.widgetOnOff = true;
+                                    dataDao.updateAppDescribe(appDescribeTemp);
+                                }
+                            }, service.getString(R.string.widgetOffWarning));
                         }
                     }
                 };
@@ -1041,25 +1000,37 @@ public class MainFunction {
             @Override
             public void onClick(View v) {
                 Runnable runnable = new Runnable() {
+                    AppDescribe appDescribeTemp;
+
                     @Override
                     public void run() {
-                        AppDescribe temAppDescribe = appDescribeMap.get(coordinateSelect.appPackage);
-                        if (temAppDescribe != null) {
-                            Coordinate temCoordinate = new Coordinate(coordinateSelect);
-                            temCoordinate.createTime = System.currentTimeMillis();
-                            dataDao.insertCoordinate(temCoordinate);
-                            addDataBinding.saveAim.setEnabled(false);
-                            addDataBinding.pkgName.setText(coordinateSelect.appPackage + " (以下坐标数据已保存)");
-                            temAppDescribe.getCoordinateFromDatabase(dataDao);
-                            if (!temAppDescribe.coordinateOnOff) {
-                                showWarningDialog(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        temAppDescribe.coordinateOnOff = true;
-                                        dataDao.updateAppDescribe(temAppDescribe);
-                                    }
-                                }, service.getString(R.string.coordinateOffWarning));
+                        appDescribeTemp = appDescribeMap.get(coordinateSelect.appPackage);
+                        if (appDescribeTemp == null) {
+                            appDescribeTemp = new AppDescribe();
+                            appDescribeTemp.appPackage = widgetSelect.appPackage;
+                            try {
+                                PackageInfo packageInfo = packageManager.getPackageInfo(widgetSelect.appPackage, PackageManager.GET_META_DATA);
+                                appDescribeTemp.appName = packageManager.getApplicationLabel(packageInfo.applicationInfo).toString();
+                            } catch (PackageManager.NameNotFoundException e) {
+                                // e.printStackTrace();
                             }
+                            appDescribeTemp.id = dataDao.insertAppDescribe(appDescribeTemp);
+                            appDescribeMap.put(appDescribeTemp.appPackage, appDescribeTemp);
+                        }
+                        Coordinate temCoordinate = new Coordinate(coordinateSelect);
+                        temCoordinate.createTime = System.currentTimeMillis();
+                        dataDao.insertCoordinate(temCoordinate);
+                        addDataBinding.saveAim.setEnabled(false);
+                        addDataBinding.pkgName.setText(coordinateSelect.appPackage + " (以下坐标数据已保存)");
+                        appDescribeTemp.getCoordinateFromDatabase(dataDao);
+                        if (!appDescribeTemp.coordinateOnOff) {
+                            showWarningDialog(new Runnable() {
+                                @Override
+                                public void run() {
+                                    appDescribeTemp.coordinateOnOff = true;
+                                    dataDao.updateAppDescribe(appDescribeTemp);
+                                }
+                            }, service.getString(R.string.coordinateOffWarning));
                         }
                     }
                 };
@@ -1294,62 +1265,6 @@ public class MainFunction {
             if (TextUtils.equals(intent.getAction(), Intent.ACTION_SCREEN_OFF)) {
                 currentPackageSub = isScreenOffPre;
                 currentActivity = isScreenOffPre;
-            }
-        }
-    }
-
-    public class MyPackageReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (TextUtils.equals(intent.getAction(), Intent.ACTION_PACKAGE_ADDED)) {
-                String dataString = intent.getDataString();
-                String packageName = dataString != null ? dataString.substring(8) : null;
-                if (!TextUtils.isEmpty(packageName)) {
-                    executorServiceSub.schedule(new Runnable() {
-                        @Override
-                        public void run() {
-                            AppDescribe appDescribe = dataDao.getAppDescribeByPackage(packageName);
-                            if (appDescribe == null) {
-                                appDescribe = new AppDescribe();
-                                appDescribe.appPackage = packageName;
-                                try {
-                                    ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-                                    appDescribe.appName = packageManager.getApplicationLabel(applicationInfo).toString();
-                                } catch (PackageManager.NameNotFoundException e) {
-                                    appDescribe.appName = "unknown";
-                                    // e.printStackTrace();
-                                }
-                                List<ResolveInfo> homeLaunchList = packageManager.queryIntentActivities(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_ALL);
-                                for (ResolveInfo e : homeLaunchList) {
-                                    if (packageName.equals(e.activityInfo.packageName)) {
-                                        appDescribe.widgetOnOff = false;
-                                        appDescribe.coordinateOnOff = false;
-                                        break;
-                                    }
-                                }
-                                List<InputMethodInfo> inputMethodInfoList = inputMethodManager.getInputMethodList();
-                                for (InputMethodInfo e : inputMethodInfoList) {
-                                    if (packageName.equals(e.getPackageName())) {
-                                        appDescribe.widgetOnOff = false;
-                                        appDescribe.coordinateOnOff = false;
-                                        break;
-                                    }
-                                }
-                                dataDao.insertAppDescribe(appDescribe);
-                            }
-                            appDescribe.getOtherFieldsFromDatabase(dataDao);
-                            appDescribeMap.put(appDescribe.appPackage, appDescribe);
-                        }
-                    }, 2000, TimeUnit.MILLISECONDS);
-                }
-            }
-            if (TextUtils.equals(intent.getAction(), Intent.ACTION_PACKAGE_FULLY_REMOVED)) {
-                String dataString = intent.getDataString();
-                String packageName = dataString != null ? dataString.substring(8) : null;
-                if (!TextUtils.isEmpty(packageName)) {
-                    appDescribeMap.remove(packageName);
-                }
             }
         }
     }

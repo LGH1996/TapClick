@@ -1,0 +1,408 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 11,
+    "identityHash": "c041dd9966bae09c617dd979feaabe94",
+    "entities": [
+      {
+        "tableName": "AppDescribe",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `appName` TEXT, `appPackage` TEXT, `coordinateRetrieveTime` INTEGER NOT NULL, `coordinateRetrieveAllTime` INTEGER NOT NULL, `widgetRetrieveTime` INTEGER NOT NULL, `widgetRetrieveAllTime` INTEGER NOT NULL, `coordinateOnOff` INTEGER NOT NULL, `widgetOnOff` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "appName",
+            "columnName": "appName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "appPackage",
+            "columnName": "appPackage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "coordinateRetrieveTime",
+            "columnName": "coordinateRetrieveTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "coordinateRetrieveAllTime",
+            "columnName": "coordinateRetrieveAllTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "widgetRetrieveTime",
+            "columnName": "widgetRetrieveTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "widgetRetrieveAllTime",
+            "columnName": "widgetRetrieveAllTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "coordinateOnOff",
+            "columnName": "coordinateOnOff",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "widgetOnOff",
+            "columnName": "widgetOnOff",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_AppDescribe_appPackage",
+            "unique": true,
+            "columnNames": [
+              "appPackage"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_AppDescribe_appPackage` ON `${TABLE_NAME}` (`appPackage`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Coordinate",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `appPackage` TEXT, `appActivity` TEXT, `createTime` INTEGER NOT NULL, `xPosition` INTEGER NOT NULL, `yPosition` INTEGER NOT NULL, `clickDelay` INTEGER NOT NULL, `clickInterval` INTEGER NOT NULL, `clickNumber` INTEGER NOT NULL, `toast` TEXT, `comment` TEXT, `lastTriggerTime` INTEGER NOT NULL, `triggerCount` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "appPackage",
+            "columnName": "appPackage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "appActivity",
+            "columnName": "appActivity",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "createTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "xPosition",
+            "columnName": "xPosition",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "yPosition",
+            "columnName": "yPosition",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clickDelay",
+            "columnName": "clickDelay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clickInterval",
+            "columnName": "clickInterval",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clickNumber",
+            "columnName": "clickNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "toast",
+            "columnName": "toast",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "comment",
+            "columnName": "comment",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastTriggerTime",
+            "columnName": "lastTriggerTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "triggerCount",
+            "columnName": "triggerCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_Coordinate_appPackage_appActivity",
+            "unique": true,
+            "columnNames": [
+              "appPackage",
+              "appActivity"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_Coordinate_appPackage_appActivity` ON `${TABLE_NAME}` (`appPackage`, `appActivity`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Widget",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `appPackage` TEXT, `appActivity` TEXT, `createTime` INTEGER NOT NULL, `clickDelay` INTEGER NOT NULL, `debounceDelay` INTEGER NOT NULL, `noRepeat` INTEGER NOT NULL, `clickOnly` INTEGER NOT NULL, `widgetClickable` INTEGER NOT NULL, `widgetRect` TEXT, `widgetNodeId` INTEGER, `widgetViewId` TEXT, `widgetDescribe` TEXT, `widgetText` TEXT, `toast` TEXT, `comment` TEXT, `triggerReason` TEXT, `lastTriggerTime` INTEGER NOT NULL, `triggerCount` INTEGER NOT NULL, `clickInterval` INTEGER NOT NULL, `clickNumber` INTEGER NOT NULL, `action` INTEGER NOT NULL, `condition` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "appPackage",
+            "columnName": "appPackage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "appActivity",
+            "columnName": "appActivity",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "createTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clickDelay",
+            "columnName": "clickDelay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "debounceDelay",
+            "columnName": "debounceDelay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "noRepeat",
+            "columnName": "noRepeat",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clickOnly",
+            "columnName": "clickOnly",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "widgetClickable",
+            "columnName": "widgetClickable",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "widgetRect",
+            "columnName": "widgetRect",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "widgetNodeId",
+            "columnName": "widgetNodeId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "widgetViewId",
+            "columnName": "widgetViewId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "widgetDescribe",
+            "columnName": "widgetDescribe",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "widgetText",
+            "columnName": "widgetText",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "toast",
+            "columnName": "toast",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "comment",
+            "columnName": "comment",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "triggerReason",
+            "columnName": "triggerReason",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastTriggerTime",
+            "columnName": "lastTriggerTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "triggerCount",
+            "columnName": "triggerCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clickInterval",
+            "columnName": "clickInterval",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clickNumber",
+            "columnName": "clickNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "action",
+            "columnName": "action",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "condition",
+            "columnName": "condition",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_Widget_appPackage_appActivity_widgetRect_widgetNodeId",
+            "unique": true,
+            "columnNames": [
+              "appPackage",
+              "appActivity",
+              "widgetRect",
+              "widgetNodeId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_Widget_appPackage_appActivity_widgetRect_widgetNodeId` ON `${TABLE_NAME}` (`appPackage`, `appActivity`, `widgetRect`, `widgetNodeId`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "MyAppConfig",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `autoHideOnTaskList` INTEGER NOT NULL, `forUpdate` TEXT, `isVip` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "autoHideOnTaskList",
+            "columnName": "autoHideOnTaskList",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "forUpdate",
+            "columnName": "forUpdate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isVip",
+            "columnName": "isVip",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_MyAppConfig_id",
+            "unique": false,
+            "columnNames": [
+              "id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_MyAppConfig_id` ON `${TABLE_NAME}` (`id`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c041dd9966bae09c617dd979feaabe94')"
+    ]
+  }
+}

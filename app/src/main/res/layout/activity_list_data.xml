@@ -89,7 +89,7 @@
                     android:id="@+id/bt_cancel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_selector"
                     android:gravity="center"
@@ -97,10 +97,21 @@
                     android:textColor="@android:color/white" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/bt_delete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_selector"
+                    android:gravity="center"
+                    android:text="删除"
+                    android:textColor="@android:color/white" />
+
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/bt_export"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_selector"
                     android:gravity="center"

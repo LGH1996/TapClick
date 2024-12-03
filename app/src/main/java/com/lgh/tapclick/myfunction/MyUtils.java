@@ -12,6 +12,8 @@ import android.view.WindowManager;
 
 import com.lgh.tapclick.BuildConfig;
 
+import java.util.List;
+
 public class MyUtils {
     private static final String contentProviderAuthority = "content://" + BuildConfig.APPLICATION_ID;
     private static Context mContext;
@@ -57,24 +59,11 @@ public class MyUtils {
         return false;
     }
 
-    public static boolean requestUpdateWidget(String packageName) {
+    public static boolean requestRemoveAppDescribes(List<String> packages) {
         try {
             ContentValues contentValues = new ContentValues();
-            contentValues.put("updateScope", "updateWidget");
-            contentValues.put("packageName", packageName);
-            int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
-            return re > 0;
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public static boolean requestUpdateCoordinate(String packageName) {
-        try {
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("updateScope", "updateCoordinate");
-            contentValues.put("packageName", packageName);
+            contentValues.put("updateScope", "removeAppDescribe");
+            contentValues.put("packageName", String.join(",", packages));
             int re = mContext.getContentResolver().update(Uri.parse(contentProviderAuthority), contentValues, null, null);
             return re > 0;
         } catch (NullPointerException e) {
