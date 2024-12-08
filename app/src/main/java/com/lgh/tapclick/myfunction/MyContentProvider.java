@@ -5,14 +5,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.CancellationSignal;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.lgh.tapclick.mybean.AppDescribe;
 import com.lgh.tapclick.myclass.DataDao;
@@ -177,17 +174,5 @@ public class MyContentProvider extends ContentProvider {
                 mainFunction.showAddDataWindow(false);
             }
         });
-    }
-
-    @Nullable
-    @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder, @Nullable CancellationSignal cancellationSignal) {
-        Bundle bundle = new Bundle();
-        if (MyAccessibilityService.mainFunction != null) {
-            bundle.putString("log", MyAccessibilityService.mainFunction.getLog());
-        }
-        Cursor cursor = super.query(uri, projection, selection, selectionArgs, sortOrder, cancellationSignal);
-        cursor.setExtras(bundle);
-        return cursor;
     }
 }
