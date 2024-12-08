@@ -56,7 +56,7 @@ public class MyContentProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         if (TextUtils.equals(selection, "isServiceRunning")) {
-            boolean isRunning = MyAccessibilityService.mainFunction != null || MyAccessibilityServiceNoGesture.mainFunction != null;
+            boolean isRunning = MyAccessibilityService.mainFunction != null;
             MatrixCursor matrixCursor = new MatrixCursor(new String[]{"isServiceRunning"});
             matrixCursor.addRow(new Object[]{isRunning ? 1 : 0});
             return matrixCursor;
@@ -65,8 +65,6 @@ public class MyContentProvider extends ContentProvider {
             MatrixCursor matrixCursor = new MatrixCursor(new String[]{"log"});
             if (MyAccessibilityService.mainFunction != null) {
                 matrixCursor.addRow(new Object[]{MyAccessibilityService.mainFunction.getLog()});
-            } else if (MyAccessibilityServiceNoGesture.mainFunction != null) {
-                matrixCursor.addRow(new Object[]{MyAccessibilityServiceNoGesture.mainFunction.getLog()});
             } else {
                 matrixCursor.addRow(new Object[]{"无障碍服务未开启"});
             }
@@ -84,14 +82,6 @@ public class MyContentProvider extends ContentProvider {
             showDbClickSetting(MyAccessibilityService.mainFunction, values);
             showDbClickFloating(MyAccessibilityService.mainFunction, values);
             showAddDataWindow(MyAccessibilityService.mainFunction, values);
-        }
-        if (MyAccessibilityServiceNoGesture.mainFunction != null) {
-            updateData(MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap(), values);
-            updateAllDate(MyAccessibilityServiceNoGesture.mainFunction.getAppDescribeMap(), values);
-            updateKeepAlive(MyAccessibilityServiceNoGesture.mainFunction, values);
-            showDbClickSetting(MyAccessibilityServiceNoGesture.mainFunction, values);
-            showDbClickFloating(MyAccessibilityServiceNoGesture.mainFunction, values);
-            showAddDataWindow(MyAccessibilityServiceNoGesture.mainFunction, values);
         }
         return 1;
     }
@@ -195,8 +185,6 @@ public class MyContentProvider extends ContentProvider {
         Bundle bundle = new Bundle();
         if (MyAccessibilityService.mainFunction != null) {
             bundle.putString("log", MyAccessibilityService.mainFunction.getLog());
-        } else if (MyAccessibilityServiceNoGesture.mainFunction != null) {
-            bundle.putString("log", MyAccessibilityServiceNoGesture.mainFunction.getLog());
         }
         Cursor cursor = super.query(uri, projection, selection, selectionArgs, sortOrder, cancellationSignal);
         cursor.setExtras(bundle);

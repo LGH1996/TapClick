@@ -23,9 +23,6 @@ public class MyAccessibilityService extends AccessibilityService {
         if (mainFunction != null) {
             mainFunction.onServiceConnected();
         }
-        if (MyAccessibilityServiceNoGesture.mainFunction != null) {
-            MyAccessibilityServiceNoGesture.mainFunction.closeService();
-        }
     }
 
     @Override

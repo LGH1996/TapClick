@@ -101,7 +101,7 @@
             android:enabled="true"
             android:exported="true"
             android:foregroundServiceType="specialUse"
-            android:label="@string/accessibilityName"
+            android:label="@string/appName"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:process=":AccessibilityService">
             <intent-filter>
@@ -111,22 +111,6 @@
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/configure" />
-        </service>
-        <service
-            android:name="com.lgh.tapclick.myfunction.MyAccessibilityServiceNoGesture"
-            android:enabled="true"
-            android:exported="true"
-            android:foregroundServiceType="specialUse"
-            android:label="@string/accessibilityNameNoGesture"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
-            android:process=":AccessibilityService">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/configurenogesture" />
         </service>
 
         <provider
