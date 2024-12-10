@@ -729,7 +729,7 @@ public class MainFunction {
                             case MotionEvent.ACTION_MOVE:
                                 aParams.x = startLpX + (rowX - startRowX);
                                 aParams.y = startLpY + (rowY - startRowY);
-                                windowManager.updateViewLayout(addDataBinding.getRoot(), aParams);
+                                windowManager.updateViewLayout(v, aParams);
                                 break;
                             case MotionEvent.ACTION_UP:
                                 DisplayMetrics metrics = new DisplayMetrics();
@@ -738,7 +738,7 @@ public class MainFunction {
                                 aParams.x = Math.min(aParams.x, metrics.widthPixels - aParams.width);
                                 aParams.y = Math.max(aParams.y, 0);
                                 aParams.y = Math.min(aParams.y, metrics.heightPixels - aParams.height);
-                                windowManager.updateViewLayout(addDataBinding.getRoot(), aParams);
+                                windowManager.updateViewLayout(v, aParams);
                                 break;
                         }
                     }
@@ -746,18 +746,20 @@ public class MainFunction {
                 // 双击打开规则管理页面
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     if (Math.abs(event.getEventTime() - preEventTime) < 500) {
-                        if (!openPageFlag
-                                && Math.abs(event.getRawX() - preRowX) < 100
-                                && Math.abs(event.getRawY() - preRowY) < 100) {
+                        if (!openPageFlag && Math.abs(event.getRawX() - preRowX) < 100 && Math.abs(event.getRawY() - preRowY) < 100) {
                             openPageFlag = true;
                             Matcher matcher = pattern.matcher(addDataBinding.pkgName.getText().toString());
-                            if (matcher.find() && appDescribeMap.containsKey(matcher.group())) {
-                                Intent intent = new Intent(service, EditDataActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                intent.putExtra("packageName", matcher.group());
-                                service.startActivity(intent);
-                                if (bParams.alpha != 0) {
-                                    addDataBinding.switchWid.callOnClick();
+                            if (matcher.find()) {
+                                if (appDescribeMap.containsKey(matcher.group())) {
+                                    Intent intent = new Intent(service, EditDataActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.putExtra("packageName", matcher.group());
+                                    service.startActivity(intent);
+                                    if (bParams.alpha != 0) {
+                                        addDataBinding.switchWid.callOnClick();
+                                    }
+                                } else {
+                                    showToast(new Object(), "请先创建规则");
                                 }
                             }
                         }
@@ -772,9 +774,10 @@ public class MainFunction {
             }
         });
         viewClickPosition.setOnTouchListener(new View.OnTouchListener() {
+            int startRowX = 0, startRowY = 0, startLpX = 0, startLpY = 0;
             final int width = cParams.width / 2;
             final int height = cParams.height / 2;
-            int startRowX = 0, startRowY = 0, startLpX = 0, startLpY = 0;
+            final Pattern pattern = Pattern.compile("[A-Za-z0-9_.]+");
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -782,14 +785,13 @@ public class MainFunction {
                     final int action = event.getAction();
                     final int rowX = Math.round(event.getRawX());
                     final int rowY = Math.round(event.getRawY());
-                    final Pattern pattern = Pattern.compile("[A-Za-z0-9_.]+");
 
                     @Override
                     public void run() {
                         switch (action) {
                             case MotionEvent.ACTION_DOWN:
                                 cParams.alpha = 0.9f;
-                                windowManager.updateViewLayout(viewClickPosition, cParams);
+                                windowManager.updateViewLayout(v, cParams);
                                 startRowX = rowX;
                                 startRowY = rowY;
                                 startLpX = cParams.x;
@@ -798,7 +800,7 @@ public class MainFunction {
                             case MotionEvent.ACTION_MOVE:
                                 cParams.x = startLpX + (rowX - startRowX);
                                 cParams.y = startLpY + (rowY - startRowY);
-                                windowManager.updateViewLayout(viewClickPosition, cParams);
+                                windowManager.updateViewLayout(v, cParams);
                                 coordinateSelect.appPackage = currentPackage;
                                 coordinateSelect.appActivity = currentActivity;
                                 coordinateSelect.xPosition = cParams.x + width;
@@ -810,7 +812,7 @@ public class MainFunction {
                                 break;
                             case MotionEvent.ACTION_UP:
                                 cParams.alpha = 0.5f;
-                                windowManager.updateViewLayout(viewClickPosition, cParams);
+                                windowManager.updateViewLayout(v, cParams);
                                 break;
                         }
                     }
@@ -1273,7 +1275,7 @@ public class MainFunction {
         if (trigger == null || trigger == preTrigger) {
             return;
         }
-        if (TextUtils.isEmpty(content)) {
+        if (StrUtil.isBlank(content)) {
             return;
         }
         handler.post(new Runnable() {
