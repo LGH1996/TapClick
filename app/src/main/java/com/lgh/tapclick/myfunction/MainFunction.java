@@ -22,8 +22,6 @@ import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -42,16 +40,17 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hjq.toast.Toaster;
 import com.lgh.tapclick.R;
 import com.lgh.tapclick.databinding.ViewAddDataBinding;
 import com.lgh.tapclick.databinding.ViewDbClickSettingBinding;
 import com.lgh.tapclick.databinding.ViewDialogWarningBinding;
 import com.lgh.tapclick.databinding.ViewWidgetSelectBinding;
 import com.lgh.tapclick.myactivity.EditDataActivity;
+import com.lgh.tapclick.myactivity.ListDataActivity;
 import com.lgh.tapclick.myactivity.MainActivity;
 import com.lgh.tapclick.mybean.AppDescribe;
 import com.lgh.tapclick.mybean.Coordinate;
@@ -96,7 +95,6 @@ public class MainFunction {
     private final WindowManager windowManager;
     private final PackageManager packageManager;
     private final InputMethodManager inputMethodManager;
-    private final Handler handler;
     private final DataDao dataDao;
     private final Map<String, AppDescribe> appDescribeMap;
     private final ScheduledExecutorService executorServiceMain;
@@ -124,7 +122,6 @@ public class MainFunction {
     private volatile Coordinate coordinate;
     private volatile ScheduledFuture<?> futureCoordinateClick;
     private volatile AccessibilityServiceInfo serviceInfo;
-    private volatile Object preTrigger;
     private MyBroadcastReceiver myBroadcastReceiver;
     private WindowManager.LayoutParams aParams, bParams, cParams;
     private ViewAddDataBinding addDataBinding;
@@ -142,7 +139,6 @@ public class MainFunction {
         packageManager = accessibilityService.getPackageManager();
         executorServiceMain = Executors.newSingleThreadScheduledExecutor();
         executorServiceSub = Executors.newSingleThreadScheduledExecutor();
-        handler = new Handler(Looper.getMainLooper());
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT);
         gson = new GsonBuilder().setPrettyPrinting().create();
         gsonNoPretty = new GsonBuilder().create();
@@ -170,6 +166,7 @@ public class MainFunction {
         keepAliveByNotification(MyUtils.getKeepAliveByNotification());
         keepAliveByFloatingWindow(MyUtils.getKeepAliveByFloatingWindow());
         showDbClickFloating(MyUtils.getDbClickEnable());
+        Toaster.init(service.getApplication());
 
         /*executorService.schedule(new Runnable() {
             @Override
@@ -312,7 +309,7 @@ public class MainFunction {
                                     coordinateSub.triggerCount += 1;
                                     coordinateSub.lastTriggerTime = System.currentTimeMillis();
                                     dataDao.updateCoordinate(coordinateSub);
-                                    showToast(coordinateSub, coordinateSub.toast);
+                                    Toaster.show(coordinateSub.toast);
                                     addLog("点击坐标：" + gson.toJson(coordinateSub));
                                 }
                             }
@@ -531,7 +528,7 @@ public class MainFunction {
                                 e.triggerCount += 1;
                                 e.lastTriggerTime = System.currentTimeMillis();
                                 dataDao.updateWidget(e);
-                                showToast(e, e.toast);
+                                Toaster.show(e.toast);
                                 addLog("点击控件：" + gson.toJson(e));
                                 if (alreadyClickSet.size() >= widgets.size()) {
                                     serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
@@ -550,7 +547,7 @@ public class MainFunction {
                         e.triggerCount += 1;
                         e.lastTriggerTime = System.currentTimeMillis();
                         dataDao.updateWidget(e);
-                        showToast(e, e.toast);
+                        Toaster.show(e.toast);
                         addLog("执行返回：" + gson.toJson(e));
                         if (alreadyClickSet.size() >= widgets.size()) {
                             serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
@@ -747,7 +744,6 @@ public class MainFunction {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     if (Math.abs(event.getEventTime() - preEventTime) < 500) {
                         if (!openPageFlag && Math.abs(event.getRawX() - preRowX) < 100 && Math.abs(event.getRawY() - preRowY) < 100) {
-                            openPageFlag = true;
                             Matcher matcher = pattern.matcher(addDataBinding.pkgName.getText().toString());
                             if (matcher.find()) {
                                 if (appDescribeMap.containsKey(matcher.group())) {
@@ -755,13 +751,16 @@ public class MainFunction {
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     intent.putExtra("packageName", matcher.group());
                                     service.startActivity(intent);
-                                    if (bParams.alpha != 0) {
-                                        addDataBinding.switchWid.callOnClick();
-                                    }
                                 } else {
-                                    showToast(new Object(), "请先创建规则");
+                                    Intent intent = new Intent(service, ListDataActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    service.startActivity(intent);
+                                }
+                                if (bParams.alpha != 0) {
+                                    addDataBinding.switchWid.callOnClick();
                                 }
                             }
+                            openPageFlag = true;
                         }
                     } else {
                         openPageFlag = false;
@@ -1269,27 +1268,5 @@ public class MainFunction {
                 currentActivity = isScreenOffPre;
             }
         }
-    }
-
-    private void showToast(Object trigger, String content) {
-        if (trigger == null || trigger == preTrigger) {
-            return;
-        }
-        if (StrUtil.isBlank(content)) {
-            return;
-        }
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(service, content, Toast.LENGTH_SHORT).show();
-                preTrigger = trigger;
-            }
-        });
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                preTrigger = null;
-            }
-        }, 1000);
     }
 }

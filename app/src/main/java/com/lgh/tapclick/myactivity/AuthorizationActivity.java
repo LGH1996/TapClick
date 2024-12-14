@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
@@ -26,9 +27,10 @@ public class AuthorizationActivity extends BaseActivity {
     private ActivityAuthorizationBinding authorizationBinding;
     private Context context;
     private Handler handler;
+    private PowerManager powerManager;
     private PackageManager packageManager;
     private DevicePolicyManager devicePolicyManager;
-    private PowerManager powerManager;
+    private NotificationManager notificationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,9 @@ public class AuthorizationActivity extends BaseActivity {
         context = getApplicationContext();
         handler = new Handler();
         packageManager = getPackageManager();
-        devicePolicyManager = getSystemService(DevicePolicyManager.class);
         powerManager = getSystemService(PowerManager.class);
+        devicePolicyManager = getSystemService(DevicePolicyManager.class);
+        notificationManager = getSystemService(NotificationManager.class);
 
         View.OnClickListener onOffClickListener = new View.OnClickListener() {
             @SuppressLint("NonConstantResourceId")
@@ -93,15 +96,15 @@ public class AuthorizationActivity extends BaseActivity {
                         break;
                     }
                     case R.id.notification_on_off: {
-                        if (getSystemService(NotificationManager.class).areNotificationsEnabled()) {
+                        if (notificationManager.areNotificationsEnabled()) {
                             boolean keepAliveByNotification = !MyUtils.getKeepAliveByNotification();
                             MyUtils.setKeepAliveByNotification(keepAliveByNotification);
                             MyUtils.requestUpdateKeepAliveByNotification(keepAliveByNotification);
                             authorizationBinding.notificationOnOffImg.setImageResource(keepAliveByNotification ? R.drawable.ic_ok : R.drawable.ic_error);
                             Toast.makeText(context, keepAliveByNotification ? "已开启" : "已关闭", Toast.LENGTH_SHORT).show();
-                        } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                        } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                             requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 0x01);
-                        } else {
+                        } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                             Intent intentNotification = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
                             intentNotification.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
                             if (intentNotification.resolveActivity(packageManager) != null) {
@@ -109,6 +112,9 @@ public class AuthorizationActivity extends BaseActivity {
                             } else {
                                 Toast.makeText(context, "授权窗口打开失败，请手动打开", Toast.LENGTH_SHORT).show();
                             }
+                        }
+                        if (!notificationManager.areNotificationsEnabled()) {
+                            MyUtils.setKeepAliveByNotification(false);
                         }
                         break;
                     }
@@ -157,7 +163,7 @@ public class AuthorizationActivity extends BaseActivity {
                 } else {
                     authorizationBinding.batteryIgnoreOnOffImg.setImageResource(R.drawable.ic_error);
                 }
-                if (MyUtils.getKeepAliveByNotification()) {
+                if (notificationManager.areNotificationsEnabled() && MyUtils.getKeepAliveByNotification()) {
                     authorizationBinding.notificationOnOffImg.setImageResource(R.drawable.ic_ok);
                 } else {
                     authorizationBinding.notificationOnOffImg.setImageResource(R.drawable.ic_error);

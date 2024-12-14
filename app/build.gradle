@@ -75,10 +75,11 @@ dependencies {
     implementation 'commons-io:commons-io:2.13.0'
     implementation 'commons-codec:commons-codec:1.16.0'
     implementation 'cn.hutool:hutool-core:5.8.32'
-    testImplementation 'junit:junit:4.13.2'
+    implementation 'com.github.getActivity:Toaster:12.6'
     annotationProcessor 'androidx.room:room-compiler:2.5.1'
     androidTestImplementation 'androidx.test:runner:1.5.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation 'junit:junit:4.13.2'
     compileOnly files('libs/classes4-dex2jar.jar')
 }
 
