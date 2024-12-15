@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 34
     defaultConfig {
         applicationId "com.lgh.tapclick"
+        compileSdk 34
         minSdkVersion 24
         targetSdkVersion 34
         versionCode 106
@@ -59,6 +59,7 @@ android {
 }
 
 dependencies {
+    compileOnly files('libs/classes4-dex2jar.jar')
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'com.google.code.gson:gson:2.10.1'
@@ -75,12 +76,10 @@ dependencies {
     implementation 'commons-io:commons-io:2.13.0'
     implementation 'commons-codec:commons-codec:1.16.0'
     implementation 'cn.hutool:hutool-core:5.8.32'
-    implementation 'com.github.getActivity:Toaster:12.6'
     annotationProcessor 'androidx.room:room-compiler:2.5.1'
     androidTestImplementation 'androidx.test:runner:1.5.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     testImplementation 'junit:junit:4.13.2'
-    compileOnly files('libs/classes4-dex2jar.jar')
 }
 
 gradle.projectsEvaluated {

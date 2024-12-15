@@ -30,7 +30,6 @@ public class Widget {
     public String widgetViewId;
     public String widgetDescribe;
     public String widgetText;
-    public String toast;
     public String comment;
     public String triggerReason;
     public long lastTriggerTime;
@@ -55,7 +54,6 @@ public class Widget {
         this.widgetViewId = "";
         this.widgetDescribe = "";
         this.widgetText = "";
-        this.toast = "";
         this.comment = "";
         this.triggerReason = "";
         this.lastTriggerTime = 0;
@@ -81,7 +79,6 @@ public class Widget {
         this.widgetViewId = widget.widgetViewId;
         this.widgetDescribe = widget.widgetDescribe;
         this.widgetText = widget.widgetText;
-        this.toast = widget.toast;
         this.comment = widget.comment;
         this.lastTriggerTime = widget.lastTriggerTime;
         this.triggerCount = widget.triggerCount;
@@ -124,7 +121,6 @@ public class Widget {
                 ", widgetViewId='" + widgetViewId + '\'' +
                 ", widgetDescribe='" + widgetDescribe + '\'' +
                 ", widgetText='" + widgetText + '\'' +
-                ", toast='" + toast + '\'' +
                 ", comment='" + comment + '\'' +
                 ", triggerReason='" + triggerReason + '\'' +
                 ", lastTriggerTime=" + lastTriggerTime +

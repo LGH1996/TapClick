@@ -277,7 +277,6 @@ public class EditDataActivity extends BaseActivity {
             coordinateBinding.coordinateClickInterval.setText(String.valueOf(coordinate.clickInterval));
             coordinateBinding.coordinateClickNumber.setText(String.valueOf(coordinate.clickNumber));
             coordinateBinding.coordinateTriggerCount.setText(String.valueOf(coordinate.triggerCount));
-            coordinateBinding.coordinateToast.setText(coordinate.toast);
             coordinateBinding.coordinateComment.setText(coordinate.comment);
             long day1 = (System.currentTimeMillis() - coordinate.createTime) / (1000 * 60 * 60 * 24);
             long day2 = (System.currentTimeMillis() - coordinate.lastTriggerTime) / (1000 * 60 * 60 * 24);
@@ -338,7 +337,6 @@ public class EditDataActivity extends BaseActivity {
                     coordinate.clickDelay = Integer.parseInt(sDelay);
                     coordinate.clickInterval = Integer.parseInt(sInterval);
                     coordinate.clickNumber = Integer.parseInt(sNumber);
-                    coordinate.toast = StrUtil.trimToEmpty(coordinateBinding.coordinateToast.getText());
                     coordinate.comment = StrUtil.trimToEmpty(coordinateBinding.coordinateComment.getText());
                     dataDao.updateCoordinate(coordinate);
                     coordinateBinding.coordinateModify.setTextColor(0xff000000);
@@ -369,7 +367,6 @@ public class EditDataActivity extends BaseActivity {
             coordinateBinding.coordinateClickInterval.addTextChangedListener(coordinateTextWatcher);
             coordinateBinding.coordinateClickNumber.addTextChangedListener(coordinateTextWatcher);
             coordinateBinding.coordinateComment.addTextChangedListener(coordinateTextWatcher);
-            coordinateBinding.coordinateToast.addTextChangedListener(coordinateTextWatcher);
 
             coordinateBinding.coordinateShare.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -452,7 +449,6 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetDebounceDelay.setText(String.valueOf(widget.debounceDelay));
             widgetBinding.widgetNoRepeat.setChecked(widget.noRepeat);
             widgetBinding.widgetClickOnly.setChecked(widget.clickOnly);
-            widgetBinding.widgetToast.setText(widget.toast);
             widgetBinding.widgetComment.setText(widget.comment);
             widgetBinding.widgetClickNumber.setText(String.valueOf(widget.clickNumber));
             widgetBinding.widgetClickInterval.setText(String.valueOf(widget.clickInterval));
@@ -522,7 +518,6 @@ public class EditDataActivity extends BaseActivity {
                     widget.widgetViewId = StrUtil.toStringOrEmpty(widgetBinding.widgetViewId.getText());
                     widget.widgetDescribe = StrUtil.toStringOrEmpty(widgetBinding.widgetDescribe.getText());
                     widget.widgetText = StrUtil.toStringOrEmpty(widgetBinding.widgetText.getText());
-                    widget.toast = StrUtil.trimToEmpty(widgetBinding.widgetToast.getText());
                     widget.comment = StrUtil.trimToEmpty(widgetBinding.widgetComment.getText());
                     widget.clickNumber = Integer.parseInt(clickNumber);
                     widget.clickInterval = Integer.parseInt(clickInterval);
@@ -562,7 +557,6 @@ public class EditDataActivity extends BaseActivity {
             widgetBinding.widgetClickInterval.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetClickDelay.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetDebounceDelay.addTextChangedListener(widgetTextWatcher);
-            widgetBinding.widgetToast.addTextChangedListener(widgetTextWatcher);
             widgetBinding.widgetComment.addTextChangedListener(widgetTextWatcher);
 
             View.OnClickListener widgetClickListener = new View.OnClickListener() {

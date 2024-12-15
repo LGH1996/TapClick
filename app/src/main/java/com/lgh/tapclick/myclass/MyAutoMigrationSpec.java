@@ -12,4 +12,9 @@ public class MyAutoMigrationSpec {
     @RenameColumn(tableName = "Widget", fromColumnName = "widgetId", toColumnName = "widgetViewId")
     public static class From8To9 implements AutoMigrationSpec {
     }
+
+    @DeleteColumn(tableName = "Widget", columnName = "toast")
+    @DeleteColumn(tableName = "Coordinate", columnName = "toast")
+    public static class From11To12 implements AutoMigrationSpec {
+    }
 }

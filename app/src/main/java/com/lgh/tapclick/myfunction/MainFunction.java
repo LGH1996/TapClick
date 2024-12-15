@@ -43,7 +43,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hjq.toast.Toaster;
 import com.lgh.tapclick.R;
 import com.lgh.tapclick.databinding.ViewAddDataBinding;
 import com.lgh.tapclick.databinding.ViewDbClickSettingBinding;
@@ -166,7 +165,6 @@ public class MainFunction {
         keepAliveByNotification(MyUtils.getKeepAliveByNotification());
         keepAliveByFloatingWindow(MyUtils.getKeepAliveByFloatingWindow());
         showDbClickFloating(MyUtils.getDbClickEnable());
-        Toaster.init(service.getApplication());
 
         /*executorService.schedule(new Runnable() {
             @Override
@@ -309,7 +307,6 @@ public class MainFunction {
                                     coordinateSub.triggerCount += 1;
                                     coordinateSub.lastTriggerTime = System.currentTimeMillis();
                                     dataDao.updateCoordinate(coordinateSub);
-                                    Toaster.show(coordinateSub.toast);
                                     addLog("点击坐标：" + gson.toJson(coordinateSub));
                                 }
                             }
@@ -528,7 +525,6 @@ public class MainFunction {
                                 e.triggerCount += 1;
                                 e.lastTriggerTime = System.currentTimeMillis();
                                 dataDao.updateWidget(e);
-                                Toaster.show(e.toast);
                                 addLog("点击控件：" + gson.toJson(e));
                                 if (alreadyClickSet.size() >= widgets.size()) {
                                     serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
@@ -547,7 +543,6 @@ public class MainFunction {
                         e.triggerCount += 1;
                         e.lastTriggerTime = System.currentTimeMillis();
                         dataDao.updateWidget(e);
-                        Toaster.show(e.toast);
                         addLog("执行返回：" + gson.toJson(e));
                         if (alreadyClickSet.size() >= widgets.size()) {
                             serviceInfo.eventTypes &= ~AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
