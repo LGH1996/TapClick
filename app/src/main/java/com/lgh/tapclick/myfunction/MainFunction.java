@@ -5,6 +5,7 @@ import android.accessibilityservice.AccessibilityServiceInfo;
 import android.accessibilityservice.GestureDescription;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -64,10 +65,12 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -113,6 +116,7 @@ public class MainFunction {
     private volatile boolean onOffCoordinate;
     private volatile boolean onOffCoordinateSub;
     private volatile boolean needChangeActivity;
+    private volatile boolean myDialogShow;
     private volatile ScheduledFuture<?> futureWidget;
     private volatile ScheduledFuture<?> futureCoordinate;
     private volatile Set<Widget> widgetSet;
@@ -190,6 +194,9 @@ public class MainFunction {
     public void onAccessibilityEvent(AccessibilityEvent event) {
         switch (event.getEventType()) {
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED: {
+                if (myDialogShow) {
+                    break;
+                }
                 AccessibilityNodeInfo root = service.getRootInActiveWindow();
                 if (root == null) {
                     break;
@@ -328,6 +335,9 @@ public class MainFunction {
                 break;
             }
             case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED: {
+                if (myDialogShow) {
+                    break;
+                }
                 if (!TextUtils.equals(event.getPackageName(), currentPackageSub)) {
                     break;
                 }
@@ -592,14 +602,6 @@ public class MainFunction {
         path.moveTo(x, y);
         GestureDescription.Builder builder = new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path, 0, 50));
         return service.dispatchGesture(builder.build(), null, null);
-    }
-
-    /**
-     * android 7.0 以上
-     * 避免无障碍服务冲突
-     */
-    public void closeService() {
-        service.disableSelf();
     }
 
     /**
@@ -955,34 +957,88 @@ public class MainFunction {
 
                     @Override
                     public void run() {
-                        appDescribeTemp = appDescribeMap.get(widgetSelect.appPackage);
-                        if (appDescribeTemp == null) {
-                            appDescribeTemp = new AppDescribe();
-                            appDescribeTemp.appPackage = widgetSelect.appPackage;
-                            try {
-                                PackageInfo packageInfo = packageManager.getPackageInfo(widgetSelect.appPackage, PackageManager.GET_META_DATA);
-                                appDescribeTemp.appName = packageManager.getApplicationLabel(packageInfo.applicationInfo).toString();
-                            } catch (PackageManager.NameNotFoundException e) {
-                                // e.printStackTrace();
+                        Map<String, Boolean> propsMap = new LinkedHashMap<>();
+                        if (Objects.nonNull(widgetSelect.widgetRect)) {
+                            propsMap.put("Bonus", true);
+                        }
+                        if (Objects.nonNull(widgetSelect.widgetNodeId)) {
+                            propsMap.put("NodeId", false);
+                        }
+                        if (StrUtil.isNotBlank(widgetSelect.widgetViewId)) {
+                            propsMap.put("ViewId", true);
+                        }
+                        if (StrUtil.isNotBlank(widgetSelect.widgetDescribe)) {
+                            propsMap.put("Describe", true);
+                        }
+                        if (StrUtil.isNotBlank(widgetSelect.widgetText)) {
+                            propsMap.put("Text", true);
+                        }
+                        int index = 0;
+                        String[] keys = new String[propsMap.size()];
+                        boolean[] values = new boolean[propsMap.size()];
+                        for (Map.Entry<String, Boolean> entry : propsMap.entrySet()) {
+                            keys[index] = entry.getKey();
+                            values[index] = entry.getValue();
+                            index++;
+                        }
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(service);
+                        alertDialogBuilder.setTitle("请选择需要保存的属性");
+                        alertDialogBuilder.setMultiChoiceItems(keys, values, new DialogInterface.OnMultiChoiceClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                propsMap.put(keys[which], isChecked);
+                                values[which] = isChecked;
                             }
-                            appDescribeTemp.id = dataDao.insertAppDescribe(appDescribeTemp);
-                            appDescribeMap.put(appDescribeTemp.appPackage, appDescribeTemp);
-                        }
-                        Widget temWidget = new Widget(widgetSelect);
-                        temWidget.createTime = System.currentTimeMillis();
-                        dataDao.insertWidget(temWidget);
-                        addDataBinding.saveWid.setEnabled(false);
-                        addDataBinding.pkgName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
-                        appDescribeTemp.getWidgetFromDatabase(dataDao);
-                        if (!appDescribeTemp.widgetOnOff) {
-                            showWarningDialog(new Runnable() {
-                                @Override
-                                public void run() {
-                                    appDescribeTemp.widgetOnOff = true;
-                                    dataDao.updateAppDescribe(appDescribeTemp);
+                        });
+                        alertDialogBuilder.setNegativeButton("取消", null);
+                        alertDialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                appDescribeTemp = appDescribeMap.get(widgetSelect.appPackage);
+                                if (appDescribeTemp == null) {
+                                    appDescribeTemp = new AppDescribe();
+                                    appDescribeTemp.appPackage = widgetSelect.appPackage;
+                                    try {
+                                        PackageInfo packageInfo = packageManager.getPackageInfo(widgetSelect.appPackage, PackageManager.GET_META_DATA);
+                                        appDescribeTemp.appName = packageManager.getApplicationLabel(packageInfo.applicationInfo).toString();
+                                    } catch (PackageManager.NameNotFoundException e) {
+                                        // e.printStackTrace();
+                                    }
+                                    appDescribeTemp.id = dataDao.insertAppDescribe(appDescribeTemp);
+                                    appDescribeMap.put(appDescribeTemp.appPackage, appDescribeTemp);
                                 }
-                            }, service.getString(R.string.widgetOffWarning));
-                        }
+                                Widget temWidget = new Widget(widgetSelect);
+                                temWidget.createTime = System.currentTimeMillis();
+                                temWidget.widgetRect = Boolean.TRUE.equals(propsMap.get("Bonus")) ? temWidget.widgetRect : null;
+                                temWidget.widgetNodeId = Boolean.TRUE.equals(propsMap.get("NodeId")) ? temWidget.widgetNodeId : null;
+                                temWidget.widgetViewId = Boolean.TRUE.equals(propsMap.get("ViewId")) ? temWidget.widgetViewId : "";
+                                temWidget.widgetDescribe = Boolean.TRUE.equals(propsMap.get("Describe")) ? temWidget.widgetDescribe : "";
+                                temWidget.widgetText = Boolean.TRUE.equals(propsMap.get("Text")) ? temWidget.widgetText : "";
+                                dataDao.insertWidget(temWidget);
+                                addDataBinding.saveWid.setEnabled(false);
+                                addDataBinding.pkgName.setText(widgetSelect.appPackage + " (以下控件数据已保存)");
+                                appDescribeTemp.getWidgetFromDatabase(dataDao);
+                                if (!appDescribeTemp.widgetOnOff) {
+                                    showWarningDialog(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            appDescribeTemp.widgetOnOff = true;
+                                            dataDao.updateAppDescribe(appDescribeTemp);
+                                        }
+                                    }, service.getString(R.string.widgetOffWarning));
+                                }
+                            }
+                        });
+                        alertDialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                myDialogShow = false;
+                            }
+                        });
+                        Dialog dialog = alertDialogBuilder.create();
+                        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY);
+                        dialog.show();
+                        myDialogShow = true;
                     }
                 };
                 if (pkgSuggestNotOnList.contains(widgetSelect.appPackage)) {
@@ -1059,8 +1115,6 @@ public class MainFunction {
     }
 
     private void showWarningDialog(Runnable onSureRun, String message) {
-        String prePackage = currentPackage;
-        String preActivity = currentActivity;
         ViewDialogWarningBinding binding = ViewDialogWarningBinding.inflate(LayoutInflater.from(service));
         binding.message.setText(message);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(service);
@@ -1075,13 +1129,13 @@ public class MainFunction {
         alertDialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                currentPackage = prePackage;
-                currentActivity = preActivity;
+                myDialogShow = false;
             }
         });
         AlertDialog dialog = alertDialogBuilder.create();
-        dialog.getWindow().getAttributes().type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
+        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY);
         dialog.show();
+        myDialogShow = true;
     }
 
     public void keepAliveByNotification(boolean enable) {
@@ -1177,7 +1231,16 @@ public class MainFunction {
         AlertDialog alertDialog = new AlertDialog.Builder(service).setView(dbClickSettingBinding.getRoot()).create();
         alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY);
         alertDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                dbClickView.setBackgroundColor(Color.TRANSPARENT);
+                windowManager.updateViewLayout(dbClickView, dbClickLp);
+                myDialogShow = false;
+            }
+        });
         alertDialog.show();
+        myDialogShow = true;
         DisplayMetrics displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getRealMetrics(displayMetrics);
         WindowManager.LayoutParams lp = alertDialog.getWindow().getAttributes();
@@ -1229,13 +1292,6 @@ public class MainFunction {
         dbClickSettingBinding.seekBarH.setOnSeekBarChangeListener(onSeekBarChangeListener);
         dbClickSettingBinding.seekBarX.setOnSeekBarChangeListener(onSeekBarChangeListener);
         dbClickSettingBinding.seekBarY.setOnSeekBarChangeListener(onSeekBarChangeListener);
-        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                dbClickView.setBackgroundColor(Color.TRANSPARENT);
-                windowManager.updateViewLayout(dbClickView, dbClickLp);
-            }
-        });
         dbClickView.setBackgroundColor(Color.RED);
         windowManager.updateViewLayout(dbClickView, dbClickLp);
     }
