@@ -92,7 +92,6 @@ import cn.hutool.core.util.StrUtil;
  */
 
 public class MainFunction {
-    private final String isScreenOffPre = "息屏值";
     private final AccessibilityService service;
     private final WindowManager windowManager;
     private final PackageManager packageManager;
@@ -111,12 +110,13 @@ public class MainFunction {
     private volatile String currentPackage;
     private volatile String currentPackageSub;
     private volatile String currentActivity;
+    private volatile String prePackage;
+    private volatile String preActivity;
     private volatile boolean onOffWidget;
     private volatile boolean onOffWidgetSub;
     private volatile boolean onOffCoordinate;
     private volatile boolean onOffCoordinateSub;
     private volatile boolean needChangeActivity;
-    private volatile boolean myDialogShow;
     private volatile ScheduledFuture<?> futureWidget;
     private volatile ScheduledFuture<?> futureCoordinate;
     private volatile Set<Widget> widgetSet;
@@ -151,13 +151,15 @@ public class MainFunction {
         debounceSet = new HashSet<>();
         logList = new LinkedList<>();
         dataDao = MyApplication.dataDao;
-        currentPackage = "初始值";
-        currentActivity = "初始值";
+        currentPackage = StrUtil.EMPTY;
+        currentPackageSub = StrUtil.EMPTY;
+        currentActivity = StrUtil.EMPTY;
+        prePackage = StrUtil.EMPTY;
+        preActivity = StrUtil.EMPTY;
     }
 
     protected void onServiceConnected() {
         serviceInfo = service.getServiceInfo();
-        currentPackageSub = currentPackage;
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         myBroadcastReceiver = new MyBroadcastReceiver();
@@ -194,9 +196,6 @@ public class MainFunction {
     public void onAccessibilityEvent(AccessibilityEvent event) {
         switch (event.getEventType()) {
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED: {
-                if (myDialogShow) {
-                    break;
-                }
                 AccessibilityNodeInfo root = service.getRootInActiveWindow();
                 if (root == null) {
                     break;
@@ -228,8 +227,8 @@ public class MainFunction {
                 if (!event.isFullScreen()
                         && !appDescribe.coordinateOnOff
                         && !appDescribe.widgetOnOff
-                        && !currentPackageSub.equals(isScreenOffPre)
-                        && !currentActivity.equals(isScreenOffPre)) {
+                        && !currentPackageSub.isEmpty()
+                        && !currentActivity.isEmpty()) {
                     break;
                 }
                 if (!packageName.equals(currentPackageSub)) {
@@ -335,9 +334,6 @@ public class MainFunction {
                 break;
             }
             case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED: {
-                if (myDialogShow) {
-                    break;
-                }
                 if (!TextUtils.equals(event.getPackageName(), currentPackageSub)) {
                     break;
                 }
@@ -952,6 +948,8 @@ public class MainFunction {
         addDataBinding.saveWid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                prePackage = currentPackage;
+                preActivity = currentActivity;
                 Runnable runnable = new Runnable() {
                     AppDescribe appDescribeTemp;
 
@@ -1032,13 +1030,13 @@ public class MainFunction {
                         alertDialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                             @Override
                             public void onDismiss(DialogInterface dialog) {
-                                myDialogShow = false;
+                                currentPackage = prePackage;
+                                currentActivity = preActivity;
                             }
                         });
                         Dialog dialog = alertDialogBuilder.create();
                         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY);
                         dialog.show();
-                        myDialogShow = true;
                     }
                 };
                 if (pkgSuggestNotOnList.contains(widgetSelect.appPackage)) {
@@ -1051,6 +1049,8 @@ public class MainFunction {
         addDataBinding.saveAim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                prePackage = currentPackage;
+                preActivity = currentActivity;
                 Runnable runnable = new Runnable() {
                     AppDescribe appDescribeTemp;
 
@@ -1129,13 +1129,13 @@ public class MainFunction {
         alertDialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                myDialogShow = false;
+                currentPackage = prePackage;
+                currentActivity = preActivity;
             }
         });
         AlertDialog dialog = alertDialogBuilder.create();
         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY);
         dialog.show();
-        myDialogShow = true;
     }
 
     public void keepAliveByNotification(boolean enable) {
@@ -1236,11 +1236,9 @@ public class MainFunction {
             public void onDismiss(DialogInterface dialog) {
                 dbClickView.setBackgroundColor(Color.TRANSPARENT);
                 windowManager.updateViewLayout(dbClickView, dbClickLp);
-                myDialogShow = false;
             }
         });
         alertDialog.show();
-        myDialogShow = true;
         DisplayMetrics displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getRealMetrics(displayMetrics);
         WindowManager.LayoutParams lp = alertDialog.getWindow().getAttributes();
@@ -1315,8 +1313,8 @@ public class MainFunction {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (TextUtils.equals(intent.getAction(), Intent.ACTION_SCREEN_OFF)) {
-                currentPackageSub = isScreenOffPre;
-                currentActivity = isScreenOffPre;
+                currentPackageSub = StrUtil.EMPTY;
+                currentActivity = StrUtil.EMPTY;
             }
         }
     }
