@@ -4,13 +4,15 @@
 
 ① 自动跳过开屏广告；
 
-② 自动关闭弹窗；
+② 自动关闭广告弹窗；
 
-③ 自动关闭广告；
+③ 自动关闭页面广告；
 
 ④ ......
 
-本软件需要长驻后台，但所占内存和耗电量极少，一般不会影响体验；
+#### GooglePlay下载地址
+
+https://play.google.com/store/apps/details?id=com.lgh.tapclick
 
 #### 具体请看使用说明
 
