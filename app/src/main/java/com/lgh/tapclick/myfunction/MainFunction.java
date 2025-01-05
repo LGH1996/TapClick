@@ -119,11 +119,10 @@ public class MainFunction {
     private volatile boolean needChangeActivity;
     private volatile ScheduledFuture<?> futureWidget;
     private volatile ScheduledFuture<?> futureCoordinate;
-    private volatile Set<Widget> widgetSet;
-    private volatile Map<String, Coordinate> coordinateMap;
+    private volatile Map<String, Set<Coordinate>> coordinateSetMap;
     private volatile Map<String, Set<Widget>> widgetSetMap;
-    private volatile Coordinate coordinate;
-    private volatile ScheduledFuture<?> futureCoordinateClick;
+    private volatile Set<Coordinate> coordinateSet;
+    private volatile Set<Widget> widgetSet;
     private volatile AccessibilityServiceInfo serviceInfo;
     private MyBroadcastReceiver myBroadcastReceiver;
     private WindowManager.LayoutParams aParams, bParams, cParams;
@@ -167,7 +166,6 @@ public class MainFunction {
         executorServiceSub.execute(this::getRunningData);
         futureWidget = executorServiceSub.schedule(System::currentTimeMillis, 0, TimeUnit.MILLISECONDS);
         futureCoordinate = executorServiceSub.schedule(System::currentTimeMillis, 0, TimeUnit.MILLISECONDS);
-        futureCoordinateClick = executorServiceSub.schedule(System::currentTimeMillis, 0, TimeUnit.MILLISECONDS);
         keepAliveByNotification(MyUtils.getKeepAliveByNotification());
         keepAliveByFloatingWindow(MyUtils.getKeepAliveByFloatingWindow());
         showDbClickFloating(MyUtils.getDbClickEnable());
@@ -242,9 +240,9 @@ public class MainFunction {
                     onOffWidgetSub = false;
                     onOffCoordinateSub = false;
                     widgetSetMap = appDescribe.widgetSetMap;
-                    coordinateMap = appDescribe.coordinateMap;
+                    coordinateSetMap = appDescribe.coordinateSetMap;
                     onOffWidget = appDescribe.widgetOnOff && !widgetSetMap.isEmpty();
-                    onOffCoordinate = appDescribe.coordinateOnOff && !coordinateMap.isEmpty();
+                    onOffCoordinate = appDescribe.coordinateOnOff && !coordinateSetMap.isEmpty();
 
                     if (onOffWidget && !appDescribe.widgetRetrieveAllTime) {
                         futureWidget = executorServiceSub.schedule(new Runnable() {
@@ -286,9 +284,9 @@ public class MainFunction {
                     needChangeActivity = false;
                     currentActivity = activityName;
                     alreadyClickSet.clear();
-                    coordinate = coordinateMap != null ? coordinateMap.get(activityName) : null;
+                    coordinateSet = coordinateSetMap != null ? coordinateSetMap.get(activityName) : null;
                     widgetSet = widgetSetMap != null ? widgetSetMap.get(activityName) : null;
-                    onOffCoordinateSub = onOffCoordinate && coordinate != null;
+                    onOffCoordinateSub = onOffCoordinate && coordinateSet != null;
                     onOffWidgetSub = onOffWidget && widgetSet != null;
 
                     if (onOffWidgetSub) {
@@ -297,26 +295,26 @@ public class MainFunction {
                     }
 
                     if (onOffCoordinateSub) {
-                        futureCoordinateClick.cancel(false);
-                        futureCoordinateClick = executorServiceSub.scheduleWithFixedDelay(new Runnable() {
-                            private final Coordinate coordinateSub = coordinate;
-                            private int num = 0;
+                        for (Coordinate coordinate : coordinateSet) {
+                            executorServiceSub.scheduleWithFixedDelay(new Runnable() {
+                                private int num = 0;
 
-                            @Override
-                            public void run() {
-                                if (onOffCoordinateSub && num++ < coordinateSub.clickNumber && currentActivity.equals(coordinateSub.appActivity)) {
-                                    click(coordinateSub.xPosition, coordinateSub.yPosition);
-                                } else {
-                                    throw new RuntimeException();
+                                @Override
+                                public void run() {
+                                    if (onOffCoordinateSub && num++ < coordinate.clickNumber && currentActivity.equals(coordinate.appActivity)) {
+                                        click(coordinate.xPosition, coordinate.yPosition);
+                                    } else {
+                                        throw new RuntimeException();
+                                    }
+                                    if (num == 1) {
+                                        coordinate.triggerCount += 1;
+                                        coordinate.lastTriggerTime = System.currentTimeMillis();
+                                        dataDao.updateCoordinate(coordinate);
+                                        addLog("点击坐标：" + gson.toJson(coordinate));
+                                    }
                                 }
-                                if (num == 1) {
-                                    coordinateSub.triggerCount += 1;
-                                    coordinateSub.lastTriggerTime = System.currentTimeMillis();
-                                    dataDao.updateCoordinate(coordinateSub);
-                                    addLog("点击坐标：" + gson.toJson(coordinateSub));
-                                }
-                            }
-                        }, coordinate.clickDelay, coordinate.clickInterval <= 0 ? 10 : coordinate.clickInterval, TimeUnit.MILLISECONDS);
+                            }, coordinate.clickDelay, coordinate.clickInterval <= 0 ? 10 : coordinate.clickInterval, TimeUnit.MILLISECONDS);
+                        }
                     }
                 }
                 if (nodeInfoList.isEmpty()) {

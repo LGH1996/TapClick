@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@Entity(indices = @Index(value = "appPackage", unique = true))
+@Entity(indices = @Index(value = {"appPackage"}, unique = true))
 public class AppDescribe {
     @PrimaryKey(autoGenerate = true)
     public Long id;
@@ -27,7 +27,7 @@ public class AppDescribe {
     public boolean coordinateOnOff;
     public boolean widgetOnOff;
     @Ignore
-    public transient Map<String, Coordinate> coordinateMap;
+    public transient Map<String, Set<Coordinate>> coordinateSetMap;
     @Ignore
     public transient Map<String, Set<Widget>> widgetSetMap;
     @Ignore
@@ -44,7 +44,7 @@ public class AppDescribe {
         this.widgetRetrieveAllTime = true;
         this.coordinateOnOff = false;
         this.widgetOnOff = false;
-        this.coordinateMap = new HashMap<>();
+        this.coordinateSetMap = new HashMap<>();
         this.widgetSetMap = new HashMap<>();
         this.coordinateList = new ArrayList<>();
         this.widgetList = new ArrayList<>();
@@ -59,7 +59,7 @@ public class AppDescribe {
         this.widgetRetrieveAllTime = appDescribe.widgetRetrieveAllTime;
         this.coordinateOnOff = appDescribe.coordinateOnOff;
         this.widgetOnOff = appDescribe.widgetOnOff;
-        this.coordinateMap = appDescribe.coordinateMap;
+        this.coordinateSetMap = appDescribe.coordinateSetMap;
         this.widgetSetMap = appDescribe.widgetSetMap;
         this.coordinateList = appDescribe.coordinateList;
         this.widgetList = appDescribe.widgetList;
@@ -71,11 +71,16 @@ public class AppDescribe {
     }
 
     public void getCoordinateFromDatabase(DataDao dataDao) {
-        coordinateMap.clear();
+        coordinateSetMap.clear();
         coordinateList.clear();
         coordinateList.addAll(dataDao.getCoordinatesByPackage(this.appPackage));
         for (Coordinate e : coordinateList) {
-            coordinateMap.put(e.appActivity, e);
+            Set<Coordinate> coordinateSet = this.coordinateSetMap.get(e.appActivity);
+            if (coordinateSet == null) {
+                coordinateSet = new HashSet<>();
+                coordinateSetMap.put(e.appActivity, coordinateSet);
+            }
+            coordinateSet.add(e);
         }
     }
 
@@ -83,13 +88,13 @@ public class AppDescribe {
         widgetSetMap.clear();
         widgetList.clear();
         widgetList.addAll(dataDao.getWidgetsByPackage(this.appPackage));
-        for (Widget w : widgetList) {
-            Set<Widget> widgetSet = this.widgetSetMap.get(w.appActivity);
+        for (Widget e : widgetList) {
+            Set<Widget> widgetSet = this.widgetSetMap.get(e.appActivity);
             if (widgetSet == null) {
                 widgetSet = new HashSet<>();
-                widgetSetMap.put(w.appActivity, widgetSet);
+                widgetSetMap.put(e.appActivity, widgetSet);
             }
-            widgetSet.add(w);
+            widgetSet.add(e);
         }
     }
 
@@ -105,7 +110,7 @@ public class AppDescribe {
                 ", widgetRetrieveAllTime=" + widgetRetrieveAllTime +
                 ", coordinateOnOff=" + coordinateOnOff +
                 ", widgetOnOff=" + widgetOnOff +
-                ", coordinateMap=" + coordinateMap +
+                ", coordinateMap=" + coordinateSetMap +
                 ", widgetSetMap=" + widgetSetMap +
                 ", coordinateList=" + coordinateList +
                 ", widgetList=" + widgetList +

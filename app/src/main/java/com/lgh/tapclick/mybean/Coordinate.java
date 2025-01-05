@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
-@Entity(indices = @Index(value = {"appPackage", "appActivity"}, unique = true))
+@Entity(indices = @Index(value = {"id"}, unique = true))
 public class Coordinate {
     @PrimaryKey(autoGenerate = true)
     public Long id;

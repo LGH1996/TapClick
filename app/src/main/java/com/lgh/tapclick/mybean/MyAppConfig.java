@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(indices = @Index("id"))
+@Entity(indices = @Index(value = "id", unique = true))
 public class MyAppConfig {
     @PrimaryKey
     public Integer id;
