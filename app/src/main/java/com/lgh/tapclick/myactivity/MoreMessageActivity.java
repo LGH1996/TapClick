@@ -2,7 +2,6 @@ package com.lgh.tapclick.myactivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -22,9 +21,11 @@ public class MoreMessageActivity extends BaseActivity {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                binding.progress.setText(String.valueOf(newProgress));
-                if (newProgress >= 100) {
-                    binding.progress.setVisibility(View.GONE);
+                if (newProgress <= 10) {
+                    binding.indicator.start();
+                }
+                if (newProgress >= 90) {
+                    binding.indicator.complete();
                 }
             }
         });
@@ -54,5 +55,11 @@ public class MoreMessageActivity extends BaseActivity {
             return;
         }
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding.webView.destroy();
     }
 }

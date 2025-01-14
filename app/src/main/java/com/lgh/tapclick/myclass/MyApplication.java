@@ -11,6 +11,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.lgh.tapclick.mybean.MyAppConfig;
 import com.lgh.tapclick.myfunction.MyUtils;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -70,12 +74,30 @@ public class MyApplication extends Application {
                     database.execSQL("ALTER TABLE 'Widget' ADD COLUMN 'condition' INTEGER NOT NULL DEFAULT 0");
                 }
             };
-            dataDao = Room.databaseBuilder(base, MyDatabase.class, "applicationData.db").addMigrations(migration_1_2, migration_2_3, migration_3_4, migration_4_5, migration_5_6, migration_6_7).allowMainThreadQueries().build().dataDao();
+            dataDao = Room.databaseBuilder(base, MyDatabase.class, "applicationData.db")
+                    .addMigrations(migration_1_2, migration_2_3, migration_3_4, migration_4_5, migration_5_6, migration_6_7)
+                    .allowMainThreadQueries()
+                    .build()
+                    .dataDao();
         }
 
         if (myHttpRequest == null) {
-            Retrofit retrofit = new Retrofit.Builder().addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJava3CallAdapterFactory.create()).build();
-            myHttpRequest = retrofit.create(MyHttpRequest.class);
+            try {
+                OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                        .sslSocketFactory(OkHttpUtil.getIgnoreSSLSocketFactory(), OkHttpUtil.IGNORE_SSL_TRUST_MANAGER_X509)
+                        .hostnameVerifier(OkHttpUtil.IGNORE_HOST_NAME_VERIFIER)
+                        .build();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://tapclick.com")
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                        .client(okHttpClient)
+                        .build();
+                myHttpRequest = retrofit.create(MyHttpRequest.class);
+            } catch (NoSuchAlgorithmException | KeyManagementException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         MyAppConfig myAppConfig = dataDao.getMyAppConfig();

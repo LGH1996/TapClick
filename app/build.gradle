@@ -76,6 +76,7 @@ dependencies {
     implementation 'commons-io:commons-io:2.13.0'
     implementation 'commons-codec:commons-codec:1.16.0'
     implementation 'cn.hutool:hutool-core:5.8.32'
+    implementation 'com.github.Justson:CoolIndicator:v1.0.0'
     annotationProcessor 'androidx.room:room-compiler:2.5.1'
     androidTestImplementation 'androidx.test:runner:1.5.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

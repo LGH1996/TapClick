@@ -50,6 +50,7 @@ import com.lgh.tapclick.databinding.ViewDbClickSettingBinding;
 import com.lgh.tapclick.databinding.ViewDialogWarningBinding;
 import com.lgh.tapclick.databinding.ViewWidgetSelectBinding;
 import com.lgh.tapclick.myactivity.EditDataActivity;
+import com.lgh.tapclick.myactivity.GetVipActivity;
 import com.lgh.tapclick.myactivity.ListDataActivity;
 import com.lgh.tapclick.myactivity.MainActivity;
 import com.lgh.tapclick.mybean.AppDescribe;
@@ -567,11 +568,11 @@ public class MainFunction {
         LinkedList<AccessibilityNodeInfo> listA = new LinkedList<>(root);
         HashSet<AccessibilityNodeInfo> setR = new HashSet<>();
         while (!listA.isEmpty()) {
-            AccessibilityNodeInfo node = listA.poll();
-            if (node != null) {
-                setR.add(node);
-                for (int n = 0; n < node.getChildCount(); n++) {
-                    listA.add(node.getChild(n));
+            AccessibilityNodeInfo nodeInfo = listA.poll();
+            if (nodeInfo != null) {
+                setR.add(nodeInfo);
+                for (int n = 0; n < nodeInfo.getChildCount(); n++) {
+                    listA.add(nodeInfo.getChild(n));
                 }
             }
         }
@@ -707,6 +708,9 @@ public class MainFunction {
 
                     @Override
                     public void run() {
+                        if (addDataBinding == null) {
+                            return;
+                        }
                         switch (action) {
                             case MotionEvent.ACTION_DOWN:
                                 startRowX = rowX;
@@ -778,6 +782,9 @@ public class MainFunction {
 
                     @Override
                     public void run() {
+                        if (viewClickPosition == null) {
+                            return;
+                        }
                         switch (action) {
                             case MotionEvent.ACTION_DOWN:
                                 cParams.alpha = 0.9f;
@@ -948,6 +955,15 @@ public class MainFunction {
             public void onClick(View v) {
                 prePackage = currentPackage;
                 preActivity = currentActivity;
+                if (!dataDao.getMyAppConfig().isVip && appDescribe.widgetList.size() > 5) {
+                    showWarningDialog(new Runnable() {
+                        @Override
+                        public void run() {
+                            service.startActivity(new Intent(service, GetVipActivity.class));
+                        }
+                    }, "体验版每个应用最多可添加5个控件，需要获取完整版吗？");
+                    return;
+                }
                 Runnable runnable = new Runnable() {
                     AppDescribe appDescribeTemp;
 

@@ -41,11 +41,12 @@ public class SettingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         ActivitySettingBinding settingBinding = ActivitySettingBinding.inflate(getLayoutInflater());
         setContentView(settingBinding.getRoot());
-        context = getApplicationContext();
         dataDao = MyApplication.dataDao;
+        context = getApplicationContext();
         myAppConfig = dataDao.getMyAppConfig();
 
         settingBinding.settingAutoHideOnTaskList.setChecked(myAppConfig.autoHideOnTaskList);
+        settingBinding.settingGetVip.setVisibility(myAppConfig.isVip ? View.GONE : View.VISIBLE);
 
         settingBinding.settingOpen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +133,7 @@ public class SettingActivity extends BaseActivity {
                             Intent shareIntent = new Intent(Intent.ACTION_SEND);
                             shareIntent.setType("text/plain");
                             shareIntent.putExtra(Intent.EXTRA_TEXT, s);
-                            startActivityForResult(Intent.createChooser(shareIntent, "请选择分享方式"), 0x01);
+                            startActivity(Intent.createChooser(shareIntent, "请选择分享方式"));
                         } else {
                             Toast.makeText(context, "暂时不支持分享", Toast.LENGTH_SHORT).show();
                         }
@@ -155,12 +156,8 @@ public class SettingActivity extends BaseActivity {
         settingBinding.settingPraise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName()));
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(Intent.createChooser(intent, "请选择应用市场"));
-                } else {
-                    Toast.makeText(context, "请到应用市场评分", Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName()));
+                startActivity(intent);
             }
         });
 
@@ -176,12 +173,8 @@ public class SettingActivity extends BaseActivity {
         settingBinding.settingAuthorChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent github = new Intent(Intent.ACTION_VIEW);
-                github.addCategory(Intent.CATEGORY_DEFAULT);
-                github.addCategory(Intent.CATEGORY_BROWSABLE);
-                github.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                github.setData(Uri.parse("https://github.com/LGH1996/TapClick"));
-                startActivity(Intent.createChooser(github, "github"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/LGH1996/TapClick"));
+                startActivity(intent);
             }
         });
 
@@ -196,17 +189,12 @@ public class SettingActivity extends BaseActivity {
                 }
             }
         });
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0x01) {
-            if (!myAppConfig.isVip) {
-                myAppConfig.isVip = true;
-                dataDao.updateMyAppConfig(myAppConfig);
-                Toast.makeText(context, "水印已去除，重启后生效", Toast.LENGTH_SHORT).show();
+        settingBinding.settingGetVip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, GetVipActivity.class));
             }
-        }
+        });
     }
 }
