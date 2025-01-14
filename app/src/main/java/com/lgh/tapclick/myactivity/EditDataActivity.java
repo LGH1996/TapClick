@@ -42,6 +42,7 @@ import com.lgh.tapclick.mybean.AppDescribe;
 import com.lgh.tapclick.mybean.BasicContent;
 import com.lgh.tapclick.mybean.Coordinate;
 import com.lgh.tapclick.mybean.CoordinateShare;
+import com.lgh.tapclick.mybean.MyAppConfig;
 import com.lgh.tapclick.mybean.Widget;
 import com.lgh.tapclick.mybean.WidgetShare;
 import com.lgh.tapclick.myclass.DataDao;
@@ -69,6 +70,7 @@ public class EditDataActivity extends BaseActivity {
     private Context context;
     private LayoutInflater inflater;
     private DataDao dataDao;
+    private MyAppConfig myAppConfig;
     private DisplayMetrics metrics;
     private SimpleDateFormat dateFormatModify;
     private SimpleDateFormat dateFormat;
@@ -86,8 +88,9 @@ public class EditDataActivity extends BaseActivity {
         editDataBinding = ActivityEditDataBinding.inflate(inflater);
         setContentView(editDataBinding.getRoot());
 
-        dataDao = MyApplication.dataDao;
         context = getApplicationContext();
+        dataDao = MyApplication.dataDao;
+        myAppConfig = dataDao.getMyAppConfig();
         gson = new GsonBuilder().create();
         dateFormatModify = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
@@ -130,7 +133,7 @@ public class EditDataActivity extends BaseActivity {
             }
         });
 
-        if (MyApplication.myAppConfig.autoHideOnTaskList) {
+        if (myAppConfig.autoHideOnTaskList) {
             MyUtils.setExcludeFromRecents(false);
         }
     }
@@ -649,7 +652,7 @@ public class EditDataActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (MyApplication.myAppConfig.autoHideOnTaskList) {
+        if (myAppConfig.autoHideOnTaskList) {
             MyUtils.setExcludeFromRecents(true);
         }
     }

@@ -19,7 +19,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class MyApplication extends Application {
 
     public static DataDao dataDao;
-    public static MyAppConfig myAppConfig;
     public static MyHttpRequest myHttpRequest;
 
     @Override
@@ -74,17 +73,15 @@ public class MyApplication extends Application {
             dataDao = Room.databaseBuilder(base, MyDatabase.class, "applicationData.db").addMigrations(migration_1_2, migration_2_3, migration_3_4, migration_4_5, migration_5_6, migration_6_7).allowMainThreadQueries().build().dataDao();
         }
 
-        if (myAppConfig == null) {
-            myAppConfig = dataDao.getMyAppConfig();
-            if (myAppConfig == null) {
-                myAppConfig = new MyAppConfig();
-                dataDao.insertMyAppConfig(myAppConfig);
-            }
+        if (myHttpRequest == null) {
+            Retrofit retrofit = new Retrofit.Builder().addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJava3CallAdapterFactory.create()).build();
+            myHttpRequest = retrofit.create(MyHttpRequest.class);
         }
 
-        if (myHttpRequest == null) {
-            Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.github.com/").addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJava3CallAdapterFactory.create()).build();
-            myHttpRequest = retrofit.create(MyHttpRequest.class);
+        MyAppConfig myAppConfig = dataDao.getMyAppConfig();
+        if (myAppConfig == null) {
+            myAppConfig = new MyAppConfig();
+            dataDao.insertMyAppConfig(myAppConfig);
         }
 
         MyUtils.init(base);

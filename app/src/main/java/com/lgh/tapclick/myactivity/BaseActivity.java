@@ -19,7 +19,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (!MyApplication.myAppConfig.isVip) {
+        if (!MyApplication.dataDao.getMyAppConfig().isVip) {
             View noVip = findViewById(R.id.no_vip);
             if (noVip == null) return;
             noVip.setVisibility(View.VISIBLE);

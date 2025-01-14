@@ -34,6 +34,7 @@ import com.lgh.tapclick.databinding.ViewPrivacyAgreementBinding;
 import com.lgh.tapclick.mybean.AppDescribe;
 import com.lgh.tapclick.mybean.CoordinateShare;
 import com.lgh.tapclick.mybean.LatestMessage;
+import com.lgh.tapclick.mybean.MyAppConfig;
 import com.lgh.tapclick.mybean.Regulation;
 import com.lgh.tapclick.mybean.RegulationExport;
 import com.lgh.tapclick.mybean.WidgetShare;
@@ -143,12 +144,13 @@ public class MainActivity extends BaseActivity {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH", Locale.getDefault());
         String forUpdate = dateFormat.format(new Date());
-        if (!forUpdate.equals(MyApplication.myAppConfig.forUpdate)) {
-            MyApplication.myAppConfig.forUpdate = forUpdate;
-            dataDao.updateMyAppConfig(MyApplication.myAppConfig);
+        MyAppConfig myAppConfig = dataDao.getMyAppConfig();
+        if (!forUpdate.equals(myAppConfig.forUpdate)) {
+            myAppConfig.forUpdate = forUpdate;
+            dataDao.updateMyAppConfig(myAppConfig);
             showUpdateInfo();
         }
-        if (MyApplication.myAppConfig.autoHideOnTaskList) {
+        if (myAppConfig.autoHideOnTaskList) {
             MyUtils.setExcludeFromRecents(true);
         }
         if (MyUtils.getIsFirstStart()) {

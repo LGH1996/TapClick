@@ -16,6 +16,7 @@ import com.lgh.tapclick.BuildConfig;
 import com.lgh.tapclick.R;
 import com.lgh.tapclick.databinding.ActivitySettingBinding;
 import com.lgh.tapclick.mybean.LatestMessage;
+import com.lgh.tapclick.mybean.MyAppConfig;
 import com.lgh.tapclick.myclass.DataDao;
 import com.lgh.tapclick.myclass.MyApplication;
 import com.lgh.tapclick.myfunction.MyUtils;
@@ -33,6 +34,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class SettingActivity extends BaseActivity {
     private Context context;
     private DataDao dataDao;
+    private MyAppConfig myAppConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +43,9 @@ public class SettingActivity extends BaseActivity {
         setContentView(settingBinding.getRoot());
         context = getApplicationContext();
         dataDao = MyApplication.dataDao;
+        myAppConfig = dataDao.getMyAppConfig();
 
-        settingBinding.settingAutoHideOnTaskList.setChecked(MyApplication.myAppConfig.autoHideOnTaskList);
+        settingBinding.settingAutoHideOnTaskList.setChecked(myAppConfig.autoHideOnTaskList);
 
         settingBinding.settingOpen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,9 +167,9 @@ public class SettingActivity extends BaseActivity {
         settingBinding.settingAutoHideOnTaskList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyApplication.myAppConfig.autoHideOnTaskList = settingBinding.settingAutoHideOnTaskList.isChecked();
-                MyUtils.setExcludeFromRecents(MyApplication.myAppConfig.autoHideOnTaskList);
-                dataDao.updateMyAppConfig(MyApplication.myAppConfig);
+                myAppConfig.autoHideOnTaskList = settingBinding.settingAutoHideOnTaskList.isChecked();
+                MyUtils.setExcludeFromRecents(myAppConfig.autoHideOnTaskList);
+                dataDao.updateMyAppConfig(myAppConfig);
             }
         });
 
@@ -199,9 +202,9 @@ public class SettingActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0x01) {
-            if (!MyApplication.myAppConfig.isVip) {
-                MyApplication.myAppConfig.isVip = true;
-                dataDao.updateMyAppConfig(MyApplication.myAppConfig);
+            if (!myAppConfig.isVip) {
+                myAppConfig.isVip = true;
+                dataDao.updateMyAppConfig(myAppConfig);
                 Toast.makeText(context, "水印已去除，重启后生效", Toast.LENGTH_SHORT).show();
             }
         }
