@@ -21,7 +21,8 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="top"
                 android:text="设备号:"
                 android:textColor="@color/text_color"
                 android:textSize="13sp" />
@@ -33,9 +34,11 @@
                 android:layout_marginStart="5dp"
                 android:background="@null"
                 android:focusable="false"
+                android:gravity="top"
                 android:hint="获取失败"
-                android:inputType="textNoSuggestions"
-                android:singleLine="true"
+                android:inputType="textNoSuggestions|textMultiLine"
+                android:lineSpacingMultiplier="1.2"
+                android:lines="2"
                 android:textColor="@color/text_color"
                 android:textSize="13sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -43,11 +46,12 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="12dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="top"
                 android:text="激活码:"
                 android:textColor="@color/text_color"
                 android:textSize="13sp" />
@@ -58,9 +62,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:background="@null"
+                android:gravity="top"
                 android:hint="请输入"
-                android:inputType="textNoSuggestions"
-                android:singleLine="true"
+                android:inputType="textNoSuggestions|textMultiLine"
+                android:lineSpacingMultiplier="1.2"
+                android:lines="2"
                 android:textColor="@color/text_color"
                 android:textSize="13sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>

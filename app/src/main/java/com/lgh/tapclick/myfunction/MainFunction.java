@@ -955,14 +955,22 @@ public class MainFunction {
             public void onClick(View v) {
                 prePackage = currentPackage;
                 preActivity = currentActivity;
-                if (!dataDao.getMyAppConfig().isVip && appDescribe.widgetList.size() > 5) {
-                    showWarningDialog(new Runnable() {
-                        @Override
-                        public void run() {
-                            service.startActivity(new Intent(service, GetVipActivity.class));
-                        }
-                    }, "体验版每个应用最多可添加5个控件，需要获取完整版吗？");
-                    return;
+                if (!dataDao.getMyAppConfig().isVip) {
+                    AppDescribe appDescribeTemp = appDescribeMap.get(widgetSelect.appPackage);
+                    if (appDescribeTemp != null && appDescribeTemp.widgetList.size() >= 5) {
+                        showWarningDialog(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(service, GetVipActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                service.startActivity(intent);
+                                if (bParams.alpha != 0) {
+                                    addDataBinding.switchWid.callOnClick();
+                                }
+                            }
+                        }, "体验版可添加控件已达上限，需要获取完整版吗？");
+                        return;
+                    }
                 }
                 Runnable runnable = new Runnable() {
                     AppDescribe appDescribeTemp;
