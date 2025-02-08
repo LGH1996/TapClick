@@ -19,7 +19,6 @@ import com.google.gson.JsonParser;
 import com.lgh.tapclick.BuildConfig;
 import com.lgh.tapclick.databinding.ActivityGetVipBinding;
 import com.lgh.tapclick.databinding.ViewDialogGetVipBinding;
-import com.lgh.tapclick.mybean.MyAppConfig;
 import com.lgh.tapclick.myclass.MyApplication;
 import com.lgh.tapclick.myfunction.MyUtils;
 
@@ -133,9 +132,7 @@ public class GetVipActivity extends BaseActivity {
                                     boolean ok = jsonObject.get("ok").getAsBoolean();
                                     String msg = jsonObject.get("msg").getAsString();
                                     if (ok) {
-                                        MyAppConfig myAppConfig = MyApplication.dataDao.getMyAppConfig();
-                                        myAppConfig.isVip = true;
-                                        MyApplication.dataDao.updateMyAppConfig(myAppConfig);
+                                        MyUtils.setIsVip(true);
                                         Toast.makeText(GetVipActivity.this, msg, Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
                                     } else {

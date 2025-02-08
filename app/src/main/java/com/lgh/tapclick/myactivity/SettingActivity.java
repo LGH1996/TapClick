@@ -46,7 +46,7 @@ public class SettingActivity extends BaseActivity {
         myAppConfig = dataDao.getMyAppConfig();
 
         settingBinding.settingAutoHideOnTaskList.setChecked(myAppConfig.autoHideOnTaskList);
-        settingBinding.settingGetVip.setVisibility(myAppConfig.isVip ? View.GONE : View.VISIBLE);
+        settingBinding.settingGetVip.setVisibility(MyUtils.getIsVip() ? View.GONE : View.VISIBLE);
 
         settingBinding.settingOpen.setOnClickListener(new View.OnClickListener() {
             @Override

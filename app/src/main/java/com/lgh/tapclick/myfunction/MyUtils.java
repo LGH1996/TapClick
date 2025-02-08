@@ -269,4 +269,14 @@ public class MyUtils {
         }
         return myDeviceNo;
     }
+
+    public static boolean getIsVip() {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+        return sharedPreferences.getBoolean("isVip", true);
+    }
+
+    public static void setIsVip(boolean isVip) {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+        sharedPreferences.edit().putBoolean("isVip", isVip).apply();
+    }
 }

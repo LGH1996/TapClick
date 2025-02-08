@@ -955,7 +955,7 @@ public class MainFunction {
             public void onClick(View v) {
                 prePackage = currentPackage;
                 preActivity = currentActivity;
-                if (!dataDao.getMyAppConfig().isVip) {
+                if (!MyUtils.getIsVip()) {
                     AppDescribe appDescribeTemp = appDescribeMap.get(widgetSelect.appPackage);
                     if (appDescribeTemp != null && appDescribeTemp.widgetList.size() >= 5) {
                         showWarningDialog(new Runnable() {
