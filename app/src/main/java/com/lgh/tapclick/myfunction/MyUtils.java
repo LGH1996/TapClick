@@ -272,7 +272,7 @@ public class MyUtils {
 
     public static boolean getIsVip() {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
-        return sharedPreferences.getBoolean("isVip", true);
+        return sharedPreferences.getBoolean("isVip", false);
     }
 
     public static void setIsVip(boolean isVip) {

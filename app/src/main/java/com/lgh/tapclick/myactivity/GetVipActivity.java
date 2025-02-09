@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -99,6 +100,10 @@ public class GetVipActivity extends BaseActivity {
                         .setView(binding.getRoot())
                         .setCancelable(false)
                         .show();
+                WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+                params.y = -150;
+                dialog.getWindow().setAttributes(params);
+
                 binding.cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

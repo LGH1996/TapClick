@@ -80,9 +80,9 @@ public class MainActivity extends BaseActivity {
         source.add(new Resource("授权管理", R.drawable.authorization));
         source.add(new Resource("创建规则", R.drawable.add_data));
         source.add(new Resource("规则管理", R.drawable.edit_data));
-        source.add(new Resource("应用设置", R.drawable.setting));
-        source.add(new Resource("使用说明", R.drawable.instructions));
         source.add(new Resource("运行日志", R.drawable.log));
+        source.add(new Resource("使用说明", R.drawable.instructions));
+        source.add(new Resource("应用设置", R.drawable.setting));
         BaseAdapter baseAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
@@ -126,8 +126,7 @@ public class MainActivity extends BaseActivity {
                         break;
                     }
                     case 3: {
-                        Intent intent = new Intent(context, SettingActivity.class);
-                        startActivityForResult(intent, 0x01);
+                        startActivity(new Intent(context, LogActivity.class));
                         break;
                     }
                     case 4: {
@@ -135,7 +134,8 @@ public class MainActivity extends BaseActivity {
                         break;
                     }
                     case 5: {
-                        startActivity(new Intent(context, LogActivity.class));
+                        Intent intent = new Intent(context, SettingActivity.class);
+                        startActivityForResult(intent, 0x01);
                         break;
                     }
                 }
