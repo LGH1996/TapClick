@@ -187,7 +187,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="35dp"
                 android:background="@drawable/button_selector"
                 android:gravity="center"
                 android:padding="1dp"
