@@ -1061,10 +1061,21 @@ public class MainFunction {
                         dialog.show();
                     }
                 };
+                Runnable checkExistRun = new Runnable() {
+                    @Override
+                    public void run() {
+                        AppDescribe appDescribeTemp = appDescribeMap.get(widgetSelect.appPackage);
+                        if (appDescribeTemp != null && appDescribeTemp.widgetList.stream().anyMatch(e -> StrUtil.equals(e.appPackage, widgetSelect.appPackage) && StrUtil.equals(e.appActivity, widgetSelect.appActivity) && Objects.equals(e.widgetRect, widgetSelect.widgetRect))) {
+                            showWarningDialog(runnable, "已存在相同坐标（Bonus）的控件，是否继续添加？");
+                        } else {
+                            runnable.run();
+                        }
+                    }
+                };
                 if (pkgSuggestNotOnList.contains(widgetSelect.appPackage)) {
-                    showWarningDialog(runnable, service.getString(R.string.addWarning));
+                    showWarningDialog(checkExistRun, service.getString(R.string.addWarning));
                 } else {
-                    runnable.run();
+                    checkExistRun.run();
                 }
             }
         });
