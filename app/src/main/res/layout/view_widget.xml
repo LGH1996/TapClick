@@ -370,7 +370,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="防抖延迟(ms):"
+                    android:text="最小触发间隔(ms):"
                     android:textColor="@color/text_color"
                     android:textSize="12sp" />
 

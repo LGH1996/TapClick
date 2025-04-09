@@ -55,7 +55,7 @@
                     android:layout_marginStart="15dp"
                     android:gravity="center_vertical|start"
                     android:singleLine="true"
-                    android:text="com.lgh.advertising.going"
+                    android:text="com.lgh.package"
                     android:textColor="@color/text_color"
                     android:textSize="13sp" />
 

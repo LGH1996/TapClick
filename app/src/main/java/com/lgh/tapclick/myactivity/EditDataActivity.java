@@ -259,7 +259,7 @@ public class EditDataActivity extends BaseActivity {
                 .filter(e -> e.lastTriggerTime > System.currentTimeMillis() - 1000 * 60 * 5)
                 .sorted((e1, e2) -> Long.compare(e2.lastTriggerTime, e1.lastTriggerTime))
                 .collect(Collectors.toList());
-        appDescribe.coordinateList.removeAll(latestTriggerCoordinateList);
+        appDescribe.coordinateList.removeIf(e -> latestTriggerCoordinateList.stream().anyMatch(n -> n == e));
         appDescribe.coordinateList.sort((e1, e2) -> Long.compare(e2.createTime, e1.createTime));
         appDescribe.coordinateList.addAll(0, latestTriggerCoordinateList);
         if (appDescribe.coordinateList.isEmpty()) {
@@ -427,7 +427,7 @@ public class EditDataActivity extends BaseActivity {
                 .filter(e -> e.lastTriggerTime > System.currentTimeMillis() - 1000 * 60 * 5)
                 .sorted((e1, e2) -> Long.compare(e2.lastTriggerTime, e1.lastTriggerTime))
                 .collect(Collectors.toList());
-        appDescribe.widgetList.removeAll(latestTriggerWidgetList);
+        appDescribe.widgetList.removeIf(e -> latestTriggerWidgetList.stream().anyMatch(n -> n == e));
         appDescribe.widgetList.sort((e1, e2) -> Long.compare(e2.createTime, e1.createTime));
         appDescribe.widgetList.addAll(0, latestTriggerWidgetList);
         if (appDescribe.widgetList.isEmpty()) {
@@ -500,7 +500,7 @@ public class EditDataActivity extends BaseActivity {
                         return;
                     }
                     if (clickDelay.isEmpty()) {
-                        widgetBinding.widgetModify.setText("延迟点击不能为空");
+                        widgetBinding.widgetModify.setText("最小触发间隔不能为空");
                         return;
                     }
                     if (debounceDelay.isEmpty()) {
