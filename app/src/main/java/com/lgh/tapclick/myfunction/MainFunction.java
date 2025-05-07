@@ -651,7 +651,6 @@ public class MainFunction {
         DisplayMetrics metrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getRealMetrics(metrics);
         int width = Math.min(metrics.heightPixels, metrics.widthPixels);
-        int height = Math.max(metrics.heightPixels, metrics.widthPixels);
 
         aParams = new WindowManager.LayoutParams();
         aParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
@@ -661,7 +660,7 @@ public class MainFunction {
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
         aParams.width = width;
-        aParams.height = height / 5;
+        aParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         aParams.x = (metrics.widthPixels - aParams.width) / 2;
         aParams.y = metrics.heightPixels / 5 * 3;
         aParams.alpha = 0.9f;
@@ -707,6 +706,9 @@ public class MainFunction {
 
                     @Override
                     public void run() {
+                        if (addDataBinding == null) {
+                            return;
+                        }
                         switch (action) {
                             case MotionEvent.ACTION_DOWN:
                                 startRowX = rowX;
@@ -723,9 +725,9 @@ public class MainFunction {
                                 DisplayMetrics metrics = new DisplayMetrics();
                                 windowManager.getDefaultDisplay().getRealMetrics(metrics);
                                 aParams.x = Math.max(aParams.x, 0);
-                                aParams.x = Math.min(aParams.x, metrics.widthPixels - aParams.width);
+                                aParams.x = Math.min(aParams.x, metrics.widthPixels - addDataBinding.getRoot().getWidth());
                                 aParams.y = Math.max(aParams.y, 0);
-                                aParams.y = Math.min(aParams.y, metrics.heightPixels - aParams.height);
+                                aParams.y = Math.min(aParams.y, metrics.heightPixels - addDataBinding.getRoot().getHeight());
                                 windowManager.updateViewLayout(v, aParams);
                                 break;
                         }
@@ -778,6 +780,9 @@ public class MainFunction {
 
                     @Override
                     public void run() {
+                        if (viewClickPosition == null) {
+                            return;
+                        }
                         switch (action) {
                             case MotionEvent.ACTION_DOWN:
                                 cParams.alpha = 0.9f;
@@ -801,7 +806,7 @@ public class MainFunction {
                                 addDataBinding.xy.setText("X轴：" + String.format("%-4d", coordinateSelect.xPosition) + "    " + "Y轴：" + String.format("%-4d", coordinateSelect.yPosition));
                                 break;
                             case MotionEvent.ACTION_UP:
-                                cParams.alpha = 0.5f;
+                                cParams.alpha = 0.6f;
                                 windowManager.updateViewLayout(v, cParams);
                                 break;
                         }
@@ -876,18 +881,20 @@ public class MainFunction {
                                     for (AccessibilityNodeInfo nodeInfo : nodeList) {
                                         Rect rect = new Rect();
                                         nodeInfo.getBoundsInScreen(rect);
-                                        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(rect.width(), rect.height());
-                                        params.leftMargin = rect.left;
-                                        params.topMargin = rect.top;
-                                        View view = new View(service);
-                                        view.setBackgroundResource(R.drawable.node);
-                                        view.setFocusableInTouchMode(true);
-                                        view.setFocusable(true);
-                                        view.setOnClickListener(onClickListener);
-                                        view.setOnFocusChangeListener(onFocusChangeListener);
-                                        view.setTag(R.string.nodeInfo, nodeInfo);
-                                        view.setTag(R.string.rect, rect);
-                                        widgetSelectBinding.frame.addView(view, params);
+                                        if (rect.width() > 0 && rect.height() > 0) {
+                                            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(rect.width(), rect.height());
+                                            params.leftMargin = rect.left;
+                                            params.topMargin = rect.top;
+                                            View view = new View(service);
+                                            view.setBackgroundResource(R.drawable.node);
+                                            view.setFocusableInTouchMode(true);
+                                            view.setFocusable(true);
+                                            view.setOnClickListener(onClickListener);
+                                            view.setOnFocusChangeListener(onFocusChangeListener);
+                                            view.setTag(R.string.nodeInfo, nodeInfo);
+                                            view.setTag(R.string.rect, rect);
+                                            widgetSelectBinding.frame.addView(view, params);
+                                        }
                                     }
                                     bParams.alpha = 0.5f;
                                     bParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
@@ -923,7 +930,7 @@ public class MainFunction {
                 if (cParams.alpha == 0) {
                     coordinateSelect.appPackage = currentPackage;
                     coordinateSelect.appActivity = currentActivity;
-                    cParams.alpha = 0.5f;
+                    cParams.alpha = 0.6f;
                     cParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
                             | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
                             | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
