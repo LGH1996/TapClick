@@ -49,7 +49,6 @@ import com.lgh.tapclick.myclass.DataDao;
 import com.lgh.tapclick.myclass.MyApplication;
 import com.lgh.tapclick.myfunction.MyUtils;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -64,6 +63,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.digest.DigestUtil;
 
 public class EditDataActivity extends BaseActivity {
     private AppDescribe appDescribe;
@@ -667,7 +667,7 @@ public class EditDataActivity extends BaseActivity {
 
     private void showEditShareFileNameDialog(String strRegulation) {
         ViewEditFileNameBinding binding = ViewEditFileNameBinding.inflate(inflater);
-        binding.fileName.setHint(DigestUtils.md5Hex(strRegulation));
+        binding.fileName.setHint(DigestUtil.md5Hex(strRegulation));
         new AlertDialog.Builder(EditDataActivity.this)
                 .setView(binding.getRoot())
                 .setCancelable(false)

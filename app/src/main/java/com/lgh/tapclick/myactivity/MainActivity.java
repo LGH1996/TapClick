@@ -80,9 +80,9 @@ public class MainActivity extends BaseActivity {
         source.add(new Resource("授权管理", R.drawable.authorization));
         source.add(new Resource("创建规则", R.drawable.add_data));
         source.add(new Resource("规则管理", R.drawable.edit_data));
+        source.add(new Resource("运行日志", R.drawable.log));
         source.add(new Resource("应用设置", R.drawable.setting));
         source.add(new Resource("使用说明", R.drawable.instructions));
-        source.add(new Resource("运行日志", R.drawable.log));
         BaseAdapter baseAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
@@ -126,16 +126,17 @@ public class MainActivity extends BaseActivity {
                         break;
                     }
                     case 3: {
-                        Intent intent = new Intent(context, SettingActivity.class);
-                        startActivityForResult(intent, 0x01);
+                        startActivity(new Intent(context, LogActivity.class));
                         break;
                     }
                     case 4: {
-                        startActivity(new Intent(context, MoreMessageActivity.class));
+                        Intent intent = new Intent(context, SettingActivity.class);
+                        startActivity(intent);
                         break;
                     }
                     case 5: {
-                        startActivity(new Intent(context, LogActivity.class));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.qq.com/doc/DWXhWVmFodlJGRnhL"));
+                        startActivity(Intent.createChooser(intent, "选择浏览器"));
                         break;
                     }
                 }
@@ -394,6 +395,7 @@ public class MainActivity extends BaseActivity {
                 newRuleBinding.sure.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        widgetShare.widget.id = null;
                         widgetShare.widget.createTime = System.currentTimeMillis();
                         widgetShare.widget.lastTriggerTime = 0;
                         widgetShare.widget.triggerCount = 0;
@@ -464,6 +466,7 @@ public class MainActivity extends BaseActivity {
                 newRuleBinding.sure.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        coordinateShare.coordinate.id = null;
                         coordinateShare.coordinate.createTime = System.currentTimeMillis();
                         coordinateShare.coordinate.lastTriggerTime = 0;
                         coordinateShare.coordinate.triggerCount = 0;

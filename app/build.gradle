@@ -53,7 +53,7 @@ android {
         checkReleaseBuilds false
     }
     packagingOptions {
-        exclude 'classes.dex'
+        exclude 'META-INF/INDEX.LIST'
     }
     namespace 'com.lgh.tapclick'
 }
@@ -74,8 +74,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.0.0'
     implementation 'me.codeboy.android:align-text-view:2.3.2'
     implementation 'commons-io:commons-io:2.13.0'
-    implementation 'commons-codec:commons-codec:1.16.0'
     implementation 'cn.hutool:hutool-core:5.8.32'
+    implementation 'cn.hutool:hutool-crypto:5.8.32'
+    implementation 'com.github.Justson:CoolIndicator:v1.0.0'
+    implementation 'com.github.tiann:FreeReflection:3.2.2'
+    compileOnly 'de.robv.android.xposed:api:82'
     annotationProcessor 'androidx.room:room-compiler:2.5.1'
     androidTestImplementation 'androidx.test:runner:1.5.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
